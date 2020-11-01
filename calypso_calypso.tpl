@@ -55,6 +55,8 @@ Calypso game interface. Nothing here yet.
 
 // Javascript HTML templates
 
+var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
+                        </div>';
 /*
 // Example:
 var jstpl_some_game_item='<div class="my_game_item" id="my_game_item_${MY_ITEM_ID}"></div>';
