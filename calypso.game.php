@@ -31,15 +31,22 @@ class Calypso extends Table
         //  the corresponding ID in gameoptions.inc.php.
         // Note: afterwards, you can get/set the global variables with getGameStateValue/setGameStateInitialValue/setGameStateValue
         parent::__construct();
-        
-        self::initGameStateLabels( array( 
-            //    "my_first_global_variable" => 10,
-            //    "my_second_global_variable" => 11,
-            //      ...
-            //    "my_first_game_variant" => 100,
-            //    "my_second_game_variant" => 101,
-            //      ...
-        ) );        
+
+        # not sure for now quite what I need to keep track of here, so start minimally-ish
+        self::initGameStateLabels( array(
+                         //"handDealer" => 10,
+                         // Mappings of suits to players, or is that in db?
+                         // keeping track of how many deals through the devk?
+                         // how many hands overall??
+                         // completed calypsos? or in db? or is scoring separate?
+                         "trickColor" => 11,
+                         // probably want some
+                         //    "my_first_game_variant" => 100,
+                         //    "my_second_game_variant" => 101,
+                          ) );
+
+        $this->cards = self::getNew( "module.common.deck" );
+        $this->cards->init( "card" );  // db table initialisation
 	}
 	
     protected function getGameName( )
@@ -80,8 +87,25 @@ class Calypso extends Table
         /************ Start the game initialization *****/
 
         // Init global values with their initial values
-        //self::setGameStateInitialValue( 'my_first_global_variable', 0 );
-        
+
+        // Set current trick color to zero (= no trick color)
+        self::setGameStateInitialValue( 'trickColor', 0 );
+
+        // AB TODO: other gamestate values when I've figured out what they are!
+
+        // Create cards
+        $num_decks = 1;  // will be 4 - need to change here and in js
+        $cards = array ();
+        foreach ( $this->colors as $color_id => $color ) {
+            // spade, heart, diamond, club
+            for ($value = 2; $value <= 14; $value ++) {
+                //  2, 3, 4, ... K, A
+                $cards [] = array ('type' => $color_id, 'type_arg' => $value, 'nbr' => $num_decks );
+            }
+        }
+
+        $this->cards->createCards( $cards, 'deck' );
+
         // Init game statistics
         // (note: statistics used in this file must be defined in your stats.inc.php file)
         //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
