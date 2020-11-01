@@ -18,13 +18,18 @@
 define([
     "dojo","dojo/_base/declare",
     "ebg/core/gamegui",
-    "ebg/counter"
+    "ebg/counter",
+    "ebg/stock"  // for stock class
 ],
 function (dojo, declare) {
     return declare("bgagame.calypso", ebg.core.gamegui, {
         constructor: function(){
             console.log('calypso constructor');
-              
+
+            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
+            this.cardwidth = 72;
+            this.cardheight = 96;
+
             // Here, you can init the global variables of your user interface
             // Example:
             // this.myGlobalValue = 0;
@@ -57,8 +62,21 @@ function (dojo, declare) {
             }
             
             // TODO: Set up your game interface here, according to "gamedatas"
-            
- 
+            // Player hand
+            this.playerHand = new ebg.stock(); // new stock object for hand
+            this.playerHand.create( this, $('myhand'), this.cardwidth, this.cardheight );
+
+            // TODO: this whole bit may need some thinking about for quad-deck:
+            this.playerHand.image_items_per_row = 13; // 13 images per row
+            // Create cards types:
+            for (var color = 1; color <= 4; color++) {
+                for (var value = 2; value <= 14; value++) {
+                    // Build card type id
+                    var card_type_id = this.getCardUniqueId(color, value);
+                    this.playerHand.addItemType(card_type_id, card_type_id, g_gamethemeurl + 'img/cards.jpg', card_type_id);
+                }
+            }
+
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -157,7 +175,11 @@ function (dojo, declare) {
             script.
         
         */
-
+        // Get card unique identifier based on its color and value
+        // TODO: This will almost certainly need modding for quad-deck fun :)
+        getCardUniqueId : function(color, value) {
+            return (color - 1) * 13 + (value - 2);
+        },
 
         ///////////////////////////////////////////////////
         //// Player's action
