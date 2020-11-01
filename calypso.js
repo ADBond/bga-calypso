@@ -69,11 +69,18 @@ function (dojo, declare) {
             // TODO: this whole bit may need some thinking about for quad-deck:
             this.playerHand.image_items_per_row = 13; // 13 images per row
             // Create cards types:
+            let num_decks = 1;  // this will be four later, but let's not go to quickly
             for (var color = 1; color <= 4; color++) {
                 for (var value = 2; value <= 14; value++) {
-                    // Build card type id
-                    var card_type_id = this.getCardUniqueId(color, value);
-                    this.playerHand.addItemType(card_type_id, card_type_id, g_gamethemeurl + 'img/cards.jpg', card_type_id);
+                    for (var deck = 1; deck <= num_decks; deck++){
+                        // Build card type id
+                        let card_type_id = this.getCardUniqueId(color, value, deck);
+                        let card_type = this.getCardUniqueType(color, value);
+                        // args are id, weight (for hand-sorting), img url, and img position
+                        // Not sure for the moment if it is important for ids to be distinct here,
+                        // but a sensible default answer seems to be 'yes'
+                        this.playerHand.addItemType(card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type);
+                    }
                 }
             }
 
@@ -176,9 +183,12 @@ function (dojo, declare) {
         
         */
         // Get card unique identifier based on its color and value
-        // TODO: This will almost certainly need modding for quad-deck fun :)
-        getCardUniqueId : function(color, value) {
+        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
+        getCardUniqueType : function(color, value) {
             return (color - 1) * 13 + (value - 2);
+        },
+        getCardUniqueId : function(color, value, deck) {
+            return (deck - 1) * 52 + (color - 1) * 13 + (value - 2);
         },
 
         ///////////////////////////////////////////////////
