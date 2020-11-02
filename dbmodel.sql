@@ -32,3 +32,7 @@ CREATE TABLE IF NOT EXISTS `card` (
 -- don't mess around with changing this til I know what I'm doing
 -- add info about first player
 ALTER TABLE `player` ADD `player_first` BOOLEAN NOT NULL DEFAULT '0';
+-- personal trump suit
+ALTER TABLE `player` ADD `trump_suit` varchar(16) NOT NULL;
+-- how many completed calypsos so far?
+ALTER TABLE `player` ADD `completed_calypsos` int(4) NOT NULL DEFAULT '0';

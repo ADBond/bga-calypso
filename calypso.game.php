@@ -120,7 +120,14 @@ class Calypso extends Table
         //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
 
         // TODO: setup the initial game situation here
-       
+        // Set up personal trump suits
+        // player_no: the index of player in natural playing order (starting with 1)
+        // For now I will randomly choose one of the four for first player, then randomly one of the other two for next
+        // the rest will be determined from that.
+
+        // Set new 'round'
+
+        // Activate first player to play (if anything else needed than below:)
 
         // Activate first player (which is in general a good idea :) )
         $this->activeNextPlayer();
