@@ -195,7 +195,11 @@ class Calypso extends Table
         Each time a player is doing some game action, one of the methods below is called.
         (note: each method below must match an input method in calypso.action.php)
     */
-
+    function playCard($card_id) {
+        self::checkAction("playCard");
+        $player_id = self::getActivePlayerId();
+        throw new BgaUserException(self::_("Not implemented: ") . "$player_id plays $card_id");
+    }
     /*
     
     Example:
@@ -233,6 +237,9 @@ class Calypso extends Table
         game state.
     */
 
+    function argGiveCards() {  // Temp
+        return array ();
+      }
     /*
     
     Example for game state "MyGameState":
@@ -258,7 +265,61 @@ class Calypso extends Table
         Here, you can create methods defined as "game state actions" (see "action" property in states.inc.php).
         The action method of state X is called everytime the current game state is set to X.
     */
-    
+    function stNewHand() {
+        // Take back all cards (from any location => null) to deck
+        $this->cards->moveAllCardsInLocation(null, "deck");
+        $this->cards->shuffle('deck');
+        // Deal 13 cards to each players
+        // Create deck, shuffle it and give 13 initial cards
+        $players = self::loadPlayersBasicInfos();
+        foreach ( $players as $player_id => $player ) {
+            $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            // Notify player about his cards
+            self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
+        }
+        //self::setGameStateValue('alreadyPlayedHearts', 0);
+        $this->gamestate->nextState("");
+    }
+
+    function stNewTrick() {
+        // New trick: active the player who wins the last trick, or the player who own the club-2 card
+        // Reset trick color to 0 (= no color)
+        self::setGameStateInitialValue('trickColor', 0);
+        $this->gamestate->nextState();
+    }
+
+    function stNextPlayer() {
+        // Active next player OR end the trick and go to the next trick OR end the hand
+        if ($this->cards->countCardInLocation('cardsontable') == 4) {
+            // This is the end of the trick
+            // Move all cards to "cardswon" of the given player
+            $best_value_player_id = self::activeNextPlayer(); // TODO figure out winner of trick
+            $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
+        
+            if ($this->cards->countCardInLocation('hand') == 0) {
+                // End of the hand
+                $this->gamestate->nextState("endHand");
+            } else {
+                // End of the trick
+                $this->gamestate->nextState("nextTrick");
+            }
+        } else {
+            // Standard case (not the end of the trick)
+            // => just active the next player
+            $player_id = self::activeNextPlayer();
+            self::giveExtraTime($player_id);
+            $this->gamestate->nextState('nextPlayer');
+        }
+    }
+
+    function stEndHand() {
+        $this->gamestate->nextState("nextHand");
+    }
+
+    // Temp note to recall:
+    // Important: All state actions game or player must end with state transition (or thrown exception).
+    // Also make sure its ONLY one state transition, if you accidentally fall though after state transition
+    // and do another one it will be a real mess and head scratching for long time. 
     /*
     
     Example for game state "MyGameState":

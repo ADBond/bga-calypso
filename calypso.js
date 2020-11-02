@@ -267,7 +267,7 @@ function (dojo, declare) {
 
 
                     this.playerHand.unselectAll();
-                } else if (this.checkAction('giveCards')) {
+                } else if (this.checkAction('giveCards')) {  // TODO: remove this!
                     // Can give cards => let the player select some cards
                 } else {
                     this.playerHand.unselectAll();
