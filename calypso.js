@@ -56,9 +56,16 @@ function (dojo, declare) {
             // Setting up player boards
             for( var player_id in gamedatas.players )
             {
-                var player = gamedatas.players[player_id];
+                let player = gamedatas.players[player_id];
                          
                 // TODO: Setting up players boards if needed
+                let player_trump = player["trump_suit"];
+                let trump_lookup = {
+                    1: "hearts", 2: "spades", 3: "clubs", 4: "diamonds"
+                };
+                // Not sure if I need stuff to be jquery?? but can't hurt for this little bit (flw)
+                document.getElementById("trump-" + player_id).textContent = trump_lookup[player_trump];
+                //$('#trump_' + player_id).text(trump_lookup[player_trump]);
             }
             
             // TODO: Set up your game interface here, according to "gamedatas"

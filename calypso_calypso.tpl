@@ -36,6 +36,7 @@ Calypso game interface. Nothing here yet.
     <div class="playertable whiteblock playertable_{DIR}">
         <div class="playertablename" style="color:#{PLAYER_COLOR}">
             {PLAYER_NAME}
+            <div class="personal-trump" id="trump-{PLAYER_ID}"></div>
         </div>
         <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
         </div>

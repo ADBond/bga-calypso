@@ -59,6 +59,10 @@
 .playertablename {
     font-weight: bold;
 }
+.personal-trump {
+    font-weight: bold;
+    color: black;
+}
 
 .playertable {
     position: absolute;
