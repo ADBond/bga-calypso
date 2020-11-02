@@ -69,7 +69,7 @@ function (dojo, declare) {
             // TODO: this whole bit may need some thinking about for quad-deck:
             this.playerHand.image_items_per_row = 13; // 13 images per row
             // Create cards types:
-            let num_decks = 1;  // this will be four later, but let's not go to quickly
+            let num_decks = 4;  // this will be four later, but let's not go to quickly
             for (var color = 1; color <= 4; color++) {
                 for (var value = 2; value <= 14; value++) {
                     for (var deck = 1; deck <= num_decks; deck++){

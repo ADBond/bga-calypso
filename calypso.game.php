@@ -94,7 +94,7 @@ class Calypso extends Table
         // AB TODO: other gamestate values when I've figured out what they are!
 
         // Create cards
-        $num_decks = 1;  // will be 4 - need to change here and in js
+        $num_decks = 4;  // will be 4 - need to change here and in js
         $cards = array ();
         foreach ( $this->colors as $color_id => $color ) {
             // spade, heart, diamond, club
