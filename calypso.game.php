@@ -71,7 +71,6 @@ class Calypso extends Table
         $default_colors = $gameinfos['player_colors'];
  
         // Create players
-        // Note: if you added some extra field on "player" table in the database (dbmodel.sql), you can initialize it there.
         $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
         foreach( $players as $player_id => $player )
@@ -120,10 +119,37 @@ class Calypso extends Table
         //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
 
         // TODO: setup the initial game situation here
+        
         // Set up personal trump suits
         // player_no: the index of player in natural playing order (starting with 1)
         // For now I will randomly choose one of the four for first player, then randomly one of the other two for next
         // the rest will be determined from that.
+        // randomly pick a suit for the first player using what I assume(?) is the standard mapping
+        self::debug("everything is hunky dory");
+        $first_player_suit = bga_rand( 1, 4 );
+        // self::dump("The first player has suit: ", $first_player_suit);
+        // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
+        $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
+        $player_suits = array(
+            1 => $first_player_suit,
+            2 => $second_player_suit,
+            3 => self::getPartnerSuit($first_player_suit),
+            4 => self::getPartnerSuit($second_player_suit)
+        );
+        $sql = "UPDATE player SET trump_suit = CASE player_no ";
+        $values = array();
+        foreach ( $players as $player_id => $player ) {
+            $player_number = $player["player_no"];
+            $trump_suit = $player_suits[$player_number];
+            $values[] = "WHEN ".$player_number." THEN ".$trump_suit;
+        }
+        $sql .= implode( $values, ' ');
+        $sql .= " ELSE 0 END;";
+        self::dump("My obviously dodgy sql: ", $sql);
+        self::DbQuery( $sql );
+        self::reloadPlayersBasicInfos();
+
+        // Note: if you added some extra field on "player" table in the database (dbmodel.sql), you can initialize it there.
 
         // Set new 'round'
 
@@ -191,7 +217,14 @@ class Calypso extends Table
     /*
         In this space, you can put any utility methods useful for your game logic
     */
-
+    function getPartnerSuit($player_suit) {
+        return array(
+            1 => 2,
+            2 => 1,
+            3 => 4,
+            4 => 3
+        )[$player_suit];
+    }
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -283,6 +316,8 @@ class Calypso extends Table
         The action method of state X is called everytime the current game state is set to X.
     */
     function stNewHand() {
+        // AB TODO: I will only move to deck & shuffle at end of each _round_ rather than hand
+        // leave now as a reminder, as so much other logic hasn't been implemented yet anyway
         // Take back all cards (from any location => null) to deck
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
@@ -295,11 +330,12 @@ class Calypso extends Table
             self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
         }
         //self::setGameStateValue('alreadyPlayedHearts', 0);
+        // AB TODO: more unorganised notes - in the to-come stNewRound function will want to set num. calypsos to 0 etc
         $this->gamestate->nextState("");
     }
 
     function stNewTrick() {
-        // New trick: active the player who wins the last trick, or the player who own the club-2 card
+        // New trick: active the player who wins the last trick, or the left of dealer
         // Reset trick color to 0 (= no color)
         self::setGameStateInitialValue('trickColor', 0);
         $this->gamestate->nextState();
@@ -308,9 +344,11 @@ class Calypso extends Table
     function stNextPlayer() {
         // Active next player OR end the trick and go to the next trick OR end the hand
         if ($this->cards->countCardInLocation('cardsontable') == 4) {
+            // TODO: probably want a utility function (or several!) to handle dealing with tricks!
             // This is the end of the trick
             // Move all cards to "cardswon" of the given player
             $best_value_player_id = self::activeNextPlayer(); // TODO figure out winner of trick
+            // TODO: cards will be split and distributed according to logic - will be moveCards, used on filtered subsets
             $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
             // Notify
             // Note: we use 2 notifications here in order we can pause the display during the first notification
