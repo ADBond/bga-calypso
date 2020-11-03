@@ -56,11 +56,11 @@ function (dojo, declare) {
             // Setting up player boards
             for( var player_id in gamedatas.players )
             {
-                let player = gamedatas.players[player_id];
+                var player = gamedatas.players[player_id];
                          
                 // TODO: Setting up players boards if needed
-                let player_trump = player["trump_suit"];
-                let trump_lookup = {
+                var player_trump = player["trump_suit"];
+                var trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
                 // Not sure if I need stuff to be jquery?? but can't hurt for this little bit (flw)
@@ -76,13 +76,13 @@ function (dojo, declare) {
             // TODO: this whole bit may need some thinking about for quad-deck:
             this.playerHand.image_items_per_row = 13; // 13 images per row
             // Create cards types:
-            let num_decks = 4;  // this will be four later, but let's not go to quickly
+            var num_decks = 4;  // this will be four later, but let's not go to quickly
             for (var color = 1; color <= 4; color++) {
                 for (var value = 2; value <= 14; value++) {
                     for (var deck = 1; deck <= num_decks; deck++){
                         // Build card type id
-                        let card_type_id = this.getCardUniqueId(color, value, deck);
-                        let card_type = this.getCardUniqueType(color, value);
+                        var card_type_id = this.getCardUniqueId(color, value, deck);
+                        var card_type = this.getCardUniqueType(color, value);
                         // args are id, weight (for hand-sorting), img url, and img position
                         // Not sure for the moment if it is important for ids to be distinct here,
                         // but a sensible default answer seems to be 'yes'
