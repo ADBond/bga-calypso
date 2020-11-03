@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `card` (
 
 -- don't mess around with changing this til I know what I'm doing
 -- add info about first player
-ALTER TABLE `player` ADD `player_first` BOOLEAN NOT NULL DEFAULT '0';
+-- ALTER TABLE `player` ADD `player_first` BOOLEAN NOT NULL DEFAULT '0';
 -- personal trump suit - default value indicates it has not been set yet.
 ALTER TABLE `player` ADD `trump_suit` varchar(16) NOT NULL DEFAULT '0';
 -- how many completed calypsos so far?
