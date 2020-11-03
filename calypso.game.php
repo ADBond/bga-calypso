@@ -323,10 +323,14 @@ class Calypso extends Table
             // if they follow suit:
             if ( $currentCard['type'] == self::getGameStateValue( 'trickColor' ) ){
                 // if trump lead then this ain't a winner, so do nothing
-                // if trump was lead, check if rank is higher than best, and set as winner only if it is
-                if( self::getGameStateValue( 'trumpLead' ) == 0 ){
-                    if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' ) ){
-                        self::setWinner( $player_id, $currentCard );
+                // if trump was not lead:
+                // check if trump is winning, and if not, check if this card is higher
+                // set as winner only if it is
+                if ( self::getGameStateValue( 'trumpLead' ) == 0 ){
+                    if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
+                        if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' ) ){
+                            self::setWinner( $player_id, $currentCard );
+                        }
                     }
                 }
             } else { // they don't follow suit
@@ -334,7 +338,7 @@ class Calypso extends Table
                 // if they do
                 if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
-                    if( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
+                    if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
                         self::setWinner( $player_id, $currentCard );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else { // if trumpPlayed - check if we're higher
@@ -405,6 +409,7 @@ class Calypso extends Table
     */
     function stNewRound() {
         // Take back all cards (from any location => null) to deck
+        // Create deck, shuffle it and give 13 initial cards
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
         $this->gamestate->nextState("");
@@ -412,7 +417,6 @@ class Calypso extends Table
 
     function stNewHand() {
         // Deal 13 cards to each players
-        // Create deck, shuffle it and give 13 initial cards
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);

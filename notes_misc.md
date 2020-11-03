@@ -33,3 +33,17 @@ Might be nice to refactor so the code is more readable and these values are hidd
 2. Hearts
 3. Clubs
 4. Diamonds
+
+### bugs
+
+Logic error here:
+
+```
+AndyB3 wins the trick
+AndyB3 [heart] plays 9 heart
+AndyB1 [club] plays 7 club
+AndyB0 [spade] plays 2 club
+AndyB2 [diamond] plays K heart
+```
+
+Should be fixed now, but worth trying to recreate to check
