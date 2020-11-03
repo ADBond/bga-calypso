@@ -41,6 +41,11 @@ class Calypso extends Table
                          "trickColor" => 11,
                          "currentTrickWinner" => 12,
                          "trumpLead" => 13,
+                         "trumpPlayed" => 14,
+
+                         "bestCardSuit" => 15,
+                         "bestCardRank" => 16,
+
                          // Probably not:
                          // completed calypsos? or in db? or is scoring separate?
                          // Mappings of suits to players, or is that in db?
@@ -99,7 +104,7 @@ class Calypso extends Table
         $num_decks = 4;  // will be 4 - need to change here and in js
         $cards = array ();
         foreach ( $this->colors as $color_id => $color ) {
-            // spade, heart, diamond, club
+            // spade, heart, club, diamond
             for ($value = 2; $value <= 14; $value ++) {
                 //  2, 3, 4, ... K, A
                 $cards [] = array ('type' => $color_id, 'type_arg' => $value, 'nbr' => $num_decks );
@@ -230,8 +235,9 @@ class Calypso extends Table
     }
 
     function getPlayerSuit($player_id) {
-        $sql = "SELECT trump_suit FROM player WHERE player_id=".$player_id.";";
-        return self::DbQuery( $sql );
+        $sql = "SELECT player_id, trump_suit FROM player WHERE player_id=".$player_id.";";
+        $query_result = self::getCollectionFromDB( $sql, true );
+        return $query_result[$player_id];
     }
 
     function trickWinner($cards_played) {
@@ -244,14 +250,13 @@ class Calypso extends Table
         $cards_played = $this->cards->getCardsInLocation( 'cardsontable' );
 
         // Move all cards to "cardswon" of the given player
-        $best_value_player_id = self::activeNextPlayer(); // TODO figure out winner of trick
+        $best_value_player_id = self::getGameStateValue( 'currentTrickWinner' ); #self::activeNextPlayer(); // TODO figure out winner of trick
         // TODO: cards will be split and distributed according to logic - will be moveCards, used on filtered subsets
         $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
 
         // reset current trick
         self::initialiseTrick();
 
-        // TODO: reset trump lead and winner
         // Notify
         // Note: we use 2 notifications here in order we can pause the display during the first notification
         //  before we move all cards to the winner (during the second)
@@ -279,6 +284,17 @@ class Calypso extends Table
         self::setGameStateInitialValue( 'currentTrickWinner', 0 );
         // Trump has not been lead yet
         self::setGameStateInitialValue( 'trumpLead', 0 );
+        // and no-one has trumped in yet
+        self::setGameStateInitialValue( 'trumpPlayed', 0 );
+        // no winning card currently
+        self::setGameStateInitialValue( 'bestCardSuit', 0 );
+        self::setGameStateInitialValue( 'bestCardRank', 0 );
+    }
+
+    function setWinner( $best_player_id, $best_card ){
+        self::setGameStateValue( 'currentTrickWinner', $best_player_id );
+        self::setGameStateValue( 'bestCardSuit', $best_card['type'] );
+        self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
     }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -296,27 +312,60 @@ class Calypso extends Table
         // AB: TODO: check for revokes
         $currentCard = $this->cards->getCard($card_id);
         
-        $currentTrickColor = self::getGameStateValue( 'trickColor' ) ;
+        $currentTrickColor = self::getGameStateValue( 'trickColor' );
         // case of the first card of the trick:
         if( $currentTrickColor == 0 ) {
             self::setGameStateValue( 'trickColor', $currentCard['type'] );
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
-            } else {  // TODO: this _should_ be irrelevant, but...
+            } else {  // TODO: this _should_ be irrelevant, but can't hurt (much)
                 self::setGameStateValue( 'trumpLead', 0 );
             }
-            self::setGameStateValue( 'currentTrickWinner', $player_id );
+            self::setWinner( $player_id, $currentCard );
         } else {
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
+            // if they follow suit:
+            if ( $currentCard['type'] == self::getGameStateValue( 'trickColor' ) ){
+                // if trump lead then this ain't a winner, so do nothing
+                // if trump was lead, check if rank is higher than best, and set as winner only if it is
+                if( self::getGameStateValue( 'trumpLead' ) == 0 ){
+                    if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' ) ){
+                        self::setWinner( $player_id, $currentCard );
+                    }
+                }
+            } else { // they don't follow suit
+                // if they don't play their trump don't worry - it's a loser
+                // if they do
+                if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
+                    // if trump not played yet then great we're winning, and set it
+                    if( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
+                        self::setWinner( $player_id, $currentCard );
+                        self::setGameStateValue( 'trumpPlayed', 1 );
+                    } else { // if trumpPlayed - check if we're higher
+                        if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
+                            self::setWinner( $player_id, $currentCard );
+                        }
+                    }
+                }
+            }
         }
         // And notify
-        self::notifyAllPlayers('playCard', clienttranslate('${player_name} plays ${value_displayed} ${color_displayed}'), array (
+        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
                 'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
                 'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
                 'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
-                'color_displayed' => $this->colors [$currentCard ['type']] ['name'] ));
+                'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
+                'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
+             ));
+        self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
+        'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+        'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
+        'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
+        'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
+        'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
+        ));
         // Next player
         $this->gamestate->nextState('playCard');
     }
