@@ -250,12 +250,12 @@ class Calypso extends Table
         $cards_played = $this->cards->getCardsInLocation( 'cardsontable' );
 
         // Move all cards to "cardswon" of the given player
-        $best_value_player_id = self::getGameStateValue( 'currentTrickWinner' ); #self::activeNextPlayer(); // TODO figure out winner of trick
+        $best_value_player_id = self::getGameStateValue( 'currentTrickWinner' );
         // TODO: cards will be split and distributed according to logic - will be moveCards, used on filtered subsets
         $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
 
-        // reset current trick
-        self::initialiseTrick();
+        // // reset current trick
+        // self::initialiseTrick();
 
         // Notify
         // Note: we use 2 notifications here in order we can pause the display during the first notification
@@ -265,16 +265,10 @@ class Calypso extends Table
             'player_id' => $best_value_player_id,
             'player_name' => $players[ $best_value_player_id ]['player_name']  // TODO: shouldn't this be special access method?
         ) );
+        $this->gamestate->changeActivePlayer( $best_value_player_id );
         self::notifyAllPlayers( 'giveAllCardsToPlayer','', array(
             'player_id' => $best_value_player_id
         ) );
-        if ($this->cards->countCardInLocation('hand') == 0) {
-            // End of the hand
-            $this->gamestate->nextState("endHand");
-        } else {
-            // End of the trick
-            $this->gamestate->nextState("nextTrick");
-        }
     }
 
     function initialiseTrick(){ 
@@ -359,13 +353,13 @@ class Calypso extends Table
                 'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
                 'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
              ));
-        self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
-        'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
-        'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
-        'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
-        'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
-        'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
-        ));
+        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
+        // 'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+        // 'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
+        // 'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
+        // 'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
+        // 'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
+        // ));
         // Next player
         $this->gamestate->nextState('playCard');
     }
@@ -429,10 +423,8 @@ class Calypso extends Table
     }
 
     function stNewTrick() {
-        // TODO AB: next okayer
         // New trick: active the player who wins the last trick, or the left of dealer
-        // Reset trick color to 0 (= no color)
-        self::setGameStateInitialValue('trickColor', 0);
+        self::initialiseTrick();
         $this->gamestate->nextState();
     }
 
@@ -441,6 +433,13 @@ class Calypso extends Table
         if ($this->cards->countCardInLocation('cardsontable') == 4) {
             // This is the end of the trick
             $this->processCompletedTrick();
+            if ($this->cards->countCardInLocation('hand') == 0) {
+                // End of the hand
+                $this->gamestate->nextState("endHand");
+            } else {
+                // End of the trick
+                $this->gamestate->nextState("nextTrick");
+            }
         } else {
             // Standard case (not the end of the trick)
             // => just active the next player
