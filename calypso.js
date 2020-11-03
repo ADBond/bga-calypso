@@ -61,7 +61,7 @@ function (dojo, declare) {
                 // TODO: Setting up players boards if needed
                 let player_trump = player["trump_suit"];
                 let trump_lookup = {
-                    1: "hearts", 2: "spades", 3: "clubs", 4: "diamonds"
+                    1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
                 // Not sure if I need stuff to be jquery?? but can't hurt for this little bit (flw)
                 document.getElementById("trump-" + player_id).textContent = trump_lookup[player_trump];

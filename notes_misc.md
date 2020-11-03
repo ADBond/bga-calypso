@@ -29,7 +29,7 @@ and there's nothing in this game that warrants using my own system.
 
 Might be nice to refactor so the code is more readable and these values are hidden, but that's not a 'now' job.
 
-1. Hearts
-2. Spades
+1. Spades
+2. Hearts
 3. Clubs
 4. Diamonds
