@@ -403,12 +403,14 @@ class Calypso extends Table
         Here, you can create methods defined as "game state actions" (see "action" property in states.inc.php).
         The action method of state X is called everytime the current game state is set to X.
     */
-    function stNewHand() {
-        // AB TODO: I will only move to deck & shuffle at end of each _round_ rather than hand
-        // leave now as a reminder, as so much other logic hasn't been implemented yet anyway
+    function stNewRound() {
         // Take back all cards (from any location => null) to deck
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
+        $this->gamestate->nextState("");
+    }
+
+    function stNewHand() {
         // Deal 13 cards to each players
         // Create deck, shuffle it and give 13 initial cards
         $players = self::loadPlayersBasicInfos();
@@ -450,7 +452,15 @@ class Calypso extends Table
     }
 
     function stEndHand() {
+        // TODO: here is the place to check for end of round
+        // if so go to "endRound" transition
         $this->gamestate->nextState("nextHand");
+    }
+
+    function stEndRound() {
+        // score it
+        // new round if there are more to do "nextRound"
+        // if no more rounds then "endGame
     }
 
     // Temp note to recall:
@@ -458,17 +468,6 @@ class Calypso extends Table
     // Also make sure its ONLY one state transition, if you accidentally fall though after state transition
     // and do another one it will be a real mess and head scratching for long time. 
     /*
-    
-    Example for game state "MyGameState":
-
-    function stMyGameState()
-    {
-        // Do some stuff ...
-        
-        // (very often) go to another gamestate
-        $this->gamestate->nextState( 'some_gamestate_transition' );
-    }    
-    */
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Zombie
