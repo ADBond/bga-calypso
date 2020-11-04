@@ -47,3 +47,5 @@ AndyB2 [diamond] plays K heart
 ```
 
 Should be fixed now, but worth trying to recreate to check
+
+Something goes wrong at the end of the hand, related to stock (js) - fine on refresh though

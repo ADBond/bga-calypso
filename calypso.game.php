@@ -408,14 +408,25 @@ class Calypso extends Table
         The action method of state X is called everytime the current game state is set to X.
     */
     function stNewRound() {
+        self::notifyAllPlayers(
+            "update",
+            clienttranslate("A new round of hands is starting"),  // TODO: number of round
+            array()
+        );
         // Take back all cards (from any location => null) to deck
         // Create deck, shuffle it and give 13 initial cards
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
+        // AB TODO: num calypsos to zero, update dealer, etc
         $this->gamestate->nextState("");
     }
 
     function stNewHand() {
+        self::notifyAllPlayers(
+            "update",
+            clienttranslate("A new hand is starting"),  // TODO: number of hand
+            array()
+        );
         // Deal 13 cards to each players
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
@@ -423,8 +434,6 @@ class Calypso extends Table
             // Notify player about his cards
             self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
         }
-        //self::setGameStateValue('alreadyPlayedHearts', 0);
-        // AB TODO: more unorganised notes - in the to-come stNewRound function will want to set num. calypsos to 0 etc
         $this->gamestate->nextState("");
     }
 
@@ -456,12 +465,22 @@ class Calypso extends Table
     }
 
     function stEndHand() {
+        self::notifyAllPlayers(
+            "update",
+            clienttranslate("Hand over!"),  // TODO: number of hand
+            array()
+        );
         // TODO: here is the place to check for end of round
         // if so go to "endRound" transition
         $this->gamestate->nextState("nextHand");
     }
 
     function stEndRound() {
+        self::notifyAllPlayers(
+            "update",
+            clienttranslate("Round over!"),  // TODO: number of round
+            array()
+        );
         // score it
         // new round if there are more to do "nextRound"
         // if no more rounds then "endGame
