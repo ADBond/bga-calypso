@@ -271,6 +271,10 @@ class Calypso extends Table
         ) );
     }
 
+    function debugMessage( $message, $array=array() ){
+        self::notifyAllPlayers( 'message', $message, $array );
+    }
+
     function initialiseTrick(){ 
         // Set current trick color to zero (= no trick color)
         self::setGameStateInitialValue( 'trickColor', 0 );
@@ -296,21 +300,57 @@ class Calypso extends Table
         // check that player leads or follows suit OR has no cards of lead suit
         // shortcut for debugging:
         //return true;
+        global $trick_suit;  // this makes me think that there is maybe a better way to do this??
         $trick_suit = self::getGameStateValue( 'trickColor' );
+        self::debugMessage("trick suit is ${trick_suit}", array( 'trick_suit' => $trick_suit ));
         if( $trick_suit == 0){  // i.e. first card of trick
+            self::debugMessage("first card played" );
             return true;
         }
         if( $card['type'] == $trick_suit ){
+            self::debugMessage("${player_id} followed suit", array( 'player_id' => $player_id));
             return true;
         }
         $hand = $this->cards->getCardsInLocation( 'hand', $player_id );
+        
+        $ranks = array_map(function($x) {return $x['type_arg'];}, $hand);
+        $str_suit = implode(",", $ranks);
+        $suits = array_map(function($x) {return $x['type'];}, $hand);
+        $str_st = implode(",", $suits);
+        self::debugMessage(
+            "card ranks: ${str_suit}\nand suits: ${str_st}",
+            array( 'player_id' => $player_id, 'str_suit' => $str_suit, 'str_st' => $str_st )
+        );
         $suit_cards = array_filter( $hand, function($hand_card){
             global $trick_suit;
             return $hand_card['type'] == $trick_suit;
         });
+        $suit_cards_2 = array_map(function($x) {
+            global $trick_suit;
+            $tmp = $GLOBALS['trick_suit'];
+            self::debugMessage(
+                "trick suit is ${trick_suit}, or ${tmp}", array( 'trick_suit' => $trick_suit, 'tmp' => $tmp)
+            );
+            return $x['type'] === $trick_suit ? $x : array( "type_arg" => "X", "type" => "Y");
+        }, $hand);
+        $ranks = array_map(function($x) {return $x['type_arg'];}, $suit_cards_2);
+        $str_suit = implode(",", $ranks);
+        $suits = array_map(function($x) {return $x['type'];}, $suit_cards_2);
+        $str_st = implode(",", $suits);
+        self::debugMessage(
+            "card ranks: ${str_suit}\nand suits: ${str_st}",
+            array( 'player_id' => $player_id, 'str_suit' => $str_suit, 'str_st' => $str_st )
+        );
         if( empty($suit_cards) ){
+            $ranks = array_map(function($x) {return $x['type_arg'];}, $suit_cards);
+            $str_suit = implode(",", $ranks);
+            self::debugMessage(
+                "${player_id} didn't follow suit, but couldn't - they had ${str_suit}",
+                array( 'player_id' => $player_id, 'str_suit' => $str_suit )
+            );
             return true;
         }
+        self::debugMessage("${player_id} was naughty", array( 'player_id' => $player_id));
         return false;
     }
 

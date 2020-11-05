@@ -328,6 +328,8 @@ function (dojo, declare) {
         setupNotifications : function() {
             console.log('notifications subscriptions setup');
 
+            dojo.subscribe('debug', this, "notif_debug");
+
             dojo.subscribe('newHand', this, "notif_newHand");
             dojo.subscribe('playCard', this, "notif_playCard");
 
@@ -380,6 +382,10 @@ function (dojo, declare) {
         },
         // TODO: from this point and below, you can write your game notifications handling methods
         
+        notif_debug : function(notif) {
+            console.log("debug message received ;)")
+            // dummy
+        }
         /*
         Example:
         
