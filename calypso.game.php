@@ -291,6 +291,29 @@ class Calypso extends Table
         self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
     }
 
+    // TODO: this does not work! why?
+    function validPlay( $player_id, $card ){
+        // check that player leads or follows suit OR has no cards of lead suit
+        // shortcut for debugging:
+        //return true;
+        $trick_suit = self::getGameStateValue( 'trickColor' );
+        if( $trick_suit == 0){  // i.e. first card of trick
+            return true;
+        }
+        if( $card['type'] == $trick_suit ){
+            return true;
+        }
+        $hand = $this->cards->getCardsInLocation( 'hand', $player_id );
+        $suit_cards = array_filter( $hand, function($hand_card){
+            global $trick_suit;
+            return $hand_card['type'] == $trick_suit;
+        });
+        if( empty($suit_cards) ){
+            return true;
+        }
+        return false;
+    }
+
 //////////////////////////////////////////////////////////////////////////////
 //////////// Player actions
 //////////// 
@@ -302,9 +325,12 @@ class Calypso extends Table
     function playCard($card_id) {
         self::checkAction("playCard");
         $player_id = self::getActivePlayerId();
-        $this->cards->moveCard($card_id, 'cardsontable', $player_id);
         // AB: TODO: check for revokes
         $currentCard = $this->cards->getCard($card_id);
+        if ( !self::validPlay($player_id, $currentCard) ){
+            throw new BgaUserException( self::_("You must follow suit if able to!") );
+        }
+        $this->cards->moveCard($card_id, 'cardsontable', $player_id);
         
         $currentTrickColor = self::getGameStateValue( 'trickColor' );
         // case of the first card of the trick:
