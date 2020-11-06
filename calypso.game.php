@@ -194,6 +194,8 @@ class Calypso extends Table
 
         // Cards played on the table
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
+        // Cards played in calypsos
+        $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'cardsincalypsos' );
 
         return $result;
     }

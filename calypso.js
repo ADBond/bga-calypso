@@ -110,6 +110,15 @@ function (dojo, declare) {
                 this.playCardOnTable(player_id, color, value, card.id);
             }
 
+            // Cards in calypsos
+            for (i in this.gamedatas.cardsincalypsos) {
+                var card = this.gamedatas.cardsincalypsos[i];
+                var color = card.type;
+                var value = card.type_arg;
+                var player_id = card.location_arg;
+                // this.playCardOnTable(player_id, color, value, card.id);
+            }
+
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 

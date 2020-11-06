@@ -25,9 +25,6 @@
     Please REMOVE this comment before publishing your game on BGA
 -->
 
-
-Calypso game interface. Nothing here yet.
-
 <!-- Chuck in the business from tutorial for now -->
 
 <div id="playertables">
@@ -39,6 +36,13 @@ Calypso game interface. Nothing here yet.
             <div class="personal-trump" id="trump-{PLAYER_ID}"></div>
         </div>
         <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
+        </div>
+    </div>
+    <div class="calypso whiteblock playercalypsocontainer_{DIR}">
+        <div class="playertablename" style="color:#{PLAYER_COLOR}">
+            {PLAYER_NAME}
+        </div>
+        <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
         </div>
     </div>
     <!-- END player -->
