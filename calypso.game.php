@@ -88,7 +88,7 @@ class Calypso extends Table
             $color = array_shift( $default_colors );
             $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
         }
-        $sql .= implode( $values, ',' );
+        $sql .= implode( ',', $values);
         self::DbQuery( $sql );
         self::reattributeColorsBasedOnPreferences( $players, $gameinfos['player_colors'] );
         self::reloadPlayersBasicInfos();
@@ -119,7 +119,7 @@ class Calypso extends Table
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
-        } 
+        }
 
         // Init game statistics
         // (note: statistics used in this file must be defined in your stats.inc.php file)
@@ -150,7 +150,7 @@ class Calypso extends Table
             $trump_suit = $player_suits[$player_number];
             $values[] = "WHEN ".$player_number." THEN ".$trump_suit;
         }
-        $sql .= implode( $values, ' ');
+        $sql .= implode( ' ', $values);
         $sql .= " ELSE 0 END;";
         self::DbQuery( $sql );
         self::reloadPlayersBasicInfos();
@@ -240,6 +240,12 @@ class Calypso extends Table
         return $query_result[$player_id];
     }
 
+    function getPlayerFromSuit($suit){
+        $sql = "SELECT trump_suit, player_id FROM player WHERE trump_suit=".$suit.";";
+        $query_result = self::getCollectionFromDB( $sql, true );
+        return $query_result[$suit];
+    }
+
     function trickWinner($cards_played) {
         return true;  // temporary bullshit
     }
@@ -252,6 +258,16 @@ class Calypso extends Table
         // Move all cards to "cardswon" of the given player
         $best_value_player_id = self::getGameStateValue( 'currentTrickWinner' );
         // TODO: cards will be split and distributed according to logic - will be moveCards, used on filtered subsets
+
+        // card gathering logic:
+        // get all cards on table (above)
+        self::sortWonCards($cards_played, $best_value_player_id);
+        // -> check if any calypsos are completed, and if so process (remove and update db)
+        self::processCalypsos();
+        // now check if remaining cards can be added to calypsos, if not discard
+        $remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
+        self::sortWonCards($remaining_cards, $best_value_player_id);
+
         $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
 
         // // reset current trick
@@ -295,7 +311,6 @@ class Calypso extends Table
         self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
     }
 
-    // TODO: this does not work! why?
     function validPlay( $player_id, $card ){
         // check that player leads or follows suit OR has no cards of lead suit
         // shortcut for debugging:
@@ -319,6 +334,77 @@ class Calypso extends Table
         }
         return false;
     }
+
+    function sortWonCards($cards_played, $winner_player_id){
+        $player_suit = self::getPlayerSuit($winner_player_id);
+        $partner_suit = self::getPartnerSuit($player_suit);
+        $partner_id = self::getPlayerFromSuit($partner_suit);
+
+        $player_calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $winner_player_id);
+        $player_ranks_so_far = array_filter( $player_calypso_so_far, function($calypso_card){
+            return $calypso_card['type_arg'];
+        });
+        $partner_calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $partner_id);
+        $partner_ranks_so_far = array_filter( $partner_calypso_so_far, function($calypso_card){
+            return $calypso_card['type_arg'];
+        });
+        foreach ($cards_played as $card){
+            // take cards from our (me + part) suits that aren't already in calypsos in progress, and add them
+            // if they are already there, wait - that will come later
+            if ($card['type'] == $player_suit){
+                if (!in_array($card['type_arg'], $player_ranks_so_far)){
+                    $this->cards->moveCard( $card["id"], 'calypso', $winner_player_id);
+                }
+            } elseif ($card['type'] == $partner_suit){
+                if (!in_array($card['type_arg'], $partner_ranks_so_far)){
+                    $this->cards->moveCard( $card["id"], 'calypso', $partner_id);
+                }
+            }
+            else {
+                // give opponents cards to player who won trick - partners can have separate piles
+                $this->cards->moveCard( $card["id"], 'woncards', $winner_player_id);
+            }
+        }
+    }
+
+    function cardInCalypso($card, $player_id){
+        $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
+        $ranks_so_far = array_filter( $calypso_so_far, function($calypso_card){
+            return $calypso_card['type_arg'];
+        });
+        return in_array($card['type_arg'], $ranks_so_far);
+    }
+
+    function processCalypsos(){
+
+        $players = self::loadPlayersBasicInfos();
+        foreach ( $players as $player_id => $player ) {
+            $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
+            $ranks_so_far = array_filter( $calypso_so_far, function($calypso_card){
+                return $calypso_card['type_arg'];
+            });
+            $calypso_string = implode( ",", $ranks_so_far );
+            self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
+                'player_id' => $player_id,
+                'player_name' => $players[ $player_id ]['player_name'],
+                'calypso_string' => $calypso_string,
+            ) );
+            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+                $this->cards->moveAllCardsInLocation( 'calypso', 'completed_calypsos', $player_id, $player_id );
+                // AB TODO: updated db when I've updated the model to allow the field
+            }
+            $ranks_so_far = array_filter( $calypso_so_far, function($calypso_card){
+                return $calypso_card['type_arg'];
+            });
+            $calypso_string = implode( ",", $ranks_so_far );
+            self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
+                'player_id' => $player_id,
+                'player_name' => $players[ $player_id ]['player_name'],
+                'calypso_string' => $calypso_string,
+            ) );
+        }
+    }
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Player actions
