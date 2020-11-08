@@ -335,29 +335,29 @@ class Calypso extends Table
         return false;
     }
 
+    function getCurrentRanks($player_id){
+        $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
+        return array_map(
+            function($calypso_card){return $calypso_card['type_arg'];},
+            $calypso_so_far
+        );
+    }
+
     function sortWonCards($cards_played, $winner_player_id){
         $player_suit = self::getPlayerSuit($winner_player_id);
         $partner_suit = self::getPartnerSuit($player_suit);
         $partner_id = self::getPlayerFromSuit($partner_suit);
 
-        $player_calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $winner_player_id);
-        $player_ranks_so_far = array_map(
-            function($calypso_card){return $calypso_card['type_arg'];},
-            $player_calypso_so_far
-        );
-        $partner_calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $partner_id);
-        $partner_ranks_so_far = array_map(
-            function($calypso_card){return $calypso_card['type_arg'];},
-            $partner_calypso_so_far
-        );
         foreach ($cards_played as $card){
             // take cards from our (me + part) suits that aren't already in calypsos in progress, and add them
             // if they are already there, wait - that will come later
             if ($card['type'] == $player_suit){
+                $player_ranks_so_far = self::getCurrentRanks($winner_player_id);
                 if (!in_array($card['type_arg'], $player_ranks_so_far)){
                     $this->cards->moveCard( $card["id"], 'calypso', $winner_player_id);
                 }
             } elseif ($card['type'] == $partner_suit){
+                $partner_ranks_so_far = self::getCurrentRanks($partner_id);
                 if (!in_array($card['type_arg'], $partner_ranks_so_far)){
                     $this->cards->moveCard( $card["id"], 'calypso', $partner_id);
                 }
