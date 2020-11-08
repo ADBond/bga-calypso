@@ -341,13 +341,15 @@ class Calypso extends Table
         $partner_id = self::getPlayerFromSuit($partner_suit);
 
         $player_calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $winner_player_id);
-        $player_ranks_so_far = array_filter( $player_calypso_so_far, function($calypso_card){
-            return $calypso_card['type_arg'];
-        });
+        $player_ranks_so_far = array_map(
+            function($calypso_card){return $calypso_card['type_arg'];},
+            $player_calypso_so_far
+        );
         $partner_calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $partner_id);
-        $partner_ranks_so_far = array_filter( $partner_calypso_so_far, function($calypso_card){
-            return $calypso_card['type_arg'];
-        });
+        $partner_ranks_so_far = array_map(
+            function($calypso_card){return $calypso_card['type_arg'];},
+            $partner_calypso_so_far
+        );
         foreach ($cards_played as $card){
             // take cards from our (me + part) suits that aren't already in calypsos in progress, and add them
             // if they are already there, wait - that will come later
@@ -369,9 +371,10 @@ class Calypso extends Table
 
     function cardInCalypso($card, $player_id){
         $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
-        $ranks_so_far = array_filter( $calypso_so_far, function($calypso_card){
-            return $calypso_card['type_arg'];
-        });
+        $ranks_so_far = array_map(
+            function($calypso_card){return $calypso_card['type_arg'];},
+            $calypso_so_far
+        );
         return in_array($card['type_arg'], $ranks_so_far);
     }
 
@@ -380,9 +383,10 @@ class Calypso extends Table
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
-            $ranks_so_far = array_filter( $calypso_so_far, function($calypso_card){
-                return $calypso_card['type_arg'];
-            });
+            $ranks_so_far = array_map(
+                function($calypso_card){return $calypso_card['type_arg'];},
+                $calypso_so_far
+            );
             $calypso_string = implode( ",", $ranks_so_far );
             self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
                 'player_id' => $player_id,
@@ -393,9 +397,10 @@ class Calypso extends Table
                 $this->cards->moveAllCardsInLocation( 'calypso', 'completed_calypsos', $player_id, $player_id );
                 // AB TODO: updated db when I've updated the model to allow the field
             }
-            $ranks_so_far = array_filter( $calypso_so_far, function($calypso_card){
-                return $calypso_card['type_arg'];
-            });
+            $ranks_so_far = array_map(
+                function($calypso_card){return $calypso_card['type_arg'];},
+                $calypso_so_far
+            );
             $calypso_string = implode( ",", $ranks_so_far );
             self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
                 'player_id' => $player_id,
