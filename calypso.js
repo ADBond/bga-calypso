@@ -63,9 +63,7 @@ function (dojo, declare) {
                 var trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
-                // Not sure if I need stuff to be jquery?? but can't hurt for this little bit (flw)
-                document.getElementById("trump-" + player_id).textContent = trump_lookup[player_trump];
-                //$('#trump_' + player_id).text(trump_lookup[player_trump]);
+                $("trump-" + player_id).textContent = trump_lookup[player_trump];
             }
             
             // TODO: Set up your game interface here, according to "gamedatas"
@@ -116,7 +114,7 @@ function (dojo, declare) {
                 var color = card.type;
                 var value = card.type_arg;
                 var player_id = card.location_arg;
-                // this.playCardOnTable(player_id, color, value, card.id);
+                this.placeCardInCalypso(player_id, color, value, card.id);
             }
 
             // Setup game notifications to handle (see "setupNotifications" method below)
@@ -229,10 +227,37 @@ function (dojo, declare) {
         playCardOnTable : function(player_id, color, value, card_id) {
             // player_id => direction
             dojo.place(this.format_block('jstpl_cardontable', {
+                // these values relate to getting the right card from sprite
                 x : this.cardwidth * (value - 2),
                 y : this.cardheight * (color - 1),
                 player_id : player_id
             }), 'playertablecard_' + player_id);
+
+            if (player_id != this.player_id) {
+                // Some opponent played a card
+                // Move card from player panel
+                this.placeOnObject('cardontable_' + player_id, 'overall_player_board_' + player_id);
+            } else {
+                // You played a card. If it exists in your hand, move card from there and remove
+                // corresponding item
+
+                if ($('myhand_item_' + card_id)) {
+                    this.placeOnObject('cardontable_' + player_id, 'myhand_item_' + card_id);
+                    this.playerHand.removeFromStockById(card_id);
+                }
+            }
+
+            // In any case: move it to its final destination
+            this.slideToObject('cardontable_' + player_id, 'playertablecard_' + player_id).play();
+        },
+
+        placeCardInCalypso : function(player_id, color, value, card_id) {
+            // player_id => direction
+            dojo.place(this.format_block('jstpl_cardincalypso', {
+                x : this.cardwidth * (value - 2),
+                y : this.cardheight * (color - 1),
+                player_id : player_id
+            }), 'playercalypso_' + player_id);
 
             if (player_id != this.player_id) {
                 // Some opponent played a card
@@ -280,8 +305,6 @@ function (dojo, declare) {
                     });
 
                     this.playerHand.unselectAll();
-                } else if (this.checkAction('giveCards')) {
-                    // Can give cards => let the player select some cards
                 } else {
                     this.playerHand.unselectAll();
                 }
@@ -377,6 +400,7 @@ function (dojo, declare) {
 
         notif_trickWin : function(notif) {
             // We do nothing here (just wait in order players can view the 4 cards played before they're gone.
+            // Actually,
         },
         notif_giveAllCardsToPlayer : function(notif) {
             // Move all cards on table to given table, then destroy them

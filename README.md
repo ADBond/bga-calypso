@@ -6,7 +6,7 @@
 * ~~implement trick-play rules~~
   * ~~implement trick-winner~~
   * ~~enforce suit-following (maybe make as switch for devving)~~
-* collecting calypsos
+* ~~collecting calypsos~~ (sort-of, maybe?? need to display in-progress to check better)
 * scoring
 * display in-progress calypsos (and completed? won discards?)
 * track dealer etc

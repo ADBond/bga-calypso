@@ -45,8 +45,24 @@
         $directions = array( 'S', 'W', 'N', 'E' );
         
         // this will inflate our player block with actual players data
+        
+        $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
         $this->page->begin_block($template, "player");
         foreach ( $players as $player_id => $info ) {
+                // TODO: this e.g. needs to ba adapted
+                // need to remember what the shift is doing though eh?
+                // and adapt suitably, but should be quids in i reckon
+                // // Important: nested block must be reset here, otherwise the second player miniboard will
+                // //  have 8 card_place, the third will have 12 card_place, and so one...
+                // $this->page->reset_subblocks( 'card_place' ); 
+
+                // for( $i=1; $i<=4; $i++ ) {
+                // $this->page->insert_block( "card_place", array( 
+                //         'PLAYER_ID' => $player_id,
+                //         'PLACE_ID' => $i
+                //         )
+                //     );
+                // }
             $dir = array_shift($directions);
             $this->page->insert_block("player", array ("PLAYER_ID" => $player_id,
                     "PLAYER_NAME" => $players [$player_id] ['player_name'],
