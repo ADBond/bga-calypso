@@ -43,11 +43,10 @@
             {PLAYER_NAME}
         </div>
         <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
-        <-- TODO: make divs for each card in calypso - these slots are fixed! -->
-            <-- BEGIN calypsocard -->
-            <-- https://en.doc.boardgamearena.com/Game_layout:_view_and_template:_yourgamename.view.php_and_yourgamename_yourgamename.tpl -->
-                <div class="calypsocard" id="calypsocard_{PLAYER_ID}_{CARD_RANK}></div>
-            <-- END calypsocard -->
+        <!-- TODO: make divs for each card in calypso - these slots are fixed! -->
+            <!-- BEGIN calypsocard -->
+                <div class="calypsocard card-{CARD_RANK}" id="calypsocard_{PLAYER_ID}_{CARD_RANK}></div>
+            <!-- END calypsocard -->
         </div>
     </div>
     <!-- END player -->
@@ -67,7 +66,7 @@
 
 var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
-var jstpl_cardincalypso = '<div class="cardontable" id="cardincalypso_${player_id}_{card_id}" style="background-position:-${x}px -${y}px">\
+var jstpl_cardincalypso = '<div class="cardontable" id="cardincalypso_${player_id}_${card_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
 /*
 // Example:
