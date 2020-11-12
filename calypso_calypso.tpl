@@ -38,7 +38,7 @@
         <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
         </div>
     </div>
-    <div class="calypso whiteblock playercalypsocontainer_{DIR}">
+    <div class="calypso whiteblock calypso_{DIR}">
         <div class="playertablename" style="color:#{PLAYER_COLOR}">
             {PLAYER_NAME}
         </div>
@@ -49,8 +49,8 @@
         </div>
     </div>
     <!-- END player -->
-
 </div>
+
 
 <div id="myhand_wrap" class="whiteblock">
     <h3>{MY_HAND}</h3>

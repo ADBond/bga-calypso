@@ -114,25 +114,22 @@
     text-align: center;
 }
 
+/* Temporary positioning for now */
 .calypso_N {
-    left: 50%;
+    left: 85%;
     top: 0px;
-    margin-left: -90px; /* half of 180 */
-}
-.calypso_S {
-    left: 50%;
-    bottom: 0px;
-    margin-left: -90px; /* half of 180 */
-}
-.calypso_W {
-    left: 0px;
-    top: 50%;
-    margin-top: -55px; /* half of 130 */
 }
 .calypso_E {
-    right: 0px;
-    top: 50%;
-    margin-top: -55px; /* half of 130 */
+    left: 85%;
+    top: 40px;
+}
+.calypso_S {
+    left: 85%;
+    top: 80px;
+}
+.calypso_W {
+    left: 85%;
+    top: 120px;
 }
 
 .playercalypso {
