@@ -29,26 +29,30 @@
 
 <div id="playertables">
 
-    <!-- BEGIN player -->
-    <div class="playertable whiteblock playertable_{DIR}">
-        <div class="playertablename" style="color:#{PLAYER_COLOR}">
-            {PLAYER_NAME}
-            <div class="personal-trump" id="trump-{PLAYER_ID}"></div>
+    <!-- BEGIN playerhand -->
+        <div class="playertable whiteblock playertable_{DIR}">
+            <div class="playertablename" style="color:#{PLAYER_COLOR}">
+                {PLAYER_NAME}
+                <div class="personal-trump" id="trump-{PLAYER_ID}"></div>
+            </div>
+            <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
+            </div>
         </div>
-        <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
+    <!-- END playerhand -->
+</div>
+<div id="playercalypso">
+    <!-- BEGIN playercalypso -->
+        <div class="calypso whiteblock calypso_{DIR}">
+            <div class="playertablename" style="color:#{PLAYER_COLOR}">
+                {PLAYER_NAME}
+            </div>
+            <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
+                <!-- BEGIN calypsocard -->
+                    <div class="calypsocard card-{CARD_RANK}" id="calypsocard_{PLAYER_ID}_{CARD_RANK}"></div>
+                <!-- END calypsocard -->
+            </div>
         </div>
-    </div>
-    <div class="calypso whiteblock calypso_{DIR}">
-        <div class="playertablename" style="color:#{PLAYER_COLOR}">
-            {PLAYER_NAME}
-        </div>
-        <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
-            <!-- BEGIN calypsocard -->
-                <div class="calypsocard card-{CARD_RANK}" id="calypsocard_{PLAYER_ID}_{CARD_RANK}"></div>
-            <!-- END calypsocard -->
-        </div>
-    </div>
-    <!-- END player -->
+    <!-- END playercalypso -->
 </div>
 
 
