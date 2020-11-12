@@ -43,9 +43,8 @@
             {PLAYER_NAME}
         </div>
         <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
-        <!-- TODO: make divs for each card in calypso - these slots are fixed! -->
             <!-- BEGIN calypsocard -->
-                <div class="calypsocard card-{CARD_RANK}" id="calypsocard_{PLAYER_ID}_{CARD_RANK}></div>
+                <div class="calypsocard card-{CARD_RANK}" id="calypsocard_{PLAYER_ID}_{CARD_RANK}"></div>
             <!-- END calypsocard -->
         </div>
     </div>

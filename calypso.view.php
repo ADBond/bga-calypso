@@ -49,20 +49,20 @@
         $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
         $this->page->begin_block( $template, "player" );
         foreach ( $players as $player_id => $info ) {
-            // $this->page->reset_subblocks( "calyspocard" );
+            $this->page->reset_subblocks( "calyspocard" );
             $trump_suit = $this->game->getPlayerSuit($player_id);
             for ($value = 2; $value <= 14; $value ++) {
                 //  2, 3, 4, ... K, A
-                // $this->page->insert_block(
-                //     "calypsocard",
-                //     array(
-                //         "PLAYER_ID" => $player_id,
-                //         #"PLAYER_NAME" => $players [$player_id] ['player_name'],
-                //         #"PLAYER_COLOR" => $players [$player_id] ['player_color'],
-                //         #"DIR" => $dir
-                //         "CARD_RANK" => $value
-                //     )
-                // );
+                $this->page->insert_block(
+                    "calypsocard",
+                    array(
+                        "PLAYER_ID" => $player_id,
+                        #"PLAYER_NAME" => $players [$player_id] ['player_name'],
+                        #"PLAYER_COLOR" => $players [$player_id] ['player_color'],
+                        #"DIR" => $dir
+                        "CARD_RANK" => $value
+                    )
+                );
             }
                 // TODO: this e.g. needs to ba adapted
                 // need to remember what the shift is doing though eh?
