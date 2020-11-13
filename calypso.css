@@ -50,10 +50,21 @@
 
 /** Table layout **/
 
+#playarea {
+    position: relative;
+    width: 1500px;
+}
+
 #playertables {
     position: relative;
     width: 710px;
     height: 340px;
+}
+
+#playercalypso {
+    position: relative;
+    left: 1000px;
+    top: -340px;
 }
 
 .playertablename {
@@ -116,20 +127,20 @@
 
 /* Temporary positioning for now */
 .calypso_N {
-    left: 85%;
+    left: 0%;
     top: 0px;
 }
 .calypso_E {
-    left: 85%;
-    top: 40px;
+    left: 0%;
+    top: 130px;
 }
 .calypso_S {
-    left: 85%;
-    top: 80px;
+    left: 0%;
+    top: 260px;
 }
 .calypso_W {
-    left: 85%;
-    top: 120px;
+    left: 0%;
+    top: 390px;
 }
 
 .playercalypso {

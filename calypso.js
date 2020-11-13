@@ -105,15 +105,18 @@ function (dojo, declare) {
                 var color = card.type;
                 var value = card.type_arg;
                 var player_id = card.location_arg;
+                console.log("on the table has: " + color + ", " + value + ", and...");
                 this.playCardOnTable(player_id, color, value, card.id);
             }
 
             // Cards in calypsos
+            console.log("now let's lay out those sweet sweet winnings")
             for (i in this.gamedatas.cardsincalypsos) {
                 var card = this.gamedatas.cardsincalypsos[i];
                 var color = card.type;
                 var value = card.type_arg;
                 var player_id = card.location_arg;
+                console.log("calypso has: " + color + ", " + value + ", and...");
                 this.placeCardInCalypso(player_id, color, value, card.id);
             }
 
@@ -255,17 +258,18 @@ function (dojo, declare) {
             dojo.place(this.format_block('jstpl_cardincalypso', {
                 x : this.cardwidth * (value - 2),
                 y : this.cardheight * (color - 1),
-                player_id : player_id
+                player_id : player_id,
+                value: value
             }), 'calypsocard_' + player_id + "_" + value);
 
-            this.placeOnObject('cardincalypso_' + player_id + "_" + card_id, 'overall_player_board_' + player_id);
+            //this.placeOnObject('cardincalypso_' + player_id + "_" + card_id, 'overall_player_board_' + player_id);
             // if ($('myhand_item_' + card_id)) {
             //     this.placeOnObject('cardontable_' + player_id, 'myhand_item_' + card_id);
             //     this.playerHand.removeFromStockById(card_id);
             // }
 
             // In any case: move it to its final destination
-            this.slideToObject('cardincalypso_' + player_id + "_" + card_id, 'calypsocard_' + player_id + '_' + value).play();
+            this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
         ///////////////////////////////////////////////////
         //// Player's action
