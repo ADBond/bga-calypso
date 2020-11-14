@@ -54,6 +54,9 @@
             $trump_suit = $this->game->getPlayerSuit($player_id);
             for ($value = 2; $value <= 14; $value ++) {
                 //  2, 3, 4, ... K, A
+                // TODO: width should probably be set in JS as we can scale to card size there
+                // width of card is 72
+                $offset_value = ($value - 2) * 15 + 50;
                 $this->page->insert_block(
                     "calypsocard",
                     array(
@@ -61,6 +64,7 @@
                         #"PLAYER_NAME" => $players [$player_id] ['player_name'],
                         #"PLAYER_COLOR" => $players [$player_id] ['player_color'],
                         #"DIR" => $dir
+                        "OFFSET" => $offset_value,
                         "CARD_RANK" => $value
                     )
                 );

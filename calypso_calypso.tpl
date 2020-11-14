@@ -49,7 +49,10 @@
                 </div>
                 <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
                     <!-- BEGIN calypsocard -->
-                        <div class="calypsocard card-{CARD_RANK}" id="calypsocard_{PLAYER_ID}_{CARD_RANK}"></div>
+                        <div class="calypsocard card-{CARD_RANK}"
+                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}"
+                             style="margin-left:{OFFSET}px">
+                        </div>
                     <!-- END calypsocard -->
                 </div>
             </div>

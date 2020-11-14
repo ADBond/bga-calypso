@@ -116,6 +116,7 @@
     position: absolute;
     width: 72px;
     height: 96px;
+    left: 0px;
     background-image: url('img/cards.jpg'); 
 }
 
