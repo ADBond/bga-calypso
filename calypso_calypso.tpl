@@ -73,12 +73,15 @@
 
 var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
-var jstpl_cardincalypso = '<div class="cardontable" id="cardincalypso_${player_id}_${value}" style="background-position:-${x}px -${y}px">\
-                        </div>';
+var jstpl_cardincalypso = '<div class="cardincalypso" id="cardincalypso_${player_id}_${value}"\
+                          style="background-position:-${x}px -${y}px;"\
+                          >\
+                          </div>';
 /*
 // Example:
 var jstpl_some_game_item='<div class="my_game_item" id="my_game_item_${MY_ITEM_ID}"></div>';
 
+                          top: ${top}px; left: ${left}px; color: red"\
 */
 
 </script>  

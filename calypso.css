@@ -120,6 +120,13 @@
 }
 
 /*** calypsos ***/
+.cardincalypso {
+    position: absolute;
+    width: 72px;
+    height: 96px;
+    background-image: url('img/cards.jpg'); 
+}
+
 .calypso {
     position: absolute;
     text-align: center;
@@ -128,7 +135,7 @@
 .playercalypso {
     display: inline-block;
     position: relative;
-    margin-top: 5px;
+    /* margin-top: 5px; */
     /* width: 72px; */
     height: 96px;
 }

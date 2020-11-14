@@ -255,11 +255,15 @@ function (dojo, declare) {
         },
 
         placeCardInCalypso : function(player_id, color, value, card_id) {
+            let top_value = 0;
+            let left_value = 0;
             dojo.place(this.format_block('jstpl_cardincalypso', {
                 x : this.cardwidth * (value - 2),
                 y : this.cardheight * (color - 1),
                 player_id : player_id,
-                value: value
+                value: value,
+                // top: top_value,
+                // left: left_value,
             }), 'calypsocard_' + player_id + "_" + value);
 
             //this.placeOnObject('cardincalypso_' + player_id + "_" + card_id, 'overall_player_board_' + player_id);
@@ -269,7 +273,8 @@ function (dojo, declare) {
             // }
 
             // In any case: move it to its final destination
-            this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
+            // TODO: reinstate this, but it is the bit that is causing weird offsets!
+            // this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
         ///////////////////////////////////////////////////
         //// Player's action
