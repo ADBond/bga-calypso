@@ -116,7 +116,6 @@
     position: absolute;
     width: 72px;
     height: 96px;
-    left: 0px;
     background-image: url('img/cards.jpg'); 
 }
 
@@ -124,6 +123,14 @@
 .calypso {
     position: absolute;
     text-align: center;
+}
+
+.playercalypso {
+    display: inline-block;
+    position: relative;
+    margin-top: 5px;
+    /* width: 72px; */
+    height: 96px;
 }
 
 /* Temporary positioning for now */
@@ -142,12 +149,4 @@
 .calypso_W {
     left: 0%;
     top: 390px;
-}
-
-.playercalypso {
-    display: inline-block;
-    position: relative;
-    margin-top: 5px;
-    width: 72px;
-    height: 96px;
 }

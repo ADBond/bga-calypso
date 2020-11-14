@@ -56,7 +56,8 @@
                 //  2, 3, 4, ... K, A
                 // TODO: width should probably be set in JS as we can scale to card size there
                 // width of card is 72
-                $offset_value = ($value - 2) * 15 + 50;
+                // TODO: z-index to assure the right ordering
+                $offset_value = ($value - 2) * 25;
                 $this->page->insert_block(
                     "calypsocard",
                     array(
