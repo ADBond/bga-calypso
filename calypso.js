@@ -257,14 +257,33 @@ function (dojo, declare) {
         placeCardInCalypso : function(player_id, color, value, card_id) {
             let top_value = 0;
             let left_value = 0;
-            dojo.place(this.format_block('jstpl_cardincalypso', {
-                x : this.cardwidth * (value - 2),
-                y : this.cardheight * (color - 1),
-                player_id : player_id,
-                value: value,
-                // top: top_value,
-                // left: left_value,
-            }), 'calypsocard_' + player_id + "_" + value);
+            // dojo.place(this.format_block('jstpl_cardincalypso', {
+            //     x : this.cardwidth * (value - 2),
+            //     y : this.cardheight * (color - 1),
+            //     player_id : player_id,
+            //     value: value,
+            //     // top: top_value,
+            //     // left: left_value,
+            // }), 'calypsocard_' + player_id + "_" + value);
+
+            let x = this.cardwidth * (value - 2);
+            let y = this.cardheight * (color - 1);
+
+            let card_el_id = `calypsocard_${player_id}_${value}`;
+            console.log(card_el_id);
+            // let card_slot = $(card_el_id); //$(card_el_id).get(0);
+            // card_slot.style.backgroundPosition = `-${x}px -${y}px;`;
+            // TODO: this should stay in css - use class manipulation
+            dojo.style(card_el_id,
+                {
+                    'backgroundPosition': `-${x}px -${y}px`,
+                    // 'backgroundImage': "url('img/cards.jpg')",
+                    // 'width': '72px',
+                    // 'height': '96px',
+                    // 'opacity': 1,
+                }
+            )
+            dojo.addClass( card_el_id, 'cardincalypso' );  // TODO: this in .tpl file??
 
             //this.placeOnObject('cardincalypso_' + player_id + "_" + card_id, 'overall_player_board_' + player_id);
             // if ($('myhand_item_' + card_id)) {
@@ -274,7 +293,8 @@ function (dojo, declare) {
 
             // In any case: move it to its final destination
             // TODO: reinstate this, but it is the bit that is causing weird offsets!
-            // this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
+            // actually, we only need to animate at end of trick
+            //this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
         ///////////////////////////////////////////////////
         //// Player's action
@@ -367,7 +387,7 @@ function (dojo, declare) {
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
-            dojo.subscribe( 'giveAllCardsToPlayer', this, "notif_giveAllCardsToPlayer" );
+            dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             // TODO: here, associate your game notifications with local methods
             
             // Example 1: standard notification handling
@@ -402,7 +422,8 @@ function (dojo, declare) {
             // We do nothing here (just wait in order players can view the 4 cards played before they're gone.
             // Actually,
         },
-        notif_giveAllCardsToPlayer : function(notif) {
+        // This is what happens after trick - we need to modify!
+        obsolete_notif_giveAllCardsToPlayer : function(notif) {
             // Move all cards on table to given table, then destroy them
             var winner_id = notif.args.player_id;
             for ( var player_id in this.gamedatas.players) {
@@ -410,6 +431,24 @@ function (dojo, declare) {
                 dojo.connect(anim, 'onEnd', function(node) {
                     dojo.destroy(node);
                 });
+                anim.play();
+            }
+        },
+        notif_moveCardsToCalypsos : function(notif) {
+            // Move all cards on table to given table, then destroy them
+            var winner_id = notif.args.player_id;
+            let moved_to = notif.args.moved_to;
+            for ( var player_id in this.gamedatas.players) {
+                let send_to_id = moved_to[player_id];
+                if(send_to_id === 0){
+                    var anim = this.slideToObject('cardontable_' + player_id, 'overall_player_board_' + winner_id);
+                    dojo.connect(anim, 'onEnd', function(node) {
+                        dojo.destroy(node);
+                    });
+                } else{
+                    var anim = this.slideToObject('cardontable_' + player_id, 'overall_player_board_' + winner_id);
+                }
+                
                 anim.play();
             }
         },
