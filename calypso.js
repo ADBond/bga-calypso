@@ -435,20 +435,31 @@ function (dojo, declare) {
             }
         },
         notif_moveCardsToCalypsos : function(notif) {
+            console.log("fan it out");
             // Move all cards on table to given table, then destroy them
             var winner_id = notif.args.player_id;
             let moved_to = notif.args.moved_to;
-            for ( var player_id in this.gamedatas.players) {
-                let send_to_id = moved_to[player_id];
+            console.log(moved_to);
+            for ( var player in moved_to) {
+                let send_to_id = moved_to[player]["owner"];
+                let send_from_id = moved_to[player]["originating_player"];
+                console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
                 if(send_to_id === 0){
-                    var anim = this.slideToObject('cardontable_' + player_id, 'overall_player_board_' + winner_id);
-                    dojo.connect(anim, 'onEnd', function(node) {
-                        dojo.destroy(node);
-                    });
+                    console.log("this card is rubbish");
+                    // TODO: fix this!! send_ti_id is null here, obviously
+                    var anim = this.slideToObject('cardontable_' + send_from_id, 'overall_player_board_' + winner_id);
                 } else{
-                    var anim = this.slideToObject('cardontable_' + player_id, 'overall_player_board_' + winner_id);
+                    console.log("but this card goes to the special place")
+                    let calypso_player_id = moved_to[player]["owner"];
+                    let value = moved_to[player]["rank"];
+                    let color = moved_to[player]["suit"];
+                    let card_id = moved_to[player]["card_id"];
+                    var anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${value}`);
+                    this.placeCardInCalypso(send_to_id, color, value, card_id);
                 }
-                
+                dojo.connect(anim, 'onEnd', function(node) {
+                    dojo.destroy(node);
+                });
                 anim.play();
             }
         },

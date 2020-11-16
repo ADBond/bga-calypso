@@ -365,19 +365,31 @@ class Calypso extends Table
             if ($card['type'] == $player_suit){
                 $player_ranks_so_far = self::getCurrentRanks($winner_player_id);
                 if (!in_array($card['type_arg'], $player_ranks_so_far)){
-                    $moved_to[$card["location_arg"]] = $winner_player_id;
+                    $moved_to[$card["location_arg"]] = array(
+                        "originating_player" => $card["location_arg"],
+                        "owner" => $winner_player_id,
+                        "suit" => $card["type"],
+                        "rank" => $card["type_arg"],
+                        "card_id" => $card["id"],
+                    );
                     $this->cards->moveCard( $card["id"], 'calypso', $winner_player_id);
                 }
             } elseif ($card['type'] == $partner_suit){
                 $partner_ranks_so_far = self::getCurrentRanks($partner_id);
                 if (!in_array($card['type_arg'], $partner_ranks_so_far)){
-                    $moved_to[$card["location_arg"]] = $partner_id;
+                    $moved_to[$card["location_arg"]] = array(
+                        "originating_player" => $card["location_arg"],
+                        "owner" => $partner_id,
+                        "suit" => $card["type"],
+                        "rank" => $card["type_arg"],
+                        "card_id" => $card["id"],
+                    );
                     $this->cards->moveCard( $card["id"], 'calypso', $partner_id);
                 }
             }
             else {
                 // give opponents cards to player who won trick - partners can have separate piles
-                $moved_to[$card["location_arg"]] = 0;
+                $moved_to[$card["location_arg"]] = array("owner" => 0, "originating_player" => $card["location_arg"],);
                 $this->cards->moveCard( $card["id"], 'woncards', $winner_player_id);
             }
         }
@@ -394,6 +406,8 @@ class Calypso extends Table
     }
 
     function processCalypsos(){
+
+        // TODO: need to return from this for moved_to, so that duplicates get animated to a pile
 
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
