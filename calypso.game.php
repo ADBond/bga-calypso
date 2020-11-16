@@ -400,8 +400,6 @@ class Calypso extends Table
 
     function processCalypsos(){
 
-        // TODO: need to return from this for moved_to, so that duplicates get animated to a pile
-
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
@@ -416,8 +414,9 @@ class Calypso extends Table
                 'calypso_string' => $calypso_string,
             ) );
             if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-                $this->cards->moveAllCardsInLocation( 'calypso', 'completed_calypsos', $player_id, $player_id );
+                $this->cards->moveAllCardsInLocation( 'calypso', 'full_calypsos', $player_id, $player_id );
                 // AB TODO: updated db when I've updated the model to allow the field
+                // AB TODO: notification and animation when this happens
             }
             $ranks_so_far = array_map(
                 function($calypso_card){return $calypso_card['type_arg'];},
@@ -444,7 +443,6 @@ class Calypso extends Table
     function playCard($card_id) {
         self::checkAction("playCard");
         $player_id = self::getActivePlayerId();
-        // AB: TODO: check for revokes
         $currentCard = $this->cards->getCard($card_id);
         if ( !self::validPlay($player_id, $currentCard) ){
             throw new BgaUserException( self::_("You must follow suit if able to!") );

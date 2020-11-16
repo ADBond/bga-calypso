@@ -382,6 +382,8 @@ function (dojo, declare) {
 
             dojo.subscribe('debug', this, "notif_debug");
 
+            dojo.subscribe('update', this, "notif_update");
+
             dojo.subscribe('newHand', this, "notif_newHand");
             dojo.subscribe('playCard', this, "notif_playCard");
 
@@ -468,6 +470,13 @@ function (dojo, declare) {
         notif_debug : function(notif) {
             console.log("debug message received ;)")
             // dummy
+        },
+
+        notif_update : function(notif) {
+            // AB TODO: do we need to do anything here?
+            // is there any point in this? Probably no
+            // I imagine it will be best to split this out into individual notifications
+            // e.g. newHand (animate dealer button etc)
         }
         /*
         Example:
