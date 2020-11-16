@@ -16,19 +16,19 @@ $gameinfos = array(
 'game_name' => "Calypso",
 
 // Game designer (or game designers, separated by commas)
-'designer' => 'R. W. Willis, Kenneth Konstam',       
+'designer' => 'R. W. Willis, Kenneth Konstam',
 
 // Game artist (or game artists, separated by commas)
-'artist' => '',         
+'artist' => '',
 
 // Year of FIRST publication of this game. Can be negative.
-'year' => 1954,                 
+'year' => 1954,
 
 // Game publisher (use empty string if there is no publisher)
-'publisher' => '',                     
+'publisher' => '',
 
 // Url of game publisher website
-'publisher_website' => '',   
+'publisher_website' => '',
 
 // Board Game Geek ID of the publisher
 'publisher_bgg_id' => 171,
@@ -77,7 +77,7 @@ $gameinfos = array(
 'solo_mode_ranked' => false,
 
 // Game is "beta". A game MUST set is_beta=1 when published on BGA for the first time, and must remains like this until all bugs are fixed.
-'is_beta' => 1,                     
+'is_beta' => 1,
 
 // Is this game cooperative (all players wins together or loose together)
 'is_coop' => 0,
@@ -88,16 +88,16 @@ $gameinfos = array(
 'language_dependency' => false,
 
 // Complexity of the game, from 0 (extremely simple) to 5 (extremely complex)
-'complexity' => 3,    
+'complexity' => 2,
 
 // Luck of the game, from 0 (absolutely no luck in this game) to 5 (totally luck driven)
-'luck' => 3,    
+'luck' => 2,
 
 // Strategy of the game, from 0 (no strategy can be setup) to 5 (totally based on strategy)
-'strategy' => 3,    
+'strategy' => 3,
 
 // Diplomacy of the game, from 0 (no interaction in this game) to 5 (totally based on interaction and discussion between players)
-'diplomacy' => 3,    
+'diplomacy' => 1,
 
 // Colors attributed to players
 'player_colors' => array( "ff0000", "008000", "0000ff", "ffa500", "773300" ),
@@ -132,9 +132,9 @@ $gameinfos = array(
 // Each paragraph must be wrapped with totranslate() for translation and should not contain html (plain text without formatting).
 // A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
 'presentation' => array(
-//    totranslate("This wonderful game is about geometric shapes!"),
-//    totranslate("It was awarded best triangle game of the year in 2005 and nominated for the Spiel des Jahres."),
-//    ...
+    // TODO: actually write this properly
+    totranslate("Calypso is a forgotten classic card game from Trinidad."),
+    totranslate("It is played by four players in partnerships."),
 ),
 
 // Games categories
@@ -144,7 +144,7 @@ $gameinfos = array(
 //  http://en.doc.boardgamearena.com/Game_meta-information:_gameinfos.inc.php
 //  IMPORTANT: this list should be ORDERED, with the most important tag first.
 //  IMPORTANT: it is mandatory that the FIRST tag is 1, 2, 3 and 4 (= game category)
-'tags' => array( 2 ),
+'tags' => array( 1, 200, 23 ),  // 201 Collection? 207 Combinations?
 
 
 //////// BGA SANDBOX ONLY PARAMETERS (DO NOT MODIFY)

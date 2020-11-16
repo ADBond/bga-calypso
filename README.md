@@ -25,3 +25,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * game art
 * Nicer game area, like in e.g. GrossTarock?
 * Set different default colours
+
+### Meta
+
+* anything to adjust in gameinfos - particularly revise description & and add tags
