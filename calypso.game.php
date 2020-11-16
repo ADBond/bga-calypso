@@ -252,33 +252,26 @@ class Calypso extends Table
 
     function processCompletedTrick() {
 
-        // TODO: is this ordering of the trick accurate?
         $cards_played = $this->cards->getCardsInLocation( 'cardsontable' );
 
-        // Move all cards to "cardswon" of the given player
         $best_value_player_id = self::getGameStateValue( 'currentTrickWinner' );
-        // TODO: cards will be split and distributed according to logic - will be moveCards, used on filtered subsets
 
         // card gathering logic:
         // get all cards on table (above)
         $moved_to_first_batch = self::sortWonCards($cards_played, $best_value_player_id);
         // -> check if any calypsos are completed, and if so process (remove and update db)
         self::processCalypsos();
-        // now check if remaining cards can be added to calypsos, if not discard
+        // now check if remaining cards can be added to calypsos
         $remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
         $moved_to_second_batch = self::sortWonCards($remaining_cards, $best_value_player_id);
-        
         $moved_to = array_merge($moved_to_first_batch, $moved_to_second_batch);
+        // any cards still on the table should be duplicates of calypso cards
+        // note that fact for animation, then give them to the trick winner
         $still_remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
         foreach($still_remaining_cards as $card){
-            $moved_to[$card["location_arg"]] = 0;
+            $moved_to[$card["location_arg"]] = array("owner" => 0, "originating_player" => $card["location_arg"],);
         }
-
-
         $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
-
-        // // reset current trick
-        // self::initialiseTrick();
 
         // Notify
         // Note: we use 2 notifications here in order we can pause the display during the first notification
