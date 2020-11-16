@@ -34,21 +34,26 @@ class Calypso extends Table
 
         # not sure for now quite what I need to keep track of here, so start minimally-ish
         self::initGameStateLabels( array(
-                         // TODO: think I want dealer to be in database
-                         //"handDealer" => 10,
-                         // keeping track of how many deals through the devk?
-                         // how many hands overall??
-                         "trickColor" => 11,
-                         "currentTrickWinner" => 12,
-                         "trumpLead" => 13,
-                         "trumpPlayed" => 14,
+                         // TODO: move dealer shit into db if there's a good reason, otherwise here is fine
+                         // who dealt first this round
+                         "firstHandDealer" => 10,
+                         // who dealt this hand
+                         "currentDealer" => 11,
+                         // suit lead
+                         "trickColor" => 21,
+                         // who's winning trick so far and with what
+                         "currentTrickWinner" => 22,
+                         "bestCardSuit" => 23,
+                         "bestCardRank" => 24,
+                         // did the lead player lead their personal trump?
+                         "trumpLead" => 25,
+                         // has someone trumped in?
+                         "trumpPlayed" => 26,
 
-                         "bestCardSuit" => 15,
-                         "bestCardRank" => 16,
-
-                         // Probably not:
-                         // completed calypsos? or in db? or is scoring separate?
-                         // Mappings of suits to players, or is that in db?
+                         // what round are we on, and which hand in the round?
+                         // AB TODO: may want to revisit once I've fiddled with gameoptions
+                         "roundNumber" => 31,
+                         "handNumber" => 32,
 
                          // probably want some
                          //    "my_first_game_variant" => 100,
