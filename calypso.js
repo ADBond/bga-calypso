@@ -63,9 +63,7 @@ function (dojo, declare) {
                 var trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
-                // Not sure if I need stuff to be jquery?? but can't hurt for this little bit (flw)
-                document.getElementById("trump-" + player_id).textContent = trump_lookup[player_trump];
-                //$('#trump_' + player_id).text(trump_lookup[player_trump]);
+                $("trump-" + player_id).textContent = trump_lookup[player_trump];
             }
             
             // TODO: Set up your game interface here, according to "gamedatas"
@@ -107,7 +105,19 @@ function (dojo, declare) {
                 var color = card.type;
                 var value = card.type_arg;
                 var player_id = card.location_arg;
+                console.log("on the table has: " + color + ", " + value + ", and...");
                 this.playCardOnTable(player_id, color, value, card.id);
+            }
+
+            // Cards in calypsos
+            console.log("now let's lay out those sweet sweet winnings")
+            for (i in this.gamedatas.cardsincalypsos) {
+                var card = this.gamedatas.cardsincalypsos[i];
+                var color = card.type;
+                var value = card.type_arg;
+                var player_id = card.location_arg;
+                console.log("calypso has: " + color + ", " + value + ", and...");
+                this.placeCardInCalypso(player_id, color, value, card.id);
             }
 
             // Setup game notifications to handle (see "setupNotifications" method below)
@@ -220,6 +230,7 @@ function (dojo, declare) {
         playCardOnTable : function(player_id, color, value, card_id) {
             // player_id => direction
             dojo.place(this.format_block('jstpl_cardontable', {
+                // these values relate to getting the right card from sprite
                 x : this.cardwidth * (value - 2),
                 y : this.cardheight * (color - 1),
                 player_id : player_id
@@ -241,6 +252,49 @@ function (dojo, declare) {
 
             // In any case: move it to its final destination
             this.slideToObject('cardontable_' + player_id, 'playertablecard_' + player_id).play();
+        },
+
+        placeCardInCalypso : function(player_id, color, value, card_id) {
+            let top_value = 0;
+            let left_value = 0;
+            // dojo.place(this.format_block('jstpl_cardincalypso', {
+            //     x : this.cardwidth * (value - 2),
+            //     y : this.cardheight * (color - 1),
+            //     player_id : player_id,
+            //     value: value,
+            //     // top: top_value,
+            //     // left: left_value,
+            // }), 'calypsocard_' + player_id + "_" + value);
+
+            let x = this.cardwidth * (value - 2);
+            let y = this.cardheight * (color - 1);
+
+            let card_el_id = `calypsocard_${player_id}_${value}`;
+            console.log(card_el_id);
+            // let card_slot = $(card_el_id); //$(card_el_id).get(0);
+            // card_slot.style.backgroundPosition = `-${x}px -${y}px;`;
+            // TODO: this should stay in css - use class manipulation
+            dojo.style(card_el_id,
+                {
+                    'backgroundPosition': `-${x}px -${y}px`,
+                    // 'backgroundImage': "url('img/cards.jpg')",
+                    // 'width': '72px',
+                    // 'height': '96px',
+                    // 'opacity': 1,
+                }
+            )
+            dojo.addClass( card_el_id, 'cardincalypso' );  // TODO: this in .tpl file??
+
+            //this.placeOnObject('cardincalypso_' + player_id + "_" + card_id, 'overall_player_board_' + player_id);
+            // if ($('myhand_item_' + card_id)) {
+            //     this.placeOnObject('cardontable_' + player_id, 'myhand_item_' + card_id);
+            //     this.playerHand.removeFromStockById(card_id);
+            // }
+
+            // In any case: move it to its final destination
+            // TODO: reinstate this, but it is the bit that is causing weird offsets!
+            // actually, we only need to animate at end of trick
+            //this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
         ///////////////////////////////////////////////////
         //// Player's action
@@ -271,8 +325,6 @@ function (dojo, declare) {
                     });
 
                     this.playerHand.unselectAll();
-                } else if (this.checkAction('giveCards')) {
-                    // Can give cards => let the player select some cards
                 } else {
                     this.playerHand.unselectAll();
                 }
@@ -330,12 +382,14 @@ function (dojo, declare) {
 
             dojo.subscribe('debug', this, "notif_debug");
 
+            dojo.subscribe('update', this, "notif_update");
+
             dojo.subscribe('newHand', this, "notif_newHand");
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
-            dojo.subscribe( 'giveAllCardsToPlayer', this, "notif_giveAllCardsToPlayer" );
+            dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             // TODO: here, associate your game notifications with local methods
             
             // Example 1: standard notification handling
@@ -368,12 +422,43 @@ function (dojo, declare) {
 
         notif_trickWin : function(notif) {
             // We do nothing here (just wait in order players can view the 4 cards played before they're gone.
+            // Actually,
         },
-        notif_giveAllCardsToPlayer : function(notif) {
+        // This is what happens after trick - we need to modify!
+        obsolete_notif_giveAllCardsToPlayer : function(notif) {
             // Move all cards on table to given table, then destroy them
             var winner_id = notif.args.player_id;
             for ( var player_id in this.gamedatas.players) {
                 var anim = this.slideToObject('cardontable_' + player_id, 'overall_player_board_' + winner_id);
+                dojo.connect(anim, 'onEnd', function(node) {
+                    dojo.destroy(node);
+                });
+                anim.play();
+            }
+        },
+        notif_moveCardsToCalypsos : function(notif) {
+            console.log("fan it out");
+            // Move all cards on table to given table, then destroy them
+            var winner_id = notif.args.player_id;
+            let moved_to = notif.args.moved_to;
+            console.log(moved_to);
+            for ( var player in moved_to) {
+                let send_to_id = moved_to[player]["owner"];
+                let send_from_id = moved_to[player]["originating_player"];
+                console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
+                if(send_to_id === 0){
+                    console.log("this card is rubbish");
+                    // TODO: fix this!! send_ti_id is null here, obviously
+                    var anim = this.slideToObject('cardontable_' + send_from_id, 'overall_player_board_' + winner_id);
+                } else{
+                    console.log("but this card goes to the special place")
+                    let calypso_player_id = moved_to[player]["owner"];
+                    let value = moved_to[player]["rank"];
+                    let color = moved_to[player]["suit"];
+                    let card_id = moved_to[player]["card_id"];
+                    var anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${value}`);
+                    this.placeCardInCalypso(send_to_id, color, value, card_id);
+                }
                 dojo.connect(anim, 'onEnd', function(node) {
                     dojo.destroy(node);
                 });
@@ -385,6 +470,13 @@ function (dojo, declare) {
         notif_debug : function(notif) {
             console.log("debug message received ;)")
             // dummy
+        },
+
+        notif_update : function(notif) {
+            // AB TODO: do we need to do anything here?
+            // is there any point in this? Probably no
+            // I imagine it will be best to split this out into individual notifications
+            // e.g. newHand (animate dealer button etc)
         }
         /*
         Example:

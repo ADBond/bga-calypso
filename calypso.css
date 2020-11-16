@@ -50,10 +50,21 @@
 
 /** Table layout **/
 
+#playarea {
+    position: relative;
+    width: 1500px;
+}
+
 #playertables {
     position: relative;
     width: 710px;
     height: 340px;
+}
+
+#playercalypso {
+    position: relative;
+    left: 1000px;
+    top: -340px;
 }
 
 .playertablename {
@@ -106,4 +117,43 @@
     width: 72px;
     height: 96px;
     background-image: url('img/cards.jpg'); 
+}
+
+/*** calypsos ***/
+.cardincalypso {
+    position: absolute;
+    width: 72px;
+    height: 96px;
+    background-image: url('img/cards.jpg'); 
+}
+
+.calypso {
+    position: absolute;
+    text-align: center;
+}
+
+.playercalypso {
+    display: inline-block;
+    position: relative;
+    /* margin-top: 5px; */
+    /* width: 72px; */
+    height: 96px;
+}
+
+/* Temporary positioning for now */
+.calypso_N {
+    left: 0%;
+    top: 0px;
+}
+.calypso_E {
+    left: 0%;
+    top: 130px;
+}
+.calypso_S {
+    left: 0%;
+    top: 260px;
+}
+.calypso_W {
+    left: 0%;
+    top: 390px;
 }

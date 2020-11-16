@@ -45,13 +45,46 @@
         $directions = array( 'S', 'W', 'N', 'E' );
         
         // this will inflate our player block with actual players data
-        $this->page->begin_block($template, "player");
+        
+        $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
+        $this->page->begin_block( $template, "playerhand" );
+        $this->page->begin_block( $template, "playercalypso" );
         foreach ( $players as $player_id => $info ) {
+            $this->page->reset_subblocks( "calypsocard" );
+            $trump_suit = $this->game->getPlayerSuit($player_id);
+            for ($value = 2; $value <= 14; $value ++) {
+                //  2, 3, 4, ... K, A
+                // TODO: width should probably be set in JS as we can scale to card size there
+                // width of card is 72
+                // TODO: z-index to assure the right ordering
+                $offset_value = ($value - 2) * 25;
+                $this->page->insert_block(
+                    "calypsocard",
+                    array(
+                        "PLAYER_ID" => $player_id,
+                        #"PLAYER_NAME" => $players [$player_id] ['player_name'],
+                        #"PLAYER_COLOR" => $players [$player_id] ['player_color'],
+                        #"DIR" => $dir
+                        "OFFSET" => $offset_value,
+                        "CARD_RANK" => $value
+                    )
+                );
+            }
+
             $dir = array_shift($directions);
-            $this->page->insert_block("player", array ("PLAYER_ID" => $player_id,
+            $this->page->insert_block(
+                "playerhand",
+                array (
+                    "PLAYER_ID" => $player_id,
                     "PLAYER_NAME" => $players [$player_id] ['player_name'],
                     "PLAYER_COLOR" => $players [$player_id] ['player_color'],
-                    "DIR" => $dir ));
+                    "DIR" => $dir
+                )
+            );
+            $this->page->insert_block(
+                "playercalypso",
+                array ("PLAYER_ID" => $player_id, "DIR" => $dir )
+            );
         }
         // this will make our My Hand text translatable
         $this->tpl['MY_HAND'] = self::_("My hand");
