@@ -14,10 +14,16 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~display in-progress calypsos~~ (and completed? won discards?)
 * track dealer etc
 * scoring
-* number of rounds/games(?)
-* stats?
+* number of rounds/games set via gameoptions
+* stats
 * any other TODOs from code not covered by these/general tidying
 * Fix js bug at end of a hand that needs refresh
+
+### Dev
+
+* hook new round/new hand stuff to setup new game so we aren't doubling up/confusing logic
+* rename those damn variables to keep a shred of self-consistency
+* check that the all the cards exist at all times, and get dealt out over the course of a round
 
 ### Display
 
@@ -25,7 +31,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * game art
 * Nicer game area, like in e.g. GrossTarock?
 * Set different default colours
+* Show who is dealer, who dealt first in round etc.
+  * animate this changing?
 
 ### Meta
 
-* anything to adjust in gameinfos - particularly revise description & and add tags
+* anything to adjust in gameinfos - particularly revise description & and tags, and durations

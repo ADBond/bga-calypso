@@ -105,6 +105,10 @@ class Calypso extends Table
 
         // AB TODO: other gamestate values when I've figured out what they are!
 
+        self::setGameStateInitialValue( 'roundNumber', 1 );
+        // TODO: move this to new hand function!
+        self::setGameStateInitialValue( 'handNumber', 1 );
+
         // Create cards
         $num_decks = 4;  // will be 4 - need to change here and in js
         $cards = array ();
@@ -124,6 +128,11 @@ class Calypso extends Table
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            if($player["player_no"] == 4){
+                // they are dealer now, and the first dealer!
+                self::setGameStateInitialValue( 'firstHandDealer', $player_id );
+                self::setGameStateInitialValue( 'currentDealer', $player_id );
+            }
         }
 
         // Init game statistics
@@ -159,8 +168,6 @@ class Calypso extends Table
         $sql .= " ELSE 0 END;";
         self::DbQuery( $sql );
         self::reloadPlayersBasicInfos();
-
-        // Note: if you added some extra field on "player" table in the database (dbmodel.sql), you can initialize it there.
 
         // Set new 'round'
 
@@ -251,8 +258,26 @@ class Calypso extends Table
         return $query_result[$suit];
     }
 
+    // TODO: delete?
     function trickWinner($cards_played) {
         return true;  // temporary bullshit
+    }
+
+    function getNextDealer() {
+        $current_dealer = self::getGameStateValue('currentDealer');
+        $players = self::loadPlayersBasicInfos();
+        $current_dealer_number = $players[$current_dealer]["player_no"];
+        foreach ( $players as $player_id => $player ) {
+            $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            if(($current_dealer_number % 4) + 1 == $player["player_no"]){
+                self::setGameStateValue( 'currentDealer', $player_id );
+            }
+        }
+        // TODO: update nextPlayer
+    }
+    // Keep this separate, as might want to rotate the other way? if not just alias
+    function getNextFirstDealer() {
+        // TODO: as above but for firstHandDealer, and maybe -1 instead of +1
     }
 
     function processCompletedTrick() {
@@ -556,9 +581,10 @@ class Calypso extends Table
         The action method of state X is called everytime the current game state is set to X.
     */
     function stNewRound() {
+        $round_number = self::getGameStateValue( 'roundNumber' );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new round of hands is starting"),  // TODO: number of round
+            clienttranslate("A new round of hands is starting - round ".$round_number),  // TODO: number of round
             array()
         );
         // Take back all cards (from any location => null) to deck
@@ -566,22 +592,32 @@ class Calypso extends Table
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
         // AB TODO: num calypsos to zero, update dealer, etc
+        $new_dealer = self::getNextFirstDealer();
+        self::setGameStateValue( 'firstHandDealer', $new_dealer );
+        self::setGameStateValue( 'currentDealer', $new_dealer );
         $this->gamestate->nextState("");
     }
 
     function stNewHand() {
+        $hand_number = self::getGameStateValue( 'handNumber' );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new hand is starting"),  // TODO: number of hand
+            clienttranslate("A new hand is starting - hand ".$hand_number."/4 in the current round"),
             array()
         );
-        // Deal 13 cards to each players
+        // Deal 13 cards to each player and notify them of their hand
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
-            // Notify player about his cards
             self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
         }
+        $new_dealer = self::getNextDealer();
+        self::setGameStateValue( 'currentDealer', $new_dealer );
+        self::notifyAllPlayers(
+            "update",
+            clienttranslate("Player ".$player_id." deals a new set of hands"),  // AB TODO: get their name
+            array()
+        );
         $this->gamestate->nextState("");
     }
 
