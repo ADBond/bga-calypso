@@ -19,6 +19,11 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * any other TODOs from code not covered by these/general tidying
 * Fix js bug at end of a hand that needs refresh
 
+### Notifications
+
+* Make sure I deal with the translation stuff properly, stop string concatenation etc.
+* Start off saying who has which trump suit, and who is partnered with whom
+
 ### Dev
 
 * hook new round/new hand stuff to setup new game so we aren't doubling up/confusing logic
@@ -37,3 +42,10 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Meta
 
 * anything to adjust in gameinfos - particularly revise description & and tags, and durations
+
+### Variants
+
+Possibly.
+
+* See https://boardgamegeek.com/thread/514183/game-got-lost-shuffle for a variant trick-winning rule: last trump-in wins
+* From question in that thread also: variant where you must beat leader when trumping in?

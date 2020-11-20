@@ -20,7 +20,7 @@ Don't expect a big deal if your variable is not set (or e.g. mistyped) - expect 
 
 ### Debugging
 
-Not yet got this working in a useful way.
+~~Not yet got this working in a useful way.~~ Working, though inelegant. Should re-read docs for better version
 
 ### Suit mapping
 
@@ -36,6 +36,10 @@ Might be nice to refactor so the code is more readable and these values are hidd
 
 ### bugs
 
+#### logic bug
+
+Resolved? triple-check
+
 Logic error here:
 
 ```
@@ -48,4 +52,16 @@ AndyB2 [diamond] plays K heart
 
 Should be fixed now, but worth trying to recreate to check
 
+### dealer crap
+
+Everyone is getting double cards right now
+
+#### hand end/setup mismatch
+
 Something goes wrong at the end of the hand, related to stock (js) - fine on refresh though
+
+### player box
+
+See e.g. backgammon, 99 (rounds-based), Jaipur (seal of excellence) for games that have extra info in the player panels. How?
+
+* https://en.doc.boardgamearena.com/Counter#Adding_stuff_to_player.27s_panel

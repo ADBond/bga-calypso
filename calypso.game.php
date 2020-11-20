@@ -79,6 +79,7 @@ class Calypso extends Table
     */
     protected function setupNewGame( $players, $options = array() )
     {    
+        
         // Set the colors of the players with HTML color code
         // The default below is red/green/blue/orange/brown
         // The number of colors defined here must correspond to the maximum number of players allowed for the gams
@@ -128,6 +129,7 @@ class Calypso extends Table
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            
             if($player["player_no"] == 4){
                 // they are dealer now, and the first dealer!
                 self::setGameStateInitialValue( 'firstHandDealer', $player_id );
@@ -208,6 +210,8 @@ class Calypso extends Table
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         // Cards played in calypsos
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
+
+        $result['dealer'] = self::getGameStateValue('currentDealer');
 
         return $result;
     }
@@ -580,7 +584,12 @@ class Calypso extends Table
         Here, you can create methods defined as "game state actions" (see "action" property in states.inc.php).
         The action method of state X is called everytime the current game state is set to X.
     */
+    function dummy(){
+        throw new BgaUserException( self::_("Don't see this!") );
+    }
+
     function stNewRound() {
+        #throw new BgaUserException( self::_("New round!") );
         $round_number = self::getGameStateValue( 'roundNumber' );
         self::notifyAllPlayers(
             "update",
@@ -592,9 +601,10 @@ class Calypso extends Table
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
         // AB TODO: num calypsos to zero, update dealer, etc
-        $new_dealer = self::getNextFirstDealer();
-        self::setGameStateValue( 'firstHandDealer', $new_dealer );
-        self::setGameStateValue( 'currentDealer', $new_dealer );
+        // AB TODO: this function is called in game setup, so make sure it runs!
+        #$new_dealer = self::getNextFirstDealer();
+        #self::setGameStateValue( 'firstHandDealer', $new_dealer );
+        #self::setGameStateValue( 'currentDealer', $new_dealer );
         $this->gamestate->nextState("");
     }
 
