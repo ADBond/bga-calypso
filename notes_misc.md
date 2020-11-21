@@ -58,7 +58,15 @@ Should be fixed now, but worth trying to recreate to check
 
 #### hand number
 
-Not getting updated at new hand, at least in the display
+~~Not getting updated at new hand, at least in the display~~
+
+#### lead player
+
+Not updated in new hand - should be left of dealer, but think it is left as whoever left won the last trick of previous hand!
+
+#### calyspo completed
+
+Not cleared after completing, needs refresh. Think I've already noted this somewhere
 
 #### hand end/setup mismatch
 

@@ -612,10 +612,11 @@ class Calypso extends Table
         self::setGameStateValue( 'handNumber', 0 );
         $old_round_number = self::getGameStateValue( 'roundNumber' );
         $round_number = $old_round_number + 1;
+        self::setGameStateValue( 'roundNumber', $round_number );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new round of hands is starting - round ".$round_number),  // TODO: number of round
-            array()
+            clienttranslate("A new round of hands is starting - round ${round_number}"),  // TODO: number of rounds total
+            array("round_number" => $round_number)
         );
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
@@ -631,10 +632,11 @@ class Calypso extends Table
     function stNewHand() {
         $old_hand_number = self::getGameStateValue( 'handNumber' );
         $hand_number = $old_hand_number + 1;
+        self::setGameStateValue( 'handNumber', $hand_number );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new hand is starting - hand ".$hand_number."/4 in the current round"),
-            array()
+            clienttranslate("A new hand is starting - hand ${hand_number}/4 in the current round"),
+            array("hand_number" => $hand_number)
         );
         // Deal 13 cards to each player and notify them of their hand
         $players = self::loadPlayersBasicInfos();
