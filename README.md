@@ -6,13 +6,13 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Logic
 
-* ~~assign trump suits to players~~ (and dealer also?)
+* ~~assign trump suits to players (and dealer also?)~~
 * ~~implement trick-play rules~~
   * ~~implement trick-winner~~
   * ~~enforce suit-following (maybe make as switch for devving)~~
 * ~~collecting calypsos (sort-of, maybe?? need to display in-progress to check better)~~
 * ~~display in-progress calypsos~~ (and completed? won discards?)
-* track dealer etc
+* ~~track dealer etc~~ make sure dealer is updated properly at end of hand
 * scoring
 * number of rounds/games set via gameoptions
 * stats
@@ -22,11 +22,13 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Notifications
 
 * Make sure I deal with the translation stuff properly, stop string concatenation etc.
+  * make sure parameters use i18n etc
 * Start off saying who has which trump suit, and who is partnered with whom
 
 ### Dev
 
 * hook new round/new hand stuff to setup new game so we aren't doubling up/confusing logic
+  * partly done but needs checking/careful eye
 * rename those damn variables to keep a shred of self-consistency
 * check that the all the cards exist at all times, and get dealt out over the course of a round
 
@@ -36,8 +38,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * game art
 * Nicer game area, like in e.g. GrossTarock?
 * Set different default colours
-* Show who is dealer, who dealt first in round etc.
+* ~~Show who is dealer~~, who dealt first in round etc.
   * animate this changing?
+* Say the game name somewhere? Or something distinctive.
 
 ### Meta
 

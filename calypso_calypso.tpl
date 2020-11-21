@@ -25,7 +25,7 @@
     Please REMOVE this comment before publishing your game on BGA
 -->
 
-<!-- Chuck in the business from tutorial for now -->
+<!-- TODO:  -->
 
 <div id="playarea">
     <div id="playertables">
@@ -84,6 +84,6 @@ var jstpl_some_game_item='<div class="my_game_item" id="my_game_item_${MY_ITEM_I
                           top: ${top}px; left: ${left}px; color: red"\
 */
 
-</script>  
+</script>
 
 {OVERALL_GAME_FOOTER}
