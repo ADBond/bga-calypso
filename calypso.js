@@ -63,12 +63,17 @@ function (dojo, declare) {
                 var trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
+                // TODO: this should be a nice little icon rather than text.
+                $("trump-" + player_id).textContent = trump_lookup[player_trump];
                 // TODO: use an icon with hoverable text, like e.g. grosstarokk. (and then can animate eventually etc.)
-                let text_to_insert = trump_lookup[player_trump];
-                if(gamedatas.dealer == player_id){
-                    text_to_insert += " (D)";
+                console.log("dealer is:")
+                console.log(gamedatas.dealer);
+                if(player_id == gamedatas.dealer){
+                    $("area-dealer-" + player_id).textContent = "(D)";
+                } else{
+                    $("area-dealer-" + player_id).textContent = "";
                 }
-                $("trump-" + player_id).textContent = text_to_insert;
+                
             }
             
             // TODO: Set up your game interface here, according to "gamedatas"

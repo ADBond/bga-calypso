@@ -124,14 +124,17 @@ class Calypso extends Table
         $this->cards->createCards( $cards, 'deck' );
 
         // Shuffle deck
+        // probably unnecessary, as this should happen as rounds start
         $this->cards->shuffle('deck');
         // Deal 13 cards to each players
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
-            $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            // don't deal cards, as that happens once we start a new hand!
+            //$cards = $this->cards->pickCards(13, 'deck', $player_id);
             
             if($player["player_no"] == 4){
                 // they are dealer now, and the first dealer!
+                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
                 self::setGameStateInitialValue( 'firstHandDealer', $player_id );
                 self::setGameStateInitialValue( 'currentDealer', $player_id );
             }
@@ -271,12 +274,21 @@ class Calypso extends Table
         $current_dealer = self::getGameStateValue('currentDealer');
         $players = self::loadPlayersBasicInfos();
         $current_dealer_number = $players[$current_dealer]["player_no"];
+        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_id} is currently dealer'), array(
+            'player_id' => $current_dealer
+        ) );
         foreach ( $players as $player_id => $player ) {
-            $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            // why am I dealing here??
+            // AB TODO: although perhaps useful to have a 'deal' function?
+            //$cards = $this->cards->pickCards(13, 'deck', $player_id);
             if(($current_dealer_number % 4) + 1 == $player["player_no"]){
-                self::setGameStateValue( 'currentDealer', $player_id );
+                $new_dealer = $player_id;
+                self::notifyAllPlayers( 'trickWin', clienttranslate('${player_id} will be the next dealer'), array(
+                    'player_id' => $player_id
+                ) );
             }
         }
+        return $new_dealer;
         // TODO: update nextPlayer
     }
     // Keep this separate, as might want to rotate the other way? if not just alias
@@ -596,8 +608,7 @@ class Calypso extends Table
             clienttranslate("A new round of hands is starting - round ".$round_number),  // TODO: number of round
             array()
         );
-        // Take back all cards (from any location => null) to deck
-        // Create deck, shuffle it and give 13 initial cards
+        // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
         // AB TODO: num calypsos to zero, update dealer, etc
@@ -625,7 +636,7 @@ class Calypso extends Table
         self::setGameStateValue( 'currentDealer', $new_dealer );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("Player ".$player_id." deals a new set of hands"),  // AB TODO: get their name
+            clienttranslate("Player ".$new_dealer." deals a new set of hands"),  // AB TODO: get their name
             array()
         );
         $this->gamestate->nextState("");

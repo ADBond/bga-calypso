@@ -52,13 +52,17 @@ AndyB2 [diamond] plays K heart
 
 Should be fixed now, but worth trying to recreate to check
 
-### dealer crap
+#### dealer crap
 
-Everyone is getting double cards right now
+~~Everyone is getting double cards right now~~
 
 #### hand end/setup mismatch
 
 Something goes wrong at the end of the hand, related to stock (js) - fine on refresh though
+
+#### dealer ordering
+
+Right now dealer leads to first trick, not forehand. (or rather am not correctly setting first dealer :/)
 
 ### player box
 

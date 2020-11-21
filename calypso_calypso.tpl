@@ -32,8 +32,8 @@
 
         <!-- BEGIN playerhand -->
             <div class="playertable whiteblock playertable_{DIR}">
-                <div class="playertablename" style="color:#{PLAYER_COLOR}">
-                    {PLAYER_NAME}
+                <div class="playertablename" id="area-name-{PLAYER_ID}" style="color:#{PLAYER_COLOR}">
+                    <div id="area-name-{PLAYER_ID}">{PLAYER_NAME}</div><div id="area-dealer-{PLAYER_ID}"></div>
                     <div class="personal-trump" id="trump-{PLAYER_ID}"></div>
                 </div>
                 <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
