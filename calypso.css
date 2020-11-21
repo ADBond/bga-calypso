@@ -110,6 +110,13 @@
     width: 72px;
     height: 96px;
 }
+
+#dealerbutton {
+    width: 16px;
+    height: 16px;
+    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+}
+
 /*** cards on table ***/
 
 .cardontable {

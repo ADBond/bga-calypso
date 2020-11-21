@@ -38,8 +38,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * game art
 * Nicer game area, like in e.g. GrossTarock?
 * Set different default colours
-* ~~Show who is dealer~~, who dealt first in round etc.
+* ~~Show who is dealer~~, ~~who dealt first in round etc. Let's not do this~~
   * animate this changing?
+* Display game state info somewhere (round `x` of `y`, hand `w` of `z`)
 * Say the game name somewhere? Or something distinctive.
 
 ### Meta

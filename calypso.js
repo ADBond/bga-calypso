@@ -69,7 +69,11 @@ function (dojo, declare) {
                 console.log("dealer is:")
                 console.log(gamedatas.dealer);
                 if(player_id == gamedatas.dealer){
-                    $("area-dealer-" + player_id).textContent = "(D)";
+                    $("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
+                    // TODO: changing dealer **move** this to new position
+                    dojo.place(this.format_block('jstpl_dealerindicator', {
+                        player_id : player_id
+                    }), 'dealer-' + player_id);
                 } else{
                     $("area-dealer-" + player_id).textContent = "";
                 }
