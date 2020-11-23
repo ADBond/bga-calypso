@@ -54,6 +54,7 @@ class Calypso extends Table
                          // AB TODO: may want to revisit once I've fiddled with gameoptions
                          "roundNumber" => 31,
                          "handNumber" => 32,
+                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
 
                          // probably want some
                          //    "my_first_game_variant" => 100,
@@ -108,6 +109,8 @@ class Calypso extends Table
 
         // pre-game value
         self::setGameStateInitialValue( 'roundNumber', 0 );
+        // set this manually right now
+        self::setGameStateInitialValue( 'totalRounds', 2 );
 
         // Create cards
         $num_decks = 4;  // will be 4 - need to change here and in js
@@ -214,6 +217,10 @@ class Calypso extends Table
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
+
+        $result['handnumber'] = self::getGameStateValue('handNumber');
+        $result['roundnumber'] = self::getGameStateValue('roundNumber');
+        $result['totalrounds'] = self::getGameStateValue('totalRounds');
 
         return $result;
     }

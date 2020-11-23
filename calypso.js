@@ -71,9 +71,11 @@ function (dojo, declare) {
                 if(player_id == gamedatas.dealer){
                     $("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
                     // TODO: changing dealer **move** this to new position
+                    let dealer_area_id = 'dealer-' + player_id;
                     dojo.place(this.format_block('jstpl_dealerindicator', {
                         player_id : player_id
-                    }), 'dealer-' + player_id);
+                    }), dealer_area_id);
+                    this.addTooltipHtml( dealer_area_id, _( "This player is the dealer for this hand" ) )
                 } else{
                     $("area-dealer-" + player_id).textContent = "";
                 }
@@ -102,6 +104,8 @@ function (dojo, declare) {
                     }
                 }
             }
+            // TODO: center hand in the div if wanted:
+            this.playerHand.centerItems = true;
 
             dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
 
@@ -124,7 +128,7 @@ function (dojo, declare) {
             }
 
             // Cards in calypsos
-            console.log("now let's lay out those sweet sweet winnings")
+            console.log("display the calypsos");
             for (i in this.gamedatas.cardsincalypsos) {
                 var card = this.gamedatas.cardsincalypsos[i];
                 var color = card.type;
@@ -134,6 +138,7 @@ function (dojo, declare) {
                 this.placeCardInCalypso(player_id, color, value, card.id);
             }
 
+            this.updateGameStatus();
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -310,6 +315,18 @@ function (dojo, declare) {
             // actually, we only need to animate at end of trick
             //this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
+
+        updateGameStatus: function() {
+            // TODO: do I want to markup any of this for styling?
+            $("gameinfo").innerHTML =  dojo.string.substitute(
+                _("Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
+                {
+                    roundnumber: this.gamedatas.roundnumber,
+                    handnumber: this.gamedatas.handnumber,
+                    totalrounds: this.gamedatas.totalrounds,
+                } 
+            );
+        },
         ///////////////////////////////////////////////////
         //// Player's action
         
@@ -427,6 +444,7 @@ function (dojo, declare) {
                 var value = card.type_arg;
                 this.playerHand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
             }
+            this.updateGameStatus();
         },
 
         notif_playCard : function(notif) {
