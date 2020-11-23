@@ -138,7 +138,7 @@ function (dojo, declare) {
                 this.placeCardInCalypso(player_id, color, value, card.id);
             }
 
-            this.updateGameStatus();
+            this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -316,15 +316,16 @@ function (dojo, declare) {
             //this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
 
-        updateGameStatus: function() {
+        updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             console.log("update that banner!");
+            console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
             // TODO: do I want to markup any of this for styling?
             $("gameinfo").innerHTML =  dojo.string.substitute(
                 _("Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
                 {
-                    roundnumber: this.gamedatas.roundnumber,
-                    handnumber: this.gamedatas.handnumber,
-                    totalrounds: this.gamedatas.totalrounds,
+                    roundnumber: roundnumber,
+                    handnumber: handnumber,
+                    totalrounds: totalrounds,
                 } 
             );
         },
@@ -412,11 +413,15 @@ function (dojo, declare) {
         setupNotifications : function() {
             console.log('notifications subscriptions setup');
 
+            // generic stuff, mostly for dev
             dojo.subscribe('debug', this, "notif_debug");
-
             dojo.subscribe('update', this, "notif_update");
 
+            // the actual cards that a player receives
             dojo.subscribe('newHand', this, "notif_newHand");
+            // admin around hand/dealer changing
+            dojo.subscribe('dealHand', this, "notif_dealHand");
+        
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
@@ -448,7 +453,13 @@ function (dojo, declare) {
             }
             
             this.playerHand.updateDisplay();
-            this.updateGameStatus();
+        },
+
+        notif_dealHand : function(notif) {
+            // TODO: animate the dealer button moving here
+            console.log("in deals");
+            console.log(notif);
+            this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
         },
 
         notif_playCard : function(notif) {

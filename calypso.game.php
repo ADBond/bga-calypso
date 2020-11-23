@@ -654,11 +654,14 @@ class Calypso extends Table
         $new_dealer = self::getNextDealer();
         self::setGameStateValue( 'currentDealer', $new_dealer );
         self::notifyAllPlayers(  // TODO: id is for debugging, delete!
-            'update',
+            'dealHand',
             clienttranslate('${dealer_name}, (${dealer_id}) deals a new hand of cards'),
             array (
                 'dealer_name' => self::getPlayerName($new_dealer),
                 'dealer_id' => $new_dealer,
+                'round_number' => self::getGameStateValue( 'roundNumber' ),
+                'hand_number' => $hand_number,
+                'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
             )
         );
         $this->gamestate->nextState("");
