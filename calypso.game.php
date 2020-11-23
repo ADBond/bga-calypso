@@ -504,7 +504,11 @@ class Calypso extends Table
         $player_id = self::getActivePlayerId();
         $currentCard = $this->cards->getCard($card_id);
         if ( !self::validPlay($player_id, $currentCard) ){
-            throw new BgaUserException( self::_("You must follow suit if able to!") );
+            $trick_suit = self::getGameStateValue( 'trickColor' );
+
+            throw new BgaUserException(
+                self::_("You must follow suit if able to! Please play a ").$this->colors[$trick_suit]['nametr']."."
+            );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
         
