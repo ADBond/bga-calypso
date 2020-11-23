@@ -70,7 +70,9 @@ Not cleared after completing, needs refresh. Think I've already noted this somew
 
 #### hand end/setup mismatch
 
-Something goes wrong at the end of the hand, related to stock (js) - fine on refresh though
+Wrong blooming function! Think it's all cushty now.
+
+~~Something goes wrong at the end of the hand, related to stock (js) - fine on refresh though~~
 
 rough dump:
 

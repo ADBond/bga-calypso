@@ -317,6 +317,7 @@ function (dojo, declare) {
         },
 
         updateGameStatus: function() {
+            console.log("update that banner!");
             // TODO: do I want to markup any of this for styling?
             $("gameinfo").innerHTML =  dojo.string.substitute(
                 _("Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
@@ -435,20 +436,22 @@ function (dojo, declare) {
         },
 
         notif_newHand : function(notif) {
-            // We received a new full hand of 13 cards.
             this.playerHand.removeAll();
-
+            //this.playerHand.updateDisplay();
+            
+            console.log(notif.args.cards);
             for ( var i in notif.args.cards) {
                 var card = notif.args.cards[i];
                 var color = card.type;
                 var value = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
+                this.playerHand.addToStockWithId(this.getCardUniqueType(color, value), card.id);
             }
+            
+            this.playerHand.updateDisplay();
             this.updateGameStatus();
         },
 
         notif_playCard : function(notif) {
-            // Play a card on the table
             this.playCardOnTable(notif.args.player_id, notif.args.color, notif.args.value, notif.args.card_id);
         },
 
