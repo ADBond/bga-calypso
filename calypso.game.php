@@ -695,25 +695,36 @@ class Calypso extends Table
     }
 
     function stEndHand() {
+        // TODO: this notification should update how many completed calypsos each player has
         self::notifyAllPlayers(
             "update",
             clienttranslate("Hand over!"),  // TODO: number of hand
             array()
         );
-        // TODO: here is the place to check for end of round
-        // if so go to "endRound" transition
-        $this->gamestate->nextState("nextHand");
+        $num_hands = 4;
+        
+        if(self::getGameStateValue( 'handNumber' ) == $num_hands){
+            $this->gamestate->nextState('endRound');
+        } else {
+            $this->gamestate->nextState("nextHand");
+        }
     }
 
     function stEndRound() {
+        // TODO: this noticiation should give scores for the round
         self::notifyAllPlayers(
             "update",
             clienttranslate("Round over!"),  // TODO: number of round
             array()
         );
-        // score it
-        // new round if there are more to do "nextRound"
-        // if no more rounds then "endGame
+        // TODO: score it
+        $num_rounds = self::getGameStateValue( 'totalRounds' );
+        
+        if(self::getGameStateValue( 'roundNumber' ) < $num_rounds){
+            $this->gamestate->nextState('nextRound');
+        } else {
+            $this->gamestate->nextState('endGame');
+        }
     }
 
     // Temp note to recall:

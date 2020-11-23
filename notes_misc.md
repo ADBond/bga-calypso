@@ -64,6 +64,12 @@ Should be fixed now, but worth trying to recreate to check
 
 Not updated in new hand - should be left of dealer, but think it is left as whoever left won the last trick of previous hand!
 
+Additionally nead to set new dealer properly in a new round!
+
+#### hand number
+
+~~After 4 hands we should end the round!~~
+
 #### calyspo completed
 
 Not cleared after completing, needs refresh. Think I've already noted this somewhere
