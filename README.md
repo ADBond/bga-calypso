@@ -12,7 +12,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * ~~enforce suit-following (maybe make as switch for devving)~~
 * ~~collecting calypsos (sort-of, maybe?? need to display in-progress to check better)~~
 * ~~display in-progress calypsos~~ (and completed? won discards?)
-* ~~track dealer etc~~ make sure dealer is updated properly at end of hand
+* ~~track dealer etc make sure dealer is updated properly at end of hand~~
 * scoring
 * number of rounds/games set via gameoptions
 * stats
@@ -42,6 +42,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * animate this changing?
 * Display game state info somewhere (round `x` of `y`, hand `w` of `z`)
 * Say the game name somewhere? Or something distinctive.
+* Check that there's nowt that's colourblind-unfriendly
 
 ### Meta
 
