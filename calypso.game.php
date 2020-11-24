@@ -237,7 +237,8 @@ class Calypso extends Table
     */
     function getGameProgression()
     {
-        // TODO: compute and return the game progression
+        // AB TODO: compute and return the game progression
+        // should be simple arithemetic from total number of hands, usually
 
         return 0;
     }
@@ -271,11 +272,6 @@ class Calypso extends Table
         return $query_result[$suit];
     }
 
-    // TODO: delete?
-    function trickWinner($cards_played) {
-        return true;  // temporary bullshit
-    }
-
     // TODO: I think there is an in-built for this? Can't find it for the mo tho
     function getPlayerName($player_id){
         $players = self::loadPlayersBasicInfos();
@@ -283,43 +279,50 @@ class Calypso extends Table
     }
 
     // next player clockwise pass 1, -1 for anti-clockwise (i.e. previous player)
-    function getAdjacentPlayer($existing_player, $direction_index=1){
+    function getAdjacentPlayer($existing_player_id, $direction_index=1){
         $players = self::loadPlayersBasicInfos();
+        $existing_player_number = $players[$existing_player_id]["player_no"];
         foreach ( $players as $player_id => $player ) {
             // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
-            $new_player_number = ($existing_player + $direction_index) % 4;
+            $new_player_number = ($existing_player_number + $direction_index) % 4;
             $new_player_number = ($new_player_number == 0) ? 4 : $new_player_number;
             if($new_player_number == $player["player_no"]){
                 $new_player = $player_id;
-                self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} will be the next dealer'), array(
-                    'player_name' => self::getPlayerName($player_id)
-                ) );
             }
         }
         return $new_player;
     }
 
     // TODO: this changes the dealer, and is only done between hands - reflect that in name
-    function getNextDealer($direction_index=1) {
-        $current_dealer = self::getGameStateValue('currentDealer');
-        $players = self::loadPlayersBasicInfos();
-        $current_dealer_number = $players[$current_dealer]["player_no"];
+    function getNextDealer($direction_index=1, $relevant_dealer='currentDealer') {
+        $current_dealer = self::getGameStateValue($relevant_dealer);
 
         // TODO: don't need these notifications long-term
-        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} was the dealer, but they are done'), array(
-            'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
+        // self::notifyAllPlayers( 'debug', clienttranslate('${player_name} was the dealer, but they are done'), array(
+        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
+        // ) );
+        $new_dealer = self::getAdjacentPlayer($current_dealer, $direction_index);
+        // self::notifyAllPlayers( 'debug', clienttranslate('${player_name} will be the next dealer'), array(
+        //     'player_name' => self::getPlayerName($new_dealer)
+        // ) );
+        $first_leader = self::getAdjacentPlayer($new_dealer);
+        self::notifyAllPlayers( 'debug', clienttranslate('${leader} is first leader, ${dealer} is dealer'), array(
+            'leader' => self::getPlayerName($first_leader),
+            'dealer' => self::getPlayerName($new_dealer),
         ) );
-        $new_dealer = self::getAdjacentPlayer($current_dealer_number);
-        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} will be the next dealer'), array(
-            'player_name' => self::getPlayerName($new_dealer)
+        // TODO: specialist notification here!
+        // TODO: this should move to newTrick function (w/e it's called)
+        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} must lead a card to the first trick.'), array(
+            'player_name' => self::getPlayerName($first_leader)
         ) );
-        $this->gamestate->changeActivePlayer( self::getAdjacentPlayer($new_dealer) );
+        $this->gamestate->changeActivePlayer( $first_leader );
         return $new_dealer;
     }
     // Keep this separate, as might want to rotate the other way? if not just alias
     function getNextFirstDealer() {
-        // TODO: as above but for firstHandDealer, and maybe -1 instead of +1
-        // self::getNextDealer($direction_index=1)
+        // TODO: this won't work, as we need to hop back by two so that we roll forward one on new hand
+        $next_first_dealer = self::getNextDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
+        return $next_first_dealer;
     }
 
     function processCompletedTrick() {
@@ -647,9 +650,9 @@ class Calypso extends Table
         $this->cards->shuffle('deck');
         // AB TODO: num calypsos to zero, update dealer, etc
         // AB TODO: this function is called in game setup, so make sure it runs!
-        #$new_dealer = self::getNextFirstDealer();
-        #self::setGameStateValue( 'firstHandDealer', $new_dealer );
-        #self::setGameStateValue( 'currentDealer', $new_dealer );
+        $new_dealer = self::getNextFirstDealer();
+        self::setGameStateValue( 'firstHandDealer', $new_dealer );
+        self::setGameStateValue( 'currentDealer', $new_dealer );
         $this->gamestate->nextState("");
     }
 

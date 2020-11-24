@@ -30,6 +30,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * hook new round/new hand stuff to setup new game so we aren't doubling up/confusing logic
   * partly done but needs checking/careful eye
 * rename those damn variables to keep a shred of self-consistency
+  *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
 * check that the all the cards exist at all times, and get dealt out over the course of a round
 
 ### Display
@@ -43,6 +44,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * Display game state info somewhere (round `x` of `y`, hand `w` of `z`)
 * Say the game name somewhere? Or something distinctive.
 * Check that there's nowt that's colourblind-unfriendly
+  * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
+  * want to think about how to nicely signify teams - see e.g. Phat for nice approach
 
 ### Meta
 
