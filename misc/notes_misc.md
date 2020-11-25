@@ -62,9 +62,9 @@ Should be fixed now, but worth trying to recreate to check
 
 #### lead player
 
-Not updated in new hand - should be left of dealer, but think it is left as whoever left won the last trick of previous hand!
+~~Not updated in new hand - should be left of dealer, but think it is left as whoever left won the last trick of previous hand!~~
 
-Additionally nead to set new dealer properly in a new round!
+~~Additionally nead to set new dealer properly in a new round!~~
 
 #### hand number
 
