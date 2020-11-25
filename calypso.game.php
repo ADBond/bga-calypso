@@ -306,10 +306,10 @@ class Calypso extends Table
         //     'player_name' => self::getPlayerName($new_dealer)
         // ) );
         $first_leader = self::getAdjacentPlayer($new_dealer);
-        self::notifyAllPlayers( 'debug', clienttranslate('${leader} is first leader, ${dealer} is dealer'), array(
-            'leader' => self::getPlayerName($first_leader),
-            'dealer' => self::getPlayerName($new_dealer),
-        ) );
+        // self::notifyAllPlayers( 'debug', clienttranslate('${leader} is first leader, ${dealer} is dealer'), array(
+        //     'leader' => self::getPlayerName($first_leader),
+        //     'dealer' => self::getPlayerName($new_dealer),
+        // ) );
         // TODO: specialist notification here!
         // TODO: this should move to newTrick function (w/e it's called)
         self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} must lead a card to the first trick.'), array(
@@ -320,7 +320,8 @@ class Calypso extends Table
     }
     // Keep this separate, as might want to rotate the other way? if not just alias
     function getNextFirstDealer() {
-        // TODO: this won't work, as we need to hop back by two so that we roll forward one on new hand
+        // hop back by two so that we roll forward one on new hand
+        // TODO: this feels horrible - is there a nice way that won't be overkill?
         $next_first_dealer = self::getNextDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
     }
@@ -483,11 +484,11 @@ class Calypso extends Table
                 $calypso_so_far
             );
             $calypso_string = implode( ",", $ranks_so_far );
-            self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
-                'player_id' => $player_id,
-                'player_name' => $players[ $player_id ]['player_name'],
-                'calypso_string' => $calypso_string,
-            ) );
+            // self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
+            //     'player_id' => $player_id,
+            //     'player_name' => $players[ $player_id ]['player_name'],
+            //     'calypso_string' => $calypso_string,
+            // ) );
             if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
                 $this->cards->moveAllCardsInLocation( 'calypso', 'full_calypsos', $player_id, $player_id );
                 // AB TODO: updated db when I've updated the model to allow the field
@@ -498,11 +499,11 @@ class Calypso extends Table
                 $calypso_so_far
             );
             $calypso_string = implode( ",", $ranks_so_far );
-            self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
-                'player_id' => $player_id,
-                'player_name' => self::getPlayerName($player_id),
-                'calypso_string' => $calypso_string,
-            ) );
+            // self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
+            //     'player_id' => $player_id,
+            //     'player_name' => self::getPlayerName($player_id),
+            //     'calypso_string' => $calypso_string,
+            // ) );
         }
     }
 
@@ -648,8 +649,7 @@ class Calypso extends Table
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
-        // AB TODO: num calypsos to zero, update dealer, etc
-        // AB TODO: this function is called in game setup, so make sure it runs!
+        // AB TODO: num calypsos to zero
         $new_dealer = self::getNextFirstDealer();
         self::setGameStateValue( 'firstHandDealer', $new_dealer );
         self::setGameStateValue( 'currentDealer', $new_dealer );
@@ -671,8 +671,13 @@ class Calypso extends Table
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
             self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
         }
-        $new_dealer = self::getNextDealer();
-        self::setGameStateValue( 'currentDealer', $new_dealer );
+        // only change dealer after first hand, otherwise round setup should've handled it. Relax!
+        if($hand_number != 1){
+            $new_dealer = self::getNextDealer();
+            self::setGameStateValue( 'currentDealer', $new_dealer );
+        } else{
+            $new_dealer = self::getGameStateValue( 'currentDealer' );
+        }
         self::notifyAllPlayers(  // TODO: id is for debugging, delete!
             'dealHand',
             clienttranslate('${dealer_name}, (${dealer_id}) deals a new hand of cards'),

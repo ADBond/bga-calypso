@@ -47,6 +47,10 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * want to think about how to nicely signify teams - see e.g. Phat for nice approach
 
+### Other UI
+
+* throw an exception if non-active player clicks on card, rather than silently failing?
+
 ### Meta
 
 * anything to adjust in gameinfos - particularly revise description & and tags, and durations
