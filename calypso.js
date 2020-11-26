@@ -425,6 +425,7 @@ function (dojo, declare) {
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
+            dojo.subscribe('actionRequired', this, "notif_actionRequired");
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             // TODO: here, associate your game notifications with local methods
@@ -469,7 +470,12 @@ function (dojo, declare) {
         notif_trickWin : function(notif) {
             // We do nothing here (just wait in order players can view the 4 cards played before they're gone.
             // Actually,
+            // What was I about to say above ^ ????
         },
+        notif_actionRequired : function(notif) {
+            // nothing needed here
+        },
+
         // This is what happens after trick - we need to modify!
         obsolete_notif_giveAllCardsToPlayer : function(notif) {
             // Move all cards on table to given table, then destroy them

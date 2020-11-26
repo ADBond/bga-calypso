@@ -103,7 +103,7 @@ class Calypso extends Table
         /************ Start the game initialization *****/
 
         // Init global values with their initial values
-        self::initialiseTrick();
+        // self::initialiseTrick();  // this should happen before each trick, so don't worry
 
         // AB TODO: other gamestate values when I've figured out what they are!
 
@@ -310,11 +310,6 @@ class Calypso extends Table
         //     'leader' => self::getPlayerName($first_leader),
         //     'dealer' => self::getPlayerName($new_dealer),
         // ) );
-        // TODO: specialist notification here!
-        // TODO: this should move to newTrick function (w/e it's called)
-        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} must lead a card to the first trick.'), array(
-            'player_name' => self::getPlayerName($first_leader)
-        ) );
         $this->gamestate->changeActivePlayer( $first_leader );
         return $new_dealer;
     }
@@ -355,7 +350,7 @@ class Calypso extends Table
         $players = self::loadPlayersBasicInfos();
         self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} wins the trick'), array(
             'player_id' => $best_value_player_id,
-            'player_name' => $players[ $best_value_player_id ]['player_name']  // TODO: shouldn't this be special access method?
+            'player_name' => self::getPlayerName($best_value_player_id)
         ) );
         $this->gamestate->changeActivePlayer( $best_value_player_id );
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
@@ -689,6 +684,10 @@ class Calypso extends Table
                 'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
             )
         );
+        // TODO: specialist notification here!
+        self::notifyAllPlayers( 'actionRequired', clienttranslate('${player_name} must lead a card to the first trick.'), array(
+            'player_name' => self::getActivePlayerName()
+        ) );
         $this->gamestate->nextState("");
     }
 

@@ -5,7 +5,7 @@
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
 * animate dealer transitions
-* re-order inter-hand notifications so it flows more nicely like
+* ~~re-order inter-hand notifications so it flows more nicely like~~
 
 ## TODO list
 
