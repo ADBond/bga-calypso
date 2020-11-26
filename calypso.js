@@ -65,17 +65,16 @@ function (dojo, declare) {
                 };
                 // TODO: this should be a nice little icon rather than text.
                 $("trump-" + player_id).textContent = trump_lookup[player_trump];
-                // TODO: use an icon with hoverable text, like e.g. grosstarokk. (and then can animate eventually etc.)
+
                 console.log("dealer is:")
                 console.log(gamedatas.dealer);
                 if(player_id == gamedatas.dealer){
-                    $("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
-                    // TODO: changing dealer **move** this to new position
+                    //$("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
                     let dealer_area_id = 'dealer-' + player_id;
                     dojo.place(this.format_block('jstpl_dealerindicator', {
                         player_id : player_id
                     }), dealer_area_id);
-                    this.addTooltipHtml( dealer_area_id, _( "This player is the dealer for this hand" ) )
+                    this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) )
                 } else{
                     $("area-dealer-" + player_id).textContent = "";
                 }
@@ -316,6 +315,17 @@ function (dojo, declare) {
             //this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
 
+        changeDealer : function(new_dealer_id) {
+            //let old_dealer_area_id = 'dealer-' + old_dealer_id;
+            let new_dealer_area_id = 'dealer-' + new_dealer_id;
+            // dojo.place(this.format_block('jstpl_dealerindicator', {
+            //     player_id : player_id
+            // }), dealer_area_id);
+            // this.addTooltipHtml( new_dealer_area_id, _( "This player is the dealer for this hand" ) )
+            console.log("dealer posirtion gows to: ", new_dealer_area_id);
+            this.slideToObject('dealerbutton', new_dealer_area_id).play();
+        },
+
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
@@ -460,6 +470,7 @@ function (dojo, declare) {
             // TODO: animate the dealer button moving here
             console.log("in deals");
             console.log(notif);
+            this.changeDealer(notif.args.dealer_id);
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
         },
 

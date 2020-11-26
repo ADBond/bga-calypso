@@ -112,9 +112,16 @@
 }
 
 #dealerbutton {
+    position: relative;
     width: 16px;
     height: 16px;
     background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+    z-index: 1;
+}
+.dealer-indicator-area {
+    position: relative;
+    width: 16px;
+    height: 16px;
 }
 
 /*** cards on table ***/

@@ -9,7 +9,7 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -->
 
-<div id="gameinfo"></div>
+<div class="whiteblock" id="gameinfo"></div>
 
 <div id="playarea">
     <div id="playertables">
