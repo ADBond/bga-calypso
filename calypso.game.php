@@ -112,8 +112,9 @@ class Calypso extends Table
         // set this manually right now
         self::setGameStateInitialValue( 'totalRounds', 2 );
 
-        // Create cards
-        $num_decks = 4;  // will be 4 - need to change here and in js
+        // Create 4 identiical decks of cards
+        // see material.inc.php to confirm the labelling
+        $num_decks = 4;
         $cards = array ();
         foreach ( $this->suits as $suit_id => $suit ) {
             // spade, heart, club, diamond
@@ -127,13 +128,9 @@ class Calypso extends Table
 
         // Shuffle deck
         // probably unnecessary, as this should happen as rounds start
-        $this->cards->shuffle('deck');
-        // Deal 13 cards to each players
+        //$this->cards->shuffle('deck');
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
-            // don't deal cards, as that happens once we start a new hand!
-            //$cards = $this->cards->pickCards(13, 'deck', $player_id);
-            
             if($player["player_no"] == 3){
                 // they are dealer now, and the first dealer!
                 // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
@@ -147,8 +144,6 @@ class Calypso extends Table
         //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
         //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
 
-        // TODO: setup the initial game situation here
-        
         // Set up personal trump suits
         // player_no: the index of player in natural playing order (starting with 1)
         // For now I will randomly choose one of the four for first player, then randomly one of the other two for next
@@ -176,11 +171,6 @@ class Calypso extends Table
         self::DbQuery( $sql );
         self::reloadPlayersBasicInfos();
 
-        // Set new 'round'
-
-        // Activate first player to play (if anything else needed than below:)
-
-        // Activate first player (which is in general a good idea :) )
         $this->activeNextPlayer();
 
         /************ End of the game initialization *****/
@@ -201,19 +191,12 @@ class Calypso extends Table
     
         $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
     
-        // Get information about players
-        // Note: you can retrieve some extra field you added for "player" table in "dbmodel.sql" if you need it.
         $sql = "SELECT player_id id, player_score score, trump_suit trump_suit FROM player ";
         $result['players'] = self::getCollectionFromDb( $sql );
-  
-        // TODO: Gather all information about current game situation (visible by player $current_player_id).
-        // AB TODO: gather remaining info once that's set-up
-        // Cards in player hand
+
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
 
-        // Cards played on the table
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
-        // Cards played in calypsos
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
