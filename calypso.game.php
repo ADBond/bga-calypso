@@ -12,8 +12,6 @@
   *
   * This is the main file for your game logic.
   *
-  * In this PHP file, you are going to defines the rules of the game.
-  *
   */
 
 
@@ -24,23 +22,18 @@ class Calypso extends Table
 {
 	function __construct( )
 	{
-        // Your global variables labels:
-        //  Here, you can assign labels to global variables you are using for this game.
         //  You can use any number of global variables with IDs between 10 and 99.
         //  If your game has options (variants), you also have to associate here a label to
         //  the corresponding ID in gameoptions.inc.php.
-        // Note: afterwards, you can get/set the global variables with getGameStateValue/setGameStateInitialValue/setGameStateValue
         parent::__construct();
 
-        # not sure for now quite what I need to keep track of here, so start minimally-ish
         self::initGameStateLabels( array(
-                         // TODO: move dealer shit into db if there's a good reason, otherwise here is fine
                          // who dealt first this round
                          "firstHandDealer" => 10,
                          // who dealt this hand
                          "currentDealer" => 11,
                          // suit lead
-                         "trickColor" => 21,
+                         "trickSuit" => 21,
                          // who's winning trick so far and with what
                          "currentTrickWinner" => 22,
                          "bestCardSuit" => 23,
@@ -102,9 +95,6 @@ class Calypso extends Table
         
         /************ Start the game initialization *****/
 
-        // Init global values with their initial values
-        // self::initialiseTrick();  // this should happen before each trick, so don't worry
-
         // AB TODO: other gamestate values when I've figured out what they are!
 
         // pre-game value
@@ -112,28 +102,23 @@ class Calypso extends Table
         // set this manually right now
         self::setGameStateInitialValue( 'totalRounds', 2 );
 
-        // Create cards
-        $num_decks = 4;  // will be 4 - need to change here and in js
+        // Create 4 identiical decks of cards
+        // see material.inc.php to confirm the labelling
+        $num_decks = 4;
         $cards = array ();
-        foreach ( $this->colors as $color_id => $color ) {
+        foreach ( $this->suits as $suit_id => $suit ) {
             // spade, heart, club, diamond
-            for ($value = 2; $value <= 14; $value ++) {
+            for ($rank = 2; $rank <= 14; $rank ++) {
                 //  2, 3, 4, ... K, A
-                $cards [] = array ('type' => $color_id, 'type_arg' => $value, 'nbr' => $num_decks );
+                $cards [] = array ('type' => $suit_id, 'type_arg' => $rank, 'nbr' => $num_decks );
             }
         }
 
         $this->cards->createCards( $cards, 'deck' );
 
-        // Shuffle deck
-        // probably unnecessary, as this should happen as rounds start
-        $this->cards->shuffle('deck');
-        // Deal 13 cards to each players
+        // set pre-initial dealers, ready for state functions to adjust to initial values
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
-            // don't deal cards, as that happens once we start a new hand!
-            //$cards = $this->cards->pickCards(13, 'deck', $player_id);
-            
             if($player["player_no"] == 3){
                 // they are dealer now, and the first dealer!
                 // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
@@ -147,15 +132,12 @@ class Calypso extends Table
         //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
         //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
 
-        // TODO: setup the initial game situation here
-        
         // Set up personal trump suits
         // player_no: the index of player in natural playing order (starting with 1)
         // For now I will randomly choose one of the four for first player, then randomly one of the other two for next
         // the rest will be determined from that.
         // randomly pick a suit for the first player using what I assume(?) is the standard mapping
         $first_player_suit = bga_rand( 1, 4 );
-        // self::dump("The first player has suit: ", $first_player_suit);
         // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
         $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
         $player_suits = array(
@@ -176,11 +158,6 @@ class Calypso extends Table
         self::DbQuery( $sql );
         self::reloadPlayersBasicInfos();
 
-        // Set new 'round'
-
-        // Activate first player to play (if anything else needed than below:)
-
-        // Activate first player (which is in general a good idea :) )
         $this->activeNextPlayer();
 
         /************ End of the game initialization *****/
@@ -201,19 +178,12 @@ class Calypso extends Table
     
         $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
     
-        // Get information about players
-        // Note: you can retrieve some extra field you added for "player" table in "dbmodel.sql" if you need it.
         $sql = "SELECT player_id id, player_score score, trump_suit trump_suit FROM player ";
         $result['players'] = self::getCollectionFromDb( $sql );
-  
-        // TODO: Gather all information about current game situation (visible by player $current_player_id).
-        // AB TODO: gather remaining info once that's set-up
-        // Cards in player hand
+
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
 
-        // Cards played on the table
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
-        // Cards played in calypsos
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
@@ -266,7 +236,7 @@ class Calypso extends Table
         return $query_result[$player_id];
     }
 
-    function getPlayerFromSuit($suit){
+    function getPlayerIDFromSuit($suit){
         $sql = "SELECT trump_suit, player_id FROM player WHERE trump_suit=".$suit.";";
         $query_result = self::getCollectionFromDB( $sql, true );
         return $query_result[$suit];
@@ -294,7 +264,7 @@ class Calypso extends Table
     }
 
     // TODO: this changes the dealer, and is only done between hands - reflect that in name
-    function getNextDealer($direction_index=1, $relevant_dealer='currentDealer') {
+    function updateDealer($direction_index=1, $relevant_dealer='currentDealer') {
         $current_dealer = self::getGameStateValue($relevant_dealer);
 
         // TODO: don't need these notifications long-term
@@ -317,7 +287,7 @@ class Calypso extends Table
     function getNextFirstDealer() {
         // hop back by two so that we roll forward one on new hand
         // TODO: this feels horrible - is there a nice way that won't be overkill?
-        $next_first_dealer = self::getNextDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
+        $next_first_dealer = self::updateDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
     }
 
@@ -364,8 +334,8 @@ class Calypso extends Table
     }
 
     function initialiseTrick(){ 
-        // Set current trick color to zero (= no trick color)
-        self::setGameStateInitialValue( 'trickColor', 0 );
+        // Set current trick suit to zero (= no trick suit)
+        self::setGameStateInitialValue( 'trickSuit', 0 );
         // No current winner yet
         self::setGameStateInitialValue( 'currentTrickWinner', 0 );
         // Trump has not been lead yet
@@ -388,7 +358,7 @@ class Calypso extends Table
         // shortcut for debugging:
         //return true;
         global $trick_suit;  // this makes me think that there is maybe a better way to do this??
-        $trick_suit = self::getGameStateValue( 'trickColor' );
+        $trick_suit = self::getGameStateValue( 'trickSuit' );
         if( $trick_suit == 0){  // i.e. first card of trick
             return true;
         }
@@ -418,7 +388,7 @@ class Calypso extends Table
     function sortWonCards($cards_played, $winner_player_id){
         $player_suit = self::getPlayerSuit($winner_player_id);
         $partner_suit = self::getPartnerSuit($player_suit);
-        $partner_id = self::getPlayerFromSuit($partner_suit);
+        $partner_id = self::getPlayerIDFromSuit($partner_suit);
 
         // array keeps track of where cards went, so we can pass to js for animation
         $moved_to = array();
@@ -516,18 +486,18 @@ class Calypso extends Table
         $player_id = self::getActivePlayerId();
         $currentCard = $this->cards->getCard($card_id);
         if ( !self::validPlay($player_id, $currentCard) ){
-            $trick_suit = self::getGameStateValue( 'trickColor' );
-
+            $trick_suit = self::getGameStateValue( 'trickSuit' );
+            // if they're trying to revoke, warn, and remind them of the suit they should be playing
             throw new BgaUserException(
-                self::_("You must follow suit if able to! Please play a ").$this->colors[$trick_suit]['nametr']."."
+                self::_("You must follow suit if able to! Please play a ").$this->suits[$trick_suit]['nametr']."."
             );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
         
-        $currentTrickColor = self::getGameStateValue( 'trickColor' );
+        $currenttrickSuit = self::getGameStateValue( 'trickSuit' );
         // case of the first card of the trick:
-        if( $currentTrickColor == 0 ) {
-            self::setGameStateValue( 'trickColor', $currentCard['type'] );
+        if( $currenttrickSuit == 0 ) {
+            self::setGameStateValue( 'trickSuit', $currentCard['type'] );
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
@@ -539,7 +509,7 @@ class Calypso extends Table
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
             // if they follow suit:
-            if ( $currentCard['type'] == self::getGameStateValue( 'trickColor' ) ){
+            if ( $currentCard['type'] == self::getGameStateValue( 'trickSuit' ) ){
                 // if trump lead then this ain't a winner, so do nothing
                 // if trump was not lead:
                 // check if trump is winning, and if not, check if this card is higher
@@ -568,19 +538,19 @@ class Calypso extends Table
             }
         }
         // And notify
-        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
-                'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
-                'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
-                'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
-                'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
-                'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
+        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
+                'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+                'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
+                'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
+                'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
+                'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
              ));
-        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
-        // 'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
-        // 'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
-        // 'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
-        // 'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
-        // 'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
+        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
+        // 'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+        // 'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
+        // 'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
+        // 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
+        // 'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
         // ));
         // Next player
         $this->gamestate->nextState('playCard');
@@ -668,7 +638,7 @@ class Calypso extends Table
         }
         // only change dealer after first hand, otherwise round setup should've handled it. Relax!
         if($hand_number != 1){
-            $new_dealer = self::getNextDealer();
+            $new_dealer = self::updateDealer();
             self::setGameStateValue( 'currentDealer', $new_dealer );
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
@@ -684,7 +654,6 @@ class Calypso extends Table
                 'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
             )
         );
-        // TODO: specialist notification here!
         self::notifyAllPlayers( 'actionRequired', clienttranslate('${player_name} must lead a card to the first trick.'), array(
             'player_name' => self::getActivePlayerName()
         ) );
@@ -692,7 +661,6 @@ class Calypso extends Table
     }
 
     function stNewTrick() {
-        // New trick: active the player who wins the last trick, or the left of dealer
         self::initialiseTrick();
         $this->gamestate->nextState();
     }
@@ -719,10 +687,10 @@ class Calypso extends Table
     }
 
     function stEndHand() {
-        // TODO: this notification should update how many completed calypsos each player has
+        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
         self::notifyAllPlayers(
             "update",
-            clienttranslate("Hand over!"),  // TODO: number of hand
+            clienttranslate("Hand over!"),
             array()
         );
         $num_hands = 4;
@@ -735,10 +703,10 @@ class Calypso extends Table
     }
 
     function stEndRound() {
-        // TODO: this noticiation should give scores for the round
+        // TODO: this noticiation should give scores for the round, and round number
         self::notifyAllPlayers(
             "update",
-            clienttranslate("Round over!"),  // TODO: number of round
+            clienttranslate("Round over!"),
             array()
         );
         // TODO: score it
@@ -750,12 +718,6 @@ class Calypso extends Table
             $this->gamestate->nextState('endGame');
         }
     }
-
-    // Temp note to recall:
-    // Important: All state actions game or player must end with state transition (or thrown exception).
-    // Also make sure its ONLY one state transition, if you accidentally fall though after state transition
-    // and do another one it will be a real mess and head scratching for long time. 
-    /*
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Zombie

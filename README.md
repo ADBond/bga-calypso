@@ -4,9 +4,8 @@
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~animate dealer transitions~~
-* ~~re-order inter-hand notifications so it flows more nicely like~~
-* ~~stop the little dealer icon from affecting position of played card~~
+* ~~update js a bit~~
+* ~~rename variables to be more consistent~~
 
 ## TODO list
 
@@ -45,17 +44,19 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Display
 
 * Animate completed calypso & removing it w/o refresh
+* Little piles for won cards to be sink for any misc won cards, instead of player panels
 * game art
 * Nicer game area, like in e.g. GrossTarock?
 * Set different default colours
 * ~~Show who is dealer~~, ~~who dealt first in round etc. Let's not do this~~
-  * animate this changing?
+  * ~~animate this changing?~~
 * ~~Display game state info somewhere (round `x` of `y`, hand `w` of `z`)~~
   * done but needs a bit of zhuzhing up
 * Say the game name somewhere? Or something distinctive.
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * want to think about how to nicely signify teams - see e.g. Phat for nice approach
+* When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
 
 ### Other UI
 

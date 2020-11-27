@@ -35,88 +35,12 @@ Might be nice to refactor so the code is more readable and these values are hidd
 4. Diamonds
 
 ### bugs
-
-#### logic bug
-
-Resolved? triple-check
-
-Logic error here:
-
-```
-AndyB3 wins the trick
-AndyB3 [heart] plays 9 heart
-AndyB1 [club] plays 7 club
-AndyB0 [spade] plays 2 club
-AndyB2 [diamond] plays K heart
-```
-
-Should be fixed now, but worth trying to recreate to check
-
-#### dealer crap
-
-~~Everyone is getting double cards right now~~
-
 #### hand number
 
 ~~Not getting updated at new hand, at least in the display~~
-
-#### lead player
-
-~~Not updated in new hand - should be left of dealer, but think it is left as whoever left won the last trick of previous hand!~~
-
-~~Additionally nead to set new dealer properly in a new round!~~
-
-#### hand number
-
-~~After 4 hands we should end the round!~~
-
 #### calyspo completed
 
 Not cleared after completing, needs refresh. Think I've already noted this somewhere
-
-#### hand end/setup mismatch
-
-Wrong blooming function! Think it's all cushty now.
-
-~~Something goes wrong at the end of the hand, related to stock (js) - fine on refresh though~~
-
-rough dump:
-
-```
-Entering state: endHand calypso.js:152:21
-Leaving state: endHand calypso.js:178:21
-onUpdateActionButtons: newHand calypso.js:204:21
-Entering state: newHand calypso.js:152:21
-Stock control: Unknow type: undefined ly_studio.js:2:990318
-Script error. ly_studio.js:2:784774
-url=https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js ly_studio.js:2:784793
-line=0 ly_studio.js:2:784819
-Uncaught TypeError: type is undefined
-    updateDisplay https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    addToStockWithId https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    notif_newHand https://en.1.studio.boardgamearena.com:8083/data/themereleases/current/games/calypso/999999-9999/calypso.js?1605980233624:428
-    Dojo 7
-    dispatchNotification https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    dispatchNotifications https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    onSynchronousNotificationEnd https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    Dojo 7
-    endnotif https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    <anonymous> https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-ly_studio.js:2:990808
-Stock control: Unknow type: undefined ly_studio.js:2:990318
-Script error. ly_studio.js:2:784774
-url=https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js ly_studio.js:2:784793
-line=0 ly_studio.js:2:784819
-Uncaught TypeError: type is undefined
-    updateDisplay https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    hResize https://en.1.studio.boardgamearena.com:8083/data/themereleases/201117-1445/js/modules/layer/ly_studio.js:2
-    Dojo 2
-
-```
-
-#### dealer ordering
-
-~~Right now dealer leads to first trick, not forehand. (or rather am not correctly setting first dealer :/)~~
 
 ### player box
 
