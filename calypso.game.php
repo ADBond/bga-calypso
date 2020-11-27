@@ -40,7 +40,7 @@ class Calypso extends Table
                          // who dealt this hand
                          "currentDealer" => 11,
                          // suit lead
-                         "trickColor" => 21,
+                         "trickSuit" => 21,
                          // who's winning trick so far and with what
                          "currentTrickWinner" => 22,
                          "bestCardSuit" => 23,
@@ -115,11 +115,11 @@ class Calypso extends Table
         // Create cards
         $num_decks = 4;  // will be 4 - need to change here and in js
         $cards = array ();
-        foreach ( $this->colors as $color_id => $color ) {
+        foreach ( $this->suits as $suit_id => $suit ) {
             // spade, heart, club, diamond
             for ($value = 2; $value <= 14; $value ++) {
                 //  2, 3, 4, ... K, A
-                $cards [] = array ('type' => $color_id, 'type_arg' => $value, 'nbr' => $num_decks );
+                $cards [] = array ('type' => $suit_id, 'type_arg' => $value, 'nbr' => $num_decks );
             }
         }
 
@@ -364,8 +364,8 @@ class Calypso extends Table
     }
 
     function initialiseTrick(){ 
-        // Set current trick color to zero (= no trick color)
-        self::setGameStateInitialValue( 'trickColor', 0 );
+        // Set current trick suit to zero (= no trick suit)
+        self::setGameStateInitialValue( 'trickSuit', 0 );
         // No current winner yet
         self::setGameStateInitialValue( 'currentTrickWinner', 0 );
         // Trump has not been lead yet
@@ -388,7 +388,7 @@ class Calypso extends Table
         // shortcut for debugging:
         //return true;
         global $trick_suit;  // this makes me think that there is maybe a better way to do this??
-        $trick_suit = self::getGameStateValue( 'trickColor' );
+        $trick_suit = self::getGameStateValue( 'trickSuit' );
         if( $trick_suit == 0){  // i.e. first card of trick
             return true;
         }
@@ -516,18 +516,18 @@ class Calypso extends Table
         $player_id = self::getActivePlayerId();
         $currentCard = $this->cards->getCard($card_id);
         if ( !self::validPlay($player_id, $currentCard) ){
-            $trick_suit = self::getGameStateValue( 'trickColor' );
+            $trick_suit = self::getGameStateValue( 'trickSuit' );
 
             throw new BgaUserException(
-                self::_("You must follow suit if able to! Please play a ").$this->colors[$trick_suit]['nametr']."."
+                self::_("You must follow suit if able to! Please play a ").$this->suits[$trick_suit]['nametr']."."
             );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
         
-        $currentTrickColor = self::getGameStateValue( 'trickColor' );
+        $currenttrickSuit = self::getGameStateValue( 'trickSuit' );
         // case of the first card of the trick:
-        if( $currentTrickColor == 0 ) {
-            self::setGameStateValue( 'trickColor', $currentCard['type'] );
+        if( $currenttrickSuit == 0 ) {
+            self::setGameStateValue( 'trickSuit', $currentCard['type'] );
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
@@ -539,7 +539,7 @@ class Calypso extends Table
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
             // if they follow suit:
-            if ( $currentCard['type'] == self::getGameStateValue( 'trickColor' ) ){
+            if ( $currentCard['type'] == self::getGameStateValue( 'trickSuit' ) ){
                 // if trump lead then this ain't a winner, so do nothing
                 // if trump was not lead:
                 // check if trump is winning, and if not, check if this card is higher
@@ -568,19 +568,19 @@ class Calypso extends Table
             }
         }
         // And notify
-        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
-                'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${suit_displayed}'), array (
+                'i18n' => array ('suit_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
                 'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
-                'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
-                'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
-                'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
+                'value_displayed' => $this->values_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
+                'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
+                'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
              ));
-        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${color_displayed}'), array (
-        // 'i18n' => array ('color_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${suit_displayed}'), array (
+        // 'i18n' => array ('suit_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
         // 'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
-        // 'value_displayed' => $this->values_label [$currentCard ['type_arg']],'color' => $currentCard ['type'],
-        // 'color_displayed' => $this->colors [$currentCard ['type']] ['name'],
-        // 'trump' => $this->colors [self::getPlayerSuit($player_id)] ['name']
+        // 'value_displayed' => $this->values_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
+        // 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
+        // 'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
         // ));
         // Next player
         $this->gamestate->nextState('playCard');

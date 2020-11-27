@@ -20,7 +20,7 @@
  */
 
 // AB TODO: going to rename some of these variables at some point later, but best not confuse myself yet.
-$this->colors = array(
+$this->suits = array(
   1 => array( 'name' => clienttranslate('spade'),
               'nametr' => self::_('spade') ),
   2 => array( 'name' => clienttranslate('heart'),

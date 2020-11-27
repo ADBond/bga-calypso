@@ -4,9 +4,8 @@
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~animate dealer transitions~~
-* ~~re-order inter-hand notifications so it flows more nicely like~~
-* ~~stop the little dealer icon from affecting position of played card~~
+* update js a bit
+* rename variables to be more consistent
 
 ## TODO list
 
