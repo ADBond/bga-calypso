@@ -59,7 +59,7 @@
 var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
 // TODO: is this obsolete now?
-var jstpl_cardincalypso = '<div class="cardincalypso" id="cardincalypso_${player_id}_${value}"\
+var jstpl_cardincalypso = '<div class="cardincalypso" id="cardincalypso_${player_id}_${rank}"\
                           style="background-position:-${x}px -${y}px;"\
                           >\
                           </div>';

@@ -52,12 +52,12 @@
         foreach ( $players as $player_id => $info ) {
             $this->page->reset_subblocks( "calypsocard" );
             $trump_suit = $this->game->getPlayerSuit($player_id);
-            for ($value = 2; $value <= 14; $value ++) {
+            for ($rank = 2; $rank <= 14; $rank ++) {
                 //  2, 3, 4, ... K, A
                 // TODO: width should probably be set in JS as we can scale to card size there
                 // width of card is 72
                 // TODO: z-index to assure the right ordering
-                $offset_value = ($value - 2) * 25;
+                $offset_value = ($rank - 2) * 25;
                 $this->page->insert_block(
                     "calypsocard",
                     array(
@@ -66,7 +66,7 @@
                         #"PLAYER_COLOR" => $players [$player_id] ['player_color'],
                         #"DIR" => $dir
                         "OFFSET" => $offset_value,
-                        "CARD_RANK" => $value
+                        "CARD_RANK" => $rank
                     )
                 );
             }

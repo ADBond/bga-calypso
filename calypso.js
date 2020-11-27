@@ -91,11 +91,11 @@ function (dojo, declare) {
             // Create cards types:
             var num_decks = 4;  // this will be four later, but let's not go to quickly
             for (var suit = 1; suit <= 4; suit++) {
-                for (var value = 2; value <= 14; value++) {
+                for (var rank = 2; rank <= 14; rank++) {
                     for (var deck = 1; deck <= num_decks; deck++){
                         // Build card type id
-                        var card_type_id = this.getCardUniqueId(suit, value, deck);
-                        var card_type = this.getCardUniqueType(suit, value);
+                        var card_type_id = this.getCardUniqueId(suit, rank, deck);
+                        var card_type = this.getCardUniqueType(suit, rank);
                         // args are id, weight (for hand-sorting), img url, and img position
                         // Not sure for the moment if it is important for ids to be distinct here,
                         // but a sensible default answer seems to be 'yes'
@@ -112,18 +112,18 @@ function (dojo, declare) {
             for ( var i in this.gamedatas.hand) {
                 var card = this.gamedatas.hand[i];
                 var suit = card.type;
-                var value = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, value), card.id);
+                var rank = card.type_arg;
+                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, rank), card.id);
             }
 
             // Cards played on table
             for (i in this.gamedatas.cardsontable) {
                 var card = this.gamedatas.cardsontable[i];
                 var suit = card.type;
-                var value = card.type_arg;
+                var rank = card.type_arg;
                 var player_id = card.location_arg;
-                console.log("on the table has: " + suit + ", " + value + ", and...");
-                this.playCardOnTable(player_id, suit, value, card.id);
+                console.log("on the table has: " + suit + ", " + rank + ", and...");
+                this.playCardOnTable(player_id, suit, rank, card.id);
             }
 
             // Cards in calypsos
@@ -131,10 +131,10 @@ function (dojo, declare) {
             for (i in this.gamedatas.cardsincalypsos) {
                 var card = this.gamedatas.cardsincalypsos[i];
                 var suit = card.type;
-                var value = card.type_arg;
+                var rank = card.type_arg;
                 var player_id = card.location_arg;
-                console.log("calypso has: " + suit + ", " + value + ", and...");
-                this.placeCardInCalypso(player_id, suit, value, card.id);
+                console.log("calypso has: " + suit + ", " + rank + ", and...");
+                this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
 
             this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);
@@ -236,20 +236,20 @@ function (dojo, declare) {
             script.
         
         */
-        // Get card unique identifier based on its suit and value
+        // Get card unique identifier based on its suit and rank
         // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
-        getCardUniqueType : function(suit, value) {
-            return (suit - 1) * 13 + (value - 2);
+        getCardUniqueType : function(suit, rank) {
+            return (suit - 1) * 13 + (rank - 2);
         },
-        getCardUniqueId : function(suit, value, deck) {
-            return (deck - 1) * 52 + (suit - 1) * 13 + (value - 2);
+        getCardUniqueId : function(suit, rank, deck) {
+            return (deck - 1) * 52 + (suit - 1) * 13 + (rank - 2);
         },
 
-        playCardOnTable : function(player_id, suit, value, card_id) {
+        playCardOnTable : function(player_id, suit, rank, card_id) {
             // player_id => direction
             dojo.place(this.format_block('jstpl_cardontable', {
-                // these values relate to getting the right card from sprite
-                x : this.cardwidth * (value - 2),
+                // these ranks relate to getting the right card from sprite
+                x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
                 player_id : player_id
             }), 'playertablecard_' + player_id);
@@ -272,7 +272,7 @@ function (dojo, declare) {
             this.slideToObject('cardontable_' + player_id, 'playertablecard_' + player_id).play();
         },
 
-        placeCardInCalypso : function(player_id, suit, value, card_id) {
+        placeCardInCalypso : function(player_id, suit, rank, card_id) {
             let top_value = 0;
             let left_value = 0;
             // dojo.place(this.format_block('jstpl_cardincalypso', {
@@ -282,12 +282,12 @@ function (dojo, declare) {
             //     value: value,
             //     // top: top_value,
             //     // left: left_value,
-            // }), 'calypsocard_' + player_id + "_" + value);
+            // }), 'calypsocard_' + player_id + "_" + rank);
 
-            let x = this.cardwidth * (value - 2);
+            let x = this.cardwidth * (rank - 2);
             let y = this.cardheight * (suit - 1);
 
-            let card_el_id = `calypsocard_${player_id}_${value}`;
+            let card_el_id = `calypsocard_${player_id}_${rank}`;
             console.log(card_el_id);
             // let card_slot = $(card_el_id); //$(card_el_id).get(0);
             // card_slot.style.backgroundPosition = `-${x}px -${y}px;`;
@@ -312,7 +312,7 @@ function (dojo, declare) {
             // In any case: move it to its final destination
             // TODO: reinstate this, but it is the bit that is causing weird offsets!
             // actually, we only need to animate at end of trick
-            //this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
+            //this.slideToObject('cardincalypso_' + player_id + "_" + rank, 'calypsocard_' + player_id + '_' + rank).play();
         },
 
         changeDealer : function(new_dealer_id) {
@@ -459,8 +459,8 @@ function (dojo, declare) {
             for ( var i in notif.args.cards) {
                 var card = notif.args.cards[i];
                 var suit = card.type;
-                var value = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, value), card.id);
+                var rank = card.type_arg;
+                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, rank), card.id);
             }
             
             this.playerHand.updateDisplay();
@@ -475,7 +475,7 @@ function (dojo, declare) {
         },
 
         notif_playCard : function(notif) {
-            this.playCardOnTable(notif.args.player_id, notif.args.suit, notif.args.value, notif.args.card_id);
+            this.playCardOnTable(notif.args.player_id, notif.args.suit, notif.args.rank, notif.args.card_id);
         },
 
         notif_trickWin : function(notif) {
@@ -516,11 +516,11 @@ function (dojo, declare) {
                 } else{
                     console.log("but this card goes to the special place")
                     let calypso_player_id = moved_to[player]["owner"];
-                    let value = moved_to[player]["rank"];
+                    let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
-                    var anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${value}`);
-                    this.placeCardInCalypso(send_to_id, suit, value, card_id);
+                    var anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${rank}`);
+                    this.placeCardInCalypso(send_to_id, suit, rank, card_id);
                 }
                 dojo.connect(anim, 'onEnd', function(node) {
                     dojo.destroy(node);

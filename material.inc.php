@@ -31,7 +31,7 @@ $this->suits = array(
               'nametr' => self::_('diamond') )
 );
 
-$this->values_label = array(
+$this->ranks_label = array(
   2 => '2',
   3 => '3',
   4 => '4',

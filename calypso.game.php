@@ -117,9 +117,9 @@ class Calypso extends Table
         $cards = array ();
         foreach ( $this->suits as $suit_id => $suit ) {
             // spade, heart, club, diamond
-            for ($value = 2; $value <= 14; $value ++) {
+            for ($rank = 2; $rank <= 14; $rank ++) {
                 //  2, 3, 4, ... K, A
-                $cards [] = array ('type' => $suit_id, 'type_arg' => $value, 'nbr' => $num_decks );
+                $cards [] = array ('type' => $suit_id, 'type_arg' => $rank, 'nbr' => $num_decks );
             }
         }
 
@@ -568,17 +568,17 @@ class Calypso extends Table
             }
         }
         // And notify
-        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${suit_displayed}'), array (
-                'i18n' => array ('suit_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
-                'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
-                'value_displayed' => $this->values_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
+        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
+                'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+                'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
+                'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
                 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
                 'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
              ));
-        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${value_displayed} ${suit_displayed}'), array (
-        // 'i18n' => array ('suit_displayed','value_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
-        // 'player_name' => self::getActivePlayerName(),'value' => $currentCard ['type_arg'],
-        // 'value_displayed' => $this->values_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
+        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
+        // 'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
+        // 'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
+        // 'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
         // 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
         // 'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
         // ));
