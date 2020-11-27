@@ -249,7 +249,7 @@ class Calypso extends Table
         return $query_result[$player_id];
     }
 
-    function getPlayerFromSuit($suit){
+    function getPlayerIDFromSuit($suit){
         $sql = "SELECT trump_suit, player_id FROM player WHERE trump_suit=".$suit.";";
         $query_result = self::getCollectionFromDB( $sql, true );
         return $query_result[$suit];
@@ -401,7 +401,7 @@ class Calypso extends Table
     function sortWonCards($cards_played, $winner_player_id){
         $player_suit = self::getPlayerSuit($winner_player_id);
         $partner_suit = self::getPartnerSuit($player_suit);
-        $partner_id = self::getPlayerFromSuit($partner_suit);
+        $partner_id = self::getPlayerIDFromSuit($partner_suit);
 
         // array keeps track of where cards went, so we can pass to js for animation
         $moved_to = array();
@@ -500,7 +500,7 @@ class Calypso extends Table
         $currentCard = $this->cards->getCard($card_id);
         if ( !self::validPlay($player_id, $currentCard) ){
             $trick_suit = self::getGameStateValue( 'trickSuit' );
-
+            // if they're trying to revoke, warn, and remind them of the suit they should be playing
             throw new BgaUserException(
                 self::_("You must follow suit if able to! Please play a ").$this->suits[$trick_suit]['nametr']."."
             );
@@ -667,7 +667,6 @@ class Calypso extends Table
                 'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
             )
         );
-        // TODO: specialist notification here!
         self::notifyAllPlayers( 'actionRequired', clienttranslate('${player_name} must lead a card to the first trick.'), array(
             'player_name' => self::getActivePlayerName()
         ) );
@@ -675,7 +674,6 @@ class Calypso extends Table
     }
 
     function stNewTrick() {
-        // New trick: active the player who wins the last trick, or the left of dealer
         self::initialiseTrick();
         $this->gamestate->nextState();
     }
@@ -733,12 +731,6 @@ class Calypso extends Table
             $this->gamestate->nextState('endGame');
         }
     }
-
-    // Temp note to recall:
-    // Important: All state actions game or player must end with state transition (or thrown exception).
-    // Also make sure its ONLY one state transition, if you accidentally fall though after state transition
-    // and do another one it will be a real mess and head scratching for long time. 
-    /*
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Zombie
