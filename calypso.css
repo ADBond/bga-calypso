@@ -110,6 +110,21 @@
     width: 72px;
     height: 96px;
 }
+
+#dealerbutton {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+    z-index: 1;
+}
+.dealer-indicator-area {
+    position: relative;
+    float: left;
+    width: 16px;
+    height: 16px;
+}
+
 /*** cards on table ***/
 
 .cardontable {

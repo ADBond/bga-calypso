@@ -63,7 +63,22 @@ function (dojo, declare) {
                 var trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
+                // TODO: this should be a nice little icon rather than text.
                 $("trump-" + player_id).textContent = trump_lookup[player_trump];
+
+                console.log("dealer is:")
+                console.log(gamedatas.dealer);
+                if(player_id == gamedatas.dealer){
+                    //$("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
+                    let dealer_area_id = 'dealer-' + player_id;
+                    dojo.place(this.format_block('jstpl_dealerindicator', {
+                        player_id : player_id
+                    }), dealer_area_id);
+                    this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) )
+                } else{
+                    $("area-dealer-" + player_id).textContent = "";
+                }
+                
             }
             
             // TODO: Set up your game interface here, according to "gamedatas"
@@ -88,6 +103,8 @@ function (dojo, declare) {
                     }
                 }
             }
+            // TODO: center hand in the div if wanted:
+            this.playerHand.centerItems = true;
 
             dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
 
@@ -110,7 +127,7 @@ function (dojo, declare) {
             }
 
             // Cards in calypsos
-            console.log("now let's lay out those sweet sweet winnings")
+            console.log("display the calypsos");
             for (i in this.gamedatas.cardsincalypsos) {
                 var card = this.gamedatas.cardsincalypsos[i];
                 var color = card.type;
@@ -120,6 +137,7 @@ function (dojo, declare) {
                 this.placeCardInCalypso(player_id, color, value, card.id);
             }
 
+            this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -296,6 +314,31 @@ function (dojo, declare) {
             // actually, we only need to animate at end of trick
             //this.slideToObject('cardincalypso_' + player_id + "_" + value, 'calypsocard_' + player_id + '_' + value).play();
         },
+
+        changeDealer : function(new_dealer_id) {
+            //let old_dealer_area_id = 'dealer-' + old_dealer_id;
+            let new_dealer_area_id = 'dealer-' + new_dealer_id;
+            // dojo.place(this.format_block('jstpl_dealerindicator', {
+            //     player_id : player_id
+            // }), dealer_area_id);
+            // this.addTooltipHtml( new_dealer_area_id, _( "This player is the dealer for this hand" ) )
+            console.log("dealer posirtion gows to: ", new_dealer_area_id);
+            this.slideToObject('dealerbutton', new_dealer_area_id).play();
+        },
+
+        updateGameStatus: function(handnumber, roundnumber, totalrounds) {
+            console.log("update that banner!");
+            console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
+            // TODO: do I want to markup any of this for styling?
+            $("gameinfo").innerHTML =  dojo.string.substitute(
+                _("Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
+                {
+                    roundnumber: roundnumber,
+                    handnumber: handnumber,
+                    totalrounds: totalrounds,
+                } 
+            );
+        },
         ///////////////////////////////////////////////////
         //// Player's action
         
@@ -380,14 +423,19 @@ function (dojo, declare) {
         setupNotifications : function() {
             console.log('notifications subscriptions setup');
 
+            // generic stuff, mostly for dev
             dojo.subscribe('debug', this, "notif_debug");
-
             dojo.subscribe('update', this, "notif_update");
 
+            // the actual cards that a player receives
             dojo.subscribe('newHand', this, "notif_newHand");
+            // admin around hand/dealer changing
+            dojo.subscribe('dealHand', this, "notif_dealHand");
+        
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
+            dojo.subscribe('actionRequired', this, "notif_actionRequired");
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             // TODO: here, associate your game notifications with local methods
@@ -404,26 +452,41 @@ function (dojo, declare) {
         },
 
         notif_newHand : function(notif) {
-            // We received a new full hand of 13 cards.
             this.playerHand.removeAll();
-
+            //this.playerHand.updateDisplay();
+            
+            console.log(notif.args.cards);
             for ( var i in notif.args.cards) {
                 var card = notif.args.cards[i];
                 var color = card.type;
                 var value = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueId(color, value), card.id);
+                this.playerHand.addToStockWithId(this.getCardUniqueType(color, value), card.id);
             }
+            
+            this.playerHand.updateDisplay();
+        },
+
+        notif_dealHand : function(notif) {
+            // TODO: animate the dealer button moving here
+            console.log("in deals");
+            console.log(notif);
+            this.changeDealer(notif.args.dealer_id);
+            this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
         },
 
         notif_playCard : function(notif) {
-            // Play a card on the table
             this.playCardOnTable(notif.args.player_id, notif.args.color, notif.args.value, notif.args.card_id);
         },
 
         notif_trickWin : function(notif) {
             // We do nothing here (just wait in order players can view the 4 cards played before they're gone.
             // Actually,
+            // What was I about to say above ^ ????
         },
+        notif_actionRequired : function(notif) {
+            // nothing needed here
+        },
+
         // This is what happens after trick - we need to modify!
         obsolete_notif_giveAllCardsToPlayer : function(notif) {
             // Move all cards on table to given table, then destroy them

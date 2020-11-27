@@ -34,21 +34,27 @@ class Calypso extends Table
 
         # not sure for now quite what I need to keep track of here, so start minimally-ish
         self::initGameStateLabels( array(
-                         // TODO: think I want dealer to be in database
-                         //"handDealer" => 10,
-                         // keeping track of how many deals through the devk?
-                         // how many hands overall??
-                         "trickColor" => 11,
-                         "currentTrickWinner" => 12,
-                         "trumpLead" => 13,
-                         "trumpPlayed" => 14,
+                         // TODO: move dealer shit into db if there's a good reason, otherwise here is fine
+                         // who dealt first this round
+                         "firstHandDealer" => 10,
+                         // who dealt this hand
+                         "currentDealer" => 11,
+                         // suit lead
+                         "trickColor" => 21,
+                         // who's winning trick so far and with what
+                         "currentTrickWinner" => 22,
+                         "bestCardSuit" => 23,
+                         "bestCardRank" => 24,
+                         // did the lead player lead their personal trump?
+                         "trumpLead" => 25,
+                         // has someone trumped in?
+                         "trumpPlayed" => 26,
 
-                         "bestCardSuit" => 15,
-                         "bestCardRank" => 16,
-
-                         // Probably not:
-                         // completed calypsos? or in db? or is scoring separate?
-                         // Mappings of suits to players, or is that in db?
+                         // what round are we on, and which hand in the round?
+                         // AB TODO: may want to revisit once I've fiddled with gameoptions
+                         "roundNumber" => 31,
+                         "handNumber" => 32,
+                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
 
                          // probably want some
                          //    "my_first_game_variant" => 100,
@@ -74,6 +80,7 @@ class Calypso extends Table
     */
     protected function setupNewGame( $players, $options = array() )
     {    
+        
         // Set the colors of the players with HTML color code
         // The default below is red/green/blue/orange/brown
         // The number of colors defined here must correspond to the maximum number of players allowed for the gams
@@ -96,9 +103,14 @@ class Calypso extends Table
         /************ Start the game initialization *****/
 
         // Init global values with their initial values
-        self::initialiseTrick();
+        // self::initialiseTrick();  // this should happen before each trick, so don't worry
 
         // AB TODO: other gamestate values when I've figured out what they are!
+
+        // pre-game value
+        self::setGameStateInitialValue( 'roundNumber', 0 );
+        // set this manually right now
+        self::setGameStateInitialValue( 'totalRounds', 2 );
 
         // Create cards
         $num_decks = 4;  // will be 4 - need to change here and in js
@@ -114,11 +126,20 @@ class Calypso extends Table
         $this->cards->createCards( $cards, 'deck' );
 
         // Shuffle deck
+        // probably unnecessary, as this should happen as rounds start
         $this->cards->shuffle('deck');
         // Deal 13 cards to each players
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
-            $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            // don't deal cards, as that happens once we start a new hand!
+            //$cards = $this->cards->pickCards(13, 'deck', $player_id);
+            
+            if($player["player_no"] == 3){
+                // they are dealer now, and the first dealer!
+                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
+                self::setGameStateInitialValue( 'firstHandDealer', $player_id );
+                self::setGameStateInitialValue( 'currentDealer', $player_id );
+            }
         }
 
         // Init game statistics
@@ -154,8 +175,6 @@ class Calypso extends Table
         $sql .= " ELSE 0 END;";
         self::DbQuery( $sql );
         self::reloadPlayersBasicInfos();
-
-        // Note: if you added some extra field on "player" table in the database (dbmodel.sql), you can initialize it there.
 
         // Set new 'round'
 
@@ -197,6 +216,12 @@ class Calypso extends Table
         // Cards played in calypsos
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
 
+        $result['dealer'] = self::getGameStateValue('currentDealer');
+
+        $result['handnumber'] = self::getGameStateValue('handNumber');
+        $result['roundnumber'] = self::getGameStateValue('roundNumber');
+        $result['totalrounds'] = self::getGameStateValue('totalRounds');
+
         return $result;
     }
 
@@ -212,7 +237,8 @@ class Calypso extends Table
     */
     function getGameProgression()
     {
-        // TODO: compute and return the game progression
+        // AB TODO: compute and return the game progression
+        // should be simple arithemetic from total number of hands, usually
 
         return 0;
     }
@@ -246,8 +272,53 @@ class Calypso extends Table
         return $query_result[$suit];
     }
 
-    function trickWinner($cards_played) {
-        return true;  // temporary bullshit
+    // TODO: I think there is an in-built for this? Can't find it for the mo tho
+    function getPlayerName($player_id){
+        $players = self::loadPlayersBasicInfos();
+        return $players[$player_id]["player_name"];
+    }
+
+    // next player clockwise pass 1, -1 for anti-clockwise (i.e. previous player)
+    function getAdjacentPlayer($existing_player_id, $direction_index=1){
+        $players = self::loadPlayersBasicInfos();
+        $existing_player_number = $players[$existing_player_id]["player_no"];
+        foreach ( $players as $player_id => $player ) {
+            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
+            $new_player_number = ($existing_player_number + $direction_index) % 4;
+            $new_player_number = ($new_player_number == 0) ? 4 : $new_player_number;
+            if($new_player_number == $player["player_no"]){
+                $new_player = $player_id;
+            }
+        }
+        return $new_player;
+    }
+
+    // TODO: this changes the dealer, and is only done between hands - reflect that in name
+    function getNextDealer($direction_index=1, $relevant_dealer='currentDealer') {
+        $current_dealer = self::getGameStateValue($relevant_dealer);
+
+        // TODO: don't need these notifications long-term
+        // self::notifyAllPlayers( 'debug', clienttranslate('${player_name} was the dealer, but they are done'), array(
+        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
+        // ) );
+        $new_dealer = self::getAdjacentPlayer($current_dealer, $direction_index);
+        // self::notifyAllPlayers( 'debug', clienttranslate('${player_name} will be the next dealer'), array(
+        //     'player_name' => self::getPlayerName($new_dealer)
+        // ) );
+        $first_leader = self::getAdjacentPlayer($new_dealer);
+        // self::notifyAllPlayers( 'debug', clienttranslate('${leader} is first leader, ${dealer} is dealer'), array(
+        //     'leader' => self::getPlayerName($first_leader),
+        //     'dealer' => self::getPlayerName($new_dealer),
+        // ) );
+        $this->gamestate->changeActivePlayer( $first_leader );
+        return $new_dealer;
+    }
+    // Keep this separate, as might want to rotate the other way? if not just alias
+    function getNextFirstDealer() {
+        // hop back by two so that we roll forward one on new hand
+        // TODO: this feels horrible - is there a nice way that won't be overkill?
+        $next_first_dealer = self::getNextDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
+        return $next_first_dealer;
     }
 
     function processCompletedTrick() {
@@ -279,7 +350,7 @@ class Calypso extends Table
         $players = self::loadPlayersBasicInfos();
         self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} wins the trick'), array(
             'player_id' => $best_value_player_id,
-            'player_name' => $players[ $best_value_player_id ]['player_name']  // TODO: shouldn't this be special access method?
+            'player_name' => self::getPlayerName($best_value_player_id)
         ) );
         $this->gamestate->changeActivePlayer( $best_value_player_id );
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
@@ -408,11 +479,11 @@ class Calypso extends Table
                 $calypso_so_far
             );
             $calypso_string = implode( ",", $ranks_so_far );
-            self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
-                'player_id' => $player_id,
-                'player_name' => $players[ $player_id ]['player_name'],
-                'calypso_string' => $calypso_string,
-            ) );
+            // self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
+            //     'player_id' => $player_id,
+            //     'player_name' => $players[ $player_id ]['player_name'],
+            //     'calypso_string' => $calypso_string,
+            // ) );
             if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
                 $this->cards->moveAllCardsInLocation( 'calypso', 'full_calypsos', $player_id, $player_id );
                 // AB TODO: updated db when I've updated the model to allow the field
@@ -423,11 +494,11 @@ class Calypso extends Table
                 $calypso_so_far
             );
             $calypso_string = implode( ",", $ranks_so_far );
-            self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
-                'player_id' => $player_id,
-                'player_name' => $players[ $player_id ]['player_name'],
-                'calypso_string' => $calypso_string,
-            ) );
+            // self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
+            //     'player_id' => $player_id,
+            //     'player_name' => self::getPlayerName($player_id),
+            //     'calypso_string' => $calypso_string,
+            // ) );
         }
     }
 
@@ -445,7 +516,11 @@ class Calypso extends Table
         $player_id = self::getActivePlayerId();
         $currentCard = $this->cards->getCard($card_id);
         if ( !self::validPlay($player_id, $currentCard) ){
-            throw new BgaUserException( self::_("You must follow suit if able to!") );
+            $trick_suit = self::getGameStateValue( 'trickColor' );
+
+            throw new BgaUserException(
+                self::_("You must follow suit if able to! Please play a ").$this->colors[$trick_suit]['nametr']."."
+            );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
         
@@ -550,33 +625,69 @@ class Calypso extends Table
         Here, you can create methods defined as "game state actions" (see "action" property in states.inc.php).
         The action method of state X is called everytime the current game state is set to X.
     */
+    function dummy(){
+        throw new BgaUserException( self::_("Don't see this!") );
+    }
+
     function stNewRound() {
+        #throw new BgaUserException( self::_("New round!") );
+        // before we start the round, we are at hand number 0
+        self::setGameStateValue( 'handNumber', 0 );
+        $old_round_number = self::getGameStateValue( 'roundNumber' );
+        $round_number = $old_round_number + 1;
+        self::setGameStateValue( 'roundNumber', $round_number );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new round of hands is starting"),  // TODO: number of round
-            array()
+            clienttranslate("A new round of hands is starting - round ${round_number}"),  // TODO: number of rounds total
+            array("round_number" => $round_number)
         );
-        // Take back all cards (from any location => null) to deck
-        // Create deck, shuffle it and give 13 initial cards
+        // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
-        // AB TODO: num calypsos to zero, update dealer, etc
+        // AB TODO: num calypsos to zero
+        $new_dealer = self::getNextFirstDealer();
+        self::setGameStateValue( 'firstHandDealer', $new_dealer );
+        self::setGameStateValue( 'currentDealer', $new_dealer );
         $this->gamestate->nextState("");
     }
 
     function stNewHand() {
+        $old_hand_number = self::getGameStateValue( 'handNumber' );
+        $hand_number = $old_hand_number + 1;
+        self::setGameStateValue( 'handNumber', $hand_number );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new hand is starting"),  // TODO: number of hand
-            array()
+            clienttranslate("A new hand is starting - hand ${hand_number}/4 in the current round"),
+            array("hand_number" => $hand_number)
         );
-        // Deal 13 cards to each players
+        // Deal 13 cards to each player and notify them of their hand
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
-            // Notify player about his cards
             self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
         }
+        // only change dealer after first hand, otherwise round setup should've handled it. Relax!
+        if($hand_number != 1){
+            $new_dealer = self::getNextDealer();
+            self::setGameStateValue( 'currentDealer', $new_dealer );
+        } else{
+            $new_dealer = self::getGameStateValue( 'currentDealer' );
+        }
+        self::notifyAllPlayers(  // TODO: id is for debugging, delete!
+            'dealHand',
+            clienttranslate('${dealer_name}, (${dealer_id}) deals a new hand of cards'),
+            array (
+                'dealer_name' => self::getPlayerName($new_dealer),
+                'dealer_id' => $new_dealer,
+                'round_number' => self::getGameStateValue( 'roundNumber' ),
+                'hand_number' => $hand_number,
+                'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
+            )
+        );
+        // TODO: specialist notification here!
+        self::notifyAllPlayers( 'actionRequired', clienttranslate('${player_name} must lead a card to the first trick.'), array(
+            'player_name' => self::getActivePlayerName()
+        ) );
         $this->gamestate->nextState("");
     }
 
@@ -608,25 +719,36 @@ class Calypso extends Table
     }
 
     function stEndHand() {
+        // TODO: this notification should update how many completed calypsos each player has
         self::notifyAllPlayers(
             "update",
             clienttranslate("Hand over!"),  // TODO: number of hand
             array()
         );
-        // TODO: here is the place to check for end of round
-        // if so go to "endRound" transition
-        $this->gamestate->nextState("nextHand");
+        $num_hands = 4;
+        
+        if(self::getGameStateValue( 'handNumber' ) == $num_hands){
+            $this->gamestate->nextState('endRound');
+        } else {
+            $this->gamestate->nextState("nextHand");
+        }
     }
 
     function stEndRound() {
+        // TODO: this noticiation should give scores for the round
         self::notifyAllPlayers(
             "update",
             clienttranslate("Round over!"),  // TODO: number of round
             array()
         );
-        // score it
-        // new round if there are more to do "nextRound"
-        // if no more rounds then "endGame
+        // TODO: score it
+        $num_rounds = self::getGameStateValue( 'totalRounds' );
+        
+        if(self::getGameStateValue( 'roundNumber' ) < $num_rounds){
+            $this->gamestate->nextState('nextRound');
+        } else {
+            $this->gamestate->nextState('endGame');
+        }
     }
 
     // Temp note to recall:
