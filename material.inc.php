@@ -12,14 +12,8 @@
  *
  * Calypso game material description
  *
- * Here, you can describe the material of your game with PHP variables.
- *   
- * This file is loaded in your game logic class constructor, ie these variables
- * are available everywhere in your game logic code.
- *
  */
 
-// AB TODO: going to rename some of these variables at some point later, but best not confuse myself yet.
 $this->suits = array(
   1 => array( 'name' => clienttranslate('spade'),
               'nametr' => self::_('spade') ),

@@ -62,9 +62,6 @@
                     "calypsocard",
                     array(
                         "PLAYER_ID" => $player_id,
-                        #"PLAYER_NAME" => $players [$player_id] ['player_name'],
-                        #"PLAYER_COLOR" => $players [$player_id] ['player_color'],
-                        #"DIR" => $dir
                         "OFFSET" => $offset_value,
                         "CARD_RANK" => $rank
                     )

@@ -12,8 +12,6 @@
   *
   * This is the main file for your game logic.
   *
-  * In this PHP file, you are going to defines the rules of the game.
-  *
   */
 
 
@@ -24,17 +22,12 @@ class Calypso extends Table
 {
 	function __construct( )
 	{
-        // Your global variables labels:
-        //  Here, you can assign labels to global variables you are using for this game.
         //  You can use any number of global variables with IDs between 10 and 99.
         //  If your game has options (variants), you also have to associate here a label to
         //  the corresponding ID in gameoptions.inc.php.
-        // Note: afterwards, you can get/set the global variables with getGameStateValue/setGameStateInitialValue/setGameStateValue
         parent::__construct();
 
-        # not sure for now quite what I need to keep track of here, so start minimally-ish
         self::initGameStateLabels( array(
-                         // TODO: move dealer shit into db if there's a good reason, otherwise here is fine
                          // who dealt first this round
                          "firstHandDealer" => 10,
                          // who dealt this hand
@@ -102,9 +95,6 @@ class Calypso extends Table
         
         /************ Start the game initialization *****/
 
-        // Init global values with their initial values
-        // self::initialiseTrick();  // this should happen before each trick, so don't worry
-
         // AB TODO: other gamestate values when I've figured out what they are!
 
         // pre-game value
@@ -126,9 +116,7 @@ class Calypso extends Table
 
         $this->cards->createCards( $cards, 'deck' );
 
-        // Shuffle deck
-        // probably unnecessary, as this should happen as rounds start
-        //$this->cards->shuffle('deck');
+        // set pre-initial dealers, ready for state functions to adjust to initial values
         $players = self::loadPlayersBasicInfos();
         foreach ( $players as $player_id => $player ) {
             if($player["player_no"] == 3){
@@ -150,7 +138,6 @@ class Calypso extends Table
         // the rest will be determined from that.
         // randomly pick a suit for the first player using what I assume(?) is the standard mapping
         $first_player_suit = bga_rand( 1, 4 );
-        // self::dump("The first player has suit: ", $first_player_suit);
         // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
         $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
         $player_suits = array(
@@ -277,7 +264,7 @@ class Calypso extends Table
     }
 
     // TODO: this changes the dealer, and is only done between hands - reflect that in name
-    function getNextDealer($direction_index=1, $relevant_dealer='currentDealer') {
+    function updateDealer($direction_index=1, $relevant_dealer='currentDealer') {
         $current_dealer = self::getGameStateValue($relevant_dealer);
 
         // TODO: don't need these notifications long-term
@@ -300,7 +287,7 @@ class Calypso extends Table
     function getNextFirstDealer() {
         // hop back by two so that we roll forward one on new hand
         // TODO: this feels horrible - is there a nice way that won't be overkill?
-        $next_first_dealer = self::getNextDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
+        $next_first_dealer = self::updateDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
     }
 
@@ -651,7 +638,7 @@ class Calypso extends Table
         }
         // only change dealer after first hand, otherwise round setup should've handled it. Relax!
         if($hand_number != 1){
-            $new_dealer = self::getNextDealer();
+            $new_dealer = self::updateDealer();
             self::setGameStateValue( 'currentDealer', $new_dealer );
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
@@ -700,10 +687,10 @@ class Calypso extends Table
     }
 
     function stEndHand() {
-        // TODO: this notification should update how many completed calypsos each player has
+        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
         self::notifyAllPlayers(
             "update",
-            clienttranslate("Hand over!"),  // TODO: number of hand
+            clienttranslate("Hand over!"),
             array()
         );
         $num_hands = 4;
@@ -716,10 +703,10 @@ class Calypso extends Table
     }
 
     function stEndRound() {
-        // TODO: this noticiation should give scores for the round
+        // TODO: this noticiation should give scores for the round, and round number
         self::notifyAllPlayers(
             "update",
-            clienttranslate("Round over!"),  // TODO: number of round
+            clienttranslate("Round over!"),
             array()
         );
         // TODO: score it
