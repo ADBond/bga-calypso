@@ -6,7 +6,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * ~~animate dealer transitions~~
 * ~~re-order inter-hand notifications so it flows more nicely like~~
-* stop the little dealer icon from affecting position of played card
+* ~~stop the little dealer icon from affecting position of played card~~
 
 ## TODO list
 
