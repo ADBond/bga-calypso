@@ -301,7 +301,7 @@ function (dojo, declare) {
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
             // TODO: do I want to markup any of this for styling?
             $("gameinfo").innerHTML =  dojo.string.substitute(
-                _("Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
+                _("Calypso: Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
                 {
                     roundnumber: roundnumber,
                     handnumber: handnumber,

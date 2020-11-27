@@ -4,8 +4,9 @@
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~update js a bit~~
-* ~~rename variables to be more consistent~~
+* Track number of completed calypsos per player
+* Update score on end of round
+* Somebody wins?!
 
 ## TODO list
 
@@ -24,7 +25,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * number of rounds/games set via gameoptions
 * stats
 * any other TODOs from code not covered by these/general tidying
-* Fix js bug at end of a hand that needs refresh
+* ~~Fix js bug at end of a hand that needs refresh~~
 
 ### Notifications
 
@@ -36,7 +37,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * ~~hook new round/new hand stuff to setup new game so we aren't doubling up/confusing logic~~
   * partly done but needs checking/careful eye
-* rename those damn variables to keep a shred of self-consistency
+* ~~rename those damn variables to keep a shred of self-consistency~~ check below, do as we go
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
 * check that the all the cards exist at all times, and get dealt out over the course of a round
 * Add a separate code licence, and make repo public once that's done
