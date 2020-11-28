@@ -490,6 +490,36 @@ class Calypso extends Table
         }
     }
 
+    function updateScores(){
+        // TODO!!
+        // getAllCompletedCalyspos
+        // for each player:
+            // score calypsos 500, 750, 1000
+            // score cardsincalypso 20 each
+            // score woncards 10 each
+        // combine partnership scores
+    }
+
+    function checkAllCardsExist(){
+        // all cushty when I've checked :)
+        // TODO: this function checks that all cards are *somewhere*
+        // not sure when/if to call this - probably only during dev
+        $locations = array(
+            'hand',
+            'cardsontable',
+            'calypso',
+            'deck',
+            'cardswon',
+            'full_calypsos',
+        );
+        $where_cards = $this->cards->countCardsInLocations();  // gives array location => count
+        // some things to check:
+        // full calypsos = 13n
+        // deck = 52n
+        // everything = 208
+        self::dump("card_counts", $where_cards);
+    }
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Player actions
@@ -501,6 +531,7 @@ class Calypso extends Table
     */
     function playCard($card_id) {
         self::checkAction("playCard");
+        //self::checkAllCardsExist();
         $player_id = self::getActivePlayerId();
         $currentCard = $this->cards->getCard($card_id);
         if ( !self::validPlay($player_id, $currentCard) ){
@@ -741,7 +772,8 @@ class Calypso extends Table
             clienttranslate("Round over!"),
             array()
         );
-        // TODO: score it
+        self::updateScores();
+
         $num_rounds = self::getGameStateValue( 'totalRounds' );
         
         if(self::getGameStateValue( 'roundNumber' ) < $num_rounds){
