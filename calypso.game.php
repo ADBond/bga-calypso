@@ -464,7 +464,18 @@ class Calypso extends Table
             if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
                 $this->cards->moveAllCardsInLocation( 'calypso', 'full_calypsos', $player_id, $player_id );
                 // AB TODO: updated db when I've updated the model to allow the field
-                // AB TODO: notification and animation when this happens
+                $sql = "UPDATE player SET completed_calypsos = completed_calypsos+1 WHERE player_id=".$player_id.";";
+                self::DbQuery( $sql );
+                // AB TODO: customise notification and animation when this happens
+                // TODO: this should happen *after* the real trick Win notification
+                self::notifyAllPlayers(
+                    'trickWin',
+                    clienttranslate('${player_name} has completed a calypso!'),
+                    array(
+                        'player_id' => $player_id,
+                        'player_name' => self::getPlayerName($player_id)
+                    )
+                );
             }
             $ranks_so_far = array_map(
                 function($calypso_card){return $calypso_card['type_arg'];},
@@ -702,7 +713,7 @@ class Calypso extends Table
             $player_name = self::getPlayerName($player_id);
             self::notifyAllPlayers(
                 "update",
-                clienttranslate("${player_name} has ${num_calypsos} completed calypsos"),
+                clienttranslate("${player_name} has ${num_calypsos} completed calypso(s)"),
                 array(
                     'player_name' => $player_name,
                     'num_calypsos' => $num_calypsos
