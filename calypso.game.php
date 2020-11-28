@@ -299,15 +299,21 @@ class Calypso extends Table
     }
 
     function processCompletedTrick() {
-
-        $cards_played = $this->cards->getCardsInLocation( 'cardsontable' );
-
         $best_value_player_id = self::getGameStateValue( 'currentTrickWinner' );
 
+        // announce who won first, then deal with the admin of what happens to the cards
+        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} wins the trick'), array(
+            'player_id' => $best_value_player_id,
+            'player_name' => self::getPlayerName($best_value_player_id)
+        ) );
+
         // card gathering logic:
-        // get all cards on table (above)
+        // $moved_to will track where cards go, so we can send that to js
+        // get all cards on table
+        $cards_played = $this->cards->getCardsInLocation( 'cardsontable' );
+        // move any cards to calypsos there's room for, and get rid of opponents' cards
         $moved_to_first_batch = self::sortWonCards($cards_played, $best_value_player_id);
-        // -> check if any calypsos are completed, and if so process (remove and update db)
+        // check if any calypsos are completed, and if so process (remove cards, update db)
         self::processCalypsos();
         // now check if remaining cards can be added to calypsos
         $remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
@@ -321,19 +327,12 @@ class Calypso extends Table
         }
         $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
 
-        // Notify
-        // Note: we use 2 notifications here in order we can pause the display during the first notification
-        //  before we move all cards to the winner (during the second)
-        $players = self::loadPlayersBasicInfos();
-        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} wins the trick'), array(
-            'player_id' => $best_value_player_id,
-            'player_name' => self::getPlayerName($best_value_player_id)
-        ) );
-        $this->gamestate->changeActivePlayer( $best_value_player_id );
+        // now we move cards where they need to go, and get next player
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
             'player_id' => $best_value_player_id,
             'moved_to' => $moved_to,
         ) );
+        $this->gamestate->changeActivePlayer( $best_value_player_id );
     }
 
     function debugMessage( $message, $array=array() ){
@@ -392,6 +391,8 @@ class Calypso extends Table
         );
     }
 
+    // cards from me & partner go to calypsos if possible, otherwise they remain
+    // cards from opponents go to woncards
     function sortWonCards($cards_played, $winner_player_id){
         $player_suit = self::getPlayerSuit($winner_player_id);
         $partner_suit = self::getPartnerSuit($player_suit);
@@ -466,10 +467,9 @@ class Calypso extends Table
                 // AB TODO: updated db when I've updated the model to allow the field
                 $sql = "UPDATE player SET completed_calypsos = completed_calypsos+1 WHERE player_id=".$player_id.";";
                 self::DbQuery( $sql );
-                // AB TODO: customise notification and animation when this happens
                 // TODO: this should happen *after* the real trick Win notification
                 self::notifyAllPlayers(
-                    'trickWin',
+                    'calypsoComplete',
                     clienttranslate('${player_name} has completed a calypso!'),
                     array(
                         'player_id' => $player_id,

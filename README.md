@@ -4,7 +4,7 @@
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* Track number of completed calypsos per player
+* ~~Track number of completed calypsos per player~~
 * Update score on end of round
 * Somebody wins?!
 

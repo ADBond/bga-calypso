@@ -408,17 +408,7 @@ function (dojo, declare) {
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
-            // TODO: here, associate your game notifications with local methods
-            
-            // Example 1: standard notification handling
-            // dojo.subscribe( 'cardPlayed', this, "notif_cardPlayed" );
-            
-            // Example 2: standard notification handling + tell the user interface to wait
-            //            during 3 seconds after calling the method in order to let the players
-            //            see what is happening in the game.
-            // dojo.subscribe( 'cardPlayed', this, "notif_cardPlayed" );
-            // this.notifqueue.setSynchronous( 'cardPlayed', 3000 );
-            // 
+            dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
         },
 
         notif_newHand : function(notif) {
@@ -453,6 +443,10 @@ function (dojo, declare) {
             // Actually,
             // What was I about to say above ^ ????
         },
+        notif_calypsoComplete : function(notif) {
+            // TODO: Here we should animate removing all those cumbersome calypso cards, ready to start anew!
+            // maybe best to do in a layout ting as may need to refactor some of that stuff :/
+        },
         notif_actionRequired : function(notif) {
             // nothing needed here
         },
@@ -470,7 +464,6 @@ function (dojo, declare) {
             }
         },
         notif_moveCardsToCalypsos : function(notif) {
-            console.log("fan it out");
             // Move all cards on table to given table, then destroy them
             const winner_id = notif.args.player_id;
             const moved_to = notif.args.moved_to;
