@@ -178,7 +178,8 @@ class Calypso extends Table
     
         $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
     
-        $sql = "SELECT player_id id, player_score score, trump_suit trump_suit FROM player ";
+        $sql = "SELECT player_id id, player_score score, trump_suit trump_suit, ".
+                "completed_calypsos completed_calypsos FROM player;";
         $result['players'] = self::getCollectionFromDb( $sql );
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
@@ -289,6 +290,12 @@ class Calypso extends Table
         // TODO: this feels horrible - is there a nice way that won't be overkill?
         $next_first_dealer = self::updateDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
+    }
+
+    function getAllCompletedCalyspos(){
+        $sql = "SELECT player_id id, completed_calypsos num_calypsos FROM player";
+        $player_calypsos = self::getCollectionFromDB( $sql, true );
+        return $player_calypsos;
     }
 
     function processCompletedTrick() {
@@ -600,7 +607,6 @@ class Calypso extends Table
     }
 
     function stNewRound() {
-        #throw new BgaUserException( self::_("New round!") );
         // before we start the round, we are at hand number 0
         self::setGameStateValue( 'handNumber', 0 );
         $old_round_number = self::getGameStateValue( 'roundNumber' );
@@ -614,7 +620,10 @@ class Calypso extends Table
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
-        // AB TODO: num calypsos to zero
+        // and make sure no-one has any calypsos counted any more :(
+        $sql = "UPDATE player SET completed_calypsos = 0;";
+        self::DbQuery( $sql );
+
         $new_dealer = self::getNextFirstDealer();
         self::setGameStateValue( 'firstHandDealer', $new_dealer );
         self::setGameStateValue( 'currentDealer', $new_dealer );
@@ -688,6 +697,18 @@ class Calypso extends Table
 
     function stEndHand() {
         // TODO: this notification should update how many completed calypsos each player has, and say hand num.
+        $player_calypsos = self::getAllCompletedCalyspos();
+        foreach ( $player_calypsos as $player_id => $num_calypsos ) {
+            $player_name = self::getPlayerName($player_id);
+            self::notifyAllPlayers(
+                "update",
+                clienttranslate("${player_name} has ${num_calypsos} completed calypsos"),
+                array(
+                    'player_name' => $player_name,
+                    'num_calypsos' => $num_calypsos
+                )
+            );
+        }
         self::notifyAllPlayers(
             "update",
             clienttranslate("Hand over!"),
