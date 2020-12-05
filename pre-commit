@@ -5,3 +5,4 @@ grep TODO -r . > todo_list
 git add todo_list
 echo "You have probably misspelled calypso some places - a likely source of errors!" > warnings
 grep calyspo -r . > warnings
+git add warnings
