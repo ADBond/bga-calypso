@@ -1,0 +1,4 @@
+./.git/hooks/pre-commit:grep calyspo -r . > warnings
+./calypso.game.php:        $partial_calyspo_counts = array( clienttranslate("Cards in incomplete calypsos") );
+./misc/notes_misc.md:#### calyspo completed
+./pre-commit:grep calyspo -r . > warnings

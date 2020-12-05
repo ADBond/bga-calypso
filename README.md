@@ -1,5 +1,11 @@
 # Calypso for BGA
 
+Run this, to make life easier:
+
+```
+cp pre-commit .git/hooks/
+```
+
 ## Current branch TODOs
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work

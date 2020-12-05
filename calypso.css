@@ -172,3 +172,19 @@
     left: 0%;
     top: 390px;
 }
+
+/* Score stuff */
+.clp-number-entry {
+    color: red;
+    font-style: italic;
+}
+.clp-score-entry {
+    font-weight: bold;
+}
+.clp-number-label {
+    text-align: left;
+    font-style: italic;
+}
+.clp-score-label {
+    text-align: right;
+}

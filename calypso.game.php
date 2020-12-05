@@ -493,10 +493,40 @@ class Calypso extends Table
     function updateScores(){
         $players = self::getAllCompletedCalyspos();
 
+        // give counts and scores different classes so we can style them differently
+        // e.g. text-align: left (vs right), different colours(?), weights
+        function wrap_class($x, $class_name){
+            return '<div class="'.$class_name.'">'.$x.'</div>';
+        }
+        function count_wrap($x){
+            return wrap_class($x, "clp-number-entry");
+        }
+        function score_wrap($x){
+            return wrap_class($x, "clp-score-entry");
+        }
+        function count_wrap_label($x){
+            return wrap_class($x, "clp-number-label");
+        }
+        function score_wrap_label($x){
+            return wrap_class($x, "clp-score-label");
+        }
+
+        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+        $calypsos_to_score = array(
+            0,
+            500,
+            1250,  // 500 + 750
+            2250,  // 500 + 750 + 1000
+            3250,  // 500 + 750 + 1000 + 1000
+        );
+
         $score_table = array();
 
         $header_names = array( '' );
         $header_suits = array( '' );
+        $calypso_counts = array( count_wrap_label(clienttranslate("Completed Calypsos")) );
+        $calypso_scores = array( score_wrap_label(clienttranslate("score")) );
+        // TODO: we should get the players in partnership order!
         // for each player:
         foreach ( $players as $player_id => $num_calypsos ) {
             // score calypsos 500, 750, 1000
@@ -516,55 +546,32 @@ class Calypso extends Table
                 'args' => array( 'player_suit' => $suit),
                 'type' => 'header'
             );
+            // TODO: the actual scores
+            $calypso_counts[] = count_wrap($num_calypsos);
+            $calypso_scores[] = score_wrap($calypsos_to_score[$num_calypsos]);
         }
 
-        //$score_table[] = $header_names;
-        //$score_table[] = $header_suits;
+        $score_table[] = $header_names;
+        $score_table[] = $header_suits;
+        $score_table[] = $calypso_counts;
+        $score_table[] = $calypso_scores;
         // combine partnership scores
-        // scoring table dialog
-        // $this->notifyAllPlayers( "tableWindow", '', array(
-        //     "id" => 'finalScoring',
-        //     "title" => clienttranslate("Title of the scoring dialog"),
-        //     "table" => $table
-        // ) );
-        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-        $calypsos_to_score = array(
-            0,
-            500,
-            1250,  // 500 + 750
-            2250,  // 500 + 750 + 1000
-            3250,  // 500 + 750 + 1000 + 1000
-        );
+        
+        $partial_calyspo_counts = array( clienttranslate("Cards in incomplete calypsos") );
+        $partial_calypso_scores = array( clienttranslate("score") );
+        $remaining_counts = array( clienttranslate("Cards in incomplete calypsos") );
+        $remaining_scores = array( clienttranslate("score") );
 
-        // give counts and scores different classes so we can style them differently
-        // e.g. text-align: left (vs right), different colours(?), weights
-        $count_entry = '<div class="number-entry"></div>';
-        $score_entry = '<div class="score-entry"></div>';
-
-        // from docs: checking it works in principle
-        $delete_table = array(
-            array( "one", "two", "three" ),    // This is my first line
-            array( "four", "five", "six" ),    // This is my second line
-            array( "seven", "height", "nine" )    // This is my third line
-         );
-         $this->notifyAllPlayers( "tableWindow", '', array(
-            "id" => 'finalScoring',
-            "title" => clienttranslate("Title of the scoring dialog"),
-            "table" => $delete_table
-        ) ); 
-
-        // $this->notifyAllPlayers(
-        //     "tableWindow",
-        //     '',
-        //     array(
-        //         "id" => 'roundScore',
-        //         "title" => clienttranslate("Scores for the round"),
-        //         "table" => $score_table,
-        //         "header" => $header_names,
-        //         "footer" => '<div>Some footer</div>',
-        //         "closing" => clienttranslate( "Closing button label" )
-        //     )
-        // ); 
+        $this->notifyAllPlayers(
+            "tableWindow",
+            '',
+            array(
+                "id" => 'roundScore',
+                "title" => clienttranslate("Scores for the round"),
+                "table" => $score_table,
+                "closing" => clienttranslate( "Close" )
+            )
+        ); 
     }
 
     function checkAllCardsExist(){
