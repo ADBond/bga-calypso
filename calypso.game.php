@@ -557,7 +557,7 @@ class Calypso extends Table
         $score_table[] = $calypso_scores;
         // combine partnership scores
         
-        $partial_calyspo_counts = array( clienttranslate("Cards in incomplete calypsos") );
+        $partial_calypso_counts = array( clienttranslate("Cards in incomplete calypsos") );
         $partial_calypso_scores = array( clienttranslate("score") );
         $remaining_counts = array( clienttranslate("Cards in incomplete calypsos") );
         $remaining_scores = array( clienttranslate("score") );

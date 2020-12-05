@@ -36,7 +36,7 @@ Might be nice to refactor so the code is more readable and these values are hidd
 
 ### bugs
 
-#### calyspo completed
+#### calypso completed
 
 Not cleared after completing, needs refresh. Think I've already noted this somewhere
 

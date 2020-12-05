@@ -1,4 +1,4 @@
-./.git/hooks/pre-commit:grep TODO -r . > todo_list
+./.git/hooks/pre-commit:grep TODO -r . > misc/todo_list
 ./calypso.game.php:                         // AB TODO: may want to revisit once I've fiddled with gameoptions
 ./calypso.game.php:                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
 ./calypso.game.php:        // AB TODO: other gamestate values when I've figured out what they are!
@@ -44,7 +44,7 @@
 ./calypso.view.php:                // TODO: width should probably be set in JS as we can scale to card size there
 ./calypso.view.php:                // TODO: z-index to assure the right ordering
 ./gameinfos.inc.php:    // TODO: actually write this properly
-./pre-commit:grep TODO -r . > todo_list
+./pre-commit:grep TODO -r . > misc/todo_list
 ./README.md:## Current branch TODOs
 ./README.md:## TODO list
 ./README.md:* any other TODOs from code not covered by these/general tidying
