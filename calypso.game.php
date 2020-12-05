@@ -491,13 +491,80 @@ class Calypso extends Table
     }
 
     function updateScores(){
-        // TODO!!
-        // getAllCompletedCalyspos
+        $players = self::getAllCompletedCalyspos();
+
+        $score_table = array();
+
+        $header_names = array( '' );
+        $header_suits = array( '' );
         // for each player:
+        foreach ( $players as $player_id => $num_calypsos ) {
             // score calypsos 500, 750, 1000
             // score cardsincalypso 20 each
             // score woncards 10 each
+
+            // TODO: separate loop?
+            // and display header
+            $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
+            $header_names[] = array(
+                'str' => '${player_name}',
+                'args' => array( 'player_name' => self::getPlayerName($player_id) ),
+                'type' => 'header'
+            );
+            $header_suits[] = array(
+                'str' => '${player_suit}',
+                'args' => array( 'player_suit' => $suit),
+                'type' => 'header'
+            );
+        }
+
+        //$score_table[] = $header_names;
+        //$score_table[] = $header_suits;
         // combine partnership scores
+        // scoring table dialog
+        // $this->notifyAllPlayers( "tableWindow", '', array(
+        //     "id" => 'finalScoring',
+        //     "title" => clienttranslate("Title of the scoring dialog"),
+        //     "table" => $table
+        // ) );
+        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+        $calypsos_to_score = array(
+            0,
+            500,
+            1250,  // 500 + 750
+            2250,  // 500 + 750 + 1000
+            3250,  // 500 + 750 + 1000 + 1000
+        );
+
+        // give counts and scores different classes so we can style them differently
+        // e.g. text-align: left (vs right), different colours(?), weights
+        $count_entry = '<div class="number-entry"></div>';
+        $score_entry = '<div class="score-entry"></div>';
+
+        // from docs: checking it works in principle
+        $delete_table = array(
+            array( "one", "two", "three" ),    // This is my first line
+            array( "four", "five", "six" ),    // This is my second line
+            array( "seven", "height", "nine" )    // This is my third line
+         );
+         $this->notifyAllPlayers( "tableWindow", '', array(
+            "id" => 'finalScoring',
+            "title" => clienttranslate("Title of the scoring dialog"),
+            "table" => $delete_table
+        ) ); 
+
+        // $this->notifyAllPlayers(
+        //     "tableWindow",
+        //     '',
+        //     array(
+        //         "id" => 'roundScore',
+        //         "title" => clienttranslate("Scores for the round"),
+        //         "table" => $score_table,
+        //         "header" => $header_names,
+        //         "footer" => '<div>Some footer</div>',
+        //         "closing" => clienttranslate( "Closing button label" )
+        //     )
+        // ); 
     }
 
     function checkAllCardsExist(){
@@ -656,7 +723,7 @@ class Calypso extends Table
         self::setGameStateValue( 'roundNumber', $round_number );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new round of hands is starting - round ${round_number}"),  // TODO: number of rounds total
+            clienttranslate('A new round of hands is starting - round ${round_number}'),  // TODO: number of rounds total
             array("round_number" => $round_number)
         );
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
@@ -678,7 +745,7 @@ class Calypso extends Table
         self::setGameStateValue( 'handNumber', $hand_number );
         self::notifyAllPlayers(
             "update",
-            clienttranslate("A new hand is starting - hand ${hand_number}/4 in the current round"),
+            clienttranslate('A new hand is starting - hand ${hand_number}/4 in the current round'),
             array("hand_number" => $hand_number)
         );
         // Deal 13 cards to each player and notify them of their hand
@@ -744,16 +811,19 @@ class Calypso extends Table
             $player_name = self::getPlayerName($player_id);
             self::notifyAllPlayers(
                 "update",
-                clienttranslate("${player_name} has ${num_calypsos} completed calypso(s)"),
+                clienttranslate('${player_name} has ${num_calypsos} completed calypso(s)'),
                 array(
                     'player_name' => $player_name,
                     'num_calypsos' => $num_calypsos
                 )
             );
         }
+        
+        self::updateScores();  // TODO: to debug this! it doesn't really live here
+
         self::notifyAllPlayers(
             "update",
-            clienttranslate("Hand over!"),
+            clienttranslate('Hand over!'),
             array()
         );
         $num_hands = 4;
@@ -769,7 +839,7 @@ class Calypso extends Table
         // TODO: this noticiation should give scores for the round, and round number
         self::notifyAllPlayers(
             "update",
-            clienttranslate("Round over!"),
+            clienttranslate('Round over!'),
             array()
         );
         self::updateScores();

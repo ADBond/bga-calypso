@@ -1,0 +1,5 @@
+#!/bin/bash
+# to be added as a pre-commit hook - compiles to-do items from repo
+# it is dumb, so won't ignore any gitignored files - don't litter them, or expect noise!
+grep TODO -r . > todo_list
+git add todo_list

@@ -53,7 +53,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * ~~animate this changing?~~
 * ~~Display game state info somewhere (round `x` of `y`, hand `w` of `z`)~~
   * done but needs a bit of zhuzhing up
-* Say the game name somewhere? Or something distinctive.
+* ~~Say the game name somewhere? Or something distinctive. Covered under the above zhuzhing~~
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * want to think about how to nicely signify teams - see e.g. Phat for nice approach

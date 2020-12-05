@@ -35,9 +35,7 @@ Might be nice to refactor so the code is more readable and these values are hidd
 4. Diamonds
 
 ### bugs
-#### hand number
 
-~~Not getting updated at new hand, at least in the display~~
 #### calyspo completed
 
 Not cleared after completing, needs refresh. Think I've already noted this somewhere
