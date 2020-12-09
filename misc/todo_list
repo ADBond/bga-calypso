@@ -10,13 +10,13 @@
 ./calypso.game.php:        // TODO: don't need these notifications long-term
 ./calypso.game.php:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
 ./calypso.game.php:        // TODO: this feels horrible - is there a nice way that won't be overkill?
+./calypso.game.php:    // TODO: uniformise names
 ./calypso.game.php:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
 ./calypso.game.php:                // AB TODO: updated db when I've updated the model to allow the field
 ./calypso.game.php:                // TODO: this should happen *after* the real trick Win notification
 ./calypso.game.php:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
 ./calypso.game.php:        // TODO: we should get the players in partnership order!
 ./calypso.game.php:            // TODO: separate loop?
-./calypso.game.php:            // TODO: the actual scores
 ./calypso.game.php:        // TODO: this function checks that all cards are *somewhere*
 ./calypso.game.php:            } else {  // TODO: this _should_ be irrelevant, but can't hurt (much)
 ./calypso.game.php:            clienttranslate('A new round of hands is starting - round ${round_number}'),  // TODO: number of rounds total

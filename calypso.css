@@ -139,6 +139,8 @@
     position: absolute;
     width: 72px;
     height: 96px;
+    /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
+    /* transform: scale(0.6); */
     background-image: url('img/cards.jpg'); 
 }
 

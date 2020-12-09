@@ -186,6 +186,7 @@ class Calypso extends Table
 
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
+        $result['woncards'] = $this->cards->getCardsInLocation( 'woncards' );
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
 
@@ -325,7 +326,7 @@ class Calypso extends Table
         foreach($still_remaining_cards as $card){
             $moved_to[$card["location_arg"]] = array("owner" => 0, "originating_player" => $card["location_arg"],);
         }
-        $this->cards->moveAllCardsInLocation('cardsontable', 'cardswon', null, $best_value_player_id);
+        $this->cards->moveAllCardsInLocation('cardsontable', 'woncards', null, $best_value_player_id);
 
         // now we move cards where they need to go, and get next player
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
@@ -357,6 +358,28 @@ class Calypso extends Table
         self::setGameStateValue( 'currentTrickWinner', $best_player_id );
         self::setGameStateValue( 'bestCardSuit', $best_card['type'] );
         self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
+    }
+
+    function setScore( $player_id, $score_delta ){
+        if($score_delta < 0){
+            $operator = "-";
+            $score_delta = -$score_delta;
+        } else{
+            $operator = "+";
+        }
+        self::DbQuery(
+            "UPDATE player SET player_score=player_score".$operator.$score_delta." WHERE player_id='".$player_id."'" 
+        );
+    }
+
+    // TODO: uniformise names
+    function setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards ){
+        $round_number = self::getGameStateValue('roundNumber');
+        $sql_query = "
+            INSERT INTO round_scores (player_id, round_number, completed_calypsos, calypso_incomplete, won_tricks)
+            VALUES
+                (".$player_id.",".$round_number.",".$num_calypsos.",".$calypso_cards.",".$won_cards.");
+        ";
     }
 
     function validPlay( $player_id, $card ){
@@ -512,6 +535,7 @@ class Calypso extends Table
         }
 
         // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+        // score calypsos 500, 750, 1000
         $calypsos_to_score = array(
             0,
             500,
@@ -520,16 +544,25 @@ class Calypso extends Table
             3250,  // 500 + 750 + 1000 + 1000
         );
 
+        $scores_for_updating = array();
         $score_table = array();
 
         $header_names = array( '' );
         $header_suits = array( '' );
         $calypso_counts = array( count_wrap_label(clienttranslate("Completed Calypsos")) );
         $calypso_scores = array( score_wrap_label(clienttranslate("score")) );
+        
+        $part_calypso_counts = array( count_wrap_label(clienttranslate("Cards in incomplete Calypsos")) );
+        $part_calypso_scores = array( score_wrap_label(clienttranslate("score")) );
+    
+        $won_card_counts = array( count_wrap_label(clienttranslate("Remaining cards won")) );
+        $won_card_scores = array( score_wrap_label(clienttranslate("score")) );
+
+        $individual_scores = array( score_wrap_label(clienttranslate("Total individual score")) );
         // TODO: we should get the players in partnership order!
         // for each player:
         foreach ( $players as $player_id => $num_calypsos ) {
-            // score calypsos 500, 750, 1000
+            $scores_for_updating[$player_id] = 0;
             // score cardsincalypso 20 each
             // score woncards 10 each
 
@@ -546,15 +579,43 @@ class Calypso extends Table
                 'args' => array( 'player_suit' => $suit),
                 'type' => 'header'
             );
-            // TODO: the actual scores
+            
+            $calypso_score = $calypsos_to_score[$num_calypsos];
             $calypso_counts[] = count_wrap($num_calypsos);
-            $calypso_scores[] = score_wrap($calypsos_to_score[$num_calypsos]);
+            $calypso_scores[] = score_wrap($calypso_score);
+            $scores_for_updating[$player_id] += $calypso_score;
+
+            $calypso_cards = count($this->cards->getCardsInLocation( 'calypso', $player_id ));
+            $won_cards = count($this->cards->getCardsInLocation( 'woncards', $player_id ));
+
+            $part_calypso_score = 20*$calypso_cards;
+            $part_calypso_counts[] = count_wrap($calypso_cards);
+            $part_calypso_scores[] = score_wrap($part_calypso_score);
+            $scores_for_updating[$player_id] += $part_calypso_score;
+
+            $won_cards_score = 10*$won_cards;
+            $won_card_counts[] = count_wrap($won_cards);
+            $won_card_scores[] = score_wrap($won_cards_score);
+            $scores_for_updating[$player_id] += $won_cards_score;
+
+            $individual_scores[] = $scores_for_updating[$player_id];
+            self::setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards );
+            self::setScore( $player_id, $scores_for_updating[$player_id] );
         }
 
         $score_table[] = $header_names;
         $score_table[] = $header_suits;
+
         $score_table[] = $calypso_counts;
         $score_table[] = $calypso_scores;
+        
+        $score_table[] = $part_calypso_counts;
+        $score_table[] = $part_calypso_scores;
+        
+        $score_table[] = $won_card_counts;
+        $score_table[] = $won_card_scores;
+
+        $score_table[] = $individual_scores;
         // combine partnership scores
         
         $partial_calypso_counts = array( clienttranslate("Cards in incomplete calypsos") );
@@ -583,7 +644,7 @@ class Calypso extends Table
             'cardsontable',
             'calypso',
             'deck',
-            'cardswon',
+            'woncards',
             'full_calypsos',
         );
         $where_cards = $this->cards->countCardsInLocations();  // gives array location => count
