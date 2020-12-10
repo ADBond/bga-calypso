@@ -18,6 +18,7 @@
 ./calypso.game.php:            // TODO: this needs partnership info:
 ./calypso.game.php:        // TODO: pass this as a variable?
 ./calypso.game.php:        // TODO: we should get the players in partnership order!
+./calypso.game.php:            // TODO: this is also a place where partnershit will change
 ./calypso.game.php:        // TODO: this function checks that all cards are *somewhere*
 ./calypso.game.php:            } else {  // TODO: this _should_ be irrelevant, but can't hurt (much)
 ./calypso.game.php:            clienttranslate('A new round of hands is starting - round ${round_number}'),  // TODO: number of rounds total

@@ -409,6 +409,7 @@ function (dojo, declare) {
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
+            dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
         },
 
         notif_newHand : function(notif) {
@@ -449,6 +450,15 @@ function (dojo, declare) {
         },
         notif_actionRequired : function(notif) {
             // nothing needed here
+        },
+
+        notif_scoreUpdate : function(notif) {
+            console.log(notif.args.scores);
+            notif.args.scores.forEach(
+                score_info => (
+                    this.scoreCtrl[score_info.player_id].setValue(score_info.total_score)
+                )
+            );
         },
 
         // This is what happens after trick - we need to modify!

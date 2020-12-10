@@ -641,6 +641,9 @@ class Calypso extends Table
             $won_card_scores[] = score_wrap($score_info['won_cards_score']);
 
             $individual_scores[] = score_wrap($score_info['total_score']);
+
+            // TODO: this is also a place where partnershit will change
+            $scores_for_updating[] = array('player_id' => $player_id, 'total_score' => $score_info['total_score']);
         }
 
         $score_table[] = $header_names;
@@ -667,7 +670,14 @@ class Calypso extends Table
                 "table" => $score_table,
                 "closing" => clienttranslate( "Close" )
             )
-        ); 
+        );
+        $this->notifyAllPlayers(
+            'scoreUpdate',
+            '',
+            array(
+                'scores' => $scores_for_updating
+            )
+        );
     }
 
     function checkAllCardsExist(){
