@@ -11,7 +11,8 @@ cp pre-commit .git/hooks/
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
 * ~~Track number of completed calypsos per player~~
-* Update score on end of round
+* ~~Update score on end of round~~
+* Combined partnership score
 * Somebody wins?!
 
 ## TODO list
@@ -29,6 +30,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~track dealer etc make sure dealer is updated properly at end of hand~~
 * scoring
 * number of rounds/games set via gameoptions
+* team settings via gameoptions?
 * stats
 * any other TODOs from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
