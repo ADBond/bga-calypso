@@ -456,7 +456,7 @@ function (dojo, declare) {
             console.log(notif.args.scores);
             notif.args.scores.forEach(
                 score_info => (
-                    this.scoreCtrl[score_info.player_id].setValue(score_info.total_score)
+                    this.scoreCtrl[score_info.player_id].toValue(score_info.total_score)
                 )
             );
         },

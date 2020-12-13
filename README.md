@@ -10,13 +10,6 @@ cp pre-commit .git/hooks/
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~Track number of completed calypsos per player~~
-* ~~Update score on end of round~~
-* ~~Combined partnership score~~
-  * ~~have utils for partnership, just need to combine sensibly :)~~
-* ~~Update score box in notification~~
-* Somebody wins?!
-
 ## TODO list
 
 Loosely split into core logic stuff and more nicities, but obviously some overlap
@@ -30,7 +23,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~collecting calypsos (sort-of, maybe?? need to display in-progress to check better)~~
 * ~~display in-progress calypsos~~ (and completed? won discards?)
 * ~~track dealer etc make sure dealer is updated properly at end of hand~~
-* scoring
+* ~~scoring~~
 * number of rounds/games set via gameoptions
 * team settings via gameoptions?
 * stats
@@ -83,7 +76,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Variants
 
-Possibly.
+~~Possibly.~~
 
-* See https://boardgamegeek.com/thread/514183/game-got-lost-shuffle for a variant trick-winning rule: last trump-in wins
-* From question in that thread also: variant where you must beat leader when trumping in?
+* ~~See https://boardgamegeek.com/thread/514183/game-got-lost-shuffle for a variant trick-winning rule: last trump-in wins~~
+* ~~From question in that thread also: variant where you must beat leader when trumping in?~~
+
+Not in first pass at any rate - not sure if there's much value to this, and Culbertson at least in fact agrees with usual rule.
