@@ -10,6 +10,13 @@ cp pre-commit .git/hooks/
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* get the layout looking proper - calypsos and played cards
+* animate completed calypsos
+* revoke indicators (and the logic of them) - optional?
+* better info banner
+* improve scoring table?
+* access old scoring tables
+
 ## TODO list
 
 Loosely split into core logic stuff and more nicities, but obviously some overlap
