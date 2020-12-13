@@ -139,6 +139,8 @@
     position: absolute;
     width: 72px;
     height: 96px;
+    /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
+    /* transform: scale(0.6); */
     background-image: url('img/cards.jpg'); 
 }
 
@@ -171,4 +173,20 @@
 .calypso_W {
     left: 0%;
     top: 390px;
+}
+
+/* Score stuff */
+.clp-number-entry {
+    color: red;
+    font-style: italic;
+}
+.clp-score-entry {
+    font-weight: bold;
+}
+.clp-number-label {
+    text-align: left;
+    font-style: italic;
+}
+.clp-score-label {
+    text-align: right;
 }
