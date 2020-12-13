@@ -5,6 +5,7 @@
 ./calypso.game.php:                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
 ./calypso.game.php:        // AB TODO: compute and return the game progression
 ./calypso.game.php:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
+./calypso.game.php:    // TODO: check here and under that there isn't a secret option number 3?
 ./calypso.game.php:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
 ./calypso.game.php:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
 ./calypso.game.php:        // TODO: don't need these notifications long-term

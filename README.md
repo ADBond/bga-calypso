@@ -13,6 +13,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~Track number of completed calypsos per player~~
 * ~~Update score on end of round~~
 * Combined partnership score
+  * have utils for partnership, just need to combine sensibly :)
 * ~~Update score box in notification~~
 * Somebody wins?!
 

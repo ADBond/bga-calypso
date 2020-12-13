@@ -250,6 +250,24 @@ class Calypso extends Table
         return $players[$player_id]["player_name"];
     }
 
+    // TODO: check here and under that there isn't a secret option number 3?
+    function getPlayerPartnership($player_id) {
+        // use bridge terminology
+        // 3, 4 is clubs, diamonds -> 'minor' suits
+        $player_suit = self::getPlayerSuit($player_id);
+        if(in_array($player_suit, array(3, 4))){
+            return 'minor';
+        }
+        return 'major';
+    }
+
+    function getPartnershipPlayers($partnership){
+        if($parnership == 'minor'){
+            return array(self::getPlayerIDFromSuit(3), self::getPlayerIDFromSuit(4));
+        }
+        return array(self::getPlayerIDFromSuit(1), self::getPlayerIDFromSuit(2));
+    }
+
     // next player clockwise pass 1, -1 for anti-clockwise (i.e. previous player)
     function getAdjacentPlayer($existing_player_id, $direction_index=1){
         $players = self::loadPlayersBasicInfos();
@@ -294,8 +312,14 @@ class Calypso extends Table
     }
 
     function getAllCompletedCalyspos(){
+        $self = $this;
+        $partnershipOrder = function($player_1, $player_2) use ($self){
+            return $this::getPlayerPartnership($player_1) == "minor"? -1 : 1;
+        };
         $sql = "SELECT player_id id, completed_calypsos num_calypsos FROM player";
         $player_calypsos = self::getCollectionFromDB( $sql, true );
+        
+        uksort($player_calypsos, $partnershipOrder);
         return $player_calypsos;
     }
 
