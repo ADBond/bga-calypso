@@ -545,6 +545,15 @@ class Calypso extends Table
             "SELECT score_id, player_id, completed_calypsos, calypso_incomplete, won_tricks FROM round_scores
             WHERE round_number=".$round_number.";"
         );
+        $partnership_scores_raw = self::getCollectionFromDB(
+            "SELECT score_id, partnership, score FROM partnership_scores
+            WHERE round_number=".$round_number.";"
+        );
+        $partnership_scores = array();
+        foreach($partnership_scores_raw as $score_id => $details){
+            $partnership_scores[$details['partnership']] = $details['score'];
+        }
+
         $processed_score = array();
 
         foreach($round_score as $score_id => $score_info){
@@ -555,6 +564,7 @@ class Calypso extends Table
                 'calypso_count' => $num_calypsos,
                 'part_calypso_count' => $calypso_cards,
                 'won_cards_count' => $won_cards,
+                'partnership_score' => $partnership_scores[self::getPlayerPartnership($score_info['player_id'])],
             ) + self::countsToScores($num_calypsos, $calypso_cards, $won_cards);
         }
         return $processed_score;
@@ -584,9 +594,16 @@ class Calypso extends Table
         );
     }
 
+    // here we actually set the scores
     function updateScores(){
         $players = self::getAllCompletedCalyspos();
 
+        $round_number = self::getGameStateValue( 'roundNumber' );
+
+        $partnership_scores = array(
+            "minor" => 0,
+            "major" => 0,
+        );
         foreach ( $players as $player_id => $num_calypsos ) {
 
             $calypso_cards = count($this->cards->getCardsInLocation( 'calypso', $player_id ));
@@ -595,10 +612,25 @@ class Calypso extends Table
             $scores_for_updating[$player_id] = self::countsToScores($num_calypsos, $calypso_cards, $won_cards)['total_score'];
 
             self::setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards );
-            // TODO: this needs partnership info:
-            self::setScore( $player_id, $scores_for_updating[$player_id] );
-        }
 
+            $partnership = self::getPlayerPartnership($player_id);
+            $partnership_scores[$partnership] += $scores_for_updating[$player_id];
+        }
+        foreach ( $players as $player_id => $num_calypsos ) {
+
+            $partnership = self::getPlayerPartnership($player_id);
+            self::setScore( $player_id, $partnership_scores[$partnership] );
+        }
+        foreach ( $partnership_scores as $partnership => $score ){
+            $sql_query = "
+                INSERT INTO partnership_scores (round_number, partnership, score)
+                VALUES
+                    (".$round_number.",'".$partnership."',".$score.");
+            ";
+            self::DbQuery(
+                $sql_query
+            );
+        }
     }
 
     function displayScores(){
@@ -638,6 +670,8 @@ class Calypso extends Table
         $won_card_scores = array( score_wrap_label(clienttranslate("score")) );
 
         $individual_scores = array( score_wrap_label(clienttranslate("Total individual score")) );
+        
+        $partnership_scores = array( score_wrap_label(clienttranslate("Total round score")) );
         // TODO: we should get the players in partnership order!
         // for each player:
         $players = self::getRoundScore($round_number);
@@ -666,8 +700,10 @@ class Calypso extends Table
 
             $individual_scores[] = score_wrap($score_info['total_score']);
 
+            $partnership_scores[] = score_wrap($score_info['partnership_score']);
+
             // TODO: this is also a place where partnershit will change
-            $scores_for_updating[] = array('player_id' => $player_id, 'total_score' => $score_info['total_score']);
+            $scores_for_updating[] = array('player_id' => $player_id, 'total_score' => $score_info['partnership_score']);
         }
 
         $score_table[] = $header_names;
@@ -683,7 +719,8 @@ class Calypso extends Table
         $score_table[] = $won_card_scores;
 
         $score_table[] = $individual_scores;
-        // combine partnership scores
+        // TODO: probably want to display this aspect betterly
+        $score_table[] = $partnership_scores;
 
         $this->notifyAllPlayers(
             "tableWindow",

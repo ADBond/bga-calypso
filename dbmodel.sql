@@ -34,6 +34,14 @@ CREATE TABLE IF NOT EXISTS `round_scores` (
         REFERENCES `player`(`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+CREATE TABLE IF NOT EXISTS `partnership_scores` (
+  `score_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `round_number` int(2) NOT NULL,
+  `partnership` ENUM('minor', 'major'),
+  `score` int(5) NOT NULL,
+  PRIMARY KEY (`score_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
 -- personal trump suit - default value indicates it has not been set yet.
 ALTER TABLE `player` ADD `trump_suit` varchar(16) NOT NULL DEFAULT '0';
 -- how many completed calypsos so far in a round?
