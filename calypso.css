@@ -57,13 +57,14 @@
 
 #playertables {
     position: relative;
+    left: 200px;
     width: 710px;
     height: 340px;
 }
 
 #playercalypso {
     position: relative;
-    left: 1000px;
+    left: 20px;
     top: -340px;
 }
 
@@ -143,6 +144,9 @@
     /* transform: scale(0.6); */
     background-image: url('img/cards.jpg'); 
 }
+.calypsocard {
+    outline: solid 1px black;
+}
 
 .calypso {
     position: absolute;
@@ -159,20 +163,23 @@
 
 /* Temporary positioning for now */
 .calypso_N {
-    left: 0%;
+    left: 400px;
     top: 0px;
+    transform: rotate(180deg);
 }
 .calypso_E {
-    left: 0%;
-    top: 130px;
+    left: 0px;
+    top: 260px;
+    transform: rotate(270deg);
 }
 .calypso_S {
-    left: 0%;
-    top: 260px;
+    left: 400px;
+    top: 520px;
 }
 .calypso_W {
-    left: 0%;
-    top: 390px;
+    left: 800px;
+    top: 260px;
+    transform: rotate(90deg);
 }
 
 /* Score stuff */
