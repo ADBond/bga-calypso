@@ -72,15 +72,15 @@ class Calypso extends Table
         the game is ready to be played.
     */
     protected function setupNewGame( $players, $options = array() )
-    {    
-        
+    {
+
+        // TODO: colours
         // Set the colors of the players with HTML color code
         // The default below is red/green/blue/orange/brown
         // The number of colors defined here must correspond to the maximum number of players allowed for the gams
         $gameinfos = self::getGameinfos();
         $default_colors = $gameinfos['player_colors'];
- 
-        // Create players
+
         $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
         foreach( $players as $player_id => $player )
@@ -94,8 +94,6 @@ class Calypso extends Table
         self::reloadPlayersBasicInfos();
         
         /************ Start the game initialization *****/
-
-        // AB TODO: other gamestate values when I've figured out what they are!
 
         // pre-game value
         self::setGameStateInitialValue( 'roundNumber', 0 );
@@ -269,6 +267,7 @@ class Calypso extends Table
     }
 
     // next player clockwise pass 1, -1 for anti-clockwise (i.e. previous player)
+    // this is where order is canonically set in-game!
     function getAdjacentPlayer($existing_player_id, $direction_index=1){
         $players = self::loadPlayersBasicInfos();
         $existing_player_number = $players[$existing_player_id]["player_no"];
@@ -281,6 +280,20 @@ class Calypso extends Table
             }
         }
         return $new_player;
+    }
+
+    function getPlayerDirections(){
+        $south_id = self::getCurrentPlayerId();
+        $west_id = self::getAdjacentPlayer($south_id);
+        $north_id = self::getAdjacentPlayer($west_id);
+        $east_id = self::getAdjacentPlayer($north_id);
+        $directions = array(
+            $south_id => "S",
+            $west_id => "W",
+            $north_id => "N",
+            $east_id => "E",
+        );
+        return $directions;
     }
 
     // TODO: this changes the dealer, and is only done between hands - reflect that in name
@@ -971,7 +984,8 @@ class Calypso extends Table
             }
         } else {
             // Standard case (not the end of the trick)
-            // => just active the next player
+            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+            // $this->gamestate->changeActivePlayer( $player_id )
             $player_id = self::activeNextPlayer();
             self::giveExtraTime($player_id);
             $this->gamestate->nextState('nextPlayer');

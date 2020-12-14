@@ -1,7 +1,7 @@
 ./.git/hooks/pre-commit:grep TODO -r . > misc/todo_list
 ./calypso.game.php:                         // AB TODO: may want to revisit once I've fiddled with gameoptions
 ./calypso.game.php:                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
-./calypso.game.php:        // AB TODO: other gamestate values when I've figured out what they are!
+./calypso.game.php:        // TODO: colours
 ./calypso.game.php:                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
 ./calypso.game.php:        // AB TODO: compute and return the game progression
 ./calypso.game.php:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
@@ -24,6 +24,7 @@
 ./calypso.game.php:            } else {  // TODO: this _should_ be irrelevant, but can't hurt (much)
 ./calypso.game.php:            clienttranslate('A new round of hands is starting - round ${round_number}'),  // TODO: number of rounds total
 ./calypso.game.php:        self::notifyAllPlayers(  // TODO: id is for debugging, delete!
+./calypso.game.php:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.game.php:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
 ./calypso.game.php:        self::updateScores();  // TODO: to debug this! it doesn't really live here
 ./calypso.game.php:        // TODO: this noticiation should give scores for the round, and round number
@@ -44,7 +45,6 @@
 ./calypso.js:        // TODO: from this point and below, you can write your game notifications handling methods
 ./calypso.js:            // AB TODO: do we need to do anything here?
 ./calypso.js:            // TODO: play the card in the user interface.
-./calypso.view.php:        // TODO: this is how we map from direction to player, which we need to do better!
 ./calypso.view.php:        // TODO: width should probably be set in JS as we can scale to card size there
 ./calypso_calypso.tpl:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./gameinfos.inc.php:    // TODO: actually write this properly

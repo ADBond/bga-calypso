@@ -16,6 +16,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * better info banner
 * improve scoring table?
 * access old scoring tables
+* ~~relative placements to current player~~
 
 ## TODO list
 
@@ -59,7 +60,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * Maybe cards should move to player, and then to wherever (to make it clear who won the trick?)
 * game art
 * Nicer game area, like in e.g. GrossTarock?
-* Fix up calypso displays. Maybe smaller?
+* ~~Fix up calypso displays. Maybe smaller?~~
 * Set different default colours
 * ~~Show who is dealer~~, ~~who dealt first in round etc. Let's not do this~~
   * ~~animate this changing?~~
@@ -71,7 +72,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * want to think about how to nicely signify teams - see e.g. Phat for nice approach
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
 * Revoke indicators
-* Direction stuff - should be relative to player! Don't forget to update this!
+* ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 
 ### Other UI
 
