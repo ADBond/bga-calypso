@@ -46,6 +46,7 @@
 ./calypso.js:            // TODO: play the card in the user interface.
 ./calypso.view.php:                // TODO: width should probably be set in JS as we can scale to card size there
 ./calypso.view.php:                // TODO: z-index to assure the right ordering
+./calypso_calypso.tpl:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./gameinfos.inc.php:    // TODO: actually write this properly
 ./pre-commit:grep TODO -r . > misc/todo_list
 ./README.md:## Current branch TODOs

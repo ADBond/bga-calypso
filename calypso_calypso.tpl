@@ -9,7 +9,7 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -->
 
-<div class="whiteblock" id="gameinfo"></div>
+<div id="clp-gameinfo"></div>
 
 <div id="playarea">
     <div id="playertables">
@@ -25,8 +25,6 @@
                 </div>
             </div>
         <!-- END playerhand -->
-    </div>
-    <div id="playercalypso">
         <!-- BEGIN playercalypso -->
             <div class="calypso whiteblock calypso_{DIR}">
                 <div class="playertablename" style="color:#{PLAYER_COLOR}">
@@ -45,7 +43,7 @@
     </div>
 </div>
 
-<div id="myhand_wrap" class="whiteblock">
+<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
     <h3>{MY_HAND}</h3>
     <div id="myhand">
     </div>

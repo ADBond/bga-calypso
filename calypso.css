@@ -68,6 +68,13 @@
     top: -340px;
 }
 
+#clp-gameinfo {
+    font-weight: bold;
+    width: 200px;
+    font-size: 16px;
+    background-color: #880000;
+}
+
 .playertablename {
     font-weight: bold;
 }
@@ -110,6 +117,10 @@
     margin-top: 5px;
     width: 72px;
     height: 96px;
+}
+
+#myhand_wrap {
+    width: 1000px;
 }
 
 #dealerbutton {
@@ -168,7 +179,7 @@
     transform: rotate(180deg);
 }
 .calypso_E {
-    left: 0px;
+    left: 800px;
     top: 260px;
     transform: rotate(270deg);
 }
@@ -177,7 +188,7 @@
     top: 520px;
 }
 .calypso_W {
-    left: 800px;
+    left: 0px;
     top: 260px;
     transform: rotate(90deg);
 }
