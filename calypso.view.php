@@ -42,10 +42,18 @@
         // Stuff straight from Hearts tutorial --- for the cards played to tricks
         $template = self::getGameName() . "_" . self::getGameName();
         
+        // TODO: this is how we map from direction to player, which we need to do better!
         $directions = array( 'S', 'W', 'N', 'E' );
         
         // this will inflate our player block with actual players data
         
+        // TODO: width should probably be set in JS as we can scale to card size there
+        // width of card is 72
+        $card_width = 72;
+        // how much offset before displaying next card
+        $each_card_offset = 25;
+        $overall_width = 13*$each_card_offset + ($card_width - $each_card_offset);
+
         $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
         $this->page->begin_block( $template, "playerhand" );
         $this->page->begin_block( $template, "playercalypso" );
@@ -54,10 +62,7 @@
             $trump_suit = $this->game->getPlayerSuit($player_id);
             for ($rank = 2; $rank <= 14; $rank ++) {
                 //  2, 3, 4, ... K, A
-                // TODO: width should probably be set in JS as we can scale to card size there
-                // width of card is 72
-                // TODO: z-index to assure the right ordering
-                $offset_value = ($rank - 2) * 25;
+                $offset_value = ($rank - 2) * $each_card_offset;
                 $this->page->insert_block(
                     "calypsocard",
                     array(
@@ -80,7 +85,7 @@
             );
             $this->page->insert_block(
                 "playercalypso",
-                array ("PLAYER_ID" => $player_id, "DIR" => $dir )
+                array ("PLAYER_ID" => $player_id, "DIR" => $dir, "WIDTH" => $overall_width)
             );
         }
         // this will make our My Hand text translatable

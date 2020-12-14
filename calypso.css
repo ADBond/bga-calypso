@@ -55,12 +55,12 @@
     width: 1500px;
 }
 
-#playertables {
+/* #playertables {
     position: relative;
     left: 200px;
     width: 710px;
     height: 340px;
-}
+} */
 
 #playercalypso {
     position: relative;
@@ -156,7 +156,12 @@
     background-image: url('img/cards.jpg'); 
 }
 .calypsocard {
+    position: absolute;
     outline: solid 1px black;
+    background-color: #AAA;
+    z-index: 0;
+    width: 72px;
+    height: 96px;
 }
 
 .calypso {
@@ -168,7 +173,7 @@
     display: inline-block;
     position: relative;
     /* margin-top: 5px; */
-    /* width: 72px; */
+    width: 400px;
     height: 96px;
 }
 

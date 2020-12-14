@@ -30,11 +30,14 @@
                 <div class="playertablename" style="color:#{PLAYER_COLOR}">
                     {PLAYER_NAME}
                 </div>
-                <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
+                <div class="playercalypso"
+                     id="playercalypso_{PLAYER_ID}"
+                     style="width:{WIDTH}px;"
+                >
                     <!-- BEGIN calypsocard -->
-                        <div class="calypsocard card-{CARD_RANK}"
+                        <div class="calypsocard calypsocard-{CARD_RANK}"
                              id="calypsocard_{PLAYER_ID}_{CARD_RANK}"
-                             style="margin-left:{OFFSET}px">
+                             style="left:{OFFSET}px;">
                         </div>
                     <!-- END calypsocard -->
                 </div>
