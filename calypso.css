@@ -53,6 +53,7 @@
 #playarea {
     position: relative;
     width: 1500px;
+    height: 1000px;
 }
 
 /* #playertables {
@@ -61,6 +62,15 @@
     width: 710px;
     height: 340px;
 } */
+#tablearea {
+    position: absolute;
+    left: 100px;
+    width: 1000px;
+    height: 800px;
+    background-color: #8800DD;
+    border-radius: 10px;
+    z-index: -1;
+}
 
 #playercalypso {
     position: relative;
@@ -69,6 +79,7 @@
 }
 
 #clp-gameinfo {
+    position: absolute;
     font-weight: bold;
     width: 200px;
     font-size: 16px;
@@ -92,24 +103,20 @@
 }
 
 .playertable_N {
-    left: 50%;
-    top: 0px;
-    margin-left: -90px; /* half of 180 */
+    left: 500px;
+    top: 150px;
 }
 .playertable_S {
-    left: 50%;
-    bottom: 0px;
-    margin-left: -90px; /* half of 180 */
+    left: 500px;
+    top: 350px;
 }
 .playertable_W {
-    left: 0px;
-    top: 50%;
-    margin-top: -55px; /* half of 130 */
+    left: 300px;
+    top: 250px;
 }
 .playertable_E {
-    right: 0px;
-    top: 50%;
-    margin-top: -55px; /* half of 130 */
+    left: 700px;
+    top: 250px;
 }
 
 .playertablecard {
@@ -121,6 +128,8 @@
 }
 
 #myhand_wrap {
+    position: absolute;
+    top: 650px;
     width: 1000px;
 }
 

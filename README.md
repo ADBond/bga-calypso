@@ -59,7 +59,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * Little piles for won cards to be sink for any misc won cards, instead of player panels
   * Maybe cards should move to player, and then to wherever (to make it clear who won the trick?)
 * game art
-* Nicer game area, like in e.g. GrossTarock?
+* ~~Nicer game area, like in e.g. GrossTarock? (have a crude version, can iterate on that in general improvements)~~
 * ~~Fix up calypso displays. Maybe smaller?~~
 * Set different default colours
 * ~~Show who is dealer~~, ~~who dealt first in round etc. Let's not do this~~

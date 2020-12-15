@@ -66,6 +66,7 @@
                 );
             }
 
+            // TODO: not sure if these should be part of the same player block or not...
             $this->page->insert_block(
                 "playerhand",
                 array (

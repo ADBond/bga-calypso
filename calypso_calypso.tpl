@@ -13,7 +13,7 @@
 
 <div id="playarea">
     <div id="playertables">
-
+        <div id="tablearea"></div>
         <!-- BEGIN playerhand -->
             <div class="playertable whiteblock playertable_{DIR}">
                 <div class="playertablename" id="area-name-{PLAYER_ID}" style="color:#{PLAYER_COLOR}">
@@ -32,8 +32,7 @@
                 </div>
                 <div class="playercalypso"
                      id="playercalypso_{PLAYER_ID}"
-                     style="width:{WIDTH}px;"
-                >
+                     style="width:{WIDTH}px;">
                     <!-- BEGIN calypsocard -->
                         <div class="calypsocard calypsocard-{CARD_RANK}"
                              id="calypsocard_{PLAYER_ID}_{CARD_RANK}"
