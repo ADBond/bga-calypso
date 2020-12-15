@@ -17,6 +17,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * improve scoring table?
 * access old scoring tables
 * ~~relative placements to current player~~
+* some of the css classes are names ridiculously. Once things are stable fix that.
 
 ## TODO list
 

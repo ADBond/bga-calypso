@@ -36,7 +36,7 @@
                     <!-- BEGIN calypsocard -->
                         <div class="calypsocard calypsocard-{CARD_RANK}"
                              id="calypsocard_{PLAYER_ID}_{CARD_RANK}"
-                             style="left:{OFFSET}px;">
+                             style="left:{OFFSET}px; background-position: 0px -{Y_OFFSET}px">
                         </div>
                     <!-- END calypsocard -->
                 </div>

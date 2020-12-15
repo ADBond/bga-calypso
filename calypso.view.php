@@ -47,6 +47,10 @@
         $each_card_offset = 25;
         $overall_width = 13*$each_card_offset + ($card_width - $each_card_offset);
 
+        // TODO: better name
+        // sprite position
+        $card_height = 96;
+
         $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
         $this->page->begin_block( $template, "playerhand" );
         $this->page->begin_block( $template, "playercalypso" );
@@ -61,7 +65,8 @@
                     array(
                         "PLAYER_ID" => $player_id,
                         "OFFSET" => $offset_value,
-                        "CARD_RANK" => $rank
+                        "CARD_RANK" => $rank,
+                        "Y_OFFSET" => $card_height * ($trump_suit - 1),
                     )
                 );
             }

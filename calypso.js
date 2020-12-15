@@ -286,7 +286,8 @@ function (dojo, declare) {
                     'z-index': `${+rank + 14}`,
                 }
             )
-            dojo.addClass( card_el_id, 'cardincalypso' );  // TODO: this in .tpl file??
+            dojo.addClass( card_el_id, 'cardincalypso' );
+            dojo.removeClass( card_el_id, 'calypsocard' );
 
         },
 

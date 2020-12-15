@@ -168,10 +168,11 @@
 .calypsocard {
     position: absolute;
     outline: solid 1px black;
-    background-color: #AAA;
+    /* background-color: #AAA; */
     z-index: 0;
     width: 72px;
     height: 96px;
+    background-image: url('img/cards_layout.jpg'); 
 }
 
 .calypso {
