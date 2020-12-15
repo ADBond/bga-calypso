@@ -40,8 +40,6 @@ Might be nice to refactor so the code is more readable and these values are hidd
 
 Not cleared after completing, needs refresh. Think I've already noted this somewhere
 
-### player box
+#### calypso z-index
 
-See e.g. backgammon, 99 (rounds-based), Jaipur (seal of excellence) for games that have extra info in the player panels. How?
-
-* https://en.doc.boardgamearena.com/Counter#Adding_stuff_to_player.27s_panel
+~~The z-index is going crazy high, and thus overlapping popups! (obviously string/numeric issue)~~

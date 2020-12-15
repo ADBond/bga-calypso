@@ -283,7 +283,7 @@ function (dojo, declare) {
             dojo.style(card_el_id,
                 {
                     'backgroundPosition': `-${x}px -${y}px`,
-                    'z-index': `${rank + 14}`,
+                    'z-index': `${+rank + 14}`,
                 }
             )
             dojo.addClass( card_el_id, 'cardincalypso' );  // TODO: this in .tpl file??
