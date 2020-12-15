@@ -294,7 +294,6 @@ function (dojo, declare) {
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'dealer-' + new_dealer_id;
 
-            console.log("dealer posirtion gows to: ", new_dealer_area_id);
             this.slideToObject('dealerbutton', new_dealer_area_id).play();
         },
 

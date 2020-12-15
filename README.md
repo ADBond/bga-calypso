@@ -18,6 +18,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * access old scoring tables
 * ~~relative placements to current player~~
 * some of the css classes are names ridiculously. Once things are stable fix that.
+  * on that note also align on wontricks/cardswon etc - good to get it sorted earlier (!). Use Culbertson terminology??
 
 ## TODO list
 

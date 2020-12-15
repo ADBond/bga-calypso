@@ -27,8 +27,15 @@
         <!-- END playerhand -->
         <!-- BEGIN playercalypso -->
             <div class="calypso whiteblock calypso_{DIR}">
+                <!-- 
+                TODO here: don't need player name here - have that outside so it's not rotated
+                need to implement revoke and wontricks stuff
+                -->
                 <div class="playertablename" style="color:#{PLAYER_COLOR}">
                     {PLAYER_NAME}
+                </div>
+                <div class="revoke-indicators">
+                    <!-- templates to include here for each suit -->
                 </div>
                 <div class="playercalypso"
                      id="playercalypso_{PLAYER_ID}"
@@ -40,6 +47,7 @@
                         </div>
                     <!-- END calypsocard -->
                 </div>
+                <div class="wontricks"></div>
             </div>
         <!-- END playercalypso -->
     </div>

@@ -175,9 +175,11 @@
     background-image: url('img/cards_layout.jpg'); 
 }
 
+/* TODO: do I need this? */
 .calypso {
     position: absolute;
     text-align: center;
+    width: 500px;
 }
 
 .playercalypso {
@@ -207,6 +209,12 @@
     left: 0px;
     top: 260px;
     transform: rotate(90deg);
+}
+.wontricks {
+    width: 72px;
+    height: 96px;
+    background-color: #444444;
+    float: right;
 }
 
 /* Score stuff */
