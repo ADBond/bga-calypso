@@ -173,7 +173,7 @@ $num_ranks: 13;
 
 // Offset for overlapping of calypso cards:
 $each_card_offset: 25px;
-$calyspo_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
+$calypso_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
 @for $rank from 2 through $num_ranks+1 {
     $offset_value: ($rank - 2) * $each_card_offset;
     .calypsocard-#{$rank} {
@@ -205,9 +205,11 @@ $calyspo_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
     height: $card_height;
 }
 
+$blank_space_colour: #999;
+
 /* TODO: rename - this bounds all of our public info */
 $won_tricks_left_buffer: 40px;
-$calypso_zone_pure_width: $calyspo_pure_width + $won_tricks_left_buffer + $card_width;
+$calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_width;
 
 $calypso_zone_side_padding: 10px;
 $calypso_bottom_buffer: 20px;
@@ -222,7 +224,7 @@ $revoke_padding: 4px;
     outline: solid 1px black;
     padding: $calypso_zone_side_padding;
     /* while I figure out what to do: */
-    background: rgba(0, 141, 0, 0.2); /* for now while it's WIP */ 
+    background: rgba(255, 255, 255, 0.75); /* for now while it's WIP */ 
 }
 
 .revoke-indicators {
@@ -232,14 +234,19 @@ $revoke_padding: 4px;
 .revoke-indicator {
     width: $revoke_size;
     height: $revoke_size;
-    background-color: #444444;
+    background-color: $blank_space_colour;
     display: inline-block;
     margin: $revoke_padding;
 }
+$max_name_size: 200px;
 .clp-playername {
     font-weight: bold;
     height: $revoke_size;
-    font-size: 24px;
+    width: $max_name_size;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 20px;
     position: absolute;
     right: 40px;
 }
@@ -254,11 +261,18 @@ $revoke_padding: 4px;
     /* leaving room for revokers */
     bottom: $calypso_bottom_buffer;
 }
+.calypsoholder {
+    width: $calypso_pure_width;
+    height: $card_height;
+    outline: solid 3px black;
+    position: absolute;
+}
 .wontricks {
     width: $card_width;
     height: $card_height;
-    background-color: #444444;
+    background-color: $blank_space_colour;
     right: 0px;
+    position: absolute;
 }
 
 /* Temporary positioning for now */

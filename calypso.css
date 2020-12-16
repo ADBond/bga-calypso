@@ -259,7 +259,7 @@
   outline: solid 1px black;
   padding: 10px;
   /* while I figure out what to do: */
-  background: rgba(0, 141, 0, 0.2);
+  background: rgba(255, 255, 255, 0.75);
   /* for now while it's WIP */
 }
 
@@ -270,7 +270,7 @@
 .revoke-indicator {
   width: 32px;
   height: 32px;
-  background-color: #444444;
+  background-color: #999;
   display: inline-block;
   margin: 4px;
 }
@@ -278,7 +278,11 @@
 .clp-playername {
   font-weight: bold;
   height: 32px;
-  font-size: 24px;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
   position: absolute;
   right: 40px;
 }
@@ -294,11 +298,19 @@
   bottom: 20px;
 }
 
+.calypsoholder {
+  width: 372px;
+  height: 96px;
+  outline: solid 3px black;
+  position: absolute;
+}
+
 .wontricks {
   width: 72px;
   height: 96px;
-  background-color: #444444;
+  background-color: #999;
   right: 0px;
+  position: absolute;
 }
 
 /* Temporary positioning for now */

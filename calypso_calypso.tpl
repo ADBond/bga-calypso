@@ -31,7 +31,7 @@
                 need to implement revoke and wontricks stuff
                 -->
                 <div class="clp-playername" style="color:#{PLAYER_COLOR}">
-                    {PLAYER_NAME}
+                    {PLAYER_NAME} - a very long username
                 </div>
                 <div class="revoke-indicators" id="revoke_{PLAYER_ID}">
                     <!-- BEGIN revokeindicator -->
@@ -39,13 +39,14 @@
                     </div>
                     <!-- END revokeindicator -->
                 </div>
-                <div class="playercalypso"
-                     id="playercalypso_{PLAYER_ID}">
+                <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
+                    <div class="calypsoholder">
                     <!-- BEGIN calypsocard -->
                         <div class="calypsocard captured-card calypsocard-{CARD_RANK} card-space-{SUIT}"
                              id="calypsocard_{PLAYER_ID}_{CARD_RANK}">
                         </div>
                     <!-- END calypsocard -->
+                    </div>
                     <div class="wontricks captured-card" id="wontricks_{PLAYER_ID}"></div>
                 </div>
             </div>

@@ -1,5 +1,3 @@
 You have probably misspelled calypso some places - a likely source of errors!
 ./.git/hooks/pre-commit:grep calyspo -r . >> misc/warnings
-./calypso_style.scss:$calyspo_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
-./calypso_style.scss:$calypso_zone_pure_width: $calyspo_pure_width + $won_tricks_left_buffer + $card_width;
 ./pre-commit:grep calyspo -r . >> misc/warnings
