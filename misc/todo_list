@@ -1,5 +1,5 @@
 ./.git/hooks/pre-commit:grep TODO -r . > misc/todo_list
-./calypso.css:/* TODO: do I need this? */
+./calypso.css:/* TODO: rename - this bounds all of our public info */
 ./calypso.game.php:                         // AB TODO: may want to revisit once I've fiddled with gameoptions
 ./calypso.game.php:                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
 ./calypso.game.php:        // TODO: colours

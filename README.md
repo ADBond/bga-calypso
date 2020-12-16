@@ -75,6 +75,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
 * Revoke indicators
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
+* Order hand with personal trumps separated?
 
 ### Other UI
 

@@ -48,6 +48,14 @@
 
 /********* You can start writing your CSS below this line: **********/
 
+/* for reference: */
+/* .whiteblock {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-image: url("../img/layout/rounded_b.png");
+} */
+
 /** Table layout **/
 
 #playarea {
@@ -130,7 +138,7 @@
 #myhand_wrap {
     position: absolute;
     top: 650px;
-    width: 1000px;
+    width: 1200px;
 }
 
 #dealerbutton {
@@ -157,37 +165,50 @@
 }
 
 /*** calypsos ***/
-.cardincalypso {
-    position: absolute;
-    width: 72px;
-    height: 96px;
+/* .cardincalypso {
     /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
     /* transform: scale(0.6); */
-    background-image: url('img/cards.jpg'); 
-}
+    /* background-image: url('img/cards.jpg');  
+} */
+
 .calypsocard {
-    position: absolute;
     outline: solid 1px black;
     /* background-color: #AAA; */
     z-index: 0;
-    width: 72px;
-    height: 96px;
     background-image: url('img/cards_layout.jpg'); 
 }
+.captured-card {
+    position: absolute;
+    width: 72px;
+    height: 96px;
+}
 
-/* TODO: do I need this? */
+/* TODO: rename - this bounds all of our public info */
 .calypso {
     position: absolute;
     text-align: center;
     width: 500px;
+    height: 200px;
+    outline: solid 1px black;
+    padding: 10px;
 }
 
 .playercalypso {
-    display: inline-block;
-    position: relative;
+    /* display: inline-block;
+    position: relative; */
+    left: 20px;
+    position: absolute;
     /* margin-top: 5px; */
-    width: 400px;
+    width: 500px;
     height: 96px;
+    /* leaving room for revokers */
+    top: 80px;
+}
+.wontricks {
+    width: 72px;
+    height: 96px;
+    background-color: #444444;
+    right: 10px;
 }
 
 /* Temporary positioning for now */
@@ -210,11 +231,18 @@
     top: 260px;
     transform: rotate(90deg);
 }
-.wontricks {
-    width: 72px;
-    height: 96px;
+
+.revoke-indicators {
+    left: 20px;
+    position: absolute;
+}
+
+.revoke-indicator {
+    width: 32px;
+    height: 32px;
     background-color: #444444;
-    float: right;
+    display: inline-block;
+    padding: 4px;
 }
 
 /* Score stuff */

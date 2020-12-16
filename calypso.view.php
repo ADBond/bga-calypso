@@ -51,12 +51,23 @@
         // sprite position
         $card_height = 96;
 
+        $this->page->begin_block( $template, "revokeindicator" ); // Nested block must be declared first
         $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
         $this->page->begin_block( $template, "playerhand" );
         $this->page->begin_block( $template, "playercalypso" );
         foreach ( $players as $player_id => $info ) {
+            $this->page->reset_subblocks( "revokeindicator" );
             $this->page->reset_subblocks( "calypsocard" );
             $trump_suit = $this->game->getPlayerSuit($player_id);
+            for ($suit = 1; $suit <= 4; $suit ++) {
+                $this->page->insert_block(
+                    "revokeindicator",
+                    array(
+                        "PLAYER_ID" => $player_id,
+                        "CARD_SUIT" => $suit,
+                    )
+                );
+            }
             for ($rank = 2; $rank <= 14; $rank ++) {
                 //  2, 3, 4, ... K, A
                 $offset_value = ($rank - 2) * $each_card_offset;
@@ -83,7 +94,10 @@
             );
             $this->page->insert_block(
                 "playercalypso",
-                array ("PLAYER_ID" => $player_id, "DIR" => $directions[$player_id], "WIDTH" => $overall_width)
+                array (
+                    "PLAYER_ID" => $player_id, "DIR" => $directions[$player_id],
+                    #"WIDTH" => $overall_width
+                )
             );
         }
         // this will make our My Hand text translatable
