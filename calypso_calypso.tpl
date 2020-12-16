@@ -30,7 +30,7 @@
                 TODO here: don't need player name here - have that outside so it's not rotated
                 need to implement revoke and wontricks stuff
                 -->
-                <div class="playertablename" style="color:#{PLAYER_COLOR}">
+                <div class="clp-playername" style="color:#{PLAYER_COLOR}">
                     {PLAYER_NAME}
                 </div>
                 <div class="revoke-indicators" id="revoke_{PLAYER_ID}">

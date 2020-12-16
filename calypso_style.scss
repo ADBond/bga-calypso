@@ -173,6 +173,7 @@ $num_ranks: 13;
 
 // Offset for overlapping of calypso cards:
 $each_card_offset: 25px;
+$calyspo_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
 @for $rank from 2 through $num_ranks+1 {
     $offset_value: ($rank - 2) * $each_card_offset;
     .calypsocard-#{$rank} {
@@ -204,35 +205,60 @@ $each_card_offset: 25px;
     height: $card_height;
 }
 
-
 /* TODO: rename - this bounds all of our public info */
+$won_tricks_left_buffer: 40px;
+$calypso_zone_pure_width: $calyspo_pure_width + $won_tricks_left_buffer + $card_width;
+
+$calypso_zone_side_padding: 10px;
+$calypso_bottom_buffer: 20px;
+
+$revoke_size: 32px;
+$revoke_padding: 4px;
 .calypso {
     position: absolute;
     text-align: center;
-    width: 500px;
-    height: 200px;
+    width: $calypso_zone_pure_width + $calypso_zone_side_padding;
+    height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*$revoke_padding;
     outline: solid 1px black;
-    padding: 10px;
+    padding: $calypso_zone_side_padding;
     /* while I figure out what to do: */
     background: rgba(0, 141, 0, 0.2); /* for now while it's WIP */ 
 }
 
+.revoke-indicators {
+    // left: 20px;
+    position: absolute;
+}
+.revoke-indicator {
+    width: $revoke_size;
+    height: $revoke_size;
+    background-color: #444444;
+    display: inline-block;
+    margin: $revoke_padding;
+}
+.clp-playername {
+    font-weight: bold;
+    height: $revoke_size;
+    font-size: 24px;
+    position: absolute;
+    right: 40px;
+}
 .playercalypso {
     /* display: inline-block;
     position: relative; */
-    left: 20px;
+    // left: 20px;
     position: absolute;
     /* margin-top: 5px; */
-    width: 500px;
-    height: 96px;
+    width: $calypso_zone_pure_width;
+    height: $card_height;
     /* leaving room for revokers */
-    top: 80px;
+    bottom: $calypso_bottom_buffer;
 }
 .wontricks {
     width: $card_width;
     height: $card_height;
     background-color: #444444;
-    right: 10px;
+    right: 0px;
 }
 
 /* Temporary positioning for now */
@@ -256,18 +282,6 @@ $each_card_offset: 25px;
     top: -200px; /* desired top - height*/
     transform-origin: bottom left;
     transform: rotate(90deg);
-}
-
-.revoke-indicators {
-    left: 20px;
-    position: absolute;
-}
-.revoke-indicator {
-    width: 32px;
-    height: 32px;
-    background-color: #444444;
-    display: inline-block;
-    padding: 4px;
 }
 
 /* Score stuff */

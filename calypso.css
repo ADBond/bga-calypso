@@ -254,8 +254,8 @@
 .calypso {
   position: absolute;
   text-align: center;
-  width: 500px;
-  height: 200px;
+  width: 494px;
+  height: 156px;
   outline: solid 1px black;
   padding: 10px;
   /* while I figure out what to do: */
@@ -263,23 +263,42 @@
   /* for now while it's WIP */
 }
 
+.revoke-indicators {
+  position: absolute;
+}
+
+.revoke-indicator {
+  width: 32px;
+  height: 32px;
+  background-color: #444444;
+  display: inline-block;
+  margin: 4px;
+}
+
+.clp-playername {
+  font-weight: bold;
+  height: 32px;
+  font-size: 24px;
+  position: absolute;
+  right: 40px;
+}
+
 .playercalypso {
   /* display: inline-block;
   position: relative; */
-  left: 20px;
   position: absolute;
   /* margin-top: 5px; */
-  width: 500px;
+  width: 484px;
   height: 96px;
   /* leaving room for revokers */
-  top: 80px;
+  bottom: 20px;
 }
 
 .wontricks {
   width: 72px;
   height: 96px;
   background-color: #444444;
-  right: 10px;
+  right: 0px;
 }
 
 /* Temporary positioning for now */
@@ -308,19 +327,6 @@
   /* desired top - height*/
   transform-origin: bottom left;
   transform: rotate(90deg);
-}
-
-.revoke-indicators {
-  left: 20px;
-  position: absolute;
-}
-
-.revoke-indicator {
-  width: 32px;
-  height: 32px;
-  background-color: #444444;
-  display: inline-block;
-  padding: 4px;
 }
 
 /* Score stuff */
