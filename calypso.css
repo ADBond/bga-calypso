@@ -71,12 +71,12 @@
     height: 340px;
 } */
 #tablearea {
-    position: absolute;
-    left: 100px;
-    width: 1000px;
+    position: relative;
+    left: 20%;
+    width: 800px;
     height: 800px;
     background-color: #8800DD;
-    border-radius: 10px;
+    border-radius: 20px;
     z-index: -1;
 }
 
@@ -137,7 +137,7 @@
 
 #myhand_wrap {
     position: absolute;
-    top: 650px;
+    top: 800px;
     width: 1200px;
 }
 
@@ -191,6 +191,8 @@
     height: 200px;
     outline: solid 1px black;
     padding: 10px;
+    /* while I figure out what to do: */
+    background: rgba(0, 141, 0, 0.2); /* for now while it's WIP */ 
 }
 
 .playercalypso {
@@ -213,22 +215,24 @@
 
 /* Temporary positioning for now */
 .calypso_N {
-    left: 400px;
-    top: 0px;
+    right: 20px;
+    top: 20px;
     transform: rotate(180deg);
 }
 .calypso_E {
-    left: 800px;
-    top: 260px;
+    right: -500px; /* desired - width*/
+    bottom: 20px;
+    transform-origin: bottom left;
     transform: rotate(270deg);
 }
 .calypso_S {
-    left: 400px;
-    top: 520px;
+    left: 20px;
+    bottom: 20px;
 }
 .calypso_W {
-    left: 0px;
-    top: 260px;
+    left: 20px;
+    top: -200px; /* desired top - height*/
+    transform-origin: bottom left;
     transform: rotate(90deg);
 }
 
@@ -236,7 +240,6 @@
     left: 20px;
     position: absolute;
 }
-
 .revoke-indicator {
     width: 32px;
     height: 32px;

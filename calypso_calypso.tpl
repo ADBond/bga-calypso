@@ -12,8 +12,7 @@
 <div id="clp-gameinfo"></div>
 
 <div id="playarea">
-    <div id="playertables">
-        <div id="tablearea"></div>
+    <div id="tablearea">
         <!-- BEGIN playerhand -->
             <div class="playertable whiteblock playertable_{DIR}">
                 <div class="playertablename" id="area-name-{PLAYER_ID}" style="color:#{PLAYER_COLOR}">
