@@ -42,9 +42,8 @@
                 <div class="playercalypso"
                      id="playercalypso_{PLAYER_ID}">
                     <!-- BEGIN calypsocard -->
-                        <div class="calypsocard captured-card calypsocard-{CARD_RANK}"
-                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}"
-                             style="background-position: 0px -{Y_OFFSET}px">
+                        <div class="calypsocard captured-card calypsocard-{CARD_RANK} card-space-{SUIT}"
+                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}">
                         </div>
                     <!-- END calypsocard -->
                     <div class="wontricks captured-card" id="wontricks_{PLAYER_ID}"></div>

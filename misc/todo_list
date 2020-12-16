@@ -45,8 +45,6 @@
 ./calypso.js:        // TODO: from this point and below, you can write your game notifications handling methods
 ./calypso.js:            // AB TODO: do we need to do anything here?
 ./calypso.js:            // TODO: play the card in the user interface.
-./calypso.view.php:        // TODO: width should probably be set in JS as we can scale to card size there
-./calypso.view.php:        // TODO: better name
 ./calypso.view.php:            // TODO: not sure if these should be part of the same player block or not...
 ./calypso_calypso.tpl:                TODO here: don't need player name here - have that outside so it's not rotated
 ./calypso_calypso.tpl:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

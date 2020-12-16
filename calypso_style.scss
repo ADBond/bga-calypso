@@ -179,6 +179,11 @@ $each_card_offset: 25px;
         left: ($rank - 2) * $each_card_offset;
     }
 }
+@for $suit from 1 through 4 {
+    .card-space-#{$suit} {
+        background-position: 0px (-$card_height * ($suit - 1));
+    }
+}
 
 // This is for the actual cards that are won:
 .cardincalypso {

@@ -39,17 +39,6 @@
         $template = self::getGameName() . "_" . self::getGameName();
 
         $directions = $this->game->getPlayerDirections();
-        
-        // TODO: width should probably be set in JS as we can scale to card size there
-        // width of card is 72
-        $card_width = 72;
-        // how much offset before displaying next card
-        $each_card_offset = 25;
-        $overall_width = 13*$each_card_offset + ($card_width - $each_card_offset);
-
-        // TODO: better name
-        // sprite position
-        $card_height = 96;
 
         $this->page->begin_block( $template, "revokeindicator" ); // Nested block must be declared first
         $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
@@ -70,14 +59,12 @@
             }
             for ($rank = 2; $rank <= 14; $rank ++) {
                 //  2, 3, 4, ... K, A
-                // $offset_value = ($rank - 2) * $each_card_offset;
                 $this->page->insert_block(
                     "calypsocard",
                     array(
                         "PLAYER_ID" => $player_id,
-                        // "OFFSET" => $offset_value,
                         "CARD_RANK" => $rank,
-                        "Y_OFFSET" => $card_height * ($trump_suit - 1),
+                        "SUIT" => $trump_suit,
                     )
                 );
             }

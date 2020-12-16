@@ -215,6 +215,22 @@
   left: 300px;
 }
 
+.card-space-1 {
+  background-position: 0px 0px;
+}
+
+.card-space-2 {
+  background-position: 0px -96px;
+}
+
+.card-space-3 {
+  background-position: 0px -192px;
+}
+
+.card-space-4 {
+  background-position: 0px -288px;
+}
+
 .cardincalypso {
   /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
   /* transform: scale(0.6); */
