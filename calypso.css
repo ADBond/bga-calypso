@@ -163,11 +163,64 @@
 }
 
 /*** calypsos ***/
-/* .cardincalypso {
-    /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
-/* transform: scale(0.6); */
-/* background-image: url('img/cards.jpg');  
-} */
+.calypsocard-2 {
+  left: 0px;
+}
+
+.calypsocard-3 {
+  left: 25px;
+}
+
+.calypsocard-4 {
+  left: 50px;
+}
+
+.calypsocard-5 {
+  left: 75px;
+}
+
+.calypsocard-6 {
+  left: 100px;
+}
+
+.calypsocard-7 {
+  left: 125px;
+}
+
+.calypsocard-8 {
+  left: 150px;
+}
+
+.calypsocard-9 {
+  left: 175px;
+}
+
+.calypsocard-10 {
+  left: 200px;
+}
+
+.calypsocard-11 {
+  left: 225px;
+}
+
+.calypsocard-12 {
+  left: 250px;
+}
+
+.calypsocard-13 {
+  left: 275px;
+}
+
+.calypsocard-14 {
+  left: 300px;
+}
+
+.cardincalypso {
+  /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
+  /* transform: scale(0.6); */
+  background-image: url("img/cards.jpg");
+}
+
 .calypsocard {
   outline: solid 1px black;
   /* background-color: #AAA; */

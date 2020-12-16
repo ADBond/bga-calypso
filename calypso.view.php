@@ -70,12 +70,12 @@
             }
             for ($rank = 2; $rank <= 14; $rank ++) {
                 //  2, 3, 4, ... K, A
-                $offset_value = ($rank - 2) * $each_card_offset;
+                // $offset_value = ($rank - 2) * $each_card_offset;
                 $this->page->insert_block(
                     "calypsocard",
                     array(
                         "PLAYER_ID" => $player_id,
-                        "OFFSET" => $offset_value,
+                        // "OFFSET" => $offset_value,
                         "CARD_RANK" => $rank,
                         "Y_OFFSET" => $card_height * ($trump_suit - 1),
                     )

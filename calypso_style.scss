@@ -59,6 +59,7 @@
 $calypso_colour: #8800DD;
 $card_width: 72px;
 $card_height: 96px;
+$num_ranks: 13;
 
 /** Table layout **/
 
@@ -135,8 +136,8 @@ $card_height: 96px;
     display: inline-block;
     position: relative;
     margin-top: 5px;
-    width: 72px;
-    height: 96px;
+    width: $card_width;
+    height: $card_height;
 }
 
 #myhand_wrap {
@@ -163,18 +164,29 @@ $card_height: 96px;
 
 .cardontable {
     position: absolute;
-    width: 72px;
-    height: 96px;
+    width: $card_width;
+    height: $card_height;
     background-image: url('img/cards.jpg'); 
 }
 
 /*** calypsos ***/
-/* .cardincalypso {
+
+// Offset for overlapping of calypso cards:
+$each_card_offset: 25px;
+@for $rank from 2 through $num_ranks+1 {
+    $offset_value: ($rank - 2) * $each_card_offset;
+    .calypsocard-#{$rank} {
+        left: ($rank - 2) * $each_card_offset;
+    }
+}
+
+// This is for the actual cards that are won:
+.cardincalypso {
     /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
     /* transform: scale(0.6); */
-    /* background-image: url('img/cards.jpg');  
-} */
-
+    background-image: url('img/cards.jpg');  
+}
+// while _this_ is the placeholder layout
 .calypsocard {
     outline: solid 1px black;
     /* background-color: #AAA; */
@@ -183,9 +195,10 @@ $card_height: 96px;
 }
 .captured-card {
     position: absolute;
-    width: 72px;
-    height: 96px;
+    width: $card_width;
+    height: $card_height;
 }
+
 
 /* TODO: rename - this bounds all of our public info */
 .calypso {
@@ -211,8 +224,8 @@ $card_height: 96px;
     top: 80px;
 }
 .wontricks {
-    width: 72px;
-    height: 96px;
+    width: $card_width;
+    height: $card_height;
     background-color: #444444;
     right: 10px;
 }
