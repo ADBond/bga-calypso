@@ -50,6 +50,7 @@
 ./calypso.view.php:            // TODO: not sure if these should be part of the same player block or not...
 ./calypso_calypso.tpl:                TODO here: don't need player name here - have that outside so it's not rotated
 ./calypso_calypso.tpl:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
+./calypso_style.scss:/* TODO: rename - this bounds all of our public info */
 ./gameinfos.inc.php:    // TODO: actually write this properly
 ./pre-commit:grep TODO -r . > misc/todo_list
 ./README.md:## Current branch TODOs

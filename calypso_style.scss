@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /**
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
@@ -13,15 +12,16 @@
  * Calypso stylesheet
  *
  */
+
 /*
     This is the CSS stylesheet of your game User Interface.
-
+    
     Styles defined on this file will be applied to the HTML elements you define in your
     HTML template (calypso_calypso.tpl), and to HTML elements you create dynamically
     (in calypso.js).
-
+    
     Usually, you are using CSS to:
-
+    
     1°) define the overall layout of your game
         (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
 
@@ -29,20 +29,25 @@
         All images of your games should be gathered into a small number of image files. Then, using
         background-image and background-position CSS properties, you create HTML blocks that can 
         display these images correctly (see example below).
-
+    
     3°) ... anything else:
         It is really easy to add and remove CSS classes dynamically from your Javascript with
         dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
         (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
         very often, using CSS classes for the logic of your user interface allow you to do complex
         thing easily.
-
-
+        
+        
      Note: on the production platform, this file will be compressed and comments will be removed.
            Consequently, don't hesitate to put as many comments as necessary.
 */
+
+
 /* Note: you must not use any @import directive */
+
+
 /********* You can start writing your CSS below this line: **********/
+
 /* for reference: */
 /* .whiteblock {
     margin-top: 10px;
@@ -50,11 +55,17 @@
     padding: 10px;
     background-image: url("../img/layout/rounded_b.png");
 } */
+
+$calypso_colour: #8800DD;
+$card_width: 72px;
+$card_height: 96px;
+
 /** Table layout **/
+
 #playarea {
-  position: relative;
-  width: 1500px;
-  height: 1000px;
+    position: relative;
+    width: 1500px;
+    height: 1000px;
 }
 
 /* #playertables {
@@ -64,213 +75,195 @@
     height: 340px;
 } */
 #tablearea {
-  position: relative;
-  left: 20%;
-  width: 800px;
-  height: 800px;
-  background-color: #8800DD;
-  border-radius: 20px;
-  z-index: -1;
+    position: relative;
+    left: 20%;
+    width: 800px;
+    height: 800px;
+    background-color: $calypso_colour;
+    border-radius: 20px;
+    z-index: -1;
 }
 
 #playercalypso {
-  position: relative;
-  left: 20px;
-  top: -340px;
+    position: relative;
+    left: 20px;
+    top: -340px;
 }
 
 #clp-gameinfo {
-  position: absolute;
-  font-weight: bold;
-  width: 200px;
-  font-size: 16px;
-  background-color: #8800DD;
+    position: absolute;
+    font-weight: bold;
+    width: 200px;
+    font-size: 16px;
+    background-color: $calypso_colour;
 }
 
 .playertablename {
-  font-weight: bold;
-  padding-bottom: 5px;
+    font-weight: bold;
+    padding-bottom: 5px;
 }
-
 .personal-trump {
-  font-weight: bold;
-  color: black;
+    font-weight: bold;
+    color: black;
 }
 
 .playertable {
-  position: absolute;
-  text-align: center;
-  width: 180px;
-  height: 130px;
+    position: absolute;
+    text-align: center;
+    width: 180px;
+    height: 130px;
 }
 
 .playertable_N {
-  left: 500px;
-  top: 150px;
+    left: 500px;
+    top: 150px;
 }
-
 .playertable_S {
-  left: 500px;
-  top: 350px;
+    left: 500px;
+    top: 350px;
 }
-
 .playertable_W {
-  left: 300px;
-  top: 250px;
+    left: 300px;
+    top: 250px;
 }
-
 .playertable_E {
-  left: 700px;
-  top: 250px;
+    left: 700px;
+    top: 250px;
 }
 
 .playertablecard {
-  display: inline-block;
-  position: relative;
-  margin-top: 5px;
-  width: 72px;
-  height: 96px;
+    display: inline-block;
+    position: relative;
+    margin-top: 5px;
+    width: 72px;
+    height: 96px;
 }
 
 #myhand_wrap {
-  position: absolute;
-  top: 800px;
-  width: 1200px;
+    position: absolute;
+    top: 800px;
+    width: 1200px;
 }
 
 #dealerbutton {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  background-image: url("img/dealer.png");
-  /* can swap out placeholder image in directory ;) */
-  z-index: 1;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+    z-index: 1;
 }
-
 .dealer-indicator-area {
-  position: relative;
-  float: left;
-  width: 16px;
-  height: 16px;
+    position: relative;
+    float: left;
+    width: 16px;
+    height: 16px;
 }
 
 /*** cards on table ***/
+
 .cardontable {
-  position: absolute;
-  width: 72px;
-  height: 96px;
-  background-image: url("img/cards.jpg");
+    position: absolute;
+    width: 72px;
+    height: 96px;
+    background-image: url('img/cards.jpg'); 
 }
 
 /*** calypsos ***/
 /* .cardincalypso {
     /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
-/* transform: scale(0.6); */
-/* background-image: url('img/cards.jpg');  
+    /* transform: scale(0.6); */
+    /* background-image: url('img/cards.jpg');  
 } */
-.calypsocard {
-  outline: solid 1px black;
-  /* background-color: #AAA; */
-  z-index: 0;
-  background-image: url("img/cards_layout.jpg");
-}
 
+.calypsocard {
+    outline: solid 1px black;
+    /* background-color: #AAA; */
+    z-index: 0;
+    background-image: url('img/cards_layout.jpg'); 
+}
 .captured-card {
-  position: absolute;
-  width: 72px;
-  height: 96px;
+    position: absolute;
+    width: 72px;
+    height: 96px;
 }
 
 /* TODO: rename - this bounds all of our public info */
 .calypso {
-  position: absolute;
-  text-align: center;
-  width: 500px;
-  height: 200px;
-  outline: solid 1px black;
-  padding: 10px;
-  /* while I figure out what to do: */
-  background: rgba(0, 141, 0, 0.2);
-  /* for now while it's WIP */
+    position: absolute;
+    text-align: center;
+    width: 500px;
+    height: 200px;
+    outline: solid 1px black;
+    padding: 10px;
+    /* while I figure out what to do: */
+    background: rgba(0, 141, 0, 0.2); /* for now while it's WIP */ 
 }
 
 .playercalypso {
-  /* display: inline-block;
-  position: relative; */
-  left: 20px;
-  position: absolute;
-  /* margin-top: 5px; */
-  width: 500px;
-  height: 96px;
-  /* leaving room for revokers */
-  top: 80px;
+    /* display: inline-block;
+    position: relative; */
+    left: 20px;
+    position: absolute;
+    /* margin-top: 5px; */
+    width: 500px;
+    height: 96px;
+    /* leaving room for revokers */
+    top: 80px;
 }
-
 .wontricks {
-  width: 72px;
-  height: 96px;
-  background-color: #444444;
-  right: 10px;
+    width: 72px;
+    height: 96px;
+    background-color: #444444;
+    right: 10px;
 }
 
 /* Temporary positioning for now */
 .calypso_N {
-  right: 20px;
-  top: 20px;
-  transform: rotate(180deg);
+    right: 20px;
+    top: 20px;
+    transform: rotate(180deg);
 }
-
 .calypso_E {
-  right: -500px;
-  /* desired - width*/
-  bottom: 20px;
-  transform-origin: bottom left;
-  transform: rotate(270deg);
+    right: -500px; /* desired - width*/
+    bottom: 20px;
+    transform-origin: bottom left;
+    transform: rotate(270deg);
 }
-
 .calypso_S {
-  left: 20px;
-  bottom: 20px;
+    left: 20px;
+    bottom: 20px;
 }
-
 .calypso_W {
-  left: 20px;
-  top: -200px;
-  /* desired top - height*/
-  transform-origin: bottom left;
-  transform: rotate(90deg);
+    left: 20px;
+    top: -200px; /* desired top - height*/
+    transform-origin: bottom left;
+    transform: rotate(90deg);
 }
 
 .revoke-indicators {
-  left: 20px;
-  position: absolute;
+    left: 20px;
+    position: absolute;
 }
-
 .revoke-indicator {
-  width: 32px;
-  height: 32px;
-  background-color: #444444;
-  display: inline-block;
-  padding: 4px;
+    width: 32px;
+    height: 32px;
+    background-color: #444444;
+    display: inline-block;
+    padding: 4px;
 }
 
 /* Score stuff */
 .clp-number-entry {
-  color: red;
-  font-style: italic;
+    color: red;
+    font-style: italic;
 }
-
 .clp-score-entry {
-  font-weight: bold;
+    font-weight: bold;
 }
-
 .clp-number-label {
-  text-align: left;
-  font-style: italic;
+    text-align: left;
+    font-style: italic;
 }
-
 .clp-score-label {
-  text-align: right;
+    text-align: right;
 }
-
-/*# sourceMappingURL=calypso.css.map */
