@@ -75,11 +75,12 @@ $num_ranks: 13;
     width: 710px;
     height: 340px;
 } */
+$table_size: 800px;
 #tablearea {
     position: relative;
     left: 20%;
-    width: 800px;
-    height: 800px;
+    width: $table_size;
+    height: $table_size;
     background-color: $calypso_colour;
     border-radius: 20px;
     z-index: -1;
@@ -202,15 +203,18 @@ $calypso_bottom_buffer: 20px;
 
 $revoke_size: 32px;
 $revoke_padding: 4px;
+
+$personal_area_width: $calypso_zone_pure_width + $calypso_zone_side_padding;
+$personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*$revoke_padding;
 .calypso {
     position: absolute;
     text-align: center;
-    width: $calypso_zone_pure_width + $calypso_zone_side_padding;
-    height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*$revoke_padding;
+    width: $personal_area_width;
+    height: $personal_area_height;
     outline: solid 1px black;
     padding: $calypso_zone_side_padding;
-    /* while I figure out what to do: */
-    background: rgba(255, 255, 255, 0.75); /* for now while it's WIP */ 
+    /* TODO: while I figure out what to do: */
+    background: rgba(255, 255, 255, 0.75);
 }
 
 .revoke-indicators {
@@ -278,25 +282,31 @@ $max_name_size: 200px;
     position: absolute;
 }
 
-/* Temporary positioning for now */
+// TODO: transform using mixins - see sass project page
+$personal_area_side_offset: 20px;
+$personal_area_bottom_offset: 20px;
 .calypso_N {
-    right: 20px;
-    top: 20px;
+    position: absolute;
+    right: $personal_area_side_offset;
+    top: $personal_area_bottom_offset;
     transform: rotate(180deg);
 }
 .calypso_E {
-    right: -500px; /* desired - width*/
-    bottom: 20px;
+    position: absolute;
+    right: $personal_area_bottom_offset - $personal_area_width - 2*$calypso_zone_side_padding;
+    bottom: $personal_area_side_offset;
     transform-origin: bottom left;
     transform: rotate(270deg);
 }
 .calypso_S {
-    left: 20px;
-    bottom: 20px;
+    position: absolute;
+    left: $personal_area_side_offset;
+    bottom: $personal_area_bottom_offset;
 }
 .calypso_W {
-    left: 20px;
-    top: -200px; /* desired top - height*/
+    position: absolute;
+    left: $personal_area_bottom_offset;
+    top: $personal_area_side_offset - $personal_area_height - 2*$calypso_zone_side_padding;
     transform-origin: bottom left;
     transform: rotate(90deg);
 }

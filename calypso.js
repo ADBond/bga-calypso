@@ -51,14 +51,9 @@ function (dojo, declare) {
         
         setup: function( gamedatas )
         {
-            console.log( "Starting game setup" );
-            
-            // Setting up player boards
             for( let player_id in gamedatas.players )
             {
                 let player = gamedatas.players[player_id];
-                         
-                // TODO: Setting up players boards if needed
                 let player_trump = player["trump_suit"];
                 let trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
@@ -78,15 +73,13 @@ function (dojo, declare) {
                 
             }
             
-            // TODO: Set up your game interface here, according to "gamedatas"
-            // Player hand
+
             this.playerHand = new ebg.stock(); // new stock object for hand
             this.playerHand.create( this, $('myhand'), this.cardwidth, this.cardheight );
 
-            // TODO: this whole bit may need some thinking about for quad-deck:
-            this.playerHand.image_items_per_row = 13; // 13 images per row
-            // Create cards types:
-            const num_decks = 4;  // this will be four later, but let's not go to quickly
+            this.playerHand.image_items_per_row = 13;
+
+            const num_decks = 4;
             for (let suit = 1; suit <= 4; suit++) {
                 for (let rank = 2; rank <= 14; rank++) {
                     for (let deck = 1; deck <= num_decks; deck++){
@@ -96,6 +89,8 @@ function (dojo, declare) {
                         // args are id, weight (for hand-sorting), img url, and img position
                         // Not sure for the moment if it is important for ids to be distinct here,
                         // but a sensible default answer seems to be 'yes'
+                        // TODO: here is where we might want to separate out trumps!
+                        // i.e. (other two, alternating colour) (my partners trumps) (my trumps)
                         this.playerHand.addItemType(card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type);
                     }
                 }
