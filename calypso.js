@@ -69,14 +69,11 @@ function (dojo, declare) {
                 console.log("dealer is:")
                 console.log(gamedatas.dealer);
                 if(player_id == gamedatas.dealer){
-                    //$("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
                     let dealer_area_id = 'dealer-' + player_id;
                     dojo.place(this.format_block('jstpl_dealerindicator', {
                         player_id : player_id
                     }), dealer_area_id);
                     this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) )
-                } else{
-                    $("area-dealer-" + player_id).textContent = "";
                 }
                 
             }
@@ -300,7 +297,6 @@ function (dojo, declare) {
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
-            // TODO: do I want to markup any of this for styling?
             $("clp-gameinfo").innerHTML =  dojo.string.substitute(
                 _("Calypso: Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
                 {

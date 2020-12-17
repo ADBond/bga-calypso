@@ -138,22 +138,6 @@
   width: 1200px;
 }
 
-#dealerbutton {
-  position: relative;
-  width: 16px;
-  height: 16px;
-  background-image: url("img/dealer.png");
-  /* can swap out placeholder image in directory ;) */
-  z-index: 1;
-}
-
-.dealer-indicator-area {
-  position: relative;
-  float: left;
-  width: 16px;
-  height: 16px;
-}
-
 /*** cards on table ***/
 .cardontable {
   position: absolute;
@@ -273,6 +257,22 @@
   background-color: #999;
   display: inline-block;
   margin: 4px;
+}
+
+.dealer-indicator-area {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 200px;
+  margin: 4px;
+}
+
+#dealerbutton {
+  width: 32px;
+  height: 32px;
+  background-image: url("img/dealer.png");
+  /* can swap out placeholder image in directory ;) */
+  z-index: 1;
 }
 
 .clp-playername {

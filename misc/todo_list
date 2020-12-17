@@ -32,13 +32,11 @@
 ./calypso.js:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:                // TODO: Setting up players boards if needed
 ./calypso.js:                // TODO: this should be a nice little icon rather than text.
-./calypso.js:                    //$("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
 ./calypso.js:            // TODO: Set up your game interface here, according to "gamedatas"
 ./calypso.js:            // TODO: this whole bit may need some thinking about for quad-deck:
 ./calypso.js:            // TODO: center hand in the div if wanted:
 ./calypso.js:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
 ./calypso.js:            // TODO: this should stay in css - use class manipulation
-./calypso.js:            // TODO: do I want to markup any of this for styling?
 ./calypso.js:            // TODO: animate the dealer button moving here
 ./calypso.js:            // TODO: Here we should animate removing all those cumbersome calypso cards, ready to start anew!
 ./calypso.js:                    // TODO: fix this!! send_ti_id is null here, obviously
@@ -46,7 +44,6 @@
 ./calypso.js:            // AB TODO: do we need to do anything here?
 ./calypso.js:            // TODO: play the card in the user interface.
 ./calypso.view.php:            // TODO: not sure if these should be part of the same player block or not...
-./calypso_calypso.tpl:                TODO here: don't need player name here - have that outside so it's not rotated
 ./calypso_calypso.tpl:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:/* TODO: rename - this bounds all of our public info */
 ./gameinfos.inc.php:    // TODO: actually write this properly

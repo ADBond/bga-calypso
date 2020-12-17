@@ -146,20 +146,6 @@ $num_ranks: 13;
     width: 1200px;
 }
 
-#dealerbutton {
-    position: relative;
-    width: 16px;
-    height: 16px;
-    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
-    z-index: 1;
-}
-.dealer-indicator-area {
-    position: relative;
-    float: left;
-    width: 16px;
-    height: 16px;
-}
-
 /*** cards on table ***/
 
 .cardontable {
@@ -238,6 +224,22 @@ $revoke_padding: 4px;
     display: inline-block;
     margin: $revoke_padding;
 }
+.dealer-indicator-area {
+    position: absolute;
+    width: $revoke_size;
+    height: $revoke_size;
+    left: 4*($revoke_size + 2*$revoke_padding) + 40px;
+    // background-color: $blank_space_colour;
+    // display: inline-block;
+    margin: $revoke_padding;
+}
+#dealerbutton {
+    width: $revoke_size;
+    height: $revoke_size;
+    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+    z-index: 1;
+}
+
 $max_name_size: 200px;
 .clp-playername {
     font-weight: bold;
@@ -250,6 +252,7 @@ $max_name_size: 200px;
     position: absolute;
     right: 40px;
 }
+
 .playercalypso {
     /* display: inline-block;
     position: relative; */
