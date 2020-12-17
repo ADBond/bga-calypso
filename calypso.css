@@ -57,12 +57,6 @@
   height: 1000px;
 }
 
-/* #playertables {
-    position: relative;
-    left: 200px;
-    width: 710px;
-    height: 340px;
-} */
 #tablearea {
   position: relative;
   left: 20%;
@@ -73,12 +67,6 @@
   z-index: -1;
 }
 
-#playercalypso {
-  position: relative;
-  left: 20px;
-  top: -340px;
-}
-
 #clp-gameinfo {
   position: absolute;
   font-weight: bold;
@@ -87,46 +75,33 @@
   background-color: #8800DD;
 }
 
-.playertablename {
-  font-weight: bold;
-  padding-bottom: 5px;
-}
-
-.personal-trump {
-  font-weight: bold;
-  color: black;
-}
-
 .playertable {
   position: absolute;
-  text-align: center;
-  width: 180px;
-  height: 130px;
+  width: 82px;
+  height: 106px;
 }
 
 .playertable_N {
-  left: 500px;
-  top: 150px;
+  left: 359px;
+  top: 221px;
 }
 
 .playertable_S {
-  left: 500px;
-  top: 350px;
+  left: 359px;
+  top: 473px;
 }
 
 .playertable_W {
-  left: 300px;
-  top: 250px;
+  left: 257px;
+  top: 347px;
 }
 
 .playertable_E {
-  left: 700px;
-  top: 250px;
+  left: 461px;
+  top: 347px;
 }
 
 .playertablecard {
-  display: inline-block;
-  position: relative;
   margin-top: 5px;
   width: 72px;
   height: 96px;

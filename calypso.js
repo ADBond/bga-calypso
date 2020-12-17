@@ -58,11 +58,8 @@ function (dojo, declare) {
                 let trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
-                // TODO: this should be a nice little icon rather than text.
-                $("trump-" + player_id).textContent = trump_lookup[player_trump];
+                // TODO: suit icon insert to area.
 
-                console.log("dealer is:")
-                console.log(gamedatas.dealer);
                 if(player_id == gamedatas.dealer){
                     let dealer_area_id = 'dealer-' + player_id;
                     dojo.place(this.format_block('jstpl_dealerindicator', {

@@ -15,17 +15,13 @@
     <div id="tablearea">
         <!-- BEGIN playerhand -->
             <div class="playertable whiteblock playertable_{DIR}">
-                <div class="playertablename" id="area-name-{PLAYER_ID}" style="color:#{PLAYER_COLOR}">
-                    <div id="area-name-{PLAYER_ID}">{PLAYER_NAME}</div>
-                    <div class="personal-trump" id="trump-{PLAYER_ID}"></div>
-                </div>
                 <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
                 </div>
             </div>
         <!-- END playerhand -->
         <!-- BEGIN playercalypso -->
             <div class="calypso calypso_{DIR}">
-                <div class="clp-playername" style="color:#{PLAYER_COLOR}">
+                <div class="clp-playername" style="color:#{PLAYER_COLOUR}">
                     {PLAYER_NAME} - a very long username
                 </div>
                 <div class="revoke-indicators" id="revoke_{PLAYER_ID}">

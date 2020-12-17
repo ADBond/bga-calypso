@@ -69,12 +69,6 @@ $num_ranks: 13;
     height: 1000px;
 }
 
-/* #playertables {
-    position: relative;
-    left: 200px;
-    width: 710px;
-    height: 340px;
-} */
 $table_size: 800px;
 #tablearea {
     position: relative;
@@ -86,12 +80,6 @@ $table_size: 800px;
     z-index: -1;
 }
 
-#playercalypso {
-    position: relative;
-    left: 20px;
-    top: -340px;
-}
-
 #clp-gameinfo {
     position: absolute;
     font-weight: bold;
@@ -100,43 +88,38 @@ $table_size: 800px;
     background-color: $calypso_colour;
 }
 
-.playertablename {
-    font-weight: bold;
-    padding-bottom: 5px;
-}
-.personal-trump {
-    font-weight: bold;
-    color: black;
-}
-
+$card_area_width: $card_width + 10px;
+$card_area_height: $card_height + 10px;
 .playertable {
     position: absolute;
-    text-align: center;
-    width: 180px;
-    height: 130px;
+    // text-align: center;
+    width: $card_area_width;
+    height: $card_area_height;
 }
 
+$left_right_offset: $card_area_width + 20px;
+$top_bottom_offset: $card_area_height + 20px;
 .playertable_N {
-    left: 500px;
-    top: 150px;
+    left: $table_size/2 - $card_area_width/2;
+    top: $table_size/2 - $card_area_height/2 - $top_bottom_offset;
 }
 .playertable_S {
-    left: 500px;
-    top: 350px;
+    left: $table_size/2 - $card_area_width/2;
+    top: $table_size/2 - $card_area_height/2 + $top_bottom_offset;
 }
 .playertable_W {
-    left: 300px;
-    top: 250px;
+    left: $table_size/2 - $card_area_width/2 - $left_right_offset;
+    top: $table_size/2 - $card_area_height/2;
 }
 .playertable_E {
-    left: 700px;
-    top: 250px;
+    left: $table_size/2 - $card_area_width/2 + $left_right_offset;
+    top: $table_size/2 - $card_area_height/2;
 }
 
 .playertablecard {
-    display: inline-block;
-    position: relative;
-    margin-top: 5px;
+    // display: inline-block;
+    // position: relative;
+    margin-top: ($card_area_height - $card_height)/2;
     width: $card_width;
     height: $card_height;
 }

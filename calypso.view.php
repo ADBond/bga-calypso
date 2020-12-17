@@ -69,13 +69,10 @@
                 );
             }
 
-            // TODO: not sure if these should be part of the same player block or not...
             $this->page->insert_block(
                 "playerhand",
                 array (
                     "PLAYER_ID" => $player_id,
-                    "PLAYER_NAME" => $players [$player_id] ['player_name'],
-                    "PLAYER_COLOR" => $players [$player_id] ['player_color'],
                     "DIR" => $directions[$player_id],
                 )
             );
@@ -83,7 +80,8 @@
                 "playercalypso",
                 array (
                     "PLAYER_ID" => $player_id, "DIR" => $directions[$player_id],
-                    #"WIDTH" => $overall_width
+                    "PLAYER_COLOUR" => $players[$player_id]["player_color"],
+                    "PLAYER_NAME" => $players[$player_id]["player_name"],
                 )
             );
         }

@@ -31,7 +31,7 @@
 ./calypso.game.php:        self::updateScores();  // TODO: to debug this! it doesn't really live here
 ./calypso.game.php:        // TODO: this noticiation should give scores for the round, and round number
 ./calypso.js:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
-./calypso.js:                // TODO: this should be a nice little icon rather than text.
+./calypso.js:                // TODO: suit icon insert to area.
 ./calypso.js:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:            // TODO: center hand in the div if wanted:
 ./calypso.js:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
@@ -42,7 +42,6 @@
 ./calypso.js:        // TODO: from this point and below, you can write your game notifications handling methods
 ./calypso.js:            // AB TODO: do we need to do anything here?
 ./calypso.js:            // TODO: play the card in the user interface.
-./calypso.view.php:            // TODO: not sure if these should be part of the same player block or not...
 ./calypso_calypso.tpl:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:    /* TODO: while I figure out what to do: */
