@@ -57,7 +57,8 @@
 
 #tablearea {
   position: relative;
-  left: 20%;
+  left: 50%;
+  transform: translate(-50%);
   width: 750px;
   height: 750px;
   background-color: #8800DD;
@@ -118,9 +119,10 @@
 }
 
 #myhand_wrap {
-  position: absolute;
-  top: 800px;
-  width: 1200px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  width: 60%;
 }
 
 /*** cards on table ***/

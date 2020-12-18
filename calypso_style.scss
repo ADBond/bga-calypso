@@ -72,7 +72,8 @@ $num_ranks: 13;
 $table_size: 750px;
 #tablearea {
     position: relative;
-    left: 20%;
+    left: 50%;
+    transform: translate(-50%);
     width: $table_size;
     height: $table_size;
     background-color: $calypso_colour;
@@ -151,9 +152,11 @@ $top_bottom_offset: $card_area_height + 20px;
 }
 
 #myhand_wrap {
-    position: absolute;
-    top: 800px;
-    width: 1200px;
+    position: relative;
+    // top: 30px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 60%;
 }
 
 /*** cards on table ***/
