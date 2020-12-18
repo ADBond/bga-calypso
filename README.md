@@ -10,9 +10,9 @@ cp pre-commit .git/hooks/
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* get the layout looking proper - calypsos and played cards
+* ~~get the layout looking proper - calypsos and played cards~~
 * animate completed calypsos
-* revoke indicators (and the logic of them) - optional?
+* ~~revoke indicators~~ (and the logic of them) - optional?
 * better info banner
 * improve scoring table?
 * access old scoring tables
@@ -52,7 +52,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * partly done but needs checking/careful eye
 * ~~rename those damn variables to keep a shred of self-consistency~~ check below, do as we go
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
-* check that the all the cards exist at all times, and get dealt out over the course of a round
+* ~~check that the all the cards exist at all times, and get dealt out over the course of a round~~
+  * mostly okay, but needs checking
 * Add a separate code licence, and make repo public once that's done
 
 ### Display
