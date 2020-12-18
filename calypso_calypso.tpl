@@ -14,7 +14,7 @@
 <div id="playarea">
     <div id="tablearea">
         <!-- BEGIN playerhand -->
-            <div class="playertable whiteblock playertable_{DIR}">
+            <div class="playertable playertable_{DIR}">
                 <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
                 </div>
             </div>

@@ -290,7 +290,7 @@ function (dojo, declare) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
             $("clp-gameinfo").innerHTML =  dojo.string.substitute(
-                _("Calypso: Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
+                _("Calypso") + "<br>" + _("Round ${roundnumber} of ${totalrounds}") + "<br>" + _("Hand ${handnumber} of 4."),
                 {
                     roundnumber: roundnumber,
                     handnumber: handnumber,

@@ -65,11 +65,11 @@ $num_ranks: 13;
 
 #playarea {
     position: relative;
-    width: 1500px;
-    height: 1000px;
+    // width: 1500px;
+    // height: 1000px;
 }
 
-$table_size: 800px;
+$table_size: 750px;
 #tablearea {
     position: relative;
     left: 20%;
@@ -83,16 +83,20 @@ $table_size: 800px;
 #clp-gameinfo {
     position: absolute;
     font-weight: bold;
-    width: 200px;
+    width: 100px;
     font-size: 16px;
-    background-color: $calypso_colour;
+    padding: 10px;
+    background-color: rgba($calypso_colour, 0.5);
 }
 
-$card_area_width: $card_width + 10px;
-$card_area_height: $card_height + 10px;
+$card_area_buffer: 20px;
+$card_area_width: $card_width + $card_area_buffer;
+$card_area_height: $card_height + $card_area_buffer;
+$card_area_outline_col: #AAA;
 .playertable {
-    position: absolute;
+    // position: absolute;
     // text-align: center;
+    outline: ridge 3px $card_area_outline_col;
     width: $card_area_width;
     height: $card_area_height;
 }
@@ -100,26 +104,48 @@ $card_area_height: $card_height + 10px;
 $left_right_offset: $card_area_width + 20px;
 $top_bottom_offset: $card_area_height + 20px;
 .playertable_N {
-    left: $table_size/2 - $card_area_width/2;
-    top: $table_size/2 - $card_area_height/2 - $top_bottom_offset;
+    // left: $table_size/2 - $card_area_width/2;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%);
+    // margin: 0 auto;
+    // top: $table_size/2 - $card_area_height/2 - $top_bottom_offset;
 }
 .playertable_S {
-    left: $table_size/2 - $card_area_width/2;
-    top: $table_size/2 - $card_area_height/2 + $top_bottom_offset;
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translate(-50%);
+    // margin: 0 auto;
+    // left: $table_size/2 - $card_area_width/2;
+    // top: $table_size/2 - $card_area_height/2 + $top_bottom_offset;
 }
 .playertable_W {
-    left: $table_size/2 - $card_area_width/2 - $left_right_offset;
-    top: $table_size/2 - $card_area_height/2;
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    transform: translate(0, -50%);
+    // left: $table_size/2 - $card_area_width/2 - $left_right_offset;
+    // top: $table_size/2 - $card_area_height/2;
 }
 .playertable_E {
-    left: $table_size/2 - $card_area_width/2 + $left_right_offset;
-    top: $table_size/2 - $card_area_height/2;
+    position: absolute;
+    right: 30%;
+    top: 50%;
+    transform: translate(0, -50%);
+    // left: $table_size/2 - $card_area_width/2 + $left_right_offset;
+    // top: $table_size/2 - $card_area_height/2;
 }
 
 .playertablecard {
     // display: inline-block;
     // position: relative;
-    margin-top: ($card_area_height - $card_height)/2;
+    // margin-top: ($card_area_height - $card_height)/2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: $card_width;
     height: $card_height;
 }
