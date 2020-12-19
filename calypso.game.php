@@ -192,6 +192,15 @@ class Calypso extends Table
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
 
+        $sql = "SELECT revoke_id id, suit suit, player_id player_id FROM revoke_flags;";
+        $player_flags = array();
+        $revoke_flag_info = self::getCollectionFromDb( $sql );
+        foreach ($revoke_flag_info as $id => $info) {
+            $player_flags[] = $info;
+        }
+
+        $result['revoke_flags'] = $player_flags;
+
         return $result;
     }
 
@@ -322,6 +331,19 @@ class Calypso extends Table
         // TODO: this feels horrible - is there a nice way that won't be overkill?
         $next_first_dealer = self::updateDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
+    }
+
+    function setRevokeFlag($player_id, $suit){
+        $sql = "INSERT INTO revoke_flags (player_id, suit) VALUES (".$player_id.",".$suit.");";
+        self::DbQuery(
+            $sql
+        );
+    }
+    function clearRevokeFlags(){
+        $sql = "DELETE FROM revoke_flags;";
+        self::DbQuery(
+            $sql
+        );
     }
 
     function getAllCompletedCalyspos(){
@@ -796,10 +818,10 @@ class Calypso extends Table
             );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
-        
-        $currenttrickSuit = self::getGameStateValue( 'trickSuit' );
+
+        $current_trick_suit = self::getGameStateValue( 'trickSuit' );
         // case of the first card of the trick:
-        if( $currenttrickSuit == 0 ) {
+        if( $current_trick_suit == 0 ) {
             self::setGameStateValue( 'trickSuit', $currentCard['type'] );
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
@@ -812,7 +834,7 @@ class Calypso extends Table
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
             // if they follow suit:
-            if ( $currentCard['type'] == self::getGameStateValue( 'trickSuit' ) ){
+            if ( $currentCard['type'] == $current_trick_suit ){
                 // if trump lead then this ain't a winner, so do nothing
                 // if trump was not lead:
                 // check if trump is winning, and if not, check if this card is higher
@@ -825,6 +847,15 @@ class Calypso extends Table
                     }
                 }
             } else { // they don't follow suit
+                self::setRevokeFlag($player_id, $current_trick_suit);
+                self::notifyAllPlayers(
+                    'revokeFlag',
+                    '',
+                    array(
+                        "player_id" => $player_id,
+                        "suit" => $current_trick_suit,
+                    )
+                );
                 // if they don't play their trump don't worry - it's a loser
                 // if they do
                 if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
@@ -948,6 +979,8 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
+        self::clearRevokeFlags();
+        // TODO: dealHand notif should sort out revoke flags on client side
         self::notifyAllPlayers(  // TODO: id is for debugging, delete!
             'dealHand',
             clienttranslate('${dealer_name}, (${dealer_id}) deals a new hand of cards'),

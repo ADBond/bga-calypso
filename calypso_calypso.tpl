@@ -26,7 +26,7 @@
                 </div>
                 <div class="revoke-indicators" id="revoke_{PLAYER_ID}">
                     <!-- BEGIN revokeindicator -->
-                    <div class="revoke-indicator revoke-{CARD_SUIT}" id="revoke_{CARD_SUIT}_{PLAYER_ID}">
+                    <div class="revoke-indicator inactive-revoke revoke-{CARD_SUIT}" id="revoke_{PLAYER_ID}_{CARD_SUIT}">
                     </div>
                     <!-- END revokeindicator -->
                 </div>

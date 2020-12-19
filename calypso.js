@@ -126,6 +126,15 @@ function (dojo, declare) {
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
 
+            // revoke flags
+            console.log("revoke flags");
+            for (i in this.gamedatas.revoke_flags) {
+                let info = this.gamedatas.revoke_flags[i];
+                console.log("revoke info");
+                console.log(info);
+                this.setRevokeFlag(info.player_id, info.suit);
+            }
+
             this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
@@ -280,6 +289,13 @@ function (dojo, declare) {
 
         },
 
+        setRevokeFlag : function(player_id, suit){
+            let revoke_el_id = `revoke_${player_id}_${suit}`;
+            console.log("this is happening: " + revoke_el_id);
+            dojo.addClass( revoke_el_id, 'active-revoke' );
+            dojo.removeClass( revoke_el_id, 'inactive-revoke' );
+        },
+
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'dealer-' + new_dealer_id;
 
@@ -393,6 +409,8 @@ function (dojo, declare) {
         
             dojo.subscribe('playCard', this, "notif_playCard");
 
+            dojo.subscribe('revokeFlag', this, "notif_revokeFlag");
+
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
@@ -426,6 +444,10 @@ function (dojo, declare) {
 
         notif_playCard : function(notif) {
             this.playCardOnTable(notif.args.player_id, notif.args.suit, notif.args.rank, notif.args.card_id);
+        },
+
+        notif_revokeFlag: function(notif) {
+            this.setRevokeFlag(notif.args.player_id, notif.args.suit);
         },
 
         notif_trickWin : function(notif) {

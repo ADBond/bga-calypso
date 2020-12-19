@@ -13,6 +13,11 @@
 -- Basically, you just have to export from PhpMyAdmin your table structure and copy/paste
 -- this export here.
 
+-- personal trump suit - default value indicates it has not been set yet.
+ALTER TABLE `player` ADD `trump_suit` varchar(16) NOT NULL DEFAULT '0';
+-- how many completed calypsos so far in a round?
+ALTER TABLE `player` ADD `completed_calypsos` int(1) NOT NULL DEFAULT '0';
+
 CREATE TABLE IF NOT EXISTS `card` (
   `card_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `card_type` varchar(16) NOT NULL,
@@ -42,7 +47,11 @@ CREATE TABLE IF NOT EXISTS `partnership_scores` (
   PRIMARY KEY (`score_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
--- personal trump suit - default value indicates it has not been set yet.
-ALTER TABLE `player` ADD `trump_suit` varchar(16) NOT NULL DEFAULT '0';
--- how many completed calypsos so far in a round?
-ALTER TABLE `player` ADD `completed_calypsos` int(1) NOT NULL DEFAULT '0';
+CREATE TABLE IF NOT EXISTS `revoke_flags` (
+  `revoke_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `player_id` int(10) unsigned NOT NULL,
+  `suit` int(1) NOT NULL,
+  PRIMARY KEY (`revoke_id`),
+  FOREIGN KEY (`player_id`)
+        REFERENCES `player`(`player_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

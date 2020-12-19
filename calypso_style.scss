@@ -236,9 +236,14 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*
 .revoke-indicator {
     width: $revoke_size;
     height: $revoke_size;
-    background-color: $blank_space_colour;
     display: inline-block;
     margin: $revoke_padding;
+}
+.active-revoke {
+    background-color: #FF0000;
+}
+.inactive-revoke {
+    background-color: $blank_space_colour;
 }
 .dealer-indicator-area {
     position: absolute;

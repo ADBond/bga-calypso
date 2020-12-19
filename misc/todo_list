@@ -25,6 +25,7 @@
 ./calypso.game.php:        // TODO: this function checks that all cards are *somewhere*
 ./calypso.game.php:            } else {  // TODO: this _should_ be irrelevant, but can't hurt (much)
 ./calypso.game.php:            clienttranslate('A new round of hands is starting - round ${round_number}'),  // TODO: number of rounds total
+./calypso.game.php:        // TODO: dealHand notif should sort out revoke flags on client side
 ./calypso.game.php:        self::notifyAllPlayers(  // TODO: id is for debugging, delete!
 ./calypso.game.php:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.game.php:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.

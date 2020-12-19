@@ -12,6 +12,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * ~~get the layout looking proper - calypsos and played cards~~
 * animate completed calypsos
+* animation - cards should come from player area
 * ~~revoke indicators~~ (and the logic of them) - optional?
 * better info banner
 * improve scoring table?

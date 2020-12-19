@@ -240,9 +240,16 @@
 .revoke-indicator {
   width: 32px;
   height: 32px;
-  background-color: #999;
   display: inline-block;
   margin: 4px;
+}
+
+.active-revoke {
+  background-color: #FF0000;
+}
+
+.inactive-revoke {
+  background-color: #999;
 }
 
 .dealer-indicator-area {
