@@ -296,6 +296,21 @@ function (dojo, declare) {
             dojo.removeClass( revoke_el_id, 'inactive-revoke' );
         },
 
+        clearRevokeFlags: function(players, suits){
+            console.log("clear me");
+            for (i in players) {
+                let player = players[i];
+                for(j in suits) {
+                    let suit = suits[j];
+                    let revoke_el_id = `revoke_${player}_${suit}`;
+                    console.log(revoke_el_id);
+                    dojo.removeClass( revoke_el_id, 'active-revoke' );
+                    dojo.addClass( revoke_el_id, 'inactive-revoke' );
+                }
+            }
+            
+        },
+
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'dealer-' + new_dealer_id;
 
@@ -410,6 +425,7 @@ function (dojo, declare) {
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe('revokeFlag', this, "notif_revokeFlag");
+            dojo.subscribe('clearRevokeFlags', this, "notif_clearRevokeFlags");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
@@ -440,6 +456,12 @@ function (dojo, declare) {
             console.log(notif);
             this.changeDealer(notif.args.dealer_id);
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
+        },
+
+        notif_clearRevokeFlags: function(notif) {
+            console.log("clearing houd");
+            console.log(notif);
+            this.clearRevokeFlags(notif.args.players, notif.args.suits);
         },
 
         notif_playCard : function(notif) {

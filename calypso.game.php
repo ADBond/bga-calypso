@@ -968,9 +968,12 @@ class Calypso extends Table
         );
         // Deal 13 cards to each player and notify them of their hand
         $players = self::loadPlayersBasicInfos();
+        $player_ids = array();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
             self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
+
+            $player_ids[] = $player_id;
         }
         // only change dealer after first hand, otherwise round setup should've handled it. Relax!
         if($hand_number != 1){
@@ -981,6 +984,14 @@ class Calypso extends Table
         }
         self::clearRevokeFlags();
         // TODO: dealHand notif should sort out revoke flags on client side
+        self::notifyAllPlayers(
+            'clearRevokeFlags',
+            "",
+            array (
+                "players" => $player_ids,
+                "suits" => [1, 2, 3, 4],
+            )
+        );
         self::notifyAllPlayers(  // TODO: id is for debugging, delete!
             'dealHand',
             clienttranslate('${dealer_name}, (${dealer_id}) deals a new hand of cards'),

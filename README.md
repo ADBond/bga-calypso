@@ -13,7 +13,8 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~get the layout looking proper - calypsos and played cards~~
 * animate completed calypsos
 * animation - cards should come from player area
-* ~~revoke indicators (and the logic of them)~~ - optional?
+* ~~revoke indicators (and the logic of them) - optional?~~
+  * optional stuff should be separate branch - should be easy to switch.
 * better info banner
 * improve scoring table?
 * access old scoring tables
@@ -75,7 +76,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * want to think about how to nicely signify teams - see e.g. Phat for nice approach
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
-* Revoke indicators
+* ~~Revoke indicators~~
+  * as a gameoption setting?
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 * Order hand with personal trumps separated?
 
