@@ -179,9 +179,13 @@ $calypso_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
         left: ($rank - 2) * $each_card_offset;
     }
 }
+$suit_height: 32px;
 @for $suit from 1 through 4 {
     .card-space-#{$suit} {
         background-position: 0px (-$card_height * ($suit - 1));
+    }
+    .revoke-#{$suit} {
+        background-position: 0px (-$suit_height * ($suit - 1));
     }
 }
 
@@ -239,8 +243,10 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*
     display: inline-block;
     margin: $revoke_padding;
 }
+
 .active-revoke {
-    background-color: #FF0000;
+    // background-color: #FF0000;
+    background-image: url('img/card_suits.jpg');
 }
 .inactive-revoke {
     background-color: $blank_space_colour;

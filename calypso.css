@@ -190,16 +190,32 @@
   background-position: 0px 0px;
 }
 
+.revoke-1 {
+  background-position: 0px 0px;
+}
+
 .card-space-2 {
   background-position: 0px -96px;
+}
+
+.revoke-2 {
+  background-position: 0px -32px;
 }
 
 .card-space-3 {
   background-position: 0px -192px;
 }
 
+.revoke-3 {
+  background-position: 0px -64px;
+}
+
 .card-space-4 {
   background-position: 0px -288px;
+}
+
+.revoke-4 {
+  background-position: 0px -96px;
 }
 
 .cardincalypso {
@@ -245,7 +261,7 @@
 }
 
 .active-revoke {
-  background-color: #FF0000;
+  background-image: url("img/card_suits.jpg");
 }
 
 .inactive-revoke {
