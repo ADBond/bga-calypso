@@ -58,7 +58,7 @@ function (dojo, declare) {
                 let trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
-                // TODO: suit icon insert to area.
+                // TODO: trump suit icon insert to area.
 
                 if(player_id == gamedatas.dealer){
                     let dealer_area_id = 'dealer-' + player_id;
@@ -67,7 +67,7 @@ function (dojo, declare) {
                     }), dealer_area_id);
                     this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) )
                 }
-                
+                this.setTrickPile(player_id, player["trick_pile"]);
             }
             
 
@@ -286,7 +286,20 @@ function (dojo, declare) {
             )
             dojo.addClass( card_el_id, 'cardincalypso' );
             dojo.removeClass( card_el_id, 'calypsocard' );
+        },
 
+        setTrickPile : function(player_id, value) {
+
+            let cards_el_id = `wontricks_${player_id}`;
+            console.log(cards_el_id);
+            if(value==1){
+                dojo.addClass( cards_el_id, 'trick-pile-full' );
+                dojo.removeClass( cards_el_id, 'trick-pile-empty' );
+            } else {
+                dojo.removeClass( cards_el_id, 'trick-pile-full' );
+                dojo.addClass( cards_el_id, 'trick-pile-empty' );
+
+            }
         },
 
         setRevokeFlag : function(player_id, suit){

@@ -39,7 +39,7 @@
                         </div>
                     <!-- END calypsocard -->
                     </div>
-                    <div class="wontricks captured-card" id="wontricks_{PLAYER_ID}"></div>
+                    <div class="wontricks captured-card trick-pile-empty" id="wontricks_{PLAYER_ID}"></div>
                 </div>
             </div>
         <!-- END playercalypso -->

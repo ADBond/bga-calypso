@@ -317,9 +317,16 @@
 .wontricks {
   width: 72px;
   height: 96px;
-  background-color: #999;
   right: 0px;
   position: absolute;
+}
+
+.trick-pile-empty {
+  background-color: #999;
+}
+
+.trick-pile-full {
+  background-color: #070;
 }
 
 .calypso_N {

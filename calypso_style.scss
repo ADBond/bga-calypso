@@ -300,9 +300,14 @@ $max_name_size: 200px;
 .wontricks {
     width: $card_width;
     height: $card_height;
-    background-color: $blank_space_colour;
     right: 0px;
     position: absolute;
+}
+.trick-pile-empty {
+    background-color: $blank_space_colour;
+}
+.trick-pile-full {
+    background-color: #070;
 }
 
 // TODO: transform using mixins - see sass project page
