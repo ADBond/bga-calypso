@@ -533,6 +533,7 @@ function (dojo, declare) {
                     console.log("this card is rubbish");
                     // TODO: fix this!! send_ti_id is null here, obviously
                     anim = this.slideToObject('cardontable_' + send_from_id, 'overall_player_board_' + winner_id);
+                    this.setTrickPile(winner_id, true);
                 } else{
                     console.log("but this card goes to the special place")
                     let calypso_player_id = moved_to[player]["owner"];
