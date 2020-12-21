@@ -173,8 +173,9 @@ class Calypso extends Table
     protected function getAllDatas()
     {
         $result = array();
-    
-        $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
+
+        // TODO: check there is not any naughty secret info here? don't think so
+        $current_player_id = self::getCurrentPlayerId();
     
         $sql = "SELECT player_id id, player_score score, trump_suit trump_suit, ".
                 "completed_calypsos completed_calypsos FROM player;";
@@ -388,7 +389,11 @@ class Calypso extends Table
         // note that fact for animation, then give them to the trick winner
         $still_remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
         foreach($still_remaining_cards as $card){
-            $moved_to[$card["location_arg"]] = array("owner" => 0, "originating_player" => $card["location_arg"],);
+            $moved_to[$card["location_arg"]] = array(
+                "owner" => 0,
+                "winner" => $winner_player_id,
+                "originating_player" => $card["location_arg"],
+            );
         }
         // TODO: woncards one place to change it!
         $this->cards->moveAllCardsInLocation('cardsontable', 'woncards', null, $best_value_player_id);
@@ -504,6 +509,7 @@ class Calypso extends Table
                 if (!in_array($card['type_arg'], $player_ranks_so_far)){
                     $moved_to[$card["location_arg"]] = array(
                         "originating_player" => $card["location_arg"],
+                        "winner" => $winner_player_id,
                         "owner" => $winner_player_id,
                         "suit" => $card["type"],
                         "rank" => $card["type_arg"],
@@ -516,6 +522,7 @@ class Calypso extends Table
                 if (!in_array($card['type_arg'], $partner_ranks_so_far)){
                     $moved_to[$card["location_arg"]] = array(
                         "originating_player" => $card["location_arg"],
+                        "winner" => $winner_player_id,
                         "owner" => $partner_id,
                         "suit" => $card["type"],
                         "rank" => $card["type_arg"],
@@ -526,7 +533,11 @@ class Calypso extends Table
             }
             else {
                 // give opponents cards to player who won trick - partners can have separate piles
-                $moved_to[$card["location_arg"]] = array("owner" => 0, "originating_player" => $card["location_arg"],);
+                $moved_to[$card["location_arg"]] = array(
+                    "owner" => 0,
+                    "winner" => $winner_player_id,
+                    "originating_player" => $card["location_arg"],
+                );
                 $this->cards->moveCard( $card["id"], 'woncards', $winner_player_id);
             }
         }

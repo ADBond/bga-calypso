@@ -536,6 +536,7 @@ function (dojo, declare) {
                 anim.play();
             }
         },
+
         notif_moveCardsToCalypsos : function(notif) {
             function finishAnim(anim) {
                 dojo.connect(anim, 'onEnd', function(node) {

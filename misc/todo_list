@@ -5,6 +5,7 @@
 ./calypso.game.php:                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
 ./calypso.game.php:        // TODO: colours
 ./calypso.game.php:                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
+./calypso.game.php:        // TODO: check there is not any naughty secret info here? don't think so
 ./calypso.game.php:        // AB TODO: compute and return the game progression
 ./calypso.game.php:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
 ./calypso.game.php:    // TODO: check here and under that there isn't a secret option number 3?
