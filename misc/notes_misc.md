@@ -49,3 +49,4 @@ Not cleared after completing, needs refresh. Think I've already noted this somew
 some cards are showing up as 2's only - this is when cards are captured, not on setup display -refresh clears it. maybe only duplicate cards?? probs not tho
 
 all in round 2??
+    -- okay this is if I do the func = X, args = y, blah blah, X(...y); thing. so don't do that

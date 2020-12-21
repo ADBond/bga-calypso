@@ -493,6 +493,20 @@ function (dojo, declare) {
         notif_calypsoComplete : function(notif) {
             // TODO: Here we should animate removing all those cumbersome calypso cards, ready to start anew!
             // maybe best to do in a layout ting as may need to refactor some of that stuff :/
+
+            // for each card in calypso, get rid of it
+            let delay = 50;
+            let player_id = notif.args.player_id;
+            let anim;
+            for (let rank = 2; rank <= 14; rank++) {
+                let card_el_id = `calypsocard_${player_id}_${rank}`;
+
+                anim = this.slideToObject(card_el_id, `overall_player_board_${player_id}` );
+                dojo.connect(anim, 'onEnd', function(node) {
+                    dojo.destroy(node);
+                });
+                anim.play();
+            }
         },
         notif_actionRequired : function(notif) {
             // nothing needed here
@@ -538,8 +552,9 @@ function (dojo, declare) {
                 if(send_to_id === 0){
                     // card is just going to trick pile
                     anim = this.slideToObject('cardontable_' + send_from_id, 'wontricks_' + winner_id);
-                    final_func = this.setTrickPile;
-                    final_args = [winner_id, true];
+                    this.setTrickPile(winner_id, true);
+                    // final_func = this.setTrickPile;
+                    // final_args = [winner_id, true];
                 } else{
                     // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
@@ -547,11 +562,12 @@ function (dojo, declare) {
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
                     anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${rank}`);
-                    final_func = this.placeCardInCalypso;
-                    final_args = [send_to_id, suit, rank, card_id];
+                    // final_func = this.placeCardInCalypso;
+                    // final_args = [send_to_id, suit, rank, card_id];
+                    this.placeCardInCalypso(send_to_id, suit, rank, card_id);
                 }
                 finishAnim(anim);
-                final_func(...final_args);
+                // final_func(...final_args);
             }
         },
         
