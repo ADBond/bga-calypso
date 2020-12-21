@@ -289,10 +289,11 @@ function (dojo, declare) {
         },
 
         setTrickPile : function(player_id, value) {
-
+            console.log("rruck pule is " + value + " for plataa " + player_id);
             let cards_el_id = `wontricks_${player_id}`;
             console.log(cards_el_id);
-            if(value==1){
+            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+            if(value > 0){
                 dojo.addClass( cards_el_id, 'trick-pile-full' );
                 dojo.removeClass( cards_el_id, 'trick-pile-empty' );
             } else {
@@ -554,7 +555,7 @@ function (dojo, declare) {
                 if(send_to_id === 0){
                     // card is just going to trick pile
                     anim = this.slideToObject('cardontable_' + send_from_id, 'wontricks_' + winner_id);
-                    this.setTrickPile(winner_id, true);
+                    this.setTrickPile(winner_id, 1);
                     // final_func = this.setTrickPile;
                     // final_args = [winner_id, true];
                 } else{

@@ -54,4 +54,4 @@ all in round 2??
 
 #### trick pile
 
-Showing up fine i think when we win tricks, but on refresh (i.e. `setupGame`) then _anyone_ who's won a trick has a pile, even if all their cards went to calypsos. That is _literally_ incorrect.
+~~Showing up fine i think when we win tricks, but on refresh (i.e. `setupGame`) then _anyone_ who's won a trick has a pile, even if all their cards went to calypsos. That is _literally_ incorrect.~~

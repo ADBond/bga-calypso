@@ -18,7 +18,7 @@ ALTER TABLE `player` ADD `trump_suit` varchar(16) NOT NULL DEFAULT '0';
 -- how many completed calypsos so far in a round?
 ALTER TABLE `player` ADD `completed_calypsos` int(1) NOT NULL DEFAULT '0';
 -- any cards in the trickpile?
-ALTER TABLE `player` ADD `trick_pile` tinyint(1) NOT NULL DEFAULT '0';
+-- ALTER TABLE `player` ADD `trick_pile` tinyint(1) NOT NULL DEFAULT '0';
 
 CREATE TABLE IF NOT EXISTS `card` (
   `card_id` int(10) unsigned NOT NULL AUTO_INCREMENT,

@@ -177,8 +177,12 @@ class Calypso extends Table
         $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
     
         $sql = "SELECT player_id id, player_score score, trump_suit trump_suit, ".
-                "completed_calypsos completed_calypsos, trick_pile trick_pile FROM player;";
+                "completed_calypsos completed_calypsos FROM player;";
         $result['players'] = self::getCollectionFromDb( $sql );
+
+        foreach($result['players'] as $player_id => $info){
+            $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id); 
+        }
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
 
@@ -388,8 +392,6 @@ class Calypso extends Table
         }
         // TODO: woncards one place to change it!
         $this->cards->moveAllCardsInLocation('cardsontable', 'woncards', null, $best_value_player_id);
-        $sql_set_trick_pile_true = "UPDATE player SET trick_pile=1 WHERE player_id=".$best_value_player_id.";";
-        self::dbQuery($sql_set_trick_pile_true);
 
         // now we move cards where they need to go, and get next player
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
@@ -421,6 +423,10 @@ class Calypso extends Table
         self::setGameStateValue( 'currentTrickWinner', $best_player_id );
         self::setGameStateValue( 'bestCardSuit', $best_card['type'] );
         self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
+    }
+
+    function getTrickPile($player_id){
+        return count($this->cards->getCardsInLocation( 'woncards', $player_id ));
     }
 
     function setScore( $player_id, $score_delta ){
@@ -954,9 +960,6 @@ class Calypso extends Table
         // and make sure no-one has any calypsos counted any more :(
         $sql = "UPDATE player SET completed_calypsos = 0;";
         self::DbQuery( $sql );
-
-        $sql_set_trick_pile_true = "UPDATE player SET trick_pile=0;";
-        self::dbQuery($sql_set_trick_pile_true);
 
         $new_dealer = self::getNextFirstDealer();
         self::setGameStateValue( 'firstHandDealer', $new_dealer );
