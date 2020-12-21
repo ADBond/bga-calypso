@@ -32,7 +32,7 @@
                 </div>
                 <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
                 <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
-                    <div class="calypsoholder">
+                    <div class="calypsoholder" id="calypsoholder_{PLAYER_ID}">
                     <!-- BEGIN calypsocard -->
                         <div class="calypsocard captured-card calypsocard-{CARD_RANK} card-space-{SUIT}"
                              id="calypsocard_{PLAYER_ID}_{CARD_RANK}">
@@ -60,6 +60,9 @@
 var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
 var jstpl_dealerindicator = '<div id="dealerbutton"></div>';
+var jstpl_calypsocard = '<div class="calypsocard captured-card calypsocard-${rank} card-space-${suit}\
+                             id="calypsocard_${player_id}_${rank}">\
+                        </div>'
 
 </script>
 

@@ -41,7 +41,6 @@
 ./calypso.js:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
 ./calypso.js:            // TODO: better tooltip
 ./calypso.js:            // TODO: animate the dealer button moving here
-./calypso.js:            // TODO: Here we should animate removing all those cumbersome calypso cards, ready to start anew!
 ./calypso.js:            // AB TODO: do we need to do anything here?
 ./calypso.js:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

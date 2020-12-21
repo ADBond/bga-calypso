@@ -413,7 +413,8 @@ class Calypso extends Table
                     clienttranslate('${player_name} has completed a calypso!'),
                     array(
                         'player_id' => $player_id,
-                        'player_name' => self::getPlayerName($player_id)
+                        'player_name' => self::getPlayerName($player_id),
+                        'player_suit' => self::getPlayerSuit($player_id),
                     )
                 );
             }

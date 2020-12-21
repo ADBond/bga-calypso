@@ -496,11 +496,7 @@ function (dojo, declare) {
             // What was I about to say above ^ ????
         },
         notif_calypsoComplete : function(notif) {
-            // TODO: Here we should animate removing all those cumbersome calypso cards, ready to start anew!
-            // maybe best to do in a layout ting as may need to refactor some of that stuff :/
-
-            // for each card in calypso, get rid of it
-            let delay = 50;
+            // for each card in calypso, get rid of it, but not too much
             let player_id = notif.args.player_id;
             let anim;
             for (let rank = 2; rank <= 14; rank++) {
@@ -511,6 +507,12 @@ function (dojo, declare) {
                     dojo.destroy(node);
                 });
                 anim.play();
+
+                dojo.place(this.format_block('jstpl_calypsocard', {
+                    rank : rank,
+                    suit : notif.args.player_suit,
+                    player_id : player_id
+                }), 'calypsoholder_' + player_id);
             }
         },
         notif_actionRequired : function(notif) {
