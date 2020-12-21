@@ -254,12 +254,11 @@ function (dojo, declare) {
 
             if (player_id != this.player_id) {
                 // Some opponent played a card
-                // Move card from player panel
-                this.placeOnObject('cardontable_' + player_id, 'overall_player_board_' + player_id);
+                // Move card from their area!
+                this.placeOnObject('cardontable_' + player_id, 'playercalypso_' + player_id);
             } else {
                 // You played a card. If it exists in your hand, move card from there and remove
                 // corresponding item
-
                 if ($('myhand_item_' + card_id)) {
                     this.placeOnObject('cardontable_' + player_id, 'myhand_item_' + card_id);
                     this.playerHand.removeFromStockById(card_id);
@@ -447,8 +446,9 @@ function (dojo, declare) {
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'moveCardsToWinner', this, "notif_moveCardsToWinner" );
-            this.notifqueue.setSynchronous( 'moveCardsToWinner', 1000 );
+            this.notifqueue.setSynchronous( 'moveCardsToWinner', 600 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
+            this.notifqueue.setSynchronous( 'moveCardsToCalypsos', 700 );
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
         },

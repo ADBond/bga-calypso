@@ -18,7 +18,6 @@
 ./calypso.game.php:    // TODO: uniformise names
 ./calypso.game.php:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
 ./calypso.game.php:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:                // TODO: this should happen *after* the real trick Win notification
 ./calypso.game.php:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
 ./calypso.game.php:        // TODO: pass this as a variable?
 ./calypso.game.php:        // TODO: we should get the players in partnership order!

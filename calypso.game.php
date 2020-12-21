@@ -380,7 +380,7 @@ class Calypso extends Table
         // move any cards to calypsos there's room for, and get rid of opponents' cards
         $moved_to_first_batch = self::sortWonCards($cards_played, $best_value_player_id);
         // check if any calypsos are completed, and if so process (remove cards, update db)
-        self::processCalypsos();
+        $calypsos_completed = self::processCalypsos();
         // now check if remaining cards can be added to calypsos
         $remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
         $moved_to_second_batch = self::sortWonCards($remaining_cards, $best_value_player_id);
@@ -406,6 +406,18 @@ class Calypso extends Table
             'player_id' => $best_value_player_id,
             'moved_to' => $moved_to,
         ) );
+        if(!empty($calypsos_completed)){
+            foreach($calypsos_completed as $player_id){
+                self::notifyAllPlayers(
+                    'calypsoComplete',
+                    clienttranslate('${player_name} has completed a calypso!'),
+                    array(
+                        'player_id' => $player_id,
+                        'player_name' => self::getPlayerName($player_id)
+                    )
+                );
+            }
+        }
         $this->gamestate->changeActivePlayer( $best_value_player_id );
     }
 
@@ -559,6 +571,8 @@ class Calypso extends Table
     function processCalypsos(){
 
         $players = self::loadPlayersBasicInfos();
+        // need to allow possibility of both partners completing calypsos in same trick
+        $calypsos_completed = array();
         foreach ( $players as $player_id => $player ) {
             $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
             $ranks_so_far = array_map(
@@ -576,15 +590,7 @@ class Calypso extends Table
                 // AB TODO: updated db when I've updated the model to allow the field
                 $sql = "UPDATE player SET completed_calypsos = completed_calypsos+1 WHERE player_id=".$player_id.";";
                 self::DbQuery( $sql );
-                // TODO: this should happen *after* the real trick Win notification
-                self::notifyAllPlayers(
-                    'calypsoComplete',
-                    clienttranslate('${player_name} has completed a calypso!'),
-                    array(
-                        'player_id' => $player_id,
-                        'player_name' => self::getPlayerName($player_id)
-                    )
-                );
+                $calypsos_completed[] = $player_id;
             }
             $ranks_so_far = array_map(
                 function($calypso_card){return $calypso_card['type_arg'];},
@@ -597,6 +603,7 @@ class Calypso extends Table
             //     'calypso_string' => $calypso_string,
             // ) );
         }
+        return $calypsos_completed;
     }
 
     function getRoundScore($round_number){
