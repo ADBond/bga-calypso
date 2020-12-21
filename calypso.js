@@ -446,6 +446,8 @@ function (dojo, declare) {
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
+            dojo.subscribe( 'moveCardsToWinner', this, "notif_moveCardsToWinner" );
+            this.notifqueue.setSynchronous( 'moveCardsToWinner', 1000 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
@@ -525,14 +527,14 @@ function (dojo, declare) {
         },
 
         // This is what happens after trick - we need to modify!
-        obsolete_notif_giveAllCardsToPlayer : function(notif) {
+        notif_moveCardsToWinner : function(notif) {
             // Move all cards on table to given table, then destroy them
-            const winner_id = notif.args.player_id;
+            const winner_id = notif.args.winner_id;
             for ( let player_id in this.gamedatas.players) {
-                let anim = this.slideToObject('cardontable_' + player_id, 'overall_player_board_' + winner_id);
-                dojo.connect(anim, 'onEnd', function(node) {
-                    dojo.destroy(node);
-                });
+                let anim = this.slideToObject('cardontable_' + player_id, 'playertablecard_' + winner_id);
+                // dojo.connect(anim, 'onEnd', function(node) {
+                //     dojo.destroy(node);
+                // });
                 anim.play();
             }
         },

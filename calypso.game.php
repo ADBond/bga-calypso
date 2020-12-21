@@ -391,7 +391,7 @@ class Calypso extends Table
         foreach($still_remaining_cards as $card){
             $moved_to[$card["location_arg"]] = array(
                 "owner" => 0,
-                "winner" => $winner_player_id,
+                "winner" => $best_value_player_id,
                 "originating_player" => $card["location_arg"],
             );
         }
@@ -399,6 +399,9 @@ class Calypso extends Table
         $this->cards->moveAllCardsInLocation('cardsontable', 'woncards', null, $best_value_player_id);
 
         // now we move cards where they need to go, and get next player
+        self::notifyAllPlayers( 'moveCardsToWinner','', array(
+            'winner_id' => $best_value_player_id,
+        ) );
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
             'player_id' => $best_value_player_id,
             'moved_to' => $moved_to,
