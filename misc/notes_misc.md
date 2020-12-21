@@ -43,3 +43,9 @@ Not cleared after completing, needs refresh. Think I've already noted this somew
 #### calypso z-index
 
 ~~The z-index is going crazy high, and thus overlapping popups! (obviously string/numeric issue)~~
+
+#### calypso display
+
+some cards are showing up as 2's only - this is when cards are captured, not on setup display -refresh clears it. maybe only duplicate cards?? probs not tho
+
+all in round 2??

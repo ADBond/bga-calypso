@@ -520,6 +520,12 @@ function (dojo, declare) {
             }
         },
         notif_moveCardsToCalypsos : function(notif) {
+            function finishAnim(anim) {
+                dojo.connect(anim, 'onEnd', function(node) {
+                    dojo.destroy(node);
+                });
+                anim.play();
+            }
             // Move all cards on table to given table, then destroy them
             const winner_id = notif.args.player_id;
             const moved_to = notif.args.moved_to;
@@ -527,29 +533,27 @@ function (dojo, declare) {
             for ( let player in moved_to) {
                 let send_to_id = moved_to[player]["owner"];
                 let send_from_id = moved_to[player]["originating_player"];
-                let anim;
+                let anim, final_func, final_args;
                 console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
                 if(send_to_id === 0){
-                    console.log("this card is rubbish");
-                    // TODO: fix this!! send_ti_id is null here, obviously
-                    anim = this.slideToObject('cardontable_' + send_from_id, 'overall_player_board_' + winner_id);
-                    this.setTrickPile(winner_id, true);
+                    // card is just going to trick pile
+                    anim = this.slideToObject('cardontable_' + send_from_id, 'wontricks_' + winner_id);
+                    final_func = this.setTrickPile;
+                    final_args = [winner_id, true];
                 } else{
-                    console.log("but this card goes to the special place")
+                    // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
                     anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${rank}`);
-                    this.placeCardInCalypso(send_to_id, suit, rank, card_id);
+                    final_func = this.placeCardInCalypso;
+                    final_args = [send_to_id, suit, rank, card_id];
                 }
-                dojo.connect(anim, 'onEnd', function(node) {
-                    dojo.destroy(node);
-                });
-                anim.play();
+                finishAnim(anim);
+                final_func(...final_args);
             }
         },
-        // TODO: from this point and below, you can write your game notifications handling methods
         
         notif_debug : function(notif) {
             console.log("debug message received ;)")
