@@ -46,7 +46,12 @@ Not cleared after completing, needs refresh. Think I've already noted this somew
 
 #### calypso display
 
-some cards are showing up as 2's only - this is when cards are captured, not on setup display -refresh clears it. maybe only duplicate cards?? probs not tho
+~~some cards are showing up as 2's only - this is when cards are captured, not on setup display -refresh clears it. maybe only duplicate cards?? probs not tho
 
 all in round 2??
-    -- okay this is if I do the func = X, args = y, blah blah, X(...y); thing. so don't do that
+    -- okay this is if I do the func = X, args = y, blah blah, X(...y); thing. so don't do that~~
+
+
+#### trick pile
+
+Showing up fine i think when we win tricks, but on refresh (i.e. `setupGame`) then _anyone_ who's won a trick has a pile, even if all their cards went to calypsos. That is _literally_ incorrect.

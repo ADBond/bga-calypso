@@ -38,6 +38,7 @@
 ./calypso.js:            // TODO: center hand in the div if wanted:
 ./calypso.js:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
 ./calypso.js:            // TODO: this should stay in css - use class manipulation
+./calypso.js:            // TODO: better tooltip
 ./calypso.js:            // TODO: animate the dealer button moving here
 ./calypso.js:            // TODO: Here we should animate removing all those cumbersome calypso cards, ready to start anew!
 ./calypso.js:            // AB TODO: do we need to do anything here?

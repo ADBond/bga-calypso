@@ -65,7 +65,7 @@ function (dojo, declare) {
                     dojo.place(this.format_block('jstpl_dealerindicator', {
                         player_id : player_id
                     }), dealer_area_id);
-                    this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) )
+                    this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) );
                 }
                 this.setTrickPile(player_id, player["trick_pile"]);
             }
@@ -307,6 +307,8 @@ function (dojo, declare) {
             console.log("this is happening: " + revoke_el_id);
             dojo.addClass( revoke_el_id, 'active-revoke' );
             dojo.removeClass( revoke_el_id, 'inactive-revoke' );
+            // TODO: better tooltip
+            this.addTooltipHtml( "revoke_el_id", _( "This player didn't follow suit this one time" ) )
         },
 
         clearRevokeFlags: function(players, suits){
