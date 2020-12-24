@@ -69,10 +69,12 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Display
 
-* Animate completed calypso & removing it w/o refresh
+* ~~Animate completed calypso & removing it w/o refresh~~
 * ~~Little piles for won cards to be sink for any misc won cards, instead of player panels~~
   * ~~Maybe cards should move to player, and then to wherever (to make it clear who won the trick?)~~
 * game art
+* see last trick?
+* optional log detail (c.f. Hungarian Tarock)
 * ~~Nicer game area, like in e.g. GrossTarock? (have a crude version, can iterate on that in general improvements)~~
 * ~~Fix up calypso displays. Maybe smaller?~~
 * Set different default colours
@@ -93,6 +95,11 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Other UI
 
 * throw an exception if non-active player clicks on card, rather than silently failing?
+
+### Things to test
+
+* new round (genuine)
+* multiple players complete calypsos in one trick
 
 ### Meta
 

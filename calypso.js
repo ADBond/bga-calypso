@@ -564,6 +564,8 @@ function (dojo, declare) {
                     // final_func = this.setTrickPile;
                     // final_args = [winner_id, true];
                 } else{
+                    console.log("stuff to see");
+                    console.log(moved_to);
                     // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
                     let rank = moved_to[player]["rank"];
