@@ -17,9 +17,8 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~revoke indicators (and the logic of them) - optional?~~
 * ~~better info banner - fine, rest just part of general polishing~~
 * ~~relative placements to current player~~
-* trick pile style - get at least a placeholder cardback, as now it's not really clear what's up
-* tooltips for trickpiles, renounce indicators
-  * tooltips broke in general, so do a thing with that yeah?
+* ~~trick pile style - get at least a placeholder cardback, as now it's not really clear what's up~~
+* ~~tooltips for trickpiles, renounce indicators~~
 
 ## For a different branch
 
@@ -81,7 +80,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~Show who is dealer~~, ~~who dealt first in round etc. Let's not do this~~
   * ~~animate this changing?~~
 * ~~Display game state info somewhere (round `x` of `y`, hand `w` of `z`)~~
-  * done but needs a bit of zhuzhing up
+  * ~~done but needs a bit of zhuzhing up~~
 * ~~Say the game name somewhere? Or something distinctive. Covered under the above zhuzhing~~
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
@@ -91,6 +90,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * as a gameoption setting?
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 * Order hand with personal trumps separated?
+* Fix tooltips??
 
 ### Other UI
 

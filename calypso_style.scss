@@ -317,7 +317,8 @@ $max_name_size: 200px;
     background-color: $blank_space_colour;
 }
 .trick-pile-full {
-    background-color: #070;
+    // background-color: #070;
+    background-image: url('img/backs.png'); 
 }
 
 // TODO: transform using mixins - see sass project page
