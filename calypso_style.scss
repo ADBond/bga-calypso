@@ -81,13 +81,19 @@ $table_size: 750px;
     z-index: -1;
 }
 
-#clp-gameinfo {
+$info_size: 20px;
+$title_size: $info_size * 1.5;
+.gameinfo {
     position: absolute;
     font-weight: bold;
-    width: 100px;
-    font-size: 16px;
+    width: 160px;
+    font-size: $info_size;
     padding: 10px;
+    text-align: center;
     background-color: rgba($calypso_colour, 0.5);
+}
+.clp_gametitle {
+    font-size: $title_size;
 }
 
 $card_area_buffer: 20px;
@@ -278,6 +284,10 @@ $max_name_size: 200px;
     font-size: 20px;
     position: absolute;
     right: 40px;
+}
+// Make it so that the top player's name is right-way up - readability over symmetry
+.clp-playername_N {
+    transform: rotate(180deg);
 }
 
 .playercalypso {

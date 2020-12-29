@@ -65,11 +65,16 @@ function (dojo, declare) {
                     dojo.place(this.format_block('jstpl_dealerindicator', {
                         player_id : player_id
                     }), dealer_area_id);
-                    this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) );
                 }
                 this.setTrickPile(player_id, player["trick_pile"]);
             }
             
+            // tooltips ahoy:
+            this.addTooltipToClass( "dealerbutton", _( "This player is the dealer for this hand" ), "" );
+            this.addTooltipToClass( "trick-pile-full", _( "This player has some cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "trick-pile-empty", _( "This player has no cards in their trick-pile" ), "" );
+            // TODO: specialise to suits?
+            this.addTooltipToClass( "active-revoke", _( "This player failed to follow this suit" ), "" );
 
             this.playerHand = new ebg.stock(); // new stock object for hand
             this.playerHand.create( this, $('myhand'), this.cardwidth, this.cardheight );
@@ -298,7 +303,6 @@ function (dojo, declare) {
             } else {
                 dojo.removeClass( cards_el_id, 'trick-pile-full' );
                 dojo.addClass( cards_el_id, 'trick-pile-empty' );
-
             }
         },
 
@@ -307,8 +311,6 @@ function (dojo, declare) {
             console.log("this is happening: " + revoke_el_id);
             dojo.addClass( revoke_el_id, 'active-revoke' );
             dojo.removeClass( revoke_el_id, 'inactive-revoke' );
-            // TODO: better tooltip
-            this.addTooltipHtml( "revoke_el_id", _( "This player didn't follow suit this one time" ) )
         },
 
         clearRevokeFlags: function(players, suits){
@@ -336,7 +338,9 @@ function (dojo, declare) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
             $("clp-gameinfo").innerHTML =  dojo.string.substitute(
-                _("Calypso") + "<br>" + _("Round ${roundnumber} of ${totalrounds}") + "<br>" + _("Hand ${handnumber} of 4."),
+                '<div class="clp_gametitle">' + _("Calypso") + "</div>" + 
+                    "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
+                    "<br>" + _("Hand ${handnumber} of 4"),
                 {
                     roundnumber: roundnumber,
                     handnumber: handnumber,

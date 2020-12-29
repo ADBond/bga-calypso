@@ -34,12 +34,12 @@
 ./calypso.game.php:        // TODO: this noticiation should give scores for the round, and round number
 ./calypso.js:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:                // TODO: trump suit icon insert to area.
+./calypso.js:            // TODO: specialise to suits?
 ./calypso.js:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:            // TODO: center hand in the div if wanted:
 ./calypso.js:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
 ./calypso.js:            // TODO: this should stay in css - use class manipulation
 ./calypso.js:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:            // TODO: better tooltip
 ./calypso.js:            // TODO: animate the dealer button moving here
 ./calypso.js:            // AB TODO: do we need to do anything here?
 ./calypso.js:            // TODO: play the card in the user interface.

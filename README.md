@@ -15,7 +15,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~animation - cards should come from player area~~
 * ~~animation - cards to trickpile~~
 * ~~revoke indicators (and the logic of them) - optional?~~
-* better info banner
+* ~~better info banner - fine, rest just part of general polishing~~
 * ~~relative placements to current player~~
 * trick pile style - get at least a placeholder cardback, as now it's not really clear what's up
 * tooltips for trickpiles, renounce indicators
@@ -65,7 +65,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
 * ~~check that the all the cards exist at all times, and get dealt out over the course of a round~~
   * mostly okay, but needs checking
-* Add a separate code licence, and make repo public once that's done
+* ~~Add a separate code licence~~, and make repo public once that's done
 
 ### Display
 

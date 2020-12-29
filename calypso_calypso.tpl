@@ -9,7 +9,7 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -->
 
-<div id="clp-gameinfo"></div>
+<div id="clp-gameinfo" class="gameinfo"></div>
 
 <div id="playarea">
     <div id="tablearea">
@@ -21,7 +21,7 @@
         <!-- END playerhand -->
         <!-- BEGIN playercalypso -->
             <div class="calypso calypso_{DIR}">
-                <div class="clp-playername" style="color:#{PLAYER_COLOUR}">
+                <div class="clp-playername clp-playername_{DIR}" style="color:#{PLAYER_COLOUR}">
                     {PLAYER_NAME} - a very long username
                 </div>
                 <div class="revoke-indicators" id="revoke_{PLAYER_ID}">
@@ -59,7 +59,7 @@
 
 var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
-var jstpl_dealerindicator = '<div id="dealerbutton"></div>';
+var jstpl_dealerindicator = '<div id="dealerbutton" class="dealerbutton"></div>';
 var jstpl_calypsocard = '<div class="calypsocard captured-card calypsocard-${rank} card-space-${suit}\
                              id="calypsocard_${player_id}_${rank}">\
                         </div>'
