@@ -10,24 +10,14 @@ cp pre-commit .git/hooks/
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~get the layout looking proper - calypsos and played cards~~
-* ~~animate completed calypsos~~
-* ~~animation - cards should come from player area~~
-* ~~animation - cards to trickpile~~
-* ~~revoke indicators (and the logic of them) - optional?~~
-* ~~better info banner - fine, rest just part of general polishing~~
-* ~~relative placements to current player~~
-* ~~trick pile style - get at least a placeholder cardback, as now it's not really clear what's up~~
-* ~~tooltips for trickpiles, renounce indicators~~
-
-## For a different branch
-
-* improve scoring table?
-* access old scoring tables
 * some of the css classes are names ridiculously. Once things are stable fix that.
   * on that note also align on wontricks/cardswon etc - good to get it sorted earlier (!).
   * Use Culbertson terminology - she ways 'trick pile' which I think works quite nicely
   * on similar note, revoke flags/indicators -> renounce indicators is a nicer terminology
+## For a different branch
+
+* improve scoring table?
+* access old scoring tables
 * optional renounce flags
 
 ## TODO list
