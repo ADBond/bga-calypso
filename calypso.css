@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /**
  *------
  * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
@@ -12,16 +13,15 @@
  * Calypso stylesheet
  *
  */
-
 /*
     This is the CSS stylesheet of your game User Interface.
-    
+
     Styles defined on this file will be applied to the HTML elements you define in your
     HTML template (calypso_calypso.tpl), and to HTML elements you create dynamically
     (in calypso.js).
-    
+
     Usually, you are using CSS to:
-    
+
     1°) define the overall layout of your game
         (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
 
@@ -29,164 +29,361 @@
         All images of your games should be gathered into a small number of image files. Then, using
         background-image and background-position CSS properties, you create HTML blocks that can 
         display these images correctly (see example below).
-    
+
     3°) ... anything else:
         It is really easy to add and remove CSS classes dynamically from your Javascript with
         dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
         (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
         very often, using CSS classes for the logic of your user interface allow you to do complex
         thing easily.
-        
-        
+
+
      Note: on the production platform, this file will be compressed and comments will be removed.
            Consequently, don't hesitate to put as many comments as necessary.
 */
-
-
 /* Note: you must not use any @import directive */
-
-
 /********* You can start writing your CSS below this line: **********/
-
+/* for reference: */
+/* .whiteblock {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-image: url("../img/layout/rounded_b.png");
+} */
 /** Table layout **/
-
 #playarea {
-    position: relative;
-    width: 1500px;
+  position: relative;
 }
 
-#playertables {
-    position: relative;
-    width: 710px;
-    height: 340px;
+#tablearea {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  width: 750px;
+  height: 750px;
+  background-color: #8800DD;
+  border-radius: 20px;
+  z-index: -1;
 }
 
-#playercalypso {
-    position: relative;
-    left: 1000px;
-    top: -340px;
+.gameinfo {
+  position: absolute;
+  font-weight: bold;
+  width: 160px;
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(136, 0, 221, 0.5);
 }
 
-.playertablename {
-    font-weight: bold;
-}
-.personal-trump {
-    font-weight: bold;
-    color: black;
+.clp_gametitle {
+  font-size: 30px;
 }
 
 .playertable {
-    position: absolute;
-    text-align: center;
-    width: 180px;
-    height: 130px;
+  outline: ridge 3px #AAA;
+  width: 92px;
+  height: 116px;
 }
 
 .playertable_N {
-    left: 50%;
-    top: 0px;
-    margin-left: -90px; /* half of 180 */
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
 }
+
 .playertable_S {
-    left: 50%;
-    bottom: 0px;
-    margin-left: -90px; /* half of 180 */
+  position: absolute;
+  bottom: 30%;
+  left: 50%;
+  transform: translate(-50%);
 }
+
 .playertable_W {
-    left: 0px;
-    top: 50%;
-    margin-top: -55px; /* half of 130 */
+  position: absolute;
+  left: 30%;
+  top: 50%;
+  transform: translate(0, -50%);
 }
+
 .playertable_E {
-    right: 0px;
-    top: 50%;
-    margin-top: -55px; /* half of 130 */
+  position: absolute;
+  right: 30%;
+  top: 50%;
+  transform: translate(0, -50%);
 }
 
 .playertablecard {
-    display: inline-block;
-    position: relative;
-    margin-top: 5px;
-    width: 72px;
-    height: 96px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 72px;
+  height: 96px;
 }
 
-#dealerbutton {
-    position: relative;
-    width: 16px;
-    height: 16px;
-    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
-    z-index: 1;
-}
-.dealer-indicator-area {
-    position: relative;
-    float: left;
-    width: 16px;
-    height: 16px;
+#myhand_wrap {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  width: 70%;
 }
 
 /*** cards on table ***/
-
 .cardontable {
-    position: absolute;
-    width: 72px;
-    height: 96px;
-    background-image: url('img/cards.jpg'); 
+  position: absolute;
+  width: 72px;
+  height: 96px;
+  background-image: url("img/cards.jpg");
 }
 
 /*** calypsos ***/
-.cardincalypso {
-    position: absolute;
-    width: 72px;
-    height: 96px;
-    /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
-    /* transform: scale(0.6); */
-    background-image: url('img/cards.jpg'); 
+.calypsocard-2 {
+  left: 0px;
 }
 
+.calypsocard-3 {
+  left: 25px;
+}
+
+.calypsocard-4 {
+  left: 50px;
+}
+
+.calypsocard-5 {
+  left: 75px;
+}
+
+.calypsocard-6 {
+  left: 100px;
+}
+
+.calypsocard-7 {
+  left: 125px;
+}
+
+.calypsocard-8 {
+  left: 150px;
+}
+
+.calypsocard-9 {
+  left: 175px;
+}
+
+.calypsocard-10 {
+  left: 200px;
+}
+
+.calypsocard-11 {
+  left: 225px;
+}
+
+.calypsocard-12 {
+  left: 250px;
+}
+
+.calypsocard-13 {
+  left: 275px;
+}
+
+.calypsocard-14 {
+  left: 300px;
+}
+
+.card-space-1 {
+  background-position: 0px 0px;
+}
+
+.revoke-1 {
+  background-position: 0px 0px;
+}
+
+.card-space-2 {
+  background-position: 0px -96px;
+}
+
+.revoke-2 {
+  background-position: 0px -32px;
+}
+
+.card-space-3 {
+  background-position: 0px -192px;
+}
+
+.revoke-3 {
+  background-position: 0px -64px;
+}
+
+.card-space-4 {
+  background-position: 0px -288px;
+}
+
+.revoke-4 {
+  background-position: 0px -96px;
+}
+
+.cardincalypso {
+  /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
+  /* transform: scale(0.6); */
+  background-image: url("img/cards.jpg");
+}
+
+.calypsocard {
+  outline: solid 1px black;
+  /* background-color: #AAA; */
+  z-index: 0;
+  background-image: url("img/cards_layout.jpg");
+}
+
+.captured-card {
+  position: absolute;
+  width: 72px;
+  height: 96px;
+}
+
+/* TODO: rename - this bounds all of our public info */
 .calypso {
-    position: absolute;
-    text-align: center;
+  position: absolute;
+  text-align: center;
+  width: 494px;
+  height: 156px;
+  outline: solid 1px black;
+  padding: 10px;
+  /* TODO: while I figure out what to do: */
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.revoke-indicators {
+  position: absolute;
+}
+
+.revoke-indicator {
+  width: 32px;
+  height: 32px;
+  display: inline-block;
+  margin: 4px;
+}
+
+.active-revoke {
+  background-image: url("img/card_suits.jpg");
+}
+
+.inactive-revoke {
+  background-color: #999;
+}
+
+.dealer-indicator-area {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 200px;
+  margin: 4px;
+}
+
+#dealerbutton {
+  width: 32px;
+  height: 32px;
+  background-image: url("img/dealer.png");
+  /* can swap out placeholder image in directory ;) */
+  z-index: 1;
+}
+
+.clp-playername {
+  font-weight: bold;
+  height: 32px;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  position: absolute;
+  right: 40px;
+}
+
+.clp-playername_N {
+  transform: rotate(180deg);
 }
 
 .playercalypso {
-    display: inline-block;
-    position: relative;
-    /* margin-top: 5px; */
-    /* width: 72px; */
-    height: 96px;
+  /* display: inline-block;
+  position: relative; */
+  position: absolute;
+  /* margin-top: 5px; */
+  width: 484px;
+  height: 96px;
+  /* leaving room for revokers */
+  bottom: 20px;
 }
 
-/* Temporary positioning for now */
+.calypsoholder {
+  width: 372px;
+  height: 96px;
+  outline: solid 3px black;
+  position: absolute;
+}
+
+.wontricks {
+  width: 72px;
+  height: 96px;
+  right: 0px;
+  position: absolute;
+}
+
+.trick-pile-empty {
+  background-color: #999;
+}
+
+.trick-pile-full {
+  background-image: url("img/backs.png");
+}
+
 .calypso_N {
-    left: 0%;
-    top: 0px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  transform: rotate(180deg);
 }
+
 .calypso_E {
-    left: 0%;
-    top: 130px;
+  position: absolute;
+  right: -494px;
+  bottom: 20px;
+  transform-origin: bottom left;
+  transform: rotate(270deg);
 }
+
 .calypso_S {
-    left: 0%;
-    top: 260px;
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
 }
+
 .calypso_W {
-    left: 0%;
-    top: 390px;
+  position: absolute;
+  left: 20px;
+  top: -156px;
+  transform-origin: bottom left;
+  transform: rotate(90deg);
 }
 
 /* Score stuff */
 .clp-number-entry {
-    color: red;
-    font-style: italic;
+  color: red;
+  font-style: italic;
 }
+
 .clp-score-entry {
-    font-weight: bold;
+  font-weight: bold;
 }
+
 .clp-number-label {
-    text-align: left;
-    font-style: italic;
+  text-align: left;
+  font-style: italic;
 }
+
 .clp-score-label {
-    text-align: right;
+  text-align: right;
 }
+
+/*# sourceMappingURL=calypso.css.map */

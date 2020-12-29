@@ -1,0 +1,367 @@
+/**
+ *------
+ * BGA framework: © Gregory Isabelli <gisabelli@boardgamearena.com> & Emmanuel Colin <ecolin@boardgamearena.com>
+ * Calypso implementation : © Andy Bond <48208438+ADBond@users.noreply.github.com>
+ *
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
+ * -----
+ *
+ * calypso.css
+ *
+ * Calypso stylesheet
+ *
+ */
+
+/*
+    This is the CSS stylesheet of your game User Interface.
+    
+    Styles defined on this file will be applied to the HTML elements you define in your
+    HTML template (calypso_calypso.tpl), and to HTML elements you create dynamically
+    (in calypso.js).
+    
+    Usually, you are using CSS to:
+    
+    1°) define the overall layout of your game
+        (ex: place the board on the top left, place player's hand beside, place the deck on the right, ...).
+
+    2°) create your CSS-sprites:
+        All images of your games should be gathered into a small number of image files. Then, using
+        background-image and background-position CSS properties, you create HTML blocks that can 
+        display these images correctly (see example below).
+    
+    3°) ... anything else:
+        It is really easy to add and remove CSS classes dynamically from your Javascript with
+        dojo.addClass and dojo.removeClass. It is also easy to check if an element has a class
+        (dojo.hasClass) or to get all elements with a specific class (dojo.query). This is why,
+        very often, using CSS classes for the logic of your user interface allow you to do complex
+        thing easily.
+        
+        
+     Note: on the production platform, this file will be compressed and comments will be removed.
+           Consequently, don't hesitate to put as many comments as necessary.
+*/
+
+
+/* Note: you must not use any @import directive */
+
+
+/********* You can start writing your CSS below this line: **********/
+
+/* for reference: */
+/* .whiteblock {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-image: url("../img/layout/rounded_b.png");
+} */
+
+$calypso_colour: #8800DD;
+$card_width: 72px;
+$card_height: 96px;
+$num_ranks: 13;
+
+/** Table layout **/
+
+#playarea {
+    position: relative;
+    // width: 1500px;
+    // height: 1000px;
+}
+
+$table_size: 750px;
+#tablearea {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+    width: $table_size;
+    height: $table_size;
+    background-color: $calypso_colour;
+    border-radius: 20px;
+    z-index: -1;
+}
+
+$info_size: 20px;
+$title_size: $info_size * 1.5;
+.gameinfo {
+    position: absolute;
+    font-weight: bold;
+    width: 160px;
+    font-size: $info_size;
+    padding: 10px;
+    text-align: center;
+    background-color: rgba($calypso_colour, 0.5);
+}
+.clp_gametitle {
+    font-size: $title_size;
+}
+
+$card_area_buffer: 20px;
+$card_area_width: $card_width + $card_area_buffer;
+$card_area_height: $card_height + $card_area_buffer;
+$card_area_outline_col: #AAA;
+.playertable {
+    // position: absolute;
+    // text-align: center;
+    outline: ridge 3px $card_area_outline_col;
+    width: $card_area_width;
+    height: $card_area_height;
+}
+
+$left_right_offset: $card_area_width + 20px;
+$top_bottom_offset: $card_area_height + 20px;
+.playertable_N {
+    // left: $table_size/2 - $card_area_width/2;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%);
+    // margin: 0 auto;
+    // top: $table_size/2 - $card_area_height/2 - $top_bottom_offset;
+}
+.playertable_S {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translate(-50%);
+    // margin: 0 auto;
+    // left: $table_size/2 - $card_area_width/2;
+    // top: $table_size/2 - $card_area_height/2 + $top_bottom_offset;
+}
+.playertable_W {
+    position: absolute;
+    left: 30%;
+    top: 50%;
+    transform: translate(0, -50%);
+    // left: $table_size/2 - $card_area_width/2 - $left_right_offset;
+    // top: $table_size/2 - $card_area_height/2;
+}
+.playertable_E {
+    position: absolute;
+    right: 30%;
+    top: 50%;
+    transform: translate(0, -50%);
+    // left: $table_size/2 - $card_area_width/2 + $left_right_offset;
+    // top: $table_size/2 - $card_area_height/2;
+}
+
+.playertablecard {
+    // display: inline-block;
+    // position: relative;
+    // margin-top: ($card_area_height - $card_height)/2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: $card_width;
+    height: $card_height;
+}
+
+#myhand_wrap {
+    position: relative;
+    // top: 30px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 70%;
+}
+
+/*** cards on table ***/
+
+.cardontable {
+    position: absolute;
+    width: $card_width;
+    height: $card_height;
+    background-image: url('img/cards.jpg'); 
+}
+
+/*** calypsos ***/
+
+// Offset for overlapping of calypso cards:
+$each_card_offset: 25px;
+$calypso_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
+@for $rank from 2 through $num_ranks+1 {
+    $offset_value: ($rank - 2) * $each_card_offset;
+    .calypsocard-#{$rank} {
+        left: ($rank - 2) * $each_card_offset;
+    }
+}
+$suit_height: 32px;
+@for $suit from 1 through 4 {
+    .card-space-#{$suit} {
+        background-position: 0px (-$card_height * ($suit - 1));
+    }
+    .revoke-#{$suit} {
+        background-position: 0px (-$suit_height * ($suit - 1));
+    }
+}
+
+// This is for the actual cards that are won:
+.cardincalypso {
+    /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
+    /* transform: scale(0.6); */
+    background-image: url('img/cards.jpg');  
+}
+// while _this_ is the placeholder layout
+.calypsocard {
+    outline: solid 1px black;
+    /* background-color: #AAA; */
+    z-index: 0;
+    background-image: url('img/cards_layout.jpg'); 
+}
+.captured-card {
+    position: absolute;
+    width: $card_width;
+    height: $card_height;
+}
+
+$blank_space_colour: #999;
+
+/* TODO: rename - this bounds all of our public info */
+$won_tricks_left_buffer: 40px;
+$calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_width;
+
+$calypso_zone_side_padding: 10px;
+$calypso_bottom_buffer: 20px;
+
+$revoke_size: 32px;
+$revoke_padding: 4px;
+
+$personal_area_width: $calypso_zone_pure_width + $calypso_zone_side_padding;
+$personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*$revoke_padding;
+.calypso {
+    position: absolute;
+    text-align: center;
+    width: $personal_area_width;
+    height: $personal_area_height;
+    outline: solid 1px black;
+    padding: $calypso_zone_side_padding;
+    /* TODO: while I figure out what to do: */
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.revoke-indicators {
+    // left: 20px;
+    position: absolute;
+}
+.revoke-indicator {
+    width: $revoke_size;
+    height: $revoke_size;
+    display: inline-block;
+    margin: $revoke_padding;
+}
+
+.active-revoke {
+    // background-color: #FF0000;
+    background-image: url('img/card_suits.jpg');
+}
+.inactive-revoke {
+    background-color: $blank_space_colour;
+}
+.dealer-indicator-area {
+    position: absolute;
+    width: $revoke_size;
+    height: $revoke_size;
+    left: 4*($revoke_size + 2*$revoke_padding) + 40px;
+    // background-color: $blank_space_colour;
+    // display: inline-block;
+    margin: $revoke_padding;
+}
+#dealerbutton {
+    width: $revoke_size;
+    height: $revoke_size;
+    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+    z-index: 1;
+}
+
+$max_name_size: 200px;
+.clp-playername {
+    font-weight: bold;
+    height: $revoke_size;
+    width: $max_name_size;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    position: absolute;
+    right: 40px;
+}
+// Make it so that the top player's name is right-way up - readability over symmetry
+.clp-playername_N {
+    transform: rotate(180deg);
+}
+
+.playercalypso {
+    /* display: inline-block;
+    position: relative; */
+    // left: 20px;
+    position: absolute;
+    /* margin-top: 5px; */
+    width: $calypso_zone_pure_width;
+    height: $card_height;
+    /* leaving room for revokers */
+    bottom: $calypso_bottom_buffer;
+}
+.calypsoholder {
+    width: $calypso_pure_width;
+    height: $card_height;
+    outline: solid 3px black;
+    position: absolute;
+}
+.wontricks {
+    width: $card_width;
+    height: $card_height;
+    right: 0px;
+    position: absolute;
+}
+.trick-pile-empty {
+    background-color: $blank_space_colour;
+}
+.trick-pile-full {
+    // background-color: #070;
+    background-image: url('img/backs.png'); 
+}
+
+// TODO: transform using mixins - see sass project page
+$personal_area_side_offset: 20px;
+$personal_area_bottom_offset: 20px;
+.calypso_N {
+    position: absolute;
+    right: $personal_area_side_offset;
+    top: $personal_area_bottom_offset;
+    transform: rotate(180deg);
+}
+.calypso_E {
+    position: absolute;
+    right: $personal_area_bottom_offset - $personal_area_width - 2*$calypso_zone_side_padding;
+    bottom: $personal_area_side_offset;
+    transform-origin: bottom left;
+    transform: rotate(270deg);
+}
+.calypso_S {
+    position: absolute;
+    left: $personal_area_side_offset;
+    bottom: $personal_area_bottom_offset;
+}
+.calypso_W {
+    position: absolute;
+    left: $personal_area_bottom_offset;
+    top: $personal_area_side_offset - $personal_area_height - 2*$calypso_zone_side_padding;
+    transform-origin: bottom left;
+    transform: rotate(90deg);
+}
+
+/* Score stuff */
+.clp-number-entry {
+    color: red;
+    font-style: italic;
+}
+.clp-score-entry {
+    font-weight: bold;
+}
+.clp-number-label {
+    text-align: left;
+    font-style: italic;
+}
+.clp-score-label {
+    text-align: right;
+}

@@ -10,6 +10,26 @@ cp pre-commit .git/hooks/
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* ~~get the layout looking proper - calypsos and played cards~~
+* ~~animate completed calypsos~~
+* ~~animation - cards should come from player area~~
+* ~~animation - cards to trickpile~~
+* ~~revoke indicators (and the logic of them) - optional?~~
+* ~~better info banner - fine, rest just part of general polishing~~
+* ~~relative placements to current player~~
+* ~~trick pile style - get at least a placeholder cardback, as now it's not really clear what's up~~
+* ~~tooltips for trickpiles, renounce indicators~~
+
+## For a different branch
+
+* improve scoring table?
+* access old scoring tables
+* some of the css classes are names ridiculously. Once things are stable fix that.
+  * on that note also align on wontricks/cardswon etc - good to get it sorted earlier (!).
+  * Use Culbertson terminology - she ways 'trick pile' which I think works quite nicely
+  * on similar note, revoke flags/indicators -> renounce indicators is a nicer terminology
+* optional renounce flags
+
 ## TODO list
 
 Loosely split into core logic stuff and more nicities, but obviously some overlap
@@ -42,33 +62,44 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * partly done but needs checking/careful eye
 * ~~rename those damn variables to keep a shred of self-consistency~~ check below, do as we go
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
-* check that the all the cards exist at all times, and get dealt out over the course of a round
-* Add a separate code licence, and make repo public once that's done
+* ~~check that the all the cards exist at all times, and get dealt out over the course of a round~~
+  * mostly okay, but needs checking
+* ~~Add a separate code licence~~, and make repo public once that's done
 
 ### Display
 
-* Animate completed calypso & removing it w/o refresh
-* Little piles for won cards to be sink for any misc won cards, instead of player panels
-  * Maybe cards should move to player, and then to wherever (to make it clear who won the trick?)
+* ~~Animate completed calypso & removing it w/o refresh~~
+* ~~Little piles for won cards to be sink for any misc won cards, instead of player panels~~
+  * ~~Maybe cards should move to player, and then to wherever (to make it clear who won the trick?)~~
 * game art
-* Nicer game area, like in e.g. GrossTarock?
-* Fix up calypso displays. Maybe smaller?
+* see last trick?
+* optional log detail (c.f. Hungarian Tarock)
+* ~~Nicer game area, like in e.g. GrossTarock? (have a crude version, can iterate on that in general improvements)~~
+* ~~Fix up calypso displays. Maybe smaller?~~
 * Set different default colours
 * ~~Show who is dealer~~, ~~who dealt first in round etc. Let's not do this~~
   * ~~animate this changing?~~
 * ~~Display game state info somewhere (round `x` of `y`, hand `w` of `z`)~~
-  * done but needs a bit of zhuzhing up
+  * ~~done but needs a bit of zhuzhing up~~
 * ~~Say the game name somewhere? Or something distinctive. Covered under the above zhuzhing~~
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * want to think about how to nicely signify teams - see e.g. Phat for nice approach
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
-* Revoke indicators
-* Direction stuff - should be relative to player! Don't forget to update this!
+* ~~Revoke indicators~~
+  * as a gameoption setting?
+* ~~Direction stuff - should be relative to player! Don't forget to update this!~~
+* Order hand with personal trumps separated?
+* Fix tooltips??
 
 ### Other UI
 
 * throw an exception if non-active player clicks on card, rather than silently failing?
+
+### Things to test
+
+* new round (genuine)
+* multiple players complete calypsos in one trick
 
 ### Meta
 

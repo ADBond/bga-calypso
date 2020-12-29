@@ -51,45 +51,37 @@ function (dojo, declare) {
         
         setup: function( gamedatas )
         {
-            console.log( "Starting game setup" );
-            
-            // Setting up player boards
             for( let player_id in gamedatas.players )
             {
                 let player = gamedatas.players[player_id];
-                         
-                // TODO: Setting up players boards if needed
                 let player_trump = player["trump_suit"];
                 let trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
-                // TODO: this should be a nice little icon rather than text.
-                $("trump-" + player_id).textContent = trump_lookup[player_trump];
+                // TODO: trump suit icon insert to area.
 
-                console.log("dealer is:")
-                console.log(gamedatas.dealer);
                 if(player_id == gamedatas.dealer){
-                    //$("area-dealer-" + player_id).textContent = "(D)";  // TODO: remove? or double up?
                     let dealer_area_id = 'dealer-' + player_id;
                     dojo.place(this.format_block('jstpl_dealerindicator', {
                         player_id : player_id
                     }), dealer_area_id);
-                    this.addTooltipHtml( "dealerbutton", _( "This player is the dealer for this hand" ) )
-                } else{
-                    $("area-dealer-" + player_id).textContent = "";
                 }
-                
+                this.setTrickPile(player_id, player["trick_pile"]);
             }
             
-            // TODO: Set up your game interface here, according to "gamedatas"
-            // Player hand
+            // tooltips ahoy:
+            this.addTooltipToClass( "dealerbutton", _( "This player is the dealer for this hand" ), "" );
+            this.addTooltipToClass( "trick-pile-full", _( "This player has some cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "trick-pile-empty", _( "This player has no cards in their trick-pile" ), "" );
+            // TODO: specialise to suits?
+            this.addTooltipToClass( "active-revoke", _( "This player failed to follow this suit" ), "" );
+
             this.playerHand = new ebg.stock(); // new stock object for hand
             this.playerHand.create( this, $('myhand'), this.cardwidth, this.cardheight );
 
-            // TODO: this whole bit may need some thinking about for quad-deck:
-            this.playerHand.image_items_per_row = 13; // 13 images per row
-            // Create cards types:
-            const num_decks = 4;  // this will be four later, but let's not go to quickly
+            this.playerHand.image_items_per_row = 13;
+
+            const num_decks = 4;
             for (let suit = 1; suit <= 4; suit++) {
                 for (let rank = 2; rank <= 14; rank++) {
                     for (let deck = 1; deck <= num_decks; deck++){
@@ -99,6 +91,8 @@ function (dojo, declare) {
                         // args are id, weight (for hand-sorting), img url, and img position
                         // Not sure for the moment if it is important for ids to be distinct here,
                         // but a sensible default answer seems to be 'yes'
+                        // TODO: here is where we might want to separate out trumps!
+                        // i.e. (other two, alternating colour) (my partners trumps) (my trumps)
                         this.playerHand.addItemType(card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type);
                     }
                 }
@@ -135,6 +129,15 @@ function (dojo, declare) {
                 let player_id = card.location_arg;
                 console.log("calypso has: " + suit + ", " + rank + ", and...");
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
+            }
+
+            // revoke flags
+            console.log("revoke flags");
+            for (i in this.gamedatas.revoke_flags) {
+                let info = this.gamedatas.revoke_flags[i];
+                console.log("revoke info");
+                console.log(info);
+                this.setRevokeFlag(info.player_id, info.suit);
             }
 
             this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);
@@ -256,12 +259,11 @@ function (dojo, declare) {
 
             if (player_id != this.player_id) {
                 // Some opponent played a card
-                // Move card from player panel
-                this.placeOnObject('cardontable_' + player_id, 'overall_player_board_' + player_id);
+                // Move card from their area!
+                this.placeOnObject('cardontable_' + player_id, 'playercalypso_' + player_id);
             } else {
                 // You played a card. If it exists in your hand, move card from there and remove
                 // corresponding item
-
                 if ($('myhand_item_' + card_id)) {
                     this.placeOnObject('cardontable_' + player_id, 'myhand_item_' + card_id);
                     this.playerHand.removeFromStockById(card_id);
@@ -283,25 +285,62 @@ function (dojo, declare) {
             dojo.style(card_el_id,
                 {
                     'backgroundPosition': `-${x}px -${y}px`,
+                    'z-index': `${+rank + 14}`,
                 }
             )
-            dojo.addClass( card_el_id, 'cardincalypso' );  // TODO: this in .tpl file??
+            dojo.addClass( card_el_id, 'cardincalypso' );
+            dojo.removeClass( card_el_id, 'calypsocard' );
+        },
 
+        setTrickPile : function(player_id, value) {
+            console.log("rruck pule is " + value + " for plataa " + player_id);
+            let cards_el_id = `wontricks_${player_id}`;
+            console.log(cards_el_id);
+            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+            if(value > 0){
+                dojo.addClass( cards_el_id, 'trick-pile-full' );
+                dojo.removeClass( cards_el_id, 'trick-pile-empty' );
+            } else {
+                dojo.removeClass( cards_el_id, 'trick-pile-full' );
+                dojo.addClass( cards_el_id, 'trick-pile-empty' );
+            }
+        },
+
+        setRevokeFlag : function(player_id, suit){
+            let revoke_el_id = `revoke_${player_id}_${suit}`;
+            console.log("this is happening: " + revoke_el_id);
+            dojo.addClass( revoke_el_id, 'active-revoke' );
+            dojo.removeClass( revoke_el_id, 'inactive-revoke' );
+        },
+
+        clearRevokeFlags: function(players, suits){
+            console.log("clear me");
+            for (i in players) {
+                let player = players[i];
+                for(j in suits) {
+                    let suit = suits[j];
+                    let revoke_el_id = `revoke_${player}_${suit}`;
+                    console.log(revoke_el_id);
+                    dojo.removeClass( revoke_el_id, 'active-revoke' );
+                    dojo.addClass( revoke_el_id, 'inactive-revoke' );
+                }
+            }
+            
         },
 
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'dealer-' + new_dealer_id;
 
-            console.log("dealer posirtion gows to: ", new_dealer_area_id);
             this.slideToObject('dealerbutton', new_dealer_area_id).play();
         },
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
-            // TODO: do I want to markup any of this for styling?
-            $("gameinfo").innerHTML =  dojo.string.substitute(
-                _("Calypso: Round ${roundnumber} of ${totalrounds}, hand ${handnumber} of 4."),
+            $("clp-gameinfo").innerHTML =  dojo.string.substitute(
+                '<div class="clp_gametitle">' + _("Calypso") + "</div>" + 
+                    "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
+                    "<br>" + _("Hand ${handnumber} of 4"),
                 {
                     roundnumber: roundnumber,
                     handnumber: handnumber,
@@ -404,10 +443,16 @@ function (dojo, declare) {
         
             dojo.subscribe('playCard', this, "notif_playCard");
 
+            dojo.subscribe('revokeFlag', this, "notif_revokeFlag");
+            dojo.subscribe('clearRevokeFlags', this, "notif_clearRevokeFlags");
+
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
+            dojo.subscribe( 'moveCardsToWinner', this, "notif_moveCardsToWinner" );
+            this.notifqueue.setSynchronous( 'moveCardsToWinner', 600 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
+            this.notifqueue.setSynchronous( 'moveCardsToCalypsos', 700 );
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
         },
@@ -435,8 +480,18 @@ function (dojo, declare) {
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
         },
 
+        notif_clearRevokeFlags: function(notif) {
+            console.log("clearing houd");
+            console.log(notif);
+            this.clearRevokeFlags(notif.args.players, notif.args.suits);
+        },
+
         notif_playCard : function(notif) {
             this.playCardOnTable(notif.args.player_id, notif.args.suit, notif.args.rank, notif.args.card_id);
+        },
+
+        notif_revokeFlag: function(notif) {
+            this.setRevokeFlag(notif.args.player_id, notif.args.suit);
         },
 
         notif_trickWin : function(notif) {
@@ -445,8 +500,24 @@ function (dojo, declare) {
             // What was I about to say above ^ ????
         },
         notif_calypsoComplete : function(notif) {
-            // TODO: Here we should animate removing all those cumbersome calypso cards, ready to start anew!
-            // maybe best to do in a layout ting as may need to refactor some of that stuff :/
+            // for each card in calypso, get rid of it, but not too much
+            let player_id = notif.args.player_id;
+            let anim;
+            for (let rank = 2; rank <= 14; rank++) {
+                let card_el_id = `calypsocard_${player_id}_${rank}`;
+
+                anim = this.slideToObject(card_el_id, `overall_player_board_${player_id}` );
+                dojo.connect(anim, 'onEnd', function(node) {
+                    dojo.destroy(node);
+                });
+                anim.play();
+
+                dojo.place(this.format_block('jstpl_calypsocard', {
+                    rank : rank,
+                    suit : notif.args.player_suit,
+                    player_id : player_id
+                }), 'calypsoholder_' + player_id);
+            }
         },
         notif_actionRequired : function(notif) {
             // nothing needed here
@@ -462,18 +533,25 @@ function (dojo, declare) {
         },
 
         // This is what happens after trick - we need to modify!
-        obsolete_notif_giveAllCardsToPlayer : function(notif) {
+        notif_moveCardsToWinner : function(notif) {
             // Move all cards on table to given table, then destroy them
-            const winner_id = notif.args.player_id;
+            const winner_id = notif.args.winner_id;
             for ( let player_id in this.gamedatas.players) {
-                let anim = this.slideToObject('cardontable_' + player_id, 'overall_player_board_' + winner_id);
+                let anim = this.slideToObject('cardontable_' + player_id, 'playertablecard_' + winner_id);
+                // dojo.connect(anim, 'onEnd', function(node) {
+                //     dojo.destroy(node);
+                // });
+                anim.play();
+            }
+        },
+
+        notif_moveCardsToCalypsos : function(notif) {
+            function finishAnim(anim) {
                 dojo.connect(anim, 'onEnd', function(node) {
                     dojo.destroy(node);
                 });
                 anim.play();
             }
-        },
-        notif_moveCardsToCalypsos : function(notif) {
             // Move all cards on table to given table, then destroy them
             const winner_id = notif.args.player_id;
             const moved_to = notif.args.moved_to;
@@ -481,28 +559,31 @@ function (dojo, declare) {
             for ( let player in moved_to) {
                 let send_to_id = moved_to[player]["owner"];
                 let send_from_id = moved_to[player]["originating_player"];
-                let anim;
+                let anim, final_func, final_args;
                 console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
                 if(send_to_id === 0){
-                    console.log("this card is rubbish");
-                    // TODO: fix this!! send_ti_id is null here, obviously
-                    anim = this.slideToObject('cardontable_' + send_from_id, 'overall_player_board_' + winner_id);
+                    // card is just going to trick pile
+                    anim = this.slideToObject('cardontable_' + send_from_id, 'wontricks_' + winner_id);
+                    this.setTrickPile(winner_id, 1);
+                    // final_func = this.setTrickPile;
+                    // final_args = [winner_id, true];
                 } else{
-                    console.log("but this card goes to the special place")
+                    console.log("stuff to see");
+                    console.log(moved_to);
+                    // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
                     anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${rank}`);
+                    // final_func = this.placeCardInCalypso;
+                    // final_args = [send_to_id, suit, rank, card_id];
                     this.placeCardInCalypso(send_to_id, suit, rank, card_id);
                 }
-                dojo.connect(anim, 'onEnd', function(node) {
-                    dojo.destroy(node);
-                });
-                anim.play();
+                finishAnim(anim);
+                // final_func(...final_args);
             }
         },
-        // TODO: from this point and below, you can write your game notifications handling methods
         
         notif_debug : function(notif) {
             console.log("debug message received ;)")

@@ -9,43 +9,44 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -->
 
-<div class="whiteblock" id="gameinfo"></div>
+<div id="clp-gameinfo" class="gameinfo"></div>
 
 <div id="playarea">
-    <div id="playertables">
-
+    <div id="tablearea">
         <!-- BEGIN playerhand -->
-            <div class="playertable whiteblock playertable_{DIR}">
-                <div class="playertablename" id="area-name-{PLAYER_ID}" style="color:#{PLAYER_COLOR}">
-                    <div id="area-name-{PLAYER_ID}">{PLAYER_NAME}</div><div id="area-dealer-{PLAYER_ID}"></div>
-                    <div class="personal-trump" id="trump-{PLAYER_ID}"></div>
-                    <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
-                </div>
+            <div class="playertable playertable_{DIR}">
                 <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
                 </div>
             </div>
         <!-- END playerhand -->
-    </div>
-    <div id="playercalypso">
         <!-- BEGIN playercalypso -->
-            <div class="calypso whiteblock calypso_{DIR}">
-                <div class="playertablename" style="color:#{PLAYER_COLOR}">
-                    {PLAYER_NAME}
+            <div class="calypso calypso_{DIR}">
+                <div class="clp-playername clp-playername_{DIR}" style="color:#{PLAYER_COLOUR}">
+                    {PLAYER_NAME} - a very long username
                 </div>
+                <div class="revoke-indicators" id="revoke_{PLAYER_ID}">
+                    <!-- BEGIN revokeindicator -->
+                    <div class="revoke-indicator inactive-revoke revoke-{CARD_SUIT}" id="revoke_{PLAYER_ID}_{CARD_SUIT}">
+                    </div>
+                    <!-- END revokeindicator -->
+                </div>
+                <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
                 <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
+                    <div class="calypsoholder" id="calypsoholder_{PLAYER_ID}">
                     <!-- BEGIN calypsocard -->
-                        <div class="calypsocard card-{CARD_RANK}"
-                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}"
-                             style="margin-left:{OFFSET}px">
+                        <div class="calypsocard captured-card calypsocard-{CARD_RANK} card-space-{SUIT}"
+                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}">
                         </div>
                     <!-- END calypsocard -->
+                    </div>
+                    <div class="wontricks captured-card trick-pile-empty" id="wontricks_{PLAYER_ID}"></div>
                 </div>
             </div>
         <!-- END playercalypso -->
     </div>
 </div>
 
-<div id="myhand_wrap" class="whiteblock">
+<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
     <h3>{MY_HAND}</h3>
     <div id="myhand">
     </div>
@@ -58,7 +59,10 @@
 
 var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
-var jstpl_dealerindicator = '<div id="dealerbutton"></div>';
+var jstpl_dealerindicator = '<div id="dealerbutton" class="dealerbutton"></div>';
+var jstpl_calypsocard = '<div class="calypsocard captured-card calypsocard-${rank} card-space-${suit}\
+                             id="calypsocard_${player_id}_${rank}">\
+                        </div>'
 
 </script>
 

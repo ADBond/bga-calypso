@@ -40,8 +40,18 @@ Might be nice to refactor so the code is more readable and these values are hidd
 
 Not cleared after completing, needs refresh. Think I've already noted this somewhere
 
-### player box
+#### calypso z-index
 
-See e.g. backgammon, 99 (rounds-based), Jaipur (seal of excellence) for games that have extra info in the player panels. How?
+~~The z-index is going crazy high, and thus overlapping popups! (obviously string/numeric issue)~~
 
-* https://en.doc.boardgamearena.com/Counter#Adding_stuff_to_player.27s_panel
+#### calypso display
+
+~~some cards are showing up as 2's only - this is when cards are captured, not on setup display -refresh clears it. maybe only duplicate cards?? probs not tho
+
+all in round 2??
+    -- okay this is if I do the func = X, args = y, blah blah, X(...y); thing. so don't do that~~
+
+
+#### trick pile
+
+~~Showing up fine i think when we win tricks, but on refresh (i.e. `setupGame`) then _anyone_ who's won a trick has a pile, even if all their cards went to calypsos. That is _literally_ incorrect.~~

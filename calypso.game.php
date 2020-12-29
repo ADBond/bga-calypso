@@ -72,15 +72,15 @@ class Calypso extends Table
         the game is ready to be played.
     */
     protected function setupNewGame( $players, $options = array() )
-    {    
-        
+    {
+
+        // TODO: colours
         // Set the colors of the players with HTML color code
         // The default below is red/green/blue/orange/brown
         // The number of colors defined here must correspond to the maximum number of players allowed for the gams
         $gameinfos = self::getGameinfos();
         $default_colors = $gameinfos['player_colors'];
- 
-        // Create players
+
         $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
         foreach( $players as $player_id => $player )
@@ -94,8 +94,6 @@ class Calypso extends Table
         self::reloadPlayersBasicInfos();
         
         /************ Start the game initialization *****/
-
-        // AB TODO: other gamestate values when I've figured out what they are!
 
         // pre-game value
         self::setGameStateInitialValue( 'roundNumber', 0 );
@@ -175,12 +173,17 @@ class Calypso extends Table
     protected function getAllDatas()
     {
         $result = array();
-    
-        $current_player_id = self::getCurrentPlayerId();    // !! We must only return informations visible by this player !!
+
+        // TODO: check there is not any naughty secret info here? don't think so
+        $current_player_id = self::getCurrentPlayerId();
     
         $sql = "SELECT player_id id, player_score score, trump_suit trump_suit, ".
                 "completed_calypsos completed_calypsos FROM player;";
         $result['players'] = self::getCollectionFromDb( $sql );
+
+        foreach($result['players'] as $player_id => $info){
+            $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id); 
+        }
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
 
@@ -193,6 +196,16 @@ class Calypso extends Table
         $result['handnumber'] = self::getGameStateValue('handNumber');
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
+
+        $sql = "SELECT revoke_id id, suit suit, player_id player_id FROM revoke_flags;";
+        $player_flags = array();
+        $revoke_flag_info = self::getCollectionFromDb( $sql );
+        foreach ($revoke_flag_info as $id => $info) {
+            $player_flags[] = $info;
+        }
+
+        $result['revoke_flags'] = $player_flags;
+
 
         return $result;
     }
@@ -269,6 +282,7 @@ class Calypso extends Table
     }
 
     // next player clockwise pass 1, -1 for anti-clockwise (i.e. previous player)
+    // this is where order is canonically set in-game!
     function getAdjacentPlayer($existing_player_id, $direction_index=1){
         $players = self::loadPlayersBasicInfos();
         $existing_player_number = $players[$existing_player_id]["player_no"];
@@ -281,6 +295,20 @@ class Calypso extends Table
             }
         }
         return $new_player;
+    }
+
+    function getPlayerDirections(){
+        $south_id = self::getCurrentPlayerId();
+        $west_id = self::getAdjacentPlayer($south_id);
+        $north_id = self::getAdjacentPlayer($west_id);
+        $east_id = self::getAdjacentPlayer($north_id);
+        $directions = array(
+            $south_id => "S",
+            $west_id => "W",
+            $north_id => "N",
+            $east_id => "E",
+        );
+        return $directions;
     }
 
     // TODO: this changes the dealer, and is only done between hands - reflect that in name
@@ -311,6 +339,19 @@ class Calypso extends Table
         return $next_first_dealer;
     }
 
+    function setRevokeFlag($player_id, $suit){
+        $sql = "INSERT INTO revoke_flags (player_id, suit) VALUES (".$player_id.",".$suit.");";
+        self::DbQuery(
+            $sql
+        );
+    }
+    function clearRevokeFlags(){
+        $sql = "DELETE FROM revoke_flags;";
+        self::DbQuery(
+            $sql
+        );
+    }
+
     function getAllCompletedCalyspos(){
         $self = $this;
         $partnershipOrder = function($player_1, $player_2) use ($self){
@@ -339,7 +380,7 @@ class Calypso extends Table
         // move any cards to calypsos there's room for, and get rid of opponents' cards
         $moved_to_first_batch = self::sortWonCards($cards_played, $best_value_player_id);
         // check if any calypsos are completed, and if so process (remove cards, update db)
-        self::processCalypsos();
+        $calypsos_completed = self::processCalypsos();
         // now check if remaining cards can be added to calypsos
         $remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
         $moved_to_second_batch = self::sortWonCards($remaining_cards, $best_value_player_id);
@@ -348,15 +389,36 @@ class Calypso extends Table
         // note that fact for animation, then give them to the trick winner
         $still_remaining_cards = $this->cards->getCardsInLocation( 'cardsontable' );
         foreach($still_remaining_cards as $card){
-            $moved_to[$card["location_arg"]] = array("owner" => 0, "originating_player" => $card["location_arg"],);
+            $moved_to[$card["location_arg"]] = array(
+                "owner" => 0,
+                "winner" => $best_value_player_id,
+                "originating_player" => $card["location_arg"],
+            );
         }
+        // TODO: woncards one place to change it!
         $this->cards->moveAllCardsInLocation('cardsontable', 'woncards', null, $best_value_player_id);
 
         // now we move cards where they need to go, and get next player
+        self::notifyAllPlayers( 'moveCardsToWinner','', array(
+            'winner_id' => $best_value_player_id,
+        ) );
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
             'player_id' => $best_value_player_id,
             'moved_to' => $moved_to,
         ) );
+        if(!empty($calypsos_completed)){
+            foreach($calypsos_completed as $player_id){
+                self::notifyAllPlayers(
+                    'calypsoComplete',
+                    clienttranslate('${player_name} has completed a calypso!'),
+                    array(
+                        'player_id' => $player_id,
+                        'player_name' => self::getPlayerName($player_id),
+                        'player_suit' => self::getPlayerSuit($player_id),
+                    )
+                );
+            }
+        }
         $this->gamestate->changeActivePlayer( $best_value_player_id );
     }
 
@@ -382,6 +444,10 @@ class Calypso extends Table
         self::setGameStateValue( 'currentTrickWinner', $best_player_id );
         self::setGameStateValue( 'bestCardSuit', $best_card['type'] );
         self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
+    }
+
+    function getTrickPile($player_id){
+        return count($this->cards->getCardsInLocation( 'woncards', $player_id ));
     }
 
     function setScore( $player_id, $score_delta ){
@@ -459,6 +525,7 @@ class Calypso extends Table
                 if (!in_array($card['type_arg'], $player_ranks_so_far)){
                     $moved_to[$card["location_arg"]] = array(
                         "originating_player" => $card["location_arg"],
+                        "winner" => $winner_player_id,
                         "owner" => $winner_player_id,
                         "suit" => $card["type"],
                         "rank" => $card["type_arg"],
@@ -471,6 +538,7 @@ class Calypso extends Table
                 if (!in_array($card['type_arg'], $partner_ranks_so_far)){
                     $moved_to[$card["location_arg"]] = array(
                         "originating_player" => $card["location_arg"],
+                        "winner" => $winner_player_id,
                         "owner" => $partner_id,
                         "suit" => $card["type"],
                         "rank" => $card["type_arg"],
@@ -481,7 +549,11 @@ class Calypso extends Table
             }
             else {
                 // give opponents cards to player who won trick - partners can have separate piles
-                $moved_to[$card["location_arg"]] = array("owner" => 0, "originating_player" => $card["location_arg"],);
+                $moved_to[$card["location_arg"]] = array(
+                    "owner" => 0,
+                    "winner" => $winner_player_id,
+                    "originating_player" => $card["location_arg"],
+                );
                 $this->cards->moveCard( $card["id"], 'woncards', $winner_player_id);
             }
         }
@@ -500,6 +572,8 @@ class Calypso extends Table
     function processCalypsos(){
 
         $players = self::loadPlayersBasicInfos();
+        // need to allow possibility of both partners completing calypsos in same trick
+        $calypsos_completed = array();
         foreach ( $players as $player_id => $player ) {
             $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
             $ranks_so_far = array_map(
@@ -517,15 +591,7 @@ class Calypso extends Table
                 // AB TODO: updated db when I've updated the model to allow the field
                 $sql = "UPDATE player SET completed_calypsos = completed_calypsos+1 WHERE player_id=".$player_id.";";
                 self::DbQuery( $sql );
-                // TODO: this should happen *after* the real trick Win notification
-                self::notifyAllPlayers(
-                    'calypsoComplete',
-                    clienttranslate('${player_name} has completed a calypso!'),
-                    array(
-                        'player_id' => $player_id,
-                        'player_name' => self::getPlayerName($player_id)
-                    )
-                );
+                $calypsos_completed[] = $player_id;
             }
             $ranks_so_far = array_map(
                 function($calypso_card){return $calypso_card['type_arg'];},
@@ -538,6 +604,7 @@ class Calypso extends Table
             //     'calypso_string' => $calypso_string,
             // ) );
         }
+        return $calypsos_completed;
     }
 
     function getRoundScore($round_number){
@@ -783,10 +850,10 @@ class Calypso extends Table
             );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
-        
-        $currenttrickSuit = self::getGameStateValue( 'trickSuit' );
+
+        $current_trick_suit = self::getGameStateValue( 'trickSuit' );
         // case of the first card of the trick:
-        if( $currenttrickSuit == 0 ) {
+        if( $current_trick_suit == 0 ) {
             self::setGameStateValue( 'trickSuit', $currentCard['type'] );
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
@@ -799,7 +866,7 @@ class Calypso extends Table
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
             // if they follow suit:
-            if ( $currentCard['type'] == self::getGameStateValue( 'trickSuit' ) ){
+            if ( $currentCard['type'] == $current_trick_suit ){
                 // if trump lead then this ain't a winner, so do nothing
                 // if trump was not lead:
                 // check if trump is winning, and if not, check if this card is higher
@@ -812,6 +879,15 @@ class Calypso extends Table
                     }
                 }
             } else { // they don't follow suit
+                self::setRevokeFlag($player_id, $current_trick_suit);
+                self::notifyAllPlayers(
+                    'revokeFlag',
+                    '',
+                    array(
+                        "player_id" => $player_id,
+                        "suit" => $current_trick_suit,
+                    )
+                );
                 // if they don't play their trump don't worry - it's a loser
                 // if they do
                 if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
@@ -924,9 +1000,12 @@ class Calypso extends Table
         );
         // Deal 13 cards to each player and notify them of their hand
         $players = self::loadPlayersBasicInfos();
+        $player_ids = array();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
             self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
+
+            $player_ids[] = $player_id;
         }
         // only change dealer after first hand, otherwise round setup should've handled it. Relax!
         if($hand_number != 1){
@@ -935,6 +1014,16 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
+        self::clearRevokeFlags();
+        // TODO: dealHand notif should sort out revoke flags on client side
+        self::notifyAllPlayers(
+            'clearRevokeFlags',
+            "",
+            array (
+                "players" => $player_ids,
+                "suits" => [1, 2, 3, 4],
+            )
+        );
         self::notifyAllPlayers(  // TODO: id is for debugging, delete!
             'dealHand',
             clienttranslate('${dealer_name}, (${dealer_id}) deals a new hand of cards'),
@@ -971,7 +1060,8 @@ class Calypso extends Table
             }
         } else {
             // Standard case (not the end of the trick)
-            // => just active the next player
+            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+            // $this->gamestate->changeActivePlayer( $player_id )
             $player_id = self::activeNextPlayer();
             self::giveExtraTime($player_id);
             $this->gamestate->nextState('nextPlayer');
