@@ -286,11 +286,11 @@ $max_name_size: 200px;
     right: 40px;
 }
 // Make it so that the top player's name is right-way up - readability over symmetry
-.clp-playername_N {
+.clp-playername-N {
     transform: rotate(180deg);
 }
 
-.playercalypso {
+.clp-playercalypso {
     /* display: inline-block;
     position: relative; */
     // left: 20px;
@@ -301,7 +301,7 @@ $max_name_size: 200px;
     /* leaving room for renounces */
     bottom: $calypso_bottom_buffer;
 }
-.calypsoholder {
+.clp-calypsoholder {
     width: $calypso_pure_width;
     height: $card_height;
     outline: solid 3px black;

@@ -20,7 +20,7 @@
     <!-- END playerhand -->
     <!-- BEGIN playercalypso -->
         <div class="calypso calypso_{DIR}">
-            <div class="clp-playername clp-playername_{DIR}" style="color:#{PLAYER_COLOUR}">
+            <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
                 {PLAYER_NAME} - a very long username
             </div>
             <div class="renounce-indicators" id="renounce_{PLAYER_ID}">
@@ -30,8 +30,8 @@
                 <!-- END renounceindicator -->
             </div>
             <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
-            <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
-                <div class="calypsoholder" id="calypsoholder_{PLAYER_ID}">
+            <div class="clp-playercalypso" id="clp-playercalypso-{PLAYER_ID}">
+                <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}">
                 <!-- BEGIN calypsocard -->
                     <div class="calypsocard captured-card calypsocard-{CARD_RANK} card-space-{SUIT}"
                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}">

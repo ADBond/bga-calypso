@@ -90,10 +90,16 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * new round (genuine)
 * multiple players complete calypsos in one trick
+* a little browser compatibility
 
 ### Meta
 
 * anything to adjust in gameinfos - particularly revise description & and tags, and durations
+
+### Misc
+
+* Zombie turn
+* Game progression
 
 ### Variants
 

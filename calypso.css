@@ -297,11 +297,11 @@
   right: 40px;
 }
 
-.clp-playername_N {
+.clp-playername-N {
   transform: rotate(180deg);
 }
 
-.playercalypso {
+.clp-playercalypso {
   /* display: inline-block;
   position: relative; */
   position: absolute;
@@ -312,7 +312,7 @@
   bottom: 20px;
 }
 
-.calypsoholder {
+.clp-calypsoholder {
   width: 372px;
   height: 96px;
   outline: solid 3px black;

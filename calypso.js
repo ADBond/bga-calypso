@@ -256,7 +256,7 @@ function (dojo, declare) {
             if (player_id != this.player_id) {
                 // Some opponent played a card
                 // Move card from their area!
-                this.placeOnObject('clp-card-on-table-' + player_id, 'playercalypso_' + player_id);
+                this.placeOnObject('clp-card-on-table-' + player_id, 'clp-playercalypso-' + player_id);
             } else {
                 // You played a card. If it exists in your hand, move card from there and remove
                 // corresponding item
@@ -512,7 +512,7 @@ function (dojo, declare) {
                     rank : rank,
                     suit : notif.args.player_suit,
                     player_id : player_id
-                }), 'calypsoholder_' + player_id);
+                }), 'clp-calypsoholder-' + player_id);
             }
         },
         notif_actionRequired : function(notif) {
