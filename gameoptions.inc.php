@@ -31,7 +31,7 @@ $game_options = array(
         'values' => array(
             1 => array(
                 'name' => totranslate('Standard, short - 1 round (4 hands)'),
-                'tmdisplay' => totranslate('1 round'),
+                'tmdisplay' => totranslate('Standard game'),
             ),
             2 => array(
                 'name' => totranslate('Medium - 2 rounds (8 hands)'),
@@ -44,7 +44,20 @@ $game_options = array(
             4 => array(
                 'name' => totranslate('Full rotation - 4 rounds (16 hands)'),
                 'description' => totranslate('4 rounds - everyone gets to be first player once'),
-                'tmdisplay' => totranslate('4 rounds'),
+                'tmdisplay' => totranslate('Full rotation'),
+            ),
+        ),
+    ),
+    101 => array(
+        'name' => totranslate('Renounce indicators'),
+        'values' => array(
+            1 => array(
+                'name' => totranslate('Renounce indicators on'),
+                'description' => totranslate('Renounce indicators show suits that players have failed to follow suit to'),
+            ),
+            2 => array(
+                'name' => totranslate('Renounce indicators off'),
+                'tmdisplay' => totranslate('Renounce indicators off'),
             ),
         ),
     ),

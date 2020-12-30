@@ -1,41 +1,42 @@
 ./calypso.css:239:/* TODO: rename - this bounds all of our public info */
 ./calypso.css:247:  /* TODO: while I figure out what to do: */
-./calypso.game.php:74:        // TODO: colours
-./calypso.game.php:117:                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
-./calypso.game.php:172:        // TODO: check there is not any naughty secret info here? don't think so
-./calypso.game.php:220:        // AB TODO: compute and return the game progression
-./calypso.game.php:255:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
-./calypso.game.php:261:    // TODO: check here and under that there isn't a secret option number 3?
-./calypso.game.php:285:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
-./calypso.game.php:309:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
-./calypso.game.php:313:        // TODO: don't need these notifications long-term
-./calypso.game.php:315:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
-./calypso.game.php:332:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:459:    // TODO: uniformise names
-./calypso.game.php:583:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-./calypso.game.php:585:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:635:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:698:        // TODO: pass this as a variable?
-./calypso.game.php:736:        // TODO: we should get the players in partnership order!
-./calypso.game.php:766:            // TODO: this is also a place where partnershit will change
-./calypso.game.php:783:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:807:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:856:            } else {  // TODO: this _should_ be irrelevant, but can't hurt (much)
-./calypso.game.php:1014:        // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1059:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1068:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
+./calypso.game.php:75:        // TODO: colours
+./calypso.game.php:118:                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
+./calypso.game.php:173:        // TODO: check there is not any naughty secret info here? don't think so
+./calypso.game.php:205:            // TODO: is this not a kind of bullshit way to do this?
+./calypso.game.php:226:        // AB TODO: compute and return the game progression
+./calypso.game.php:261:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
+./calypso.game.php:267:    // TODO: check here and under that there isn't a secret option number 3?
+./calypso.game.php:291:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
+./calypso.game.php:315:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
+./calypso.game.php:319:        // TODO: don't need these notifications long-term
+./calypso.game.php:321:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
+./calypso.game.php:338:        // TODO: this feels horrible - is there a nice way that won't be overkill?
+./calypso.game.php:465:    // TODO: uniformise names
+./calypso.game.php:589:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+./calypso.game.php:591:                // AB TODO: updated db when I've updated the model to allow the field
+./calypso.game.php:641:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+./calypso.game.php:704:        // TODO: pass this as a variable?
+./calypso.game.php:742:        // TODO: we should get the players in partnership order!
+./calypso.game.php:772:            // TODO: this is also a place where partnershit will change
+./calypso.game.php:789:        // TODO: probably want to display this aspect betterly
+./calypso.game.php:813:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:849:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1020:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1067:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1076:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:77:            // TODO: specialise to suits?
 ./calypso.js:95:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:101:            // TODO: center hand in the div if wanted:
-./calypso.js:240:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
-./calypso.js:292:            // TODO: this should stay in css - use class manipulation
-./calypso.js:306:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:482:            // TODO: animate the dealer button moving here
-./calypso.js:520:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:605:            // AB TODO: do we need to do anything here?
-./calypso.js:620:            // TODO: play the card in the user interface.
+./calypso.js:242:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
+./calypso.js:294:            // TODO: this should stay in css - use class manipulation
+./calypso.js:308:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:484:            // TODO: animate the dealer button moving here
+./calypso.js:522:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:607:            // AB TODO: do we need to do anything here?
+./calypso.js:622:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:42:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:221:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:240:    /* TODO: while I figure out what to do: */

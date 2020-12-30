@@ -6,7 +6,7 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* optional renounce flags
+* ~~optional renounce flags~~
 * ~~number of rounds set via gameoptions~~
 * teams by gameoptions (13,24 12,34 14,23 random )
 ## For a different branch
@@ -70,14 +70,17 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * teams through some light colours, and put in player boxes upstairs (with trump suits)
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
 * ~~Renounce indicators~~
-  * as a gameoption setting
+  * ~~as a gameoption setting~~
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 * Order hand with personal trumps separated?
-* Fix tooltips??
-* Fix dealer button animation
-* New cards in calypso get eaten by calypso animation - need to handle this!
 * improve scoring table?
 * access old scoring tables
+
+## Things to fic
+
+* Fix tooltips?? (renounce and dealer button)
+* Fix dealer button animation
+* New cards in calypso get eaten by calypso animation - need to handle this!
 
 ### Other UI
 

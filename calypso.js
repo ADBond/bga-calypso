@@ -132,9 +132,11 @@ function (dojo, declare) {
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
 
-            for (i in this.gamedatas.renounce_flags) {
-                let info = this.gamedatas.renounce_flags[i];
-                this.setRenounceFlag(info.player_id, info.suit);
+            if(this.renounce_flags_on == "on"){
+                for (i in this.gamedatas.renounce_flags) {
+                    let info = this.gamedatas.renounce_flags[i];
+                    this.setRenounceFlag(info.player_id, info.suit);
+                }
             }
 
             this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);

@@ -48,6 +48,7 @@ class Calypso extends Table
                          "handNumber" => 32,
 
                          "totalRounds" => 100,
+                         "renounceFlags" => 101,
 
                           ) );
 
@@ -192,15 +193,20 @@ class Calypso extends Table
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
 
-        $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
-        $player_flags = array();
-        $renounce_flag_info = self::getCollectionFromDb( $sql );
-        foreach ($renounce_flag_info as $id => $info) {
-            $player_flags[] = $info;
+        if(self::getGameStateValue('renounceFlags') == 1){
+            $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
+            $player_flags = array();
+            $renounce_flag_info = self::getCollectionFromDb( $sql );
+            foreach ($renounce_flag_info as $id => $info) {
+                $player_flags[] = $info;
+            }
+
+            $result['renounce_flags'] = $player_flags;
+            // TODO: is this not a kind of bullshit way to do this?
+            $result['renounce_flags_on'] = "on";
+        } else{
+            $result['renounce_flags_on'] = "off";
         }
-
-        $result['renounce_flags'] = $player_flags;
-
 
         return $result;
     }
@@ -840,8 +846,9 @@ class Calypso extends Table
             $trick_suit = self::getGameStateValue( 'trickSuit' );
             // if they're trying to revoke, warn, and remind them of the suit they should be playing
             $trick_suit_name = $this->suits[$trick_suit]['nametr'];
+            // TODO: really not convinced I've got the translation stuff right here.
             throw new BgaUserException(
-                self::_(`You must follow suit if able to! Please play a ${trick_suit_name}.`)
+                sprintf(self::_("You must follow suit if able to! Please play a %s."), $trick_suit_name)
             );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
@@ -853,7 +860,8 @@ class Calypso extends Table
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
-            } else {  // TODO: this _should_ be irrelevant, but can't hurt (much)
+            } else {
+                // this _should_ be irrelevant, but can't hurt
                 self::setGameStateValue( 'trumpLead', 0 );
             }
             self::setWinner( $player_id, $currentCard );
@@ -873,24 +881,29 @@ class Calypso extends Table
                         }
                     }
                 }
-            } else { // they don't follow suit
-                self::setRenounceFlag($player_id, $current_trick_suit);
-                self::notifyAllPlayers(
-                    'renounceFlag',
-                    '',
-                    array(
-                        "player_id" => $player_id,
-                        "suit" => $current_trick_suit,
-                    )
-                );
+            } else {
+                // they don't follow suit
+                if(self::getGameStateValue('renounceFlags') == 1){
+                    self::setRenounceFlag($player_id, $current_trick_suit);
+                    self::notifyAllPlayers(
+                        'renounceFlag',
+                        '',
+                        array(
+                            "player_id" => $player_id,
+                            "suit" => $current_trick_suit,
+                        )
+                    );
+                }
+                
                 // if they don't play their trump don't worry - it's a loser
-                // if they do
+                // if they do...
                 if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
                         self::setWinner( $player_id, $currentCard );
                         self::setGameStateValue( 'trumpPlayed', 1 );
-                    } else { // if trumpPlayed - check if we're higher
+                    } else {
+                        // if trumpPlayed - check if we're higher, in which case we're winning. Otherwise still a loser
                         if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
                             self::setWinner( $player_id, $currentCard );
                         }
@@ -906,14 +919,6 @@ class Calypso extends Table
                 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
                 'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
              ));
-        // self::notifyAllPlayers('Debug', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
-        // 'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
-        // 'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
-        // 'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
-        // 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
-        // 'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
-        // ));
-        // Next player
         $this->gamestate->nextState('playCard');
     }
 
@@ -1010,22 +1015,25 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
-        self::clearRenounceFlags();
-        // TODO: dealHand notif should sort out revoke flags on client side
-        self::notifyAllPlayers(
-            'clearRenounceFlags',
-            "",
-            array (
-                "players" => $player_ids,
-                "suits" => [1, 2, 3, 4],
-            )
-        );
+        if(self::getGameStateValue('renounceFlags') == 1){
+            self::clearRenounceFlags();
+            // TODO: dealHand notif should sort out revoke flags on client side
+            self::notifyAllPlayers(
+                'clearRenounceFlags',
+                "",
+                array (
+                    "players" => $player_ids,
+                    "suits" => [1, 2, 3, 4],
+                )
+            );
+        }
+
         self::notifyAllPlayers(
             'dealHand',
             clienttranslate('${dealer_name}, deals a new hand of cards'),
             array (
                 'dealer_name' => self::getPlayerName($new_dealer),
-                // 'dealer_id' => $new_dealer,
+                'dealer_id' => $new_dealer,
                 'round_number' => self::getGameStateValue( 'roundNumber' ),
                 'hand_number' => $hand_number,
                 'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
