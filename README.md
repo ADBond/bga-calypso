@@ -10,17 +10,15 @@ cp pre-commit .git/hooks/
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* some of the css classes are names ridiculously. Once things are stable fix that.
+* ~~some of the css classes are names ridiculously. Once things are stable fix that.~~
   * ~~renounce bits~~
-  * dealer bits
-  * overall 'calypso' particularly egregious
+  * ~~dealer bits~~
+  * ~~overall 'calypso' particularly egregious~~
 * ~~on that note also align on wontricks/cardswon etc - good to get it sorted earlier (!).~~
 * ~~Use Culbertson terminology - she ways 'trick pile' which I think works quite nicely~~
 * ~~on similar note, revoke flags/indicators -> renounce indicators is a nicer terminology~~
 ## For a different branch
 
-* improve scoring table?
-* access old scoring tables
 * optional renounce flags
 
 ## To-do list
@@ -34,7 +32,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * ~~implement trick-winner~~
   * ~~enforce suit-following (maybe make as switch for devving)~~
 * ~~collecting calypsos (sort-of, maybe?? need to display in-progress to check better)~~
-* ~~display in-progress calypsos~~ (and completed? won discards?)
+* ~~display in-progress calypsos~~ (and completed? ~~won discards?~~)
 * ~~track dealer etc make sure dealer is updated properly at end of hand~~
 * ~~scoring~~
 * number of rounds/games set via gameoptions
@@ -77,13 +75,16 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~Say the game name somewhere? Or something distinctive. Covered under the above zhuzhing~~
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
-  * want to think about how to nicely signify teams - see e.g. Phat for nice approach
+  * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
+  * teams through some light colours, and put in player boxes upstairs (with trump suits)
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
 * ~~Renounce indicators~~
   * as a gameoption setting?
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 * Order hand with personal trumps separated?
 * Fix tooltips??
+* improve scoring table?
+* access old scoring tables
 
 ### Other UI
 

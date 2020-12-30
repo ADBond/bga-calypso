@@ -13,29 +13,28 @@
 
 <div id="clp-table-area">
     <!-- BEGIN playerhand -->
-        <div class="clp-player-card-play-area clp-player-card-play-area-{DIR}">
-            <div class="clp-player-card-play-area-card" id="clp-player-card-play-area-card-{PLAYER_ID}">
-            </div>
-        </div>
+    <div class="clp-player-card-play-area clp-player-card-play-area-{DIR}">
+        <div class="clp-player-card-play-area-card" id="clp-player-card-play-area-card-{PLAYER_ID}"></div>
+    </div>
     <!-- END playerhand -->
     <!-- BEGIN playercalypso -->
-        <div class="clp-calypso clp-calypso-{DIR}">
-            <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
-                {PLAYER_NAME} - a very long username
-            </div>
-            <div class="clp-renounce-indicators">
-                <!-- BEGIN renounceindicator -->
-                <div class="clp-renounce-indicator clp-inactive-renounce clp-renounce-{CARD_SUIT}" id="clp-renounce-{PLAYER_ID}-{CARD_SUIT}">
-                </div>
-                <!-- END renounceindicator -->
-            </div>
-            <div class="clp-dealer-indicator-area" id="clp-dealer-{PLAYER_ID}"></div>
-            <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
-                <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}">
-                </div>
-                <div class="clp-trickpile clp-captured-card clp-trickpile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
-            </div>
+    <div class="clp-player-personal-area clp-player-personal-area-{DIR}">
+        <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
+            {PLAYER_NAME} - a very long username
         </div>
+        <div class="clp-renounce-indicators">
+            <!-- BEGIN renounceindicator -->
+            <div class="clp-renounce-indicator clp-inactive-renounce clp-renounce-{CARD_SUIT}"
+                id="clp-renounce-{PLAYER_ID}-{CARD_SUIT}">
+            </div>
+            <!-- END renounceindicator -->
+        </div>
+        <div class="clp-dealer-indicator-area" id="clp-dealer-{PLAYER_ID}"></div>
+        <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
+            <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}"></div>
+            <div class="clp-trickpile clp-captured-card clp-trickpile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
+        </div>
+    </div>
     <!-- END playercalypso -->
 </div>
 
@@ -51,11 +50,12 @@
 
 // Javascript HTML templates
 
-var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}" style="background-position:-${x}px -${y}px">\
+var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}"\
+                            style="background-position:-${x}px -${y}px">\
                         </div>';
 var jstpl_dealerindicator = '<div id="clp-dealerbutton" class="clp-dealerbutton"></div>';
 var jstpl_calypsocard = '<div class="clp-calypsocard-space clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}"\
-                             id="clp-calypsocard-${player_id}-${rank}">\
+                            id="clp-calypsocard-${player_id}-${rank}">\
                         </div>'
 
 </script>

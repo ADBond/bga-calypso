@@ -42,7 +42,7 @@
 ./calypso.js:520:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
 ./calypso.js:605:            // AB TODO: do we need to do anything here?
 ./calypso.js:620:            // TODO: play the card in the user interface.
-./calypso_calypso.tpl:43:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
+./calypso_calypso.tpl:42:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:221:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:240:    /* TODO: while I figure out what to do: */
 ./calypso_style.scss:323:// TODO: might want to do this as a child div, to separate styles better...

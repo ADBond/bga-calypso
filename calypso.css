@@ -237,7 +237,7 @@
 }
 
 /* TODO: rename - this bounds all of our public info */
-.clp-calypso {
+.clp-player-personal-area {
   position: absolute;
   text-align: center;
   width: 494px;
@@ -330,14 +330,14 @@
   background-image: url("img/backs.png");
 }
 
-.clp-calypso-N {
+.clp-player-personal-area-N {
   position: absolute;
   right: 20px;
   top: 20px;
   transform: rotate(180deg);
 }
 
-.clp-calypso-E {
+.clp-player-personal-area-E {
   position: absolute;
   right: -494px;
   bottom: 20px;
@@ -345,13 +345,13 @@
   transform: rotate(270deg);
 }
 
-.clp-calypso-S {
+.clp-player-personal-area-S {
   position: absolute;
   left: 20px;
   bottom: 20px;
 }
 
-.clp-calypso-W {
+.clp-player-personal-area-W {
   position: absolute;
   left: 20px;
   top: -156px;
