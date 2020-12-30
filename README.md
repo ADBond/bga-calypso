@@ -11,9 +11,12 @@ cp pre-commit .git/hooks/
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
 * some of the css classes are names ridiculously. Once things are stable fix that.
-  * ~~on that note also align on wontricks/cardswon etc - good to get it sorted earlier (!).~~
-  * ~~Use Culbertson terminology - she ways 'trick pile' which I think works quite nicely~~
-  * ~~on similar note, revoke flags/indicators -> renounce indicators is a nicer terminology~~
+  * renounce bits
+  * dealer bits
+  * overall 'calypso' particularly egregious
+* ~~on that note also align on wontricks/cardswon etc - good to get it sorted earlier (!).~~
+* ~~Use Culbertson terminology - she ways 'trick pile' which I think works quite nicely~~
+* ~~on similar note, revoke flags/indicators -> renounce indicators is a nicer terminology~~
 ## For a different branch
 
 * improve scoring table?

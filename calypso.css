@@ -322,13 +322,11 @@
   height: 96px;
   right: 0px;
   position: absolute;
-}
-
-.trick-pile-empty {
   background-color: #999;
 }
 
-.trick-pile-full {
+.clp-trickpile-full {
+  border-radius: 5px;
   background-image: url("img/backs.png");
 }
 

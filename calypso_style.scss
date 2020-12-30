@@ -165,9 +165,10 @@ $top_bottom_offset: $card_area_height + 20px;
     width: 70%;
 }
 
+$card_rounding: 5px;
 /*** cards on table ***/
 .clp-face-up-card {
-    border-radius: 5px;
+    border-radius: $card_rounding;
     width: $card_width;
     height: $card_height;
     background-image: url('img/cards.jpg');
@@ -313,12 +314,16 @@ $max_name_size: 200px;
     height: $card_height;
     right: 0px;
     position: absolute;
-}
-.trick-pile-empty {
     background-color: $blank_space_colour;
+    // border: solid 3px black;
 }
-.trick-pile-full {
+// .clp-trickpile-empty {
+    
+// }
+// TODO: might want to do this as a child div, to separate styles better...
+.clp-trickpile-full {
     // background-color: #070;
+    border-radius: $card_rounding;
     background-image: url('img/backs.png'); 
 }
 

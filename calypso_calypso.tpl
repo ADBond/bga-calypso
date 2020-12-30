@@ -38,7 +38,7 @@
                     </div>
                 <!-- END calypsocard -->
                 </div>
-                <div class="clp-trickpile clp-captured-card trick-pile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
+                <div class="clp-trickpile clp-captured-card clp-trickpile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
             </div>
         </div>
     <!-- END playercalypso -->

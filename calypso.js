@@ -71,8 +71,8 @@ function (dojo, declare) {
             
             // tooltips ahoy:
             this.addTooltipToClass( "dealerbutton", _( "This player is the dealer for this hand" ), "" );
-            this.addTooltipToClass( "trick-pile-full", _( "This player has some cards in their trick-pile" ), "" );
-            this.addTooltipToClass( "trick-pile-empty", _( "This player has no cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
             // TODO: specialise to suits?
             this.addTooltipToClass( "active-renounce", _( "This player failed to follow this suit" ), "" );
 
@@ -293,11 +293,11 @@ function (dojo, declare) {
             console.log(cards_el_id);
             // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
             if(value > 0){
-                dojo.addClass( cards_el_id, 'trick-pile-full' );
-                dojo.removeClass( cards_el_id, 'trick-pile-empty' );
+                dojo.addClass( cards_el_id, 'clp-trickpile-full' );
+                dojo.removeClass( cards_el_id, 'clp-trickpile-empty' );
             } else {
-                dojo.removeClass( cards_el_id, 'trick-pile-full' );
-                dojo.addClass( cards_el_id, 'trick-pile-empty' );
+                dojo.removeClass( cards_el_id, 'clp-trickpile-full' );
+                dojo.addClass( cards_el_id, 'clp-trickpile-empty' );
             }
         },
 
