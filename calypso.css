@@ -195,7 +195,7 @@
   background-position: 0px 0px;
 }
 
-.renounce-1 {
+.clp-renounce-1 {
   background-position: 0px 0px;
 }
 
@@ -203,7 +203,7 @@
   background-position: 0px -96px;
 }
 
-.renounce-2 {
+.clp-renounce-2 {
   background-position: 0px -32px;
 }
 
@@ -211,7 +211,7 @@
   background-position: 0px -192px;
 }
 
-.renounce-3 {
+.clp-renounce-3 {
   background-position: 0px -64px;
 }
 
@@ -219,7 +219,7 @@
   background-position: 0px -288px;
 }
 
-.renounce-4 {
+.clp-renounce-4 {
   background-position: 0px -96px;
 }
 
@@ -248,22 +248,22 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
-.renounce-indicators {
+.clp-renounce-indicators {
   position: absolute;
 }
 
-.renounce-indicator {
+.clp-renounce-indicator {
   width: 32px;
   height: 32px;
   display: inline-block;
   margin: 4px;
 }
 
-.active-renounce {
+.clp-active-renounce {
   background-image: url("img/card_suits.jpg");
 }
 
-.inactive-renounce {
+.clp-inactive-renounce {
   background-color: #999;
 }
 

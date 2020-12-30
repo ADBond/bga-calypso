@@ -194,7 +194,7 @@ $suit_height: 32px;
     .clp-card-space-#{$suit} {
         background-position: 0px (-$card_height * ($suit - 1));
     }
-    .renounce-#{$suit} {
+    .clp-renounce-#{$suit} {
         background-position: 0px (-$suit_height * ($suit - 1));
     }
 }
@@ -241,22 +241,22 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     background: rgba(255, 255, 255, 0.75);
 }
 
-.renounce-indicators {
+.clp-renounce-indicators {
     // left: 20px;
     position: absolute;
 }
-.renounce-indicator {
+.clp-renounce-indicator {
     width: $renounce_size;
     height: $renounce_size;
     display: inline-block;
     margin: $renounce_padding;
 }
 
-.active-renounce {
+.clp-active-renounce {
     // background-color: #FF0000;
     background-image: url('img/card_suits.jpg');
 }
-.inactive-renounce {
+.clp-inactive-renounce {
     background-color: $blank_space_colour;
 }
 .dealer-indicator-area {

@@ -74,7 +74,7 @@ function (dojo, declare) {
             this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
             this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
             // TODO: specialise to suits?
-            this.addTooltipToClass( "active-renounce", _( "This player failed to follow this suit" ), "" );
+            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
 
             this.playerHand = new ebg.stock(); // new stock object for hand
             this.playerHand.create( this, $('clp-myhand'), this.cardwidth, this.cardheight );
@@ -302,10 +302,10 @@ function (dojo, declare) {
         },
 
         setRenounceFlag : function(player_id, suit){
-            let renounce_el_id = `renounce_${player_id}_${suit}`;
+            let renounce_el_id = `clp-renounce-${player_id}-${suit}`;
             console.log("this is happening: " + renounce_el_id);
-            dojo.addClass( renounce_el_id, 'active-renounce' );
-            dojo.removeClass( renounce_el_id, 'inactive-renounce' );
+            dojo.addClass( renounce_el_id, 'clp-active-renounce' );
+            dojo.removeClass( renounce_el_id, 'clp-inactive-renounce' );
         },
 
         clearRenounceFlags: function(players, suits){
@@ -314,10 +314,10 @@ function (dojo, declare) {
                 let player = players[i];
                 for(j in suits) {
                     let suit = suits[j];
-                    let renounce_el_id = `renounce_${player}_${suit}`;
+                    let renounce_el_id = `clp-renounce-${player}-${suit}`;
                     console.log(renounce_el_id);
-                    dojo.removeClass( renounce_el_id, 'active-renounce' );
-                    dojo.addClass( renounce_el_id, 'inactive-renounce' );
+                    dojo.removeClass( renounce_el_id, 'clp-active-renounce' );
+                    dojo.addClass( renounce_el_id, 'clp-inactive-renounce' );
                 }
             }
             

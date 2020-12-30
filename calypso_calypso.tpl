@@ -23,9 +23,9 @@
             <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
                 {PLAYER_NAME} - a very long username
             </div>
-            <div class="renounce-indicators" id="renounce_{PLAYER_ID}">
+            <div class="clp-renounce-indicators" id="renounce_{PLAYER_ID}">
                 <!-- BEGIN renounceindicator -->
-                <div class="renounce-indicator inactive-renounce renounce-{CARD_SUIT}" id="renounce_{PLAYER_ID}_{CARD_SUIT}">
+                <div class="clp-renounce-indicator clp-inactive-renounce clp-renounce-{CARD_SUIT}" id="clp-renounce-{PLAYER_ID}-{CARD_SUIT}">
                 </div>
                 <!-- END renounceindicator -->
             </div>
