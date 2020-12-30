@@ -1,17 +1,13 @@
 # Calypso for BGA
 
-Run this, to make life easier:
-
-```
-cp pre-commit .git/hooks/
-```
+For devvy stuff check out [dev notes](misc/dev.md).
 
 ## Current branch to-do list
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
 * optional renounce flags
-* number of rounds set via gameoptions
+* ~~number of rounds set via gameoptions~~
 * teams by gameoptions (13,24 12,34 14,23 random )
 ## For a different branch
 
@@ -34,6 +30,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * stats
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
+* stop games ending in ties
 
 ### Notifications
 
@@ -77,6 +74,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 * Order hand with personal trumps separated?
 * Fix tooltips??
+* Fix dealer button animation
+* New cards in calypso get eaten by calypso animation - need to handle this!
 * improve scoring table?
 * access old scoring tables
 

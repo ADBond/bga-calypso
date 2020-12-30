@@ -839,8 +839,9 @@ class Calypso extends Table
         if ( !self::validPlay($player_id, $currentCard) ){
             $trick_suit = self::getGameStateValue( 'trickSuit' );
             // if they're trying to revoke, warn, and remind them of the suit they should be playing
+            $trick_suit_name = $this->suits[$trick_suit]['nametr'];
             throw new BgaUserException(
-                self::_("You must follow suit if able to! Please play a ").$this->suits[$trick_suit]['nametr']."."
+                self::_(`You must follow suit if able to! Please play a ${trick_suit_name}.`)
             );
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
@@ -969,7 +970,7 @@ class Calypso extends Table
         self::notifyAllPlayers(
             "update",
             clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
-            array("round_number" => $round_number)
+            array("round_number" => $round_number, "total_rounds" => $total_rounds)
         );
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
@@ -1019,12 +1020,12 @@ class Calypso extends Table
                 "suits" => [1, 2, 3, 4],
             )
         );
-        self::notifyAllPlayers(  // TODO: id is for debugging, delete!
+        self::notifyAllPlayers(
             'dealHand',
-            clienttranslate('${dealer_name}, (${dealer_id}) deals a new hand of cards'),
+            clienttranslate('${dealer_name}, deals a new hand of cards'),
             array (
                 'dealer_name' => self::getPlayerName($new_dealer),
-                'dealer_id' => $new_dealer,
+                // 'dealer_id' => $new_dealer,
                 'round_number' => self::getGameStateValue( 'roundNumber' ),
                 'hand_number' => $hand_number,
                 'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
@@ -1077,9 +1078,6 @@ class Calypso extends Table
                 )
             );
         }
-        
-        self::updateScores();  // TODO: to debug this! it doesn't really live here
-        self::displayScores();
 
         self::notifyAllPlayers(
             "update",
@@ -1096,13 +1094,8 @@ class Calypso extends Table
     }
 
     function stEndRound() {
-        // TODO: this noticiation should give scores for the round, and round number
-        self::notifyAllPlayers(
-            "update",
-            clienttranslate('Round over!'),
-            array()
-        );
         self::updateScores();
+        self::displayScores();
 
         $num_rounds = self::getGameStateValue( 'totalRounds' );
         
