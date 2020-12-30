@@ -29,7 +29,7 @@
                 </div>
                 <!-- END renounceindicator -->
             </div>
-            <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
+            <div class="clp-dealer-indicator-area" id="clp-dealer-{PLAYER_ID}"></div>
             <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
                 <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}">
                 </div>

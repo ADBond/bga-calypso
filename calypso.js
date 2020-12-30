@@ -61,7 +61,7 @@ function (dojo, declare) {
                 // TODO: trump suit icon insert to area.
 
                 if(player_id == gamedatas.dealer){
-                    let dealer_area_id = 'dealer-' + player_id;
+                    let dealer_area_id = 'clp-dealer-' + player_id;
                     dojo.place(this.format_block('jstpl_dealerindicator', {
                         player_id : player_id
                     }), dealer_area_id);
@@ -283,10 +283,10 @@ function (dojo, declare) {
         },
 
         placeCardInCalypso : function(player_id, suit, rank, card_id) {
-            let x = this.cardwidth * (rank - 2);
-            let y = this.cardheight * (suit - 1);
+            const x = this.cardwidth * (rank - 2);
+            const y = this.cardheight * (suit - 1);
 
-            let card_el_id = `calypsocard_${player_id}_${rank}`;
+            const card_el_id = `calypsocard_${player_id}_${rank}`;
             console.log(card_el_id);
 
             // TODO: this should stay in css - use class manipulation
@@ -302,7 +302,7 @@ function (dojo, declare) {
 
         setTrickPile : function(player_id, value) {
             console.log("rruck pule is " + value + " for plataa " + player_id);
-            let cards_el_id = `clp-trickpile-${player_id}`;
+            const cards_el_id = `clp-trickpile-${player_id}`;
             console.log(cards_el_id);
             // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
             if(value > 0){
@@ -315,7 +315,7 @@ function (dojo, declare) {
         },
 
         setRenounceFlag : function(player_id, suit){
-            let renounce_el_id = `clp-renounce-${player_id}-${suit}`;
+            const renounce_el_id = `clp-renounce-${player_id}-${suit}`;
             console.log("this is happening: " + renounce_el_id);
             dojo.addClass( renounce_el_id, 'clp-active-renounce' );
             dojo.removeClass( renounce_el_id, 'clp-inactive-renounce' );
@@ -337,7 +337,7 @@ function (dojo, declare) {
         },
 
         changeDealer : function(new_dealer_id) {
-            const new_dealer_area_id = 'dealer-' + new_dealer_id;
+            const new_dealer_area_id = 'clp-dealer-' + new_dealer_id;
 
             this.slideToObject('dealerbutton', new_dealer_area_id).play();
         },
@@ -509,17 +509,17 @@ function (dojo, declare) {
         },
         notif_calypsoComplete : function(notif) {
             // for each card in calypso, get rid of it, but not too much
-            let player_id = notif.args.player_id;
-            let anim;
+            const player_id = notif.args.player_id;
             for (let rank = 2; rank <= 14; rank++) {
                 let card_el_id = `calypsocard_${player_id}_${rank}`;
 
-                anim = this.slideToObject(card_el_id, `overall_player_board_${player_id}` );
+                let anim = this.slideToObject(card_el_id, `overall_player_board_${player_id}` );
                 dojo.connect(anim, 'onEnd', function(node) {
                     dojo.destroy(node);
                 });
                 anim.play();
 
+                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
                 dojo.place(this.format_block('jstpl_calypsocard', {
                     rank : rank,
                     suit : notif.args.player_suit,
@@ -532,7 +532,6 @@ function (dojo, declare) {
         },
 
         notif_scoreUpdate : function(notif) {
-            console.log(notif.args.scores);
             notif.args.scores.forEach(
                 score_info => (
                     this.scoreCtrl[score_info.player_id].toValue(score_info.total_score)

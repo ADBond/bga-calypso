@@ -259,7 +259,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
 .clp-inactive-renounce {
     background-color: $blank_space_colour;
 }
-.dealer-indicator-area {
+.clp-dealer-indicator-area {
     position: absolute;
     width: $renounce_size;
     height: $renounce_size;
