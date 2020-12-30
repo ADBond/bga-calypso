@@ -6,7 +6,7 @@ Run this, to make life easier:
 cp pre-commit .git/hooks/
 ```
 
-## Current branch TODOs
+## Current branch to-do list
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
@@ -20,7 +20,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * access old scoring tables
 * optional renounce flags
 
-## TODO list
+## To-do list
 
 Loosely split into core logic stuff and more nicities, but obviously some overlap
 
@@ -37,7 +37,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * number of rounds/games set via gameoptions
 * team settings via gameoptions?
 * stats
-* any other TODOs from code not covered by these/general tidying
+* anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
 
 ### Notifications

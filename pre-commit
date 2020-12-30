@@ -1,8 +1,8 @@
 #!/bin/bash
 # to be added as a pre-commit hook - compiles to-do items from repo
 # it is dumb, so won't ignore any gitignored files - don't litter them, or expect noise!
-grep TODO -r . > misc/todo_list
+grep TODO --exclude="pre-commit" --exclude-dir={.git,misc} -r . > misc/todo_list
 git add misc/todo_list
 echo "You have probably misspelled calypso some places - a likely source of errors!" > misc/warnings
-grep calyspo -r . >> misc/warnings
+grep calyspo --exclude="pre-commit" --exclude-dir={.git,misc} -r . >> misc/warnings
 git add misc/warnings
