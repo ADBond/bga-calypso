@@ -30,15 +30,15 @@
                 <!-- END renounceindicator -->
             </div>
             <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
-            <div class="clp-playercalypso" id="clp-playercalypso-{PLAYER_ID}">
+            <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
                 <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}">
                 <!-- BEGIN calypsocard -->
-                    <div class="clp-calypsocard clp-captured-card clp-calypsocard-{CARD_RANK} clp-card-space-{SUIT}"
+                    <div class="clp-calypsocard-space clp-captured-card clp-calypsocard-{CARD_RANK} clp-card-space-{SUIT}"
                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}">
                     </div>
                 <!-- END calypsocard -->
                 </div>
-                <div class="trickpile clp-captured-card trick-pile-empty" id="trickpile_{PLAYER_ID}"></div>
+                <div class="clp-trickpile clp-captured-card trick-pile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
             </div>
         </div>
     <!-- END playercalypso -->

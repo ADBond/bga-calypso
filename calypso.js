@@ -254,14 +254,13 @@ function (dojo, declare) {
             }), 'clp-player-card-play-area-card-' + player_id);
 
             if (player_id != this.player_id) {
-                // Some opponent played a card
-                // Move card from their area!
-                this.placeOnObject('clp-card-on-table-' + player_id, 'clp-playercalypso-' + player_id);
+                // Move card from their general area
+                this.placeOnObject('clp-card-on-table-' + player_id, 'clp-player-all-captured-cards-' + player_id);
             } else {
-                // You played a card. If it exists in your hand, move card from there and remove
-                // corresponding item
-                if ($('myhand_item_' + card_id)) {
-                    this.placeOnObject('clp-card-on-table-' + player_id, 'myhand_item_' + card_id);
+                // div id is generated automatically from stock when we create hand
+                // via this.addToStockById()
+                if ($('clp-myhand_item_' + card_id)) {
+                    this.placeOnObject('clp-card-on-table-' + player_id, 'clp-myhand_item_' + card_id);
                     this.playerHand.removeFromStockById(card_id);
                 }
             }
@@ -285,12 +284,12 @@ function (dojo, declare) {
                 }
             )
             dojo.addClass( card_el_id, 'clp-face-up-card' );
-            dojo.removeClass( card_el_id, 'clp-calypsocard' );
+            dojo.removeClass( card_el_id, 'clp-calypsocard-space' );
         },
 
         setTrickPile : function(player_id, value) {
             console.log("rruck pule is " + value + " for plataa " + player_id);
-            let cards_el_id = `trickpile_${player_id}`;
+            let cards_el_id = `clp-trickpile-${player_id}`;
             console.log(cards_el_id);
             // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
             if(value > 0){
@@ -559,7 +558,7 @@ function (dojo, declare) {
                 console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
                 if(send_to_id === 0){
                     // card is just going to trick pile
-                    anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'trickpile_' + winner_id);
+                    anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
                     this.setTrickPile(winner_id, 1);
                     // final_func = this.setTrickPile;
                     // final_args = [winner_id, true];

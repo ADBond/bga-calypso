@@ -223,7 +223,7 @@
   background-position: 0px -96px;
 }
 
-.clp-calypsocard {
+.clp-calypsocard-space {
   outline: solid 1px black;
   /* background-color: #AAA; */
   z-index: 0;
@@ -299,7 +299,7 @@
   transform: rotate(180deg);
 }
 
-.clp-playercalypso {
+.clp-player-all-captured-cards {
   /* display: inline-block;
   position: relative; */
   position: absolute;
@@ -317,7 +317,7 @@
   position: absolute;
 }
 
-.trickpile {
+.clp-trickpile {
   width: 72px;
   height: 96px;
   right: 0px;

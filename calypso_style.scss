@@ -203,7 +203,7 @@ $suit_height: 32px;
 //     background-image: url('img/cards.jpg');  
 // }
 // while _this_ is the placeholder layout
-.clp-calypsocard {
+.clp-calypsocard-space {
     outline: solid 1px black;
     /* background-color: #AAA; */
     z-index: 0;
@@ -291,7 +291,7 @@ $max_name_size: 200px;
     transform: rotate(180deg);
 }
 
-.clp-playercalypso {
+.clp-player-all-captured-cards {
     /* display: inline-block;
     position: relative; */
     // left: 20px;
@@ -308,7 +308,7 @@ $max_name_size: 200px;
     outline: solid 3px black;
     position: absolute;
 }
-.trickpile {
+.clp-trickpile {
     width: $card_width;
     height: $card_height;
     right: 0px;
