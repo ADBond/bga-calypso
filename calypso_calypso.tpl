@@ -9,7 +9,7 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -->
 
-<div id="clp-gameinfo" class="gameinfo"></div>
+<div id="clp-game-info" class="clp-game-info"></div>
 
 <div id="clp-table-area">
     <!-- BEGIN playerhand -->
@@ -45,9 +45,9 @@
 </div>
 
 
-<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
+<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
     <h3>{MY_HAND}</h3>
-    <div id="myhand">
+    <div id="clp-myhand">
     </div>
 </div>
 
@@ -56,7 +56,7 @@
 
 // Javascript HTML templates
 
-var jstpl_cardontable = '<div class="cardontable" id="cardontable_${player_id}" style="background-position:-${x}px -${y}px">\
+var jstpl_cardontable = '<div class="clp-card-on-table" id="clp-card-on-table-${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
 var jstpl_dealerindicator = '<div id="dealerbutton" class="dealerbutton"></div>';
 var jstpl_calypsocard = '<div class="calypsocard captured-card calypsocard-${rank} card-space-${suit}\

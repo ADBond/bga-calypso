@@ -62,7 +62,7 @@
   z-index: -1;
 }
 
-.gameinfo {
+.clp-game-info {
   position: absolute;
   font-weight: bold;
   width: 160px;
@@ -119,7 +119,7 @@
   height: 96px;
 }
 
-#myhand_wrap {
+#clp-myhand-wrap {
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -127,7 +127,7 @@
 }
 
 /*** cards on table ***/
-.cardontable {
+.clp-card-on-table {
   position: absolute;
   width: 72px;
   height: 96px;

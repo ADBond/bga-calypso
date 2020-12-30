@@ -77,7 +77,7 @@ function (dojo, declare) {
             this.addTooltipToClass( "active-renounce", _( "This player failed to follow this suit" ), "" );
 
             this.playerHand = new ebg.stock(); // new stock object for hand
-            this.playerHand.create( this, $('myhand'), this.cardwidth, this.cardheight );
+            this.playerHand.create( this, $('clp-myhand'), this.cardwidth, this.cardheight );
 
             this.playerHand.image_items_per_row = 13;
 
@@ -256,18 +256,18 @@ function (dojo, declare) {
             if (player_id != this.player_id) {
                 // Some opponent played a card
                 // Move card from their area!
-                this.placeOnObject('cardontable_' + player_id, 'playercalypso_' + player_id);
+                this.placeOnObject('clp-card-on-table-' + player_id, 'playercalypso_' + player_id);
             } else {
                 // You played a card. If it exists in your hand, move card from there and remove
                 // corresponding item
                 if ($('myhand_item_' + card_id)) {
-                    this.placeOnObject('cardontable_' + player_id, 'myhand_item_' + card_id);
+                    this.placeOnObject('clp-card-on-table-' + player_id, 'myhand_item_' + card_id);
                     this.playerHand.removeFromStockById(card_id);
                 }
             }
 
             // In any case: move it to its final destination
-            this.slideToObject('cardontable_' + player_id, 'clp-player-card-play-area-card-' + player_id).play();
+            this.slideToObject('clp-card-on-table-' + player_id, 'clp-player-card-play-area-card-' + player_id).play();
         },
 
         placeCardInCalypso : function(player_id, suit, rank, card_id) {
@@ -333,7 +333,7 @@ function (dojo, declare) {
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
-            $("clp-gameinfo").innerHTML =  dojo.string.substitute(
+            $("clp-game-info").innerHTML =  dojo.string.substitute(
                 '<div class="clp-gametitle">' + _("Calypso") + "</div>" + 
                     "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
                     "<br>" + _("Hand ${handnumber} of 4"),
@@ -533,7 +533,7 @@ function (dojo, declare) {
             // Move all cards on table to given table, then destroy them
             const winner_id = notif.args.winner_id;
             for ( let player_id in this.gamedatas.players) {
-                let anim = this.slideToObject('cardontable_' + player_id, 'clp-player-card-play-area-card-' + winner_id);
+                let anim = this.slideToObject('clp-card-on-table-' + player_id, 'clp-player-card-play-area-card-' + winner_id);
                 // dojo.connect(anim, 'onEnd', function(node) {
                 //     dojo.destroy(node);
                 // });
@@ -559,7 +559,7 @@ function (dojo, declare) {
                 console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
                 if(send_to_id === 0){
                     // card is just going to trick pile
-                    anim = this.slideToObject('cardontable_' + send_from_id, 'trickpile_' + winner_id);
+                    anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'trickpile_' + winner_id);
                     this.setTrickPile(winner_id, 1);
                     // final_func = this.setTrickPile;
                     // final_args = [winner_id, true];
@@ -571,7 +571,7 @@ function (dojo, declare) {
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
-                    anim = this.slideToObject('cardontable_' + send_from_id, `calypsocard_${calypso_player_id}_${rank}`);
+                    anim = this.slideToObject('clp-card-on-table-' + send_from_id, `calypsocard_${calypso_player_id}_${rank}`);
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];
                     this.placeCardInCalypso(send_to_id, suit, rank, card_id);

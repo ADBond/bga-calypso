@@ -83,7 +83,7 @@ $table_size: 750px;
 
 $info_size: 20px;
 $title_size: $info_size * 1.5;
-.gameinfo {
+.clp-game-info {
     position: absolute;
     font-weight: bold;
     width: 160px;
@@ -157,7 +157,7 @@ $top_bottom_offset: $card_area_height + 20px;
     height: $card_height;
 }
 
-#myhand_wrap {
+#clp-myhand-wrap {
     position: relative;
     // top: 30px;
     left: 50%;
@@ -167,7 +167,7 @@ $top_bottom_offset: $card_area_height + 20px;
 
 /*** cards on table ***/
 
-.cardontable {
+.clp-card-on-table {
     position: absolute;
     width: $card_width;
     height: $card_height;

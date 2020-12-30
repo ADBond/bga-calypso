@@ -41,7 +41,7 @@
 ./calypso.js:472:            // TODO: animate the dealer button moving here
 ./calypso.js:590:            // AB TODO: do we need to do anything here?
 ./calypso.js:605:            // TODO: play the card in the user interface.
-./calypso_calypso.tpl:48:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
+./calypso_calypso.tpl:48:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:219:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:238:    /* TODO: while I figure out what to do: */
 ./calypso_style.scss:324:// TODO: transform using mixins - see sass project page
