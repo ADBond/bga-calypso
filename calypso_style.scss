@@ -166,12 +166,15 @@ $top_bottom_offset: $card_area_height + 20px;
 }
 
 /*** cards on table ***/
+.clp-face-up-card {
+    border-radius: 5px;
+    width: $card_width;
+    height: $card_height;
+    background-image: url('img/cards.jpg');
+}
 
 .clp-card-on-table {
     position: absolute;
-    width: $card_width;
-    height: $card_height;
-    background-image: url('img/cards.jpg'); 
 }
 
 /*** calypsos ***/
@@ -181,13 +184,13 @@ $each_card_offset: 25px;
 $calypso_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
 @for $rank from 2 through $num_ranks+1 {
     $offset_value: ($rank - 2) * $each_card_offset;
-    .calypsocard-#{$rank} {
+    .clp-calypsocard-#{$rank} {
         left: ($rank - 2) * $each_card_offset;
     }
 }
 $suit_height: 32px;
 @for $suit from 1 through 4 {
-    .card-space-#{$suit} {
+    .clp-card-space-#{$suit} {
         background-position: 0px (-$card_height * ($suit - 1));
     }
     .renounce-#{$suit} {
@@ -196,19 +199,17 @@ $suit_height: 32px;
 }
 
 // This is for the actual cards that are won:
-.cardincalypso {
-    /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
-    /* transform: scale(0.6); */
-    background-image: url('img/cards.jpg');  
-}
+// .cardincalypso {
+//     background-image: url('img/cards.jpg');  
+// }
 // while _this_ is the placeholder layout
-.calypsocard {
+.clp-calypsocard {
     outline: solid 1px black;
     /* background-color: #AAA; */
     z-index: 0;
     background-image: url('img/cards_layout.jpg'); 
 }
-.captured-card {
+.clp-captured-card {
     position: absolute;
     width: $card_width;
     height: $card_height;

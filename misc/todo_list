@@ -1,5 +1,5 @@
-./calypso.css:241:/* TODO: rename - this bounds all of our public info */
-./calypso.css:249:  /* TODO: while I figure out what to do: */
+./calypso.css:239:/* TODO: rename - this bounds all of our public info */
+./calypso.css:247:  /* TODO: while I figure out what to do: */
 ./calypso.game.php:47:                         // AB TODO: may want to revisit once I've fiddled with gameoptions
 ./calypso.game.php:50:                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
 ./calypso.game.php:77:        // TODO: colours
@@ -42,7 +42,7 @@
 ./calypso.js:590:            // AB TODO: do we need to do anything here?
 ./calypso.js:605:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:48:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
-./calypso_style.scss:219:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:238:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:324:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:220:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:239:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:325:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:135:    // TODO: actually write this properly

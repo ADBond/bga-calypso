@@ -127,67 +127,71 @@
 }
 
 /*** cards on table ***/
-.clp-card-on-table {
-  position: absolute;
+.clp-face-up-card {
+  border-radius: 5px;
   width: 72px;
   height: 96px;
   background-image: url("img/cards.jpg");
 }
 
+.clp-card-on-table {
+  position: absolute;
+}
+
 /*** calypsos ***/
-.calypsocard-2 {
+.clp-calypsocard-2 {
   left: 0px;
 }
 
-.calypsocard-3 {
+.clp-calypsocard-3 {
   left: 25px;
 }
 
-.calypsocard-4 {
+.clp-calypsocard-4 {
   left: 50px;
 }
 
-.calypsocard-5 {
+.clp-calypsocard-5 {
   left: 75px;
 }
 
-.calypsocard-6 {
+.clp-calypsocard-6 {
   left: 100px;
 }
 
-.calypsocard-7 {
+.clp-calypsocard-7 {
   left: 125px;
 }
 
-.calypsocard-8 {
+.clp-calypsocard-8 {
   left: 150px;
 }
 
-.calypsocard-9 {
+.clp-calypsocard-9 {
   left: 175px;
 }
 
-.calypsocard-10 {
+.clp-calypsocard-10 {
   left: 200px;
 }
 
-.calypsocard-11 {
+.clp-calypsocard-11 {
   left: 225px;
 }
 
-.calypsocard-12 {
+.clp-calypsocard-12 {
   left: 250px;
 }
 
-.calypsocard-13 {
+.clp-calypsocard-13 {
   left: 275px;
 }
 
-.calypsocard-14 {
+.clp-calypsocard-14 {
   left: 300px;
 }
 
-.card-space-1 {
+.clp-card-space-1 {
   background-position: 0px 0px;
 }
 
@@ -195,7 +199,7 @@
   background-position: 0px 0px;
 }
 
-.card-space-2 {
+.clp-card-space-2 {
   background-position: 0px -96px;
 }
 
@@ -203,7 +207,7 @@
   background-position: 0px -32px;
 }
 
-.card-space-3 {
+.clp-card-space-3 {
   background-position: 0px -192px;
 }
 
@@ -211,7 +215,7 @@
   background-position: 0px -64px;
 }
 
-.card-space-4 {
+.clp-card-space-4 {
   background-position: 0px -288px;
 }
 
@@ -219,20 +223,14 @@
   background-position: 0px -96px;
 }
 
-.cardincalypso {
-  /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
-  /* transform: scale(0.6); */
-  background-image: url("img/cards.jpg");
-}
-
-.calypsocard {
+.clp-calypsocard {
   outline: solid 1px black;
   /* background-color: #AAA; */
   z-index: 0;
   background-image: url("img/cards_layout.jpg");
 }
 
-.captured-card {
+.clp-captured-card {
   position: absolute;
   width: 72px;
   height: 96px;

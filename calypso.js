@@ -284,8 +284,8 @@ function (dojo, declare) {
                     'z-index': `${+rank + 14}`,
                 }
             )
-            dojo.addClass( card_el_id, 'cardincalypso' );
-            dojo.removeClass( card_el_id, 'calypsocard' );
+            dojo.addClass( card_el_id, 'clp-face-up-card' );
+            dojo.removeClass( card_el_id, 'clp-calypsocard' );
         },
 
         setTrickPile : function(player_id, value) {

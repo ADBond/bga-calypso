@@ -33,12 +33,12 @@
             <div class="clp-playercalypso" id="clp-playercalypso-{PLAYER_ID}">
                 <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}">
                 <!-- BEGIN calypsocard -->
-                    <div class="calypsocard captured-card calypsocard-{CARD_RANK} card-space-{SUIT}"
+                    <div class="clp-calypsocard clp-captured-card clp-calypsocard-{CARD_RANK} clp-card-space-{SUIT}"
                             id="calypsocard_{PLAYER_ID}_{CARD_RANK}">
                     </div>
                 <!-- END calypsocard -->
                 </div>
-                <div class="trickpile captured-card trick-pile-empty" id="trickpile_{PLAYER_ID}"></div>
+                <div class="trickpile clp-captured-card trick-pile-empty" id="trickpile_{PLAYER_ID}"></div>
             </div>
         </div>
     <!-- END playercalypso -->
@@ -56,10 +56,10 @@
 
 // Javascript HTML templates
 
-var jstpl_cardontable = '<div class="clp-card-on-table" id="clp-card-on-table-${player_id}" style="background-position:-${x}px -${y}px">\
+var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
 var jstpl_dealerindicator = '<div id="dealerbutton" class="dealerbutton"></div>';
-var jstpl_calypsocard = '<div class="calypsocard captured-card calypsocard-${rank} card-space-${suit}\
+var jstpl_calypsocard = '<div class="clp-face-up-card clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}\
                              id="calypsocard_${player_id}_${rank}">\
                         </div>'
 
