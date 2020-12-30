@@ -111,9 +111,15 @@ class Calypso extends Table
         $this->cards->createCards( $cards, 'deck' );
 
         // set pre-initial dealers, ready for state functions to adjust to initial values
+        // choose some player randomly to be leader's partner
+        // this choice is convenient as they can be round 0 dealer, then deal will rotate in newRound
+        $pre_dealer = bga_rand(1, 4);
         $players = self::loadPlayersBasicInfos();
+        // TODO: switch if I can figure out why this isn't in the db
+        // this is index is how I set up table config
+        $index_to_use = 'player_no';// 'player_table_order';
         foreach ( $players as $player_id => $player ) {
-            if($player["player_no"] == 3){
+            if($player[$index_to_use] == $pre_dealer){
                 // they are dealer now, and the first dealer!
                 // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
                 self::setGameStateInitialValue( 'firstHandDealer', $player_id );
@@ -127,13 +133,14 @@ class Calypso extends Table
         //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
 
         // Set up personal trump suits
-        // player_no: the index of player in natural playing order (starting with 1)
-        // For now I will randomly choose one of the four for first player, then randomly one of the other two for next
-        // the rest will be determined from that.
-        // randomly pick a suit for the first player using what I assume(?) is the standard mapping
+        // Randomly choose suit for first player, then randomly one of the other two available for next
+        // the rest are then determined
         $first_player_suit = bga_rand( 1, 4 );
         // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
         $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
+        // choose first player randomly
+
+        // use partnership option + player_table_no to decide mapping to these
         $player_suits = array(
             1 => $first_player_suit,
             2 => $second_player_suit,
@@ -1051,7 +1058,6 @@ class Calypso extends Table
     }
 
     function stNextPlayer() {
-        // Active next player OR end the trick and go to the next trick OR end the hand
         if ($this->cards->countCardInLocation('cardsontable') == 4) {
             // This is the end of the trick
             $this->processCompletedTrick();
@@ -1059,7 +1065,7 @@ class Calypso extends Table
                 // End of the hand
                 $this->gamestate->nextState("endHand");
             } else {
-                // End of the trick
+                // More tricks to play, let's get to it!
                 $this->gamestate->nextState("nextTrick");
             }
         } else {
