@@ -14,7 +14,6 @@
 ./calypso.game.php:        // TODO: don't need these notifications long-term
 ./calypso.game.php:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
 ./calypso.game.php:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:        // TODO: woncards one place to change it!
 ./calypso.game.php:    // TODO: uniformise names
 ./calypso.game.php:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
 ./calypso.game.php:                // AB TODO: updated db when I've updated the model to allow the field
