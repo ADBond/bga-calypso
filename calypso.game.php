@@ -44,14 +44,11 @@ class Calypso extends Table
                          "trumpPlayed" => 26,
 
                          // what round are we on, and which hand in the round?
-                         // AB TODO: may want to revisit once I've fiddled with gameoptions
                          "roundNumber" => 31,
                          "handNumber" => 32,
-                         "totalRounds" => 33,  // TODO: this is a gameoption thing, may not live like this 
 
-                         // probably want some
-                         //    "my_first_game_variant" => 100,
-                         //    "my_second_game_variant" => 101,
+                         "totalRounds" => 100,
+
                           ) );
 
         $this->cards = self::getNew( "module.common.deck" );
@@ -97,8 +94,6 @@ class Calypso extends Table
 
         // pre-game value
         self::setGameStateInitialValue( 'roundNumber', 0 );
-        // set this manually right now
-        self::setGameStateInitialValue( 'totalRounds', 2 );
 
         // Create 4 identiical decks of cards
         // see material.inc.php to confirm the labelling
@@ -970,9 +965,10 @@ class Calypso extends Table
         $old_round_number = self::getGameStateValue( 'roundNumber' );
         $round_number = $old_round_number + 1;
         self::setGameStateValue( 'roundNumber', $round_number );
+        $total_rounds = self::getGameStateValue( 'totalRounds');
         self::notifyAllPlayers(
             "update",
-            clienttranslate('A new round of hands is starting - round ${round_number}'),  // TODO: number of rounds total
+            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
             array("round_number" => $round_number)
         );
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
@@ -994,7 +990,7 @@ class Calypso extends Table
         self::setGameStateValue( 'handNumber', $hand_number );
         self::notifyAllPlayers(
             "update",
-            clienttranslate('A new hand is starting - hand ${hand_number}/4 in the current round'),
+            clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round'),
             array("hand_number" => $hand_number)
         );
         // Deal 13 cards to each player and notify them of their hand
