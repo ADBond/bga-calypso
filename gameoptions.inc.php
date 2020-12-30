@@ -61,4 +61,22 @@ $game_options = array(
             ),
         ),
     ),
+    102 => array(
+        'name' => totranslate('Partnerships'),
+        'values' => array(
+            1 => array(
+                'name' => totranslate('By table order - 1st and 3rd against 2nd and 4th'),
+            ),
+            2 => array(
+                'name' => totranslate('By table order - 1st and 2nd against 3rd and 4th'),
+            ),
+            3 => array(
+                'name' => totranslate('By table order - 1st and 4th against 2nd and 3rd'),
+            ),
+            4 => array(
+                'name' => totranslate('Random'),
+                'description' => totranslate('Partnerships are allocated randomly')
+            ),
+        )
+    ),
 );

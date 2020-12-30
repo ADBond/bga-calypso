@@ -1,5 +1,3 @@
-./calypso.css:239:/* TODO: rename - this bounds all of our public info */
-./calypso.css:247:  /* TODO: while I figure out what to do: */
 ./calypso.game.php:75:        // TODO: colours
 ./calypso.game.php:118:                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
 ./calypso.game.php:173:        // TODO: check there is not any naughty secret info here? don't think so
