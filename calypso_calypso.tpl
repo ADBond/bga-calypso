@@ -19,7 +19,7 @@
         </div>
     <!-- END playerhand -->
     <!-- BEGIN playercalypso -->
-        <div class="calypso calypso_{DIR}">
+        <div class="clp-calypso clp-calypso-{DIR}">
             <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
                 {PLAYER_NAME} - a very long username
             </div>
@@ -53,9 +53,9 @@
 
 var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
-var jstpl_dealerindicator = '<div id="dealerbutton" class="dealerbutton"></div>';
+var jstpl_dealerindicator = '<div id="clp-dealerbutton" class="clp-dealerbutton"></div>';
 var jstpl_calypsocard = '<div class="clp-calypsocard-space clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}"\
-                             id="calypsocard_${player_id}_${rank}">\
+                             id="clp-calypsocard-${player_id}-${rank}">\
                         </div>'
 
 </script>

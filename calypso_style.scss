@@ -230,7 +230,7 @@ $renounce_padding: 4px;
 
 $personal_area_width: $calypso_zone_pure_width + $calypso_zone_side_padding;
 $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 2*$renounce_padding;
-.calypso {
+.clp-calypso {
     position: absolute;
     text-align: center;
     width: $personal_area_width;
@@ -268,7 +268,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     // display: inline-block;
     margin: $renounce_padding;
 }
-#dealerbutton {
+#clp-dealerbutton {
     width: $renounce_size;
     height: $renounce_size;
     background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
@@ -330,25 +330,25 @@ $max_name_size: 200px;
 // TODO: transform using mixins - see sass project page
 $personal_area_side_offset: 20px;
 $personal_area_bottom_offset: 20px;
-.calypso_N {
+.clp-calypso-N {
     position: absolute;
     right: $personal_area_side_offset;
     top: $personal_area_bottom_offset;
     transform: rotate(180deg);
 }
-.calypso_E {
+.clp-calypso-E {
     position: absolute;
     right: $personal_area_bottom_offset - $personal_area_width - 2*$calypso_zone_side_padding;
     bottom: $personal_area_side_offset;
     transform-origin: bottom left;
     transform: rotate(270deg);
 }
-.calypso_S {
+.clp-calypso-S {
     position: absolute;
     left: $personal_area_side_offset;
     bottom: $personal_area_bottom_offset;
 }
-.calypso_W {
+.clp-calypso-W {
     position: absolute;
     left: $personal_area_bottom_offset;
     top: $personal_area_side_offset - $personal_area_height - 2*$calypso_zone_side_padding;

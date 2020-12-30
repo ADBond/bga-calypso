@@ -37,11 +37,11 @@
 ./calypso.js:101:            // TODO: center hand in the div if wanted:
 ./calypso.js:240:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
 ./calypso.js:292:            // TODO: this should stay in css - use class manipulation
-./calypso.js:307:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:484:            // TODO: animate the dealer button moving here
-./calypso.js:522:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:601:            // AB TODO: do we need to do anything here?
-./calypso.js:616:            // TODO: play the card in the user interface.
+./calypso.js:306:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:482:            // TODO: animate the dealer button moving here
+./calypso.js:520:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:605:            // AB TODO: do we need to do anything here?
+./calypso.js:620:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:43:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:221:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:240:    /* TODO: while I figure out what to do: */

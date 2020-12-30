@@ -71,7 +71,7 @@ function (dojo, declare) {
             }
             
             // tooltips ahoy:
-            this.addTooltipToClass( "dealerbutton", _( "This player is the dealer for this hand" ), "" );
+            this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
             this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
             this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
             // TODO: specialise to suits?
@@ -286,7 +286,7 @@ function (dojo, declare) {
             const x = this.cardwidth * (rank - 2);
             const y = this.cardheight * (suit - 1);
 
-            const card_el_id = `calypsocard_${player_id}_${rank}`;
+            const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
             console.log(card_el_id);
 
             // TODO: this should stay in css - use class manipulation
@@ -301,7 +301,6 @@ function (dojo, declare) {
         },
 
         setTrickPile : function(player_id, value) {
-            console.log("rruck pule is " + value + " for plataa " + player_id);
             const cards_el_id = `clp-trickpile-${player_id}`;
             console.log(cards_el_id);
             // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
@@ -339,7 +338,7 @@ function (dojo, declare) {
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'clp-dealer-' + new_dealer_id;
 
-            this.slideToObject('dealerbutton', new_dealer_area_id).play();
+            this.slideToObject('clp-dealerbutton', new_dealer_area_id).play();
         },
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
@@ -371,9 +370,8 @@ function (dojo, declare) {
         */
         onPlayerHandSelectionChanged : function() {
             const items = this.playerHand.getSelectedItems();
-
+            const action = 'playCard';
             if (items.length > 0) {
-                let action = 'playCard';
                 if (this.checkAction(action, true)) {
                     // Can play a card
                     let card_id = items[0].id;
@@ -511,7 +509,7 @@ function (dojo, declare) {
             // for each card in calypso, get rid of it, but not too much
             const player_id = notif.args.player_id;
             for (let rank = 2; rank <= 14; rank++) {
-                let card_el_id = `calypsocard_${player_id}_${rank}`;
+                let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
 
                 let anim = this.slideToObject(card_el_id, `overall_player_board_${player_id}` );
                 dojo.connect(anim, 'onEnd', function(node) {
@@ -544,7 +542,10 @@ function (dojo, declare) {
             // Move all cards on table to given table, then destroy them
             const winner_id = notif.args.winner_id;
             for ( let player_id in this.gamedatas.players) {
-                let anim = this.slideToObject('clp-card-on-table-' + player_id, 'clp-player-card-play-area-card-' + winner_id);
+                let anim = this.slideToObject(
+                    'clp-card-on-table-' + player_id,
+                    'clp-player-card-play-area-card-' + winner_id
+                );
                 // dojo.connect(anim, 'onEnd', function(node) {
                 //     dojo.destroy(node);
                 // });
@@ -582,7 +583,10 @@ function (dojo, declare) {
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
-                    anim = this.slideToObject('clp-card-on-table-' + send_from_id, `calypsocard_${calypso_player_id}_${rank}`);
+                    anim = this.slideToObject(
+                        'clp-card-on-table-' + send_from_id,
+                        `clp-calypsocard-${calypso_player_id}-${rank}`
+                    );
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];
                     this.placeCardInCalypso(send_to_id, suit, rank, card_id);
