@@ -131,13 +131,9 @@ function (dojo, declare) {
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
 
-            // revoke flags
-            console.log("revoke flags");
             for (i in this.gamedatas.renounce_flags) {
                 let info = this.gamedatas.renounce_flags[i];
-                console.log("revoke info");
-                console.log(info);
-                this.setRevokeFlag(info.player_id, info.suit);
+                this.setRenounceFlag(info.player_id, info.suit);
             }
 
             this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);
@@ -306,14 +302,14 @@ function (dojo, declare) {
             }
         },
 
-        setRevokeFlag : function(player_id, suit){
+        setRenounceFlag : function(player_id, suit){
             let renounce_el_id = `renounce_${player_id}_${suit}`;
             console.log("this is happening: " + renounce_el_id);
             dojo.addClass( renounce_el_id, 'active-renounce' );
             dojo.removeClass( renounce_el_id, 'inactive-renounce' );
         },
 
-        clearRevokeFlags: function(players, suits){
+        clearRenounceFlags: function(players, suits){
             console.log("clear me");
             for (i in players) {
                 let player = players[i];
@@ -444,7 +440,7 @@ function (dojo, declare) {
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe('renounceFlag', this, "notif_renounceFlag");
-            dojo.subscribe('clearRevokeFlags', this, "notif_clearRevokeFlags");
+            dojo.subscribe('clearRenounceFlags', this, "notif_clearRenounceFlags");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
@@ -480,10 +476,10 @@ function (dojo, declare) {
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
         },
 
-        notif_clearRevokeFlags: function(notif) {
+        notif_clearRenounceFlags: function(notif) {
             console.log("clearing houd");
             console.log(notif);
-            this.clearRevokeFlags(notif.args.players, notif.args.suits);
+            this.clearRenounceFlags(notif.args.players, notif.args.suits);
         },
 
         notif_playCard : function(notif) {
@@ -491,7 +487,7 @@ function (dojo, declare) {
         },
 
         notif_renounceFlag: function(notif) {
-            this.setRevokeFlag(notif.args.player_id, notif.args.suit);
+            this.setRenounceFlag(notif.args.player_id, notif.args.suit);
         },
 
         notif_trickWin : function(notif) {

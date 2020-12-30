@@ -35,12 +35,12 @@
 ./calypso.js:76:            // TODO: specialise to suits?
 ./calypso.js:94:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:100:            // TODO: center hand in the div if wanted:
-./calypso.js:243:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
-./calypso.js:284:            // TODO: this should stay in css - use class manipulation
-./calypso.js:299:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:476:            // TODO: animate the dealer button moving here
-./calypso.js:594:            // AB TODO: do we need to do anything here?
-./calypso.js:609:            // TODO: play the card in the user interface.
+./calypso.js:239:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
+./calypso.js:280:            // TODO: this should stay in css - use class manipulation
+./calypso.js:295:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:472:            // TODO: animate the dealer button moving here
+./calypso.js:590:            // AB TODO: do we need to do anything here?
+./calypso.js:605:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:49:<div id="myhand_wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:219:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:238:    /* TODO: while I figure out what to do: */

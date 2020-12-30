@@ -76,7 +76,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * want to think about how to nicely signify teams - see e.g. Phat for nice approach
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
-* ~~Revoke indicators~~
+* ~~Renounce indicators~~
   * as a gameoption setting?
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 * Order hand with personal trumps separated?

@@ -339,13 +339,13 @@ class Calypso extends Table
         return $next_first_dealer;
     }
 
-    function setRevokeFlag($player_id, $suit){
+    function setRenounceFlag($player_id, $suit){
         $sql = "INSERT INTO renounce_flags (player_id, suit) VALUES (".$player_id.",".$suit.");";
         self::DbQuery(
             $sql
         );
     }
-    function clearRevokeFlags(){
+    function clearRenounceFlags(){
         $sql = "DELETE FROM renounce_flags;";
         self::DbQuery(
             $sql
@@ -878,7 +878,7 @@ class Calypso extends Table
                     }
                 }
             } else { // they don't follow suit
-                self::setRevokeFlag($player_id, $current_trick_suit);
+                self::setRenounceFlag($player_id, $current_trick_suit);
                 self::notifyAllPlayers(
                     'renounceFlag',
                     '',
@@ -1013,10 +1013,10 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
-        self::clearRevokeFlags();
+        self::clearRenounceFlags();
         // TODO: dealHand notif should sort out revoke flags on client side
         self::notifyAllPlayers(
-            'clearRevokeFlags',
+            'clearRenounceFlags',
             "",
             array (
                 "players" => $player_ids,
