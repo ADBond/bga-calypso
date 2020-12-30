@@ -51,11 +51,7 @@
     background-image: url("../img/layout/rounded_b.png");
 } */
 /** Table layout **/
-#playarea {
-  position: relative;
-}
-
-#tablearea {
+#clp-table-area {
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -76,45 +72,45 @@
   background-color: rgba(136, 0, 221, 0.5);
 }
 
-.clp_gametitle {
+.clp-gametitle {
   font-size: 30px;
 }
 
-.clp_player-card-play-area {
+.clp-player-card-play-area {
   outline: ridge 3px #AAA;
   width: 92px;
   height: 116px;
 }
 
-.clp_player-card-play-area_N {
+.clp-player-card-play-area-N {
   position: absolute;
   top: 30%;
   left: 50%;
   transform: translate(-50%);
 }
 
-.clp_player-card-play-area_S {
+.clp-player-card-play-area-S {
   position: absolute;
   bottom: 30%;
   left: 50%;
   transform: translate(-50%);
 }
 
-.clp_player-card-play-area_W {
+.clp-player-card-play-area-W {
   position: absolute;
   left: 30%;
   top: 50%;
   transform: translate(0, -50%);
 }
 
-.clp_player-card-play-area_E {
+.clp-player-card-play-area-E {
   position: absolute;
   right: 30%;
   top: 50%;
   transform: translate(0, -50%);
 }
 
-.clp_player-card-play-area-card {
+.clp-player-card-play-area-card {
   position: absolute;
   top: 50%;
   left: 50%;

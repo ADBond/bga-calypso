@@ -251,7 +251,7 @@ function (dojo, declare) {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
                 player_id : player_id
-            }), 'clp_player-card-play-area-card_' + player_id);
+            }), 'clp-player-card-play-area-card-' + player_id);
 
             if (player_id != this.player_id) {
                 // Some opponent played a card
@@ -267,7 +267,7 @@ function (dojo, declare) {
             }
 
             // In any case: move it to its final destination
-            this.slideToObject('cardontable_' + player_id, 'clp_player-card-play-area-card_' + player_id).play();
+            this.slideToObject('cardontable_' + player_id, 'clp-player-card-play-area-card-' + player_id).play();
         },
 
         placeCardInCalypso : function(player_id, suit, rank, card_id) {
@@ -334,7 +334,7 @@ function (dojo, declare) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
             $("clp-gameinfo").innerHTML =  dojo.string.substitute(
-                '<div class="clp_gametitle">' + _("Calypso") + "</div>" + 
+                '<div class="clp-gametitle">' + _("Calypso") + "</div>" + 
                     "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
                     "<br>" + _("Hand ${handnumber} of 4"),
                 {
@@ -533,7 +533,7 @@ function (dojo, declare) {
             // Move all cards on table to given table, then destroy them
             const winner_id = notif.args.winner_id;
             for ( let player_id in this.gamedatas.players) {
-                let anim = this.slideToObject('cardontable_' + player_id, 'clp_player-card-play-area-card_' + winner_id);
+                let anim = this.slideToObject('cardontable_' + player_id, 'clp-player-card-play-area-card-' + winner_id);
                 // dojo.connect(anim, 'onEnd', function(node) {
                 //     dojo.destroy(node);
                 // });
