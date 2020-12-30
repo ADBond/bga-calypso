@@ -41,7 +41,6 @@
         $directions = $this->game->getPlayerDirections();
 
         $this->page->begin_block( $template, "renounceindicator" ); // Nested block must be declared first
-        $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
         $this->page->begin_block( $template, "playerhand" );
         $this->page->begin_block( $template, "playercalypso" );
         foreach ( $players as $player_id => $info ) {
@@ -54,17 +53,6 @@
                     array(
                         "PLAYER_ID" => $player_id,
                         "CARD_SUIT" => $suit,
-                    )
-                );
-            }
-            for ($rank = 2; $rank <= 14; $rank ++) {
-                //  2, 3, 4, ... K, A
-                $this->page->insert_block(
-                    "calypsocard",
-                    array(
-                        "PLAYER_ID" => $player_id,
-                        "CARD_RANK" => $rank,
-                        "SUIT" => $trump_suit,
                     )
                 );
             }

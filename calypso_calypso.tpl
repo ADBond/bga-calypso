@@ -23,7 +23,7 @@
             <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
                 {PLAYER_NAME} - a very long username
             </div>
-            <div class="clp-renounce-indicators" id="renounce_{PLAYER_ID}">
+            <div class="clp-renounce-indicators">
                 <!-- BEGIN renounceindicator -->
                 <div class="clp-renounce-indicator clp-inactive-renounce clp-renounce-{CARD_SUIT}" id="clp-renounce-{PLAYER_ID}-{CARD_SUIT}">
                 </div>
@@ -32,11 +32,6 @@
             <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
             <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
                 <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}">
-                <!-- BEGIN calypsocard -->
-                    <div class="clp-calypsocard-space clp-captured-card clp-calypsocard-{CARD_RANK} clp-card-space-{SUIT}"
-                            id="calypsocard_{PLAYER_ID}_{CARD_RANK}">
-                    </div>
-                <!-- END calypsocard -->
                 </div>
                 <div class="clp-trickpile clp-captured-card clp-trickpile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
             </div>
@@ -59,7 +54,7 @@
 var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}" style="background-position:-${x}px -${y}px">\
                         </div>';
 var jstpl_dealerindicator = '<div id="dealerbutton" class="dealerbutton"></div>';
-var jstpl_calypsocard = '<div class="clp-face-up-card clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}\
+var jstpl_calypsocard = '<div class="clp-calypsocard-space clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}"\
                              id="calypsocard_${player_id}_${rank}">\
                         </div>'
 

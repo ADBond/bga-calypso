@@ -67,6 +67,7 @@ function (dojo, declare) {
                     }), dealer_area_id);
                 }
                 this.setTrickPile(player_id, player["trick_pile"]);
+                this.setupCalypsoArea(player_id, player_trump);
             }
             
             // tooltips ahoy:
@@ -242,6 +243,18 @@ function (dojo, declare) {
         },
         getCardUniqueId : function(suit, rank, deck) {
             return (deck - 1) * 52 + (suit - 1) * 13 + (rank - 2);
+        },
+
+        setupCalypsoArea : function(player_id, suit) {
+            for (let rank = 2; rank <= 14; rank++) {
+                // let card_el_id = `calypsocard_${player_id}_${rank}`;
+                dojo.place(this.format_block('jstpl_calypsocard', {
+                    rank : rank,
+                    suit : suit,
+                    player_id : player_id
+                }), 'clp-calypsoholder-' + player_id);
+                // dojo.removeClass(card_el_id, "clp-face-up-card");
+            }
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
