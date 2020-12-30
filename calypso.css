@@ -51,11 +51,7 @@
     background-image: url("../img/layout/rounded_b.png");
 } */
 /** Table layout **/
-#playarea {
-  position: relative;
-}
-
-#tablearea {
+#clp-table-area {
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -66,7 +62,7 @@
   z-index: -1;
 }
 
-.gameinfo {
+.clp-game-info {
   position: absolute;
   font-weight: bold;
   width: 160px;
@@ -76,45 +72,45 @@
   background-color: rgba(136, 0, 221, 0.5);
 }
 
-.clp_gametitle {
+.clp-gametitle {
   font-size: 30px;
 }
 
-.playertable {
+.clp-player-card-play-area {
   outline: ridge 3px #AAA;
   width: 92px;
   height: 116px;
 }
 
-.playertable_N {
+.clp-player-card-play-area-N {
   position: absolute;
   top: 30%;
   left: 50%;
   transform: translate(-50%);
 }
 
-.playertable_S {
+.clp-player-card-play-area-S {
   position: absolute;
   bottom: 30%;
   left: 50%;
   transform: translate(-50%);
 }
 
-.playertable_W {
+.clp-player-card-play-area-W {
   position: absolute;
   left: 30%;
   top: 50%;
   transform: translate(0, -50%);
 }
 
-.playertable_E {
+.clp-player-card-play-area-E {
   position: absolute;
   right: 30%;
   top: 50%;
   transform: translate(0, -50%);
 }
 
-.playertablecard {
+.clp-player-card-play-area-card {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -123,7 +119,7 @@
   height: 96px;
 }
 
-#myhand_wrap {
+#clp-myhand-wrap {
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -131,119 +127,117 @@
 }
 
 /*** cards on table ***/
-.cardontable {
-  position: absolute;
+.clp-face-up-card {
+  border-radius: 5px;
   width: 72px;
   height: 96px;
   background-image: url("img/cards.jpg");
 }
 
+.clp-card-on-table {
+  position: absolute;
+}
+
 /*** calypsos ***/
-.calypsocard-2 {
+.clp-calypsocard-2 {
   left: 0px;
 }
 
-.calypsocard-3 {
+.clp-calypsocard-3 {
   left: 25px;
 }
 
-.calypsocard-4 {
+.clp-calypsocard-4 {
   left: 50px;
 }
 
-.calypsocard-5 {
+.clp-calypsocard-5 {
   left: 75px;
 }
 
-.calypsocard-6 {
+.clp-calypsocard-6 {
   left: 100px;
 }
 
-.calypsocard-7 {
+.clp-calypsocard-7 {
   left: 125px;
 }
 
-.calypsocard-8 {
+.clp-calypsocard-8 {
   left: 150px;
 }
 
-.calypsocard-9 {
+.clp-calypsocard-9 {
   left: 175px;
 }
 
-.calypsocard-10 {
+.clp-calypsocard-10 {
   left: 200px;
 }
 
-.calypsocard-11 {
+.clp-calypsocard-11 {
   left: 225px;
 }
 
-.calypsocard-12 {
+.clp-calypsocard-12 {
   left: 250px;
 }
 
-.calypsocard-13 {
+.clp-calypsocard-13 {
   left: 275px;
 }
 
-.calypsocard-14 {
+.clp-calypsocard-14 {
   left: 300px;
 }
 
-.card-space-1 {
+.clp-card-space-1 {
   background-position: 0px 0px;
 }
 
-.revoke-1 {
+.clp-renounce-1 {
   background-position: 0px 0px;
 }
 
-.card-space-2 {
+.clp-card-space-2 {
   background-position: 0px -96px;
 }
 
-.revoke-2 {
+.clp-renounce-2 {
   background-position: 0px -32px;
 }
 
-.card-space-3 {
+.clp-card-space-3 {
   background-position: 0px -192px;
 }
 
-.revoke-3 {
+.clp-renounce-3 {
   background-position: 0px -64px;
 }
 
-.card-space-4 {
+.clp-card-space-4 {
   background-position: 0px -288px;
 }
 
-.revoke-4 {
+.clp-renounce-4 {
   background-position: 0px -96px;
 }
 
-.cardincalypso {
-  /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
-  /* transform: scale(0.6); */
-  background-image: url("img/cards.jpg");
-}
-
-.calypsocard {
+.clp-calypsocard-space {
   outline: solid 1px black;
   /* background-color: #AAA; */
   z-index: 0;
   background-image: url("img/cards_layout.jpg");
 }
 
-.captured-card {
+.clp-captured-card {
   position: absolute;
   width: 72px;
   height: 96px;
 }
 
 /* TODO: rename - this bounds all of our public info */
-.calypso {
+.clp-player-personal-area {
   position: absolute;
   text-align: center;
   width: 494px;
@@ -254,26 +248,26 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
-.revoke-indicators {
+.clp-renounce-indicators {
   position: absolute;
 }
 
-.revoke-indicator {
+.clp-renounce-indicator {
   width: 32px;
   height: 32px;
   display: inline-block;
   margin: 4px;
 }
 
-.active-revoke {
+.clp-active-renounce {
   background-image: url("img/card_suits.jpg");
 }
 
-.inactive-revoke {
+.clp-inactive-renounce {
   background-color: #999;
 }
 
-.dealer-indicator-area {
+.clp-dealer-indicator-area {
   position: absolute;
   width: 32px;
   height: 32px;
@@ -281,7 +275,7 @@
   margin: 4px;
 }
 
-#dealerbutton {
+#clp-dealerbutton {
   width: 32px;
   height: 32px;
   background-image: url("img/dealer.png");
@@ -301,51 +295,49 @@
   right: 40px;
 }
 
-.clp-playername_N {
+.clp-playername-N {
   transform: rotate(180deg);
 }
 
-.playercalypso {
+.clp-player-all-captured-cards {
   /* display: inline-block;
   position: relative; */
   position: absolute;
   /* margin-top: 5px; */
   width: 484px;
   height: 96px;
-  /* leaving room for revokers */
+  /* leaving room for renounces */
   bottom: 20px;
 }
 
-.calypsoholder {
+.clp-calypsoholder {
   width: 372px;
   height: 96px;
   outline: solid 3px black;
   position: absolute;
 }
 
-.wontricks {
+.clp-trickpile {
   width: 72px;
   height: 96px;
   right: 0px;
   position: absolute;
-}
-
-.trick-pile-empty {
   background-color: #999;
 }
 
-.trick-pile-full {
+.clp-trickpile-full {
+  border-radius: 5px;
   background-image: url("img/backs.png");
 }
 
-.calypso_N {
+.clp-player-personal-area-N {
   position: absolute;
   right: 20px;
   top: 20px;
   transform: rotate(180deg);
 }
 
-.calypso_E {
+.clp-player-personal-area-E {
   position: absolute;
   right: -494px;
   bottom: 20px;
@@ -353,13 +345,13 @@
   transform: rotate(270deg);
 }
 
-.calypso_S {
+.clp-player-personal-area-S {
   position: absolute;
   left: 20px;
   bottom: 20px;
 }
 
-.calypso_W {
+.clp-player-personal-area-W {
   position: absolute;
   left: 20px;
   top: -156px;

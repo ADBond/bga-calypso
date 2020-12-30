@@ -63,14 +63,14 @@ $num_ranks: 13;
 
 /** Table layout **/
 
-#playarea {
-    position: relative;
-    // width: 1500px;
-    // height: 1000px;
-}
+// #playarea {
+//     position: relative;
+//     // width: 1500px;
+//     // height: 1000px;
+// }
 
 $table_size: 750px;
-#tablearea {
+#clp-table-area {
     position: relative;
     left: 50%;
     transform: translate(-50%);
@@ -83,7 +83,7 @@ $table_size: 750px;
 
 $info_size: 20px;
 $title_size: $info_size * 1.5;
-.gameinfo {
+.clp-game-info {
     position: absolute;
     font-weight: bold;
     width: 160px;
@@ -92,7 +92,7 @@ $title_size: $info_size * 1.5;
     text-align: center;
     background-color: rgba($calypso_colour, 0.5);
 }
-.clp_gametitle {
+.clp-gametitle {
     font-size: $title_size;
 }
 
@@ -100,7 +100,7 @@ $card_area_buffer: 20px;
 $card_area_width: $card_width + $card_area_buffer;
 $card_area_height: $card_height + $card_area_buffer;
 $card_area_outline_col: #AAA;
-.playertable {
+.clp-player-card-play-area {
     // position: absolute;
     // text-align: center;
     outline: ridge 3px $card_area_outline_col;
@@ -110,7 +110,7 @@ $card_area_outline_col: #AAA;
 
 $left_right_offset: $card_area_width + 20px;
 $top_bottom_offset: $card_area_height + 20px;
-.playertable_N {
+.clp-player-card-play-area-N {
     // left: $table_size/2 - $card_area_width/2;
     position: absolute;
     top: 30%;
@@ -119,7 +119,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // margin: 0 auto;
     // top: $table_size/2 - $card_area_height/2 - $top_bottom_offset;
 }
-.playertable_S {
+.clp-player-card-play-area-S {
     position: absolute;
     bottom: 30%;
     left: 50%;
@@ -128,7 +128,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // left: $table_size/2 - $card_area_width/2;
     // top: $table_size/2 - $card_area_height/2 + $top_bottom_offset;
 }
-.playertable_W {
+.clp-player-card-play-area-W {
     position: absolute;
     left: 30%;
     top: 50%;
@@ -136,7 +136,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // left: $table_size/2 - $card_area_width/2 - $left_right_offset;
     // top: $table_size/2 - $card_area_height/2;
 }
-.playertable_E {
+.clp-player-card-play-area-E {
     position: absolute;
     right: 30%;
     top: 50%;
@@ -145,7 +145,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // top: $table_size/2 - $card_area_height/2;
 }
 
-.playertablecard {
+.clp-player-card-play-area-card {
     // display: inline-block;
     // position: relative;
     // margin-top: ($card_area_height - $card_height)/2;
@@ -157,7 +157,7 @@ $top_bottom_offset: $card_area_height + 20px;
     height: $card_height;
 }
 
-#myhand_wrap {
+#clp-myhand-wrap {
     position: relative;
     // top: 30px;
     left: 50%;
@@ -165,13 +165,17 @@ $top_bottom_offset: $card_area_height + 20px;
     width: 70%;
 }
 
+$card_rounding: 5px;
 /*** cards on table ***/
-
-.cardontable {
-    position: absolute;
+.clp-face-up-card {
+    border-radius: $card_rounding;
     width: $card_width;
     height: $card_height;
-    background-image: url('img/cards.jpg'); 
+    background-image: url('img/cards.jpg');
+}
+
+.clp-card-on-table {
+    position: absolute;
 }
 
 /*** calypsos ***/
@@ -181,34 +185,32 @@ $each_card_offset: 25px;
 $calypso_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
 @for $rank from 2 through $num_ranks+1 {
     $offset_value: ($rank - 2) * $each_card_offset;
-    .calypsocard-#{$rank} {
+    .clp-calypsocard-#{$rank} {
         left: ($rank - 2) * $each_card_offset;
     }
 }
 $suit_height: 32px;
 @for $suit from 1 through 4 {
-    .card-space-#{$suit} {
+    .clp-card-space-#{$suit} {
         background-position: 0px (-$card_height * ($suit - 1));
     }
-    .revoke-#{$suit} {
+    .clp-renounce-#{$suit} {
         background-position: 0px (-$suit_height * ($suit - 1));
     }
 }
 
 // This is for the actual cards that are won:
-.cardincalypso {
-    /* Probably best not to scale, but maybe handy if things get cluttered. rotate probably useful though! */
-    /* transform: scale(0.6); */
-    background-image: url('img/cards.jpg');  
-}
+// .cardincalypso {
+//     background-image: url('img/cards.jpg');  
+// }
 // while _this_ is the placeholder layout
-.calypsocard {
+.clp-calypsocard-space {
     outline: solid 1px black;
     /* background-color: #AAA; */
     z-index: 0;
     background-image: url('img/cards_layout.jpg'); 
 }
-.captured-card {
+.clp-captured-card {
     position: absolute;
     width: $card_width;
     height: $card_height;
@@ -223,12 +225,12 @@ $calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_
 $calypso_zone_side_padding: 10px;
 $calypso_bottom_buffer: 20px;
 
-$revoke_size: 32px;
-$revoke_padding: 4px;
+$renounce_size: 32px;
+$renounce_padding: 4px;
 
 $personal_area_width: $calypso_zone_pure_width + $calypso_zone_side_padding;
-$personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*$revoke_padding;
-.calypso {
+$personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 2*$renounce_padding;
+.clp-player-personal-area {
     position: absolute;
     text-align: center;
     width: $personal_area_width;
@@ -239,36 +241,36 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*
     background: rgba(255, 255, 255, 0.75);
 }
 
-.revoke-indicators {
+.clp-renounce-indicators {
     // left: 20px;
     position: absolute;
 }
-.revoke-indicator {
-    width: $revoke_size;
-    height: $revoke_size;
+.clp-renounce-indicator {
+    width: $renounce_size;
+    height: $renounce_size;
     display: inline-block;
-    margin: $revoke_padding;
+    margin: $renounce_padding;
 }
 
-.active-revoke {
+.clp-active-renounce {
     // background-color: #FF0000;
     background-image: url('img/card_suits.jpg');
 }
-.inactive-revoke {
+.clp-inactive-renounce {
     background-color: $blank_space_colour;
 }
-.dealer-indicator-area {
+.clp-dealer-indicator-area {
     position: absolute;
-    width: $revoke_size;
-    height: $revoke_size;
-    left: 4*($revoke_size + 2*$revoke_padding) + 40px;
+    width: $renounce_size;
+    height: $renounce_size;
+    left: 4*($renounce_size + 2*$renounce_padding) + 40px;
     // background-color: $blank_space_colour;
     // display: inline-block;
-    margin: $revoke_padding;
+    margin: $renounce_padding;
 }
-#dealerbutton {
-    width: $revoke_size;
-    height: $revoke_size;
+#clp-dealerbutton {
+    width: $renounce_size;
+    height: $renounce_size;
     background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
     z-index: 1;
 }
@@ -276,7 +278,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*
 $max_name_size: 200px;
 .clp-playername {
     font-weight: bold;
-    height: $revoke_size;
+    height: $renounce_size;
     width: $max_name_size;
     white-space: nowrap;
     overflow: hidden;
@@ -286,11 +288,11 @@ $max_name_size: 200px;
     right: 40px;
 }
 // Make it so that the top player's name is right-way up - readability over symmetry
-.clp-playername_N {
+.clp-playername-N {
     transform: rotate(180deg);
 }
 
-.playercalypso {
+.clp-player-all-captured-cards {
     /* display: inline-block;
     position: relative; */
     // left: 20px;
@@ -298,51 +300,55 @@ $max_name_size: 200px;
     /* margin-top: 5px; */
     width: $calypso_zone_pure_width;
     height: $card_height;
-    /* leaving room for revokers */
+    /* leaving room for renounces */
     bottom: $calypso_bottom_buffer;
 }
-.calypsoholder {
+.clp-calypsoholder {
     width: $calypso_pure_width;
     height: $card_height;
     outline: solid 3px black;
     position: absolute;
 }
-.wontricks {
+.clp-trickpile {
     width: $card_width;
     height: $card_height;
     right: 0px;
     position: absolute;
-}
-.trick-pile-empty {
     background-color: $blank_space_colour;
+    // border: solid 3px black;
 }
-.trick-pile-full {
+// .clp-trickpile-empty {
+    
+// }
+// TODO: might want to do this as a child div, to separate styles better...
+.clp-trickpile-full {
     // background-color: #070;
+    border-radius: $card_rounding;
     background-image: url('img/backs.png'); 
 }
 
 // TODO: transform using mixins - see sass project page
 $personal_area_side_offset: 20px;
 $personal_area_bottom_offset: 20px;
-.calypso_N {
+.clp-player-personal-area-N {
     position: absolute;
     right: $personal_area_side_offset;
     top: $personal_area_bottom_offset;
     transform: rotate(180deg);
 }
-.calypso_E {
+.clp-player-personal-area-E {
     position: absolute;
     right: $personal_area_bottom_offset - $personal_area_width - 2*$calypso_zone_side_padding;
     bottom: $personal_area_side_offset;
     transform-origin: bottom left;
     transform: rotate(270deg);
 }
-.calypso_S {
+.clp-player-personal-area-S {
     position: absolute;
     left: $personal_area_side_offset;
     bottom: $personal_area_bottom_offset;
 }
-.calypso_W {
+.clp-player-personal-area-W {
     position: absolute;
     left: $personal_area_bottom_offset;
     top: $personal_area_side_offset - $personal_area_height - 2*$calypso_zone_side_padding;

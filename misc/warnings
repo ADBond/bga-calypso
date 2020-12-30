@@ -1,3 +1,1 @@
 You have probably misspelled calypso some places - a likely source of errors!
-./.git/hooks/pre-commit:grep calyspo -r . >> misc/warnings
-./pre-commit:grep calyspo -r . >> misc/warnings

@@ -189,7 +189,7 @@ class Calypso extends Table
 
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
-        $result['woncards'] = $this->cards->getCardsInLocation( 'woncards' );
+        $result['trickpile'] = $this->cards->getCardsInLocation( 'trickpile' );
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
 
@@ -197,14 +197,14 @@ class Calypso extends Table
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
 
-        $sql = "SELECT revoke_id id, suit suit, player_id player_id FROM revoke_flags;";
+        $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
         $player_flags = array();
-        $revoke_flag_info = self::getCollectionFromDb( $sql );
-        foreach ($revoke_flag_info as $id => $info) {
+        $renounce_flag_info = self::getCollectionFromDb( $sql );
+        foreach ($renounce_flag_info as $id => $info) {
             $player_flags[] = $info;
         }
 
-        $result['revoke_flags'] = $player_flags;
+        $result['renounce_flags'] = $player_flags;
 
 
         return $result;
@@ -339,14 +339,14 @@ class Calypso extends Table
         return $next_first_dealer;
     }
 
-    function setRevokeFlag($player_id, $suit){
-        $sql = "INSERT INTO revoke_flags (player_id, suit) VALUES (".$player_id.",".$suit.");";
+    function setRenounceFlag($player_id, $suit){
+        $sql = "INSERT INTO renounce_flags (player_id, suit) VALUES (".$player_id.",".$suit.");";
         self::DbQuery(
             $sql
         );
     }
-    function clearRevokeFlags(){
-        $sql = "DELETE FROM revoke_flags;";
+    function clearRenounceFlags(){
+        $sql = "DELETE FROM renounce_flags;";
         self::DbQuery(
             $sql
         );
@@ -395,8 +395,7 @@ class Calypso extends Table
                 "originating_player" => $card["location_arg"],
             );
         }
-        // TODO: woncards one place to change it!
-        $this->cards->moveAllCardsInLocation('cardsontable', 'woncards', null, $best_value_player_id);
+        $this->cards->moveAllCardsInLocation('cardsontable', 'trickpile', null, $best_value_player_id);
 
         // now we move cards where they need to go, and get next player
         self::notifyAllPlayers( 'moveCardsToWinner','', array(
@@ -447,7 +446,7 @@ class Calypso extends Table
     }
 
     function getTrickPile($player_id){
-        return count($this->cards->getCardsInLocation( 'woncards', $player_id ));
+        return count($this->cards->getCardsInLocation( 'trickpile', $player_id ));
     }
 
     function setScore( $player_id, $score_delta ){
@@ -508,7 +507,7 @@ class Calypso extends Table
     }
 
     // cards from me & partner go to calypsos if possible, otherwise they remain
-    // cards from opponents go to woncards
+    // cards from opponents go to trickpile
     function sortWonCards($cards_played, $winner_player_id){
         $player_suit = self::getPlayerSuit($winner_player_id);
         $partner_suit = self::getPartnerSuit($player_suit);
@@ -554,7 +553,7 @@ class Calypso extends Table
                     "winner" => $winner_player_id,
                     "originating_player" => $card["location_arg"],
                 );
-                $this->cards->moveCard( $card["id"], 'woncards', $winner_player_id);
+                $this->cards->moveCard( $card["id"], 'trickpile', $winner_player_id);
             }
         }
         return $moved_to;
@@ -674,7 +673,7 @@ class Calypso extends Table
         foreach ( $players as $player_id => $num_calypsos ) {
 
             $calypso_cards = count($this->cards->getCardsInLocation( 'calypso', $player_id ));
-            $won_cards = count($this->cards->getCardsInLocation( 'woncards', $player_id ));
+            $won_cards = count($this->cards->getCardsInLocation( 'trickpile', $player_id ));
 
             $scores_for_updating[$player_id] = self::countsToScores($num_calypsos, $calypso_cards, $won_cards)['total_score'];
 
@@ -817,7 +816,7 @@ class Calypso extends Table
             'cardsontable',
             'calypso',
             'deck',
-            'woncards',
+            'trickpile',
             'full_calypsos',
         );
         $where_cards = $this->cards->countCardsInLocations();  // gives array location => count
@@ -879,9 +878,9 @@ class Calypso extends Table
                     }
                 }
             } else { // they don't follow suit
-                self::setRevokeFlag($player_id, $current_trick_suit);
+                self::setRenounceFlag($player_id, $current_trick_suit);
                 self::notifyAllPlayers(
-                    'revokeFlag',
+                    'renounceFlag',
                     '',
                     array(
                         "player_id" => $player_id,
@@ -1014,10 +1013,10 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
-        self::clearRevokeFlags();
+        self::clearRenounceFlags();
         // TODO: dealHand notif should sort out revoke flags on client side
         self::notifyAllPlayers(
-            'clearRevokeFlags',
+            'clearRenounceFlags',
             "",
             array (
                 "players" => $player_ids,
