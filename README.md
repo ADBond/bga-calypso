@@ -10,16 +10,10 @@ cp pre-commit .git/hooks/
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~some of the css classes are names ridiculously. Once things are stable fix that.~~
-  * ~~renounce bits~~
-  * ~~dealer bits~~
-  * ~~overall 'calypso' particularly egregious~~
-* ~~on that note also align on wontricks/cardswon etc - good to get it sorted earlier (!).~~
-* ~~Use Culbertson terminology - she ways 'trick pile' which I think works quite nicely~~
-* ~~on similar note, revoke flags/indicators -> renounce indicators is a nicer terminology~~
-## For a different branch
-
 * optional renounce flags
+* number of rounds set via gameoptions
+* teams by gameoptions (13,24 12,34 14,23 random )
+## For a different branch
 
 ## To-do list
 
@@ -36,7 +30,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~track dealer etc make sure dealer is updated properly at end of hand~~
 * ~~scoring~~
 * number of rounds/games set via gameoptions
-* team settings via gameoptions?
+* team settings via gameoptions
 * stats
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
@@ -50,8 +44,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Dev
 
 * ~~hook new round/new hand stuff to setup new game so we aren't doubling up/confusing logic~~
-  * partly done but needs checking/careful eye
-* ~~rename those damn variables to keep a shred of self-consistency~~ check below, do as we go
+  * ~~partly done but needs checking/careful eye~~
+* ~~rename those damn variables to keep a shred of self-consistency check below, do as we go~~
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
 * ~~check that the all the cards exist at all times, and get dealt out over the course of a round~~
   * mostly okay, but needs checking
@@ -79,7 +73,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * teams through some light colours, and put in player boxes upstairs (with trump suits)
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
 * ~~Renounce indicators~~
-  * as a gameoption setting?
+  * as a gameoption setting
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
 * Order hand with personal trumps separated?
 * Fix tooltips??
