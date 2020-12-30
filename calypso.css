@@ -195,7 +195,7 @@
   background-position: 0px 0px;
 }
 
-.revoke-1 {
+.renounce-1 {
   background-position: 0px 0px;
 }
 
@@ -203,7 +203,7 @@
   background-position: 0px -96px;
 }
 
-.revoke-2 {
+.renounce-2 {
   background-position: 0px -32px;
 }
 
@@ -211,7 +211,7 @@
   background-position: 0px -192px;
 }
 
-.revoke-3 {
+.renounce-3 {
   background-position: 0px -64px;
 }
 
@@ -219,7 +219,7 @@
   background-position: 0px -288px;
 }
 
-.revoke-4 {
+.renounce-4 {
   background-position: 0px -96px;
 }
 
@@ -254,22 +254,22 @@
   background: rgba(255, 255, 255, 0.75);
 }
 
-.revoke-indicators {
+.renounce-indicators {
   position: absolute;
 }
 
-.revoke-indicator {
+.renounce-indicator {
   width: 32px;
   height: 32px;
   display: inline-block;
   margin: 4px;
 }
 
-.active-revoke {
+.active-renounce {
   background-image: url("img/card_suits.jpg");
 }
 
-.inactive-revoke {
+.inactive-renounce {
   background-color: #999;
 }
 
@@ -312,7 +312,7 @@
   /* margin-top: 5px; */
   width: 484px;
   height: 96px;
-  /* leaving room for revokers */
+  /* leaving room for renounces */
   bottom: 20px;
 }
 

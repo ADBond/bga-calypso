@@ -49,11 +49,11 @@ CREATE TABLE IF NOT EXISTS `partnership_scores` (
   PRIMARY KEY (`score_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `revoke_flags` (
-  `revoke_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `renounce_flags` (
+  `renounce_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `player_id` int(10) unsigned NOT NULL,
   `suit` int(1) NOT NULL,
-  PRIMARY KEY (`revoke_id`),
+  PRIMARY KEY (`renounce_id`),
   FOREIGN KEY (`player_id`)
         REFERENCES `player`(`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

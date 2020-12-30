@@ -74,7 +74,7 @@ function (dojo, declare) {
             this.addTooltipToClass( "trick-pile-full", _( "This player has some cards in their trick-pile" ), "" );
             this.addTooltipToClass( "trick-pile-empty", _( "This player has no cards in their trick-pile" ), "" );
             // TODO: specialise to suits?
-            this.addTooltipToClass( "active-revoke", _( "This player failed to follow this suit" ), "" );
+            this.addTooltipToClass( "active-renounce", _( "This player failed to follow this suit" ), "" );
 
             this.playerHand = new ebg.stock(); // new stock object for hand
             this.playerHand.create( this, $('myhand'), this.cardwidth, this.cardheight );
@@ -133,8 +133,8 @@ function (dojo, declare) {
 
             // revoke flags
             console.log("revoke flags");
-            for (i in this.gamedatas.revoke_flags) {
-                let info = this.gamedatas.revoke_flags[i];
+            for (i in this.gamedatas.renounce_flags) {
+                let info = this.gamedatas.renounce_flags[i];
                 console.log("revoke info");
                 console.log(info);
                 this.setRevokeFlag(info.player_id, info.suit);
@@ -307,10 +307,10 @@ function (dojo, declare) {
         },
 
         setRevokeFlag : function(player_id, suit){
-            let revoke_el_id = `revoke_${player_id}_${suit}`;
-            console.log("this is happening: " + revoke_el_id);
-            dojo.addClass( revoke_el_id, 'active-revoke' );
-            dojo.removeClass( revoke_el_id, 'inactive-revoke' );
+            let renounce_el_id = `renounce_${player_id}_${suit}`;
+            console.log("this is happening: " + renounce_el_id);
+            dojo.addClass( renounce_el_id, 'active-renounce' );
+            dojo.removeClass( renounce_el_id, 'inactive-renounce' );
         },
 
         clearRevokeFlags: function(players, suits){
@@ -319,10 +319,10 @@ function (dojo, declare) {
                 let player = players[i];
                 for(j in suits) {
                     let suit = suits[j];
-                    let revoke_el_id = `revoke_${player}_${suit}`;
-                    console.log(revoke_el_id);
-                    dojo.removeClass( revoke_el_id, 'active-revoke' );
-                    dojo.addClass( revoke_el_id, 'inactive-revoke' );
+                    let renounce_el_id = `renounce_${player}_${suit}`;
+                    console.log(renounce_el_id);
+                    dojo.removeClass( renounce_el_id, 'active-renounce' );
+                    dojo.addClass( renounce_el_id, 'inactive-renounce' );
                 }
             }
             
@@ -443,7 +443,7 @@ function (dojo, declare) {
         
             dojo.subscribe('playCard', this, "notif_playCard");
 
-            dojo.subscribe('revokeFlag', this, "notif_revokeFlag");
+            dojo.subscribe('renounceFlag', this, "notif_renounceFlag");
             dojo.subscribe('clearRevokeFlags', this, "notif_clearRevokeFlags");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
@@ -490,7 +490,7 @@ function (dojo, declare) {
             this.playCardOnTable(notif.args.player_id, notif.args.suit, notif.args.rank, notif.args.card_id);
         },
 
-        notif_revokeFlag: function(notif) {
+        notif_renounceFlag: function(notif) {
             this.setRevokeFlag(notif.args.player_id, notif.args.suit);
         },
 

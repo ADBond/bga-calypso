@@ -40,17 +40,17 @@
 
         $directions = $this->game->getPlayerDirections();
 
-        $this->page->begin_block( $template, "revokeindicator" ); // Nested block must be declared first
+        $this->page->begin_block( $template, "renounceindicator" ); // Nested block must be declared first
         $this->page->begin_block( $template, "calypsocard" ); // Nested block must be declared first
         $this->page->begin_block( $template, "playerhand" );
         $this->page->begin_block( $template, "playercalypso" );
         foreach ( $players as $player_id => $info ) {
-            $this->page->reset_subblocks( "revokeindicator" );
+            $this->page->reset_subblocks( "renounceindicator" );
             $this->page->reset_subblocks( "calypsocard" );
             $trump_suit = $this->game->getPlayerSuit($player_id);
             for ($suit = 1; $suit <= 4; $suit ++) {
                 $this->page->insert_block(
-                    "revokeindicator",
+                    "renounceindicator",
                     array(
                         "PLAYER_ID" => $player_id,
                         "CARD_SUIT" => $suit,

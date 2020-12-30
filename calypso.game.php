@@ -197,14 +197,14 @@ class Calypso extends Table
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
 
-        $sql = "SELECT revoke_id id, suit suit, player_id player_id FROM revoke_flags;";
+        $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
         $player_flags = array();
-        $revoke_flag_info = self::getCollectionFromDb( $sql );
-        foreach ($revoke_flag_info as $id => $info) {
+        $renounce_flag_info = self::getCollectionFromDb( $sql );
+        foreach ($renounce_flag_info as $id => $info) {
             $player_flags[] = $info;
         }
 
-        $result['revoke_flags'] = $player_flags;
+        $result['renounce_flags'] = $player_flags;
 
 
         return $result;
@@ -340,13 +340,13 @@ class Calypso extends Table
     }
 
     function setRevokeFlag($player_id, $suit){
-        $sql = "INSERT INTO revoke_flags (player_id, suit) VALUES (".$player_id.",".$suit.");";
+        $sql = "INSERT INTO renounce_flags (player_id, suit) VALUES (".$player_id.",".$suit.");";
         self::DbQuery(
             $sql
         );
     }
     function clearRevokeFlags(){
-        $sql = "DELETE FROM revoke_flags;";
+        $sql = "DELETE FROM renounce_flags;";
         self::DbQuery(
             $sql
         );
@@ -880,7 +880,7 @@ class Calypso extends Table
             } else { // they don't follow suit
                 self::setRevokeFlag($player_id, $current_trick_suit);
                 self::notifyAllPlayers(
-                    'revokeFlag',
+                    'renounceFlag',
                     '',
                     array(
                         "player_id" => $player_id,

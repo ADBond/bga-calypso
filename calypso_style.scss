@@ -190,7 +190,7 @@ $suit_height: 32px;
     .card-space-#{$suit} {
         background-position: 0px (-$card_height * ($suit - 1));
     }
-    .revoke-#{$suit} {
+    .renounce-#{$suit} {
         background-position: 0px (-$suit_height * ($suit - 1));
     }
 }
@@ -223,11 +223,11 @@ $calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_
 $calypso_zone_side_padding: 10px;
 $calypso_bottom_buffer: 20px;
 
-$revoke_size: 32px;
-$revoke_padding: 4px;
+$renounce_size: 32px;
+$renounce_padding: 4px;
 
 $personal_area_width: $calypso_zone_pure_width + $calypso_zone_side_padding;
-$personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*$revoke_padding;
+$personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 2*$renounce_padding;
 .calypso {
     position: absolute;
     text-align: center;
@@ -239,36 +239,36 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*
     background: rgba(255, 255, 255, 0.75);
 }
 
-.revoke-indicators {
+.renounce-indicators {
     // left: 20px;
     position: absolute;
 }
-.revoke-indicator {
-    width: $revoke_size;
-    height: $revoke_size;
+.renounce-indicator {
+    width: $renounce_size;
+    height: $renounce_size;
     display: inline-block;
-    margin: $revoke_padding;
+    margin: $renounce_padding;
 }
 
-.active-revoke {
+.active-renounce {
     // background-color: #FF0000;
     background-image: url('img/card_suits.jpg');
 }
-.inactive-revoke {
+.inactive-renounce {
     background-color: $blank_space_colour;
 }
 .dealer-indicator-area {
     position: absolute;
-    width: $revoke_size;
-    height: $revoke_size;
-    left: 4*($revoke_size + 2*$revoke_padding) + 40px;
+    width: $renounce_size;
+    height: $renounce_size;
+    left: 4*($renounce_size + 2*$renounce_padding) + 40px;
     // background-color: $blank_space_colour;
     // display: inline-block;
-    margin: $revoke_padding;
+    margin: $renounce_padding;
 }
 #dealerbutton {
-    width: $revoke_size;
-    height: $revoke_size;
+    width: $renounce_size;
+    height: $renounce_size;
     background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
     z-index: 1;
 }
@@ -276,7 +276,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $revoke_size + 2*
 $max_name_size: 200px;
 .clp-playername {
     font-weight: bold;
-    height: $revoke_size;
+    height: $renounce_size;
     width: $max_name_size;
     white-space: nowrap;
     overflow: hidden;
@@ -298,7 +298,7 @@ $max_name_size: 200px;
     /* margin-top: 5px; */
     width: $calypso_zone_pure_width;
     height: $card_height;
-    /* leaving room for revokers */
+    /* leaving room for renounces */
     bottom: $calypso_bottom_buffer;
 }
 .calypsoholder {

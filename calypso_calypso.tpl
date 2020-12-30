@@ -24,11 +24,11 @@
                 <div class="clp-playername clp-playername_{DIR}" style="color:#{PLAYER_COLOUR}">
                     {PLAYER_NAME} - a very long username
                 </div>
-                <div class="revoke-indicators" id="revoke_{PLAYER_ID}">
-                    <!-- BEGIN revokeindicator -->
-                    <div class="revoke-indicator inactive-revoke revoke-{CARD_SUIT}" id="revoke_{PLAYER_ID}_{CARD_SUIT}">
+                <div class="renounce-indicators" id="renounce_{PLAYER_ID}">
+                    <!-- BEGIN renounceindicator -->
+                    <div class="renounce-indicator inactive-renounce renounce-{CARD_SUIT}" id="renounce_{PLAYER_ID}_{CARD_SUIT}">
                     </div>
-                    <!-- END revokeindicator -->
+                    <!-- END renounceindicator -->
                 </div>
                 <div class="dealer-indicator-area" id="dealer-{PLAYER_ID}"></div>
                 <div class="playercalypso" id="playercalypso_{PLAYER_ID}">
