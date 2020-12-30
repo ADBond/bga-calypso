@@ -27,26 +27,25 @@
 $game_options = array(
 
     100 => array(
-        'name' => totranslate('Game Length')
+        'name' => totranslate('Game Length'),
         'values' => array(
             1 => array(
                 'name' => totranslate('Standard, short - 1 round (4 hands)'),
-                'tmdisplay' => totranslate('1 round')
+                'tmdisplay' => totranslate('1 round'),
             ),
             2 => array(
                 'name' => totranslate('Medium - 2 rounds (8 hands)'),
-                'tmdisplay' => totranslate('2 rounds')
+                'tmdisplay' => totranslate('2 rounds'),
             ),
             3 => array(
                 'name' => totranslate('Longer - 3 rounds (12 hands)'),
-                'tmdisplay' => totranslate('3 rounds')
+                'tmdisplay' => totranslate('3 rounds'),
             ),
             4 => array(
                 'name' => totranslate('Full rotation - 4 rounds (16 hands)'),
                 'description' => totranslate('4 rounds - everyone gets to be first player once'),
-                'tmdisplay' => totranslate('4 rounds')
-            )
+                'tmdisplay' => totranslate('4 rounds'),
+            ),
         ),
     ),
-
 );
