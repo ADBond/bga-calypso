@@ -14,8 +14,8 @@
 <div id="playarea">
     <div id="tablearea">
         <!-- BEGIN playerhand -->
-            <div class="playertable playertable_{DIR}">
-                <div class="playertablecard" id="playertablecard_{PLAYER_ID}">
+            <div class="clp_player-card-play-area clp_player-card-play-area_{DIR}">
+                <div class="clp_player-card-play-area-card" id="clp_player-card-play-area-card_{PLAYER_ID}">
                 </div>
             </div>
         <!-- END playerhand -->

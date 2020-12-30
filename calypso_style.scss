@@ -100,7 +100,7 @@ $card_area_buffer: 20px;
 $card_area_width: $card_width + $card_area_buffer;
 $card_area_height: $card_height + $card_area_buffer;
 $card_area_outline_col: #AAA;
-.playertable {
+.clp_player-card-play-area {
     // position: absolute;
     // text-align: center;
     outline: ridge 3px $card_area_outline_col;
@@ -110,7 +110,7 @@ $card_area_outline_col: #AAA;
 
 $left_right_offset: $card_area_width + 20px;
 $top_bottom_offset: $card_area_height + 20px;
-.playertable_N {
+.clp_player-card-play-area_N {
     // left: $table_size/2 - $card_area_width/2;
     position: absolute;
     top: 30%;
@@ -119,7 +119,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // margin: 0 auto;
     // top: $table_size/2 - $card_area_height/2 - $top_bottom_offset;
 }
-.playertable_S {
+.clp_player-card-play-area_S {
     position: absolute;
     bottom: 30%;
     left: 50%;
@@ -128,7 +128,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // left: $table_size/2 - $card_area_width/2;
     // top: $table_size/2 - $card_area_height/2 + $top_bottom_offset;
 }
-.playertable_W {
+.clp_player-card-play-area_W {
     position: absolute;
     left: 30%;
     top: 50%;
@@ -136,7 +136,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // left: $table_size/2 - $card_area_width/2 - $left_right_offset;
     // top: $table_size/2 - $card_area_height/2;
 }
-.playertable_E {
+.clp_player-card-play-area_E {
     position: absolute;
     right: 30%;
     top: 50%;
@@ -145,7 +145,7 @@ $top_bottom_offset: $card_area_height + 20px;
     // top: $table_size/2 - $card_area_height/2;
 }
 
-.playertablecard {
+.clp_player-card-play-area-card {
     // display: inline-block;
     // position: relative;
     // margin-top: ($card_area_height - $card_height)/2;

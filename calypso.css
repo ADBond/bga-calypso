@@ -80,41 +80,41 @@
   font-size: 30px;
 }
 
-.playertable {
+.clp_player-card-play-area {
   outline: ridge 3px #AAA;
   width: 92px;
   height: 116px;
 }
 
-.playertable_N {
+.clp_player-card-play-area_N {
   position: absolute;
   top: 30%;
   left: 50%;
   transform: translate(-50%);
 }
 
-.playertable_S {
+.clp_player-card-play-area_S {
   position: absolute;
   bottom: 30%;
   left: 50%;
   transform: translate(-50%);
 }
 
-.playertable_W {
+.clp_player-card-play-area_W {
   position: absolute;
   left: 30%;
   top: 50%;
   transform: translate(0, -50%);
 }
 
-.playertable_E {
+.clp_player-card-play-area_E {
   position: absolute;
   right: 30%;
   top: 50%;
   transform: translate(0, -50%);
 }
 
-.playertablecard {
+.clp_player-card-play-area-card {
   position: absolute;
   top: 50%;
   left: 50%;
