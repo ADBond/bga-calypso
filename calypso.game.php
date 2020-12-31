@@ -47,8 +47,13 @@ class Calypso extends Table
                          "roundNumber" => 31,
                          "handNumber" => 32,
 
+                         // gameoptions - see gameoptions.inc.php
+                         // how many rounds we play to
                          "totalRounds" => 100,
+                         // are renounce indicators on or off?
                          "renounceFlags" => 101,
+                         // how do we pair players for partnerships?
+                         "partnerships" => 102,
 
                           ) );
 
@@ -71,7 +76,6 @@ class Calypso extends Table
     */
     protected function setupNewGame( $players, $options = array() )
     {
-
         // TODO: colours
         // Set the colors of the players with HTML color code
         // The default below is red/green/blue/orange/brown
@@ -79,17 +83,84 @@ class Calypso extends Table
         $gameinfos = self::getGameinfos();
         $default_colors = $gameinfos['player_colors'];
 
+        // TODO: is this whole process a little unnecessarily complex? or that's just the way it is?? need a think
+        // choose some player randomly to be first dealer
+        $first_dealer_order_number = bga_rand(1, 4);
+        // Set up personal trump suits
+        // Randomly choose suit for first player, then randomly one of the other two available for next
+        // the rest are then determined
+        $first_player_suit = bga_rand(1, 4);
+        // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
+        $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
+        // choose first player randomly
+
+        // use partnership option + player_table_no to decide mapping to these
+        // 4 will be dealer, 2 their partner, then 1 and 3 the other partnership
+        $player_suits = array(
+            1 => $first_player_suit,
+            2 => $second_player_suit,
+            3 => self::getPartnerSuit($first_player_suit),
+            4 => self::getPartnerSuit($second_player_suit)
+        );
+
+        // normalise player_table_order to be 1-4:
+        $player_table_orders = array_map(
+            function($player){return $player['player_table_order'];},
+            $players
+        );
+        // sort by values, keeping key associations intact
+        asort($player_table_orders);
+        $player_table_orders = array_combine(array_keys($player_table_orders), array(1, 2, 3, 4));
+
+        $first_dealer_id = array_search($first_dealer_order_number, $player_table_orders);
+        self::setGameStateInitialValue( 'firstHandDealer', $first_dealer_id );
+        self::setGameStateInitialValue( 'currentDealer', $first_dealer_id );
+        
+        // TODO: then set up partnerships, to re-order player_table (keeping)
+        // set up partnerships
+        $player_orders = array(1, 2, 3, 4);
+        switch(self::getGameStateValue('partnerships')){
+            // 1,3 vs 2,4
+            case 1:
+                // default, as above
+                break;
+            // 1,2 vs 3,4
+            case 2:
+                $player_orders = array(1, 3, 2, 4);
+                break;
+            // 1,4 vs 2,3
+            case 3:
+                $player_orders = array(1, 2, 4, 3);
+                break;
+            // just random
+            case 4:
+                shuffle($player_orders);
+                break;
+        }
+        // and rotate so that dealer is last
+        while($player_orders[3] != $first_dealer_id){
+            $player_orders = array_shift($player_orders);
+        }
+        $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
+
+        // $sql = "INSERT INTO player 
+        //         -- (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
+        //         (player_id, player_color, player_canal, player_name, player_avatar)
+        //         VALUES ";
         $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
-        foreach( $players as $player_id => $player )
-        {
+        foreach( $players as $player_id => $player ) {
+            $order = $new_order_index[$player_table_orders[$player_id]];
+            $suit = $player_suits[$order];
             $color = array_shift( $default_colors );
+            // $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] ).
+            //         "','".addslashes( $player['player_avatar'] )."','".addslashes( $order ).
+            //         "','".addslashes( $suit )."')";
             $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
         }
         $sql .= implode( ',', $values);
         self::DbQuery( $sql );
         self::reattributeColorsBasedOnPreferences( $players, $gameinfos['player_colors'] );
-        self::reloadPlayersBasicInfos();
         
         /************ Start the game initialization *****/
 
@@ -99,66 +170,23 @@ class Calypso extends Table
         // Create 4 identiical decks of cards
         // see material.inc.php to confirm the labelling
         $num_decks = 4;
-        $cards = array ();
+        $cards = array();
         foreach ( $this->suits as $suit_id => $suit ) {
             // spade, heart, club, diamond
-            for ($rank = 2; $rank <= 14; $rank ++) {
+            for ($rank = 2; $rank <= 14; $rank++) {
                 //  2, 3, 4, ... K, A
-                $cards [] = array ('type' => $suit_id, 'type_arg' => $rank, 'nbr' => $num_decks );
+                $cards[] = array ('type' => $suit_id, 'type_arg' => $rank, 'nbr' => $num_decks );
             }
         }
 
         $this->cards->createCards( $cards, 'deck' );
-
-        // set pre-initial dealers, ready for state functions to adjust to initial values
-        // choose some player randomly to be leader's partner
-        // this choice is convenient as they can be round 0 dealer, then deal will rotate in newRound
-        $pre_dealer = bga_rand(1, 4);
-        $players = self::loadPlayersBasicInfos();
-        // TODO: switch if I can figure out why this isn't in the db
-        // this is index is how I set up table config
-        $index_to_use = 'player_no';// 'player_table_order';
-        foreach ( $players as $player_id => $player ) {
-            if($player[$index_to_use] == $pre_dealer){
-                // they are dealer now, and the first dealer!
-                // AB TODO: this feels like a dirty hack. null first, and a check in newRound?
-                self::setGameStateInitialValue( 'firstHandDealer', $player_id );
-                self::setGameStateInitialValue( 'currentDealer', $player_id );
-            }
-        }
 
         // Init game statistics
         // (note: statistics used in this file must be defined in your stats.inc.php file)
         //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
         //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
 
-        // Set up personal trump suits
-        // Randomly choose suit for first player, then randomly one of the other two available for next
-        // the rest are then determined
-        $first_player_suit = bga_rand( 1, 4 );
-        // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
-        $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
-        // choose first player randomly
-
-        // use partnership option + player_table_no to decide mapping to these
-        $player_suits = array(
-            1 => $first_player_suit,
-            2 => $second_player_suit,
-            3 => self::getPartnerSuit($first_player_suit),
-            4 => self::getPartnerSuit($second_player_suit)
-        );
-        $sql = "UPDATE player SET trump_suit = CASE player_no ";
-        $values = array();
-        foreach ( $players as $player_id => $player ) {
-            $player_number = $player["player_no"];
-            $trump_suit = $player_suits[$player_number];
-            $values[] = "WHEN ".$player_number." THEN ".$trump_suit;
-        }
-        $sql .= implode( ' ', $values);
-        $sql .= " ELSE 0 END;";
-        self::DbQuery( $sql );
         self::reloadPlayersBasicInfos();
-
         $this->activeNextPlayer();
 
         /************ End of the game initialization *****/
@@ -990,10 +1018,13 @@ class Calypso extends Table
         // and make sure no-one has any calypsos counted any more :(
         $sql = "UPDATE player SET completed_calypsos = 0;";
         self::DbQuery( $sql );
-
-        $new_dealer = self::getNextFirstDealer();
-        self::setGameStateValue( 'firstHandDealer', $new_dealer );
-        self::setGameStateValue( 'currentDealer', $new_dealer );
+        if($round_number != 1){
+            $new_dealer = self::getNextFirstDealer();
+            self::setGameStateValue( 'firstHandDealer', $new_dealer );
+            self::setGameStateValue( 'currentDealer', $new_dealer );
+        } else{
+            $new_dealer = self::getGameStateValue( 'firstHandDealer' );
+        }
         $this->gamestate->nextState("");
     }
 
