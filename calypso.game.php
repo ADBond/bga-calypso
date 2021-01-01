@@ -140,30 +140,29 @@ class Calypso extends Table
         // and rotate so that dealer is last
         $dealer = $player_orders[3];
         while($dealer != $first_dealer_order_number){
-            $player_orders = array_shift($player_orders);
+            $player_orders[] = array_shift($player_orders);
             $dealer = $player_orders[3];
         }
-        // $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
+        $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
 
-        // $sql = "INSERT INTO player 
-        //         -- (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
-        //         (player_id, player_color, player_canal, player_name, player_avatar)
-        //         VALUES ";
-        $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
+        $sql = "INSERT INTO player 
+                (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
+                VALUES ";
+        // $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
 
         // self::debug("new_order_index is ". implode($new_order_index));
         // self::dump("player_table_orders", $player_table_orders);
 
         foreach( $players as $player_id => $player ) {
-            // $order = $new_order_index[$player_table_orders[$player_id]];  // this is being an arse
+            $order = $new_order_index[$player_table_orders[$player_id]];  // this is being an arse
             // $old_order = $player_table_orders[$player_id];
-            // $suit = $player_suits[$order];
+            $suit = $player_suits[$order];
             $color = array_shift( $default_colors );
-            // $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] ).
-            //         "','".addslashes( $player['player_avatar'] )."','".addslashes( $order ).
-            //         "','".addslashes( $suit )."')";
-            $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
+            $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] ).
+                    "','".addslashes( $player['player_avatar'] )."','".addslashes( $order ).
+                    "','".addslashes( $suit )."')";
+            // $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
         
             // TODO: delete:
             // if($player["player_table_order"] == 1){
