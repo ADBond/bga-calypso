@@ -116,32 +116,33 @@ class Calypso extends Table
         self::setGameStateInitialValue( 'firstHandDealer', $first_dealer_id );
         self::setGameStateInitialValue( 'currentDealer', $first_dealer_id );
         
-        // TODO: it is LITERALLY something down to 145 that breaks game startup when we un-comment :/
-        // // TODO: then set up partnerships, to re-order player_table (keeping)
-        // // set up partnerships
-        // $player_orders = array(1, 2, 3, 4);
-        // switch(self::getGameStateValue('partnerships')){
-        //     // 1,3 vs 2,4
-        //     case 1:
-        //         // default, as above
-        //         break;
-        //     // 1,2 vs 3,4
-        //     case 2:
-        //         $player_orders = array(1, 3, 2, 4);
-        //         break;
-        //     // 1,4 vs 2,3
-        //     case 3:
-        //         $player_orders = array(1, 2, 4, 3);
-        //         break;
-        //     // just random
-        //     case 4:
-        //         shuffle($player_orders);
-        //         break;
-        // }
-        // // and rotate so that dealer is last
-        // while($player_orders[3] != $first_dealer_id){
-        //     $player_orders = array_shift($player_orders);
-        // }
+        // TODO: then set up partnerships, to re-order player_table (keeping)
+        // set up partnerships
+        $player_orders = array(1, 2, 3, 4);
+        switch(self::getGameStateValue('partnerships')){
+            // 1,3 vs 2,4
+            case 1:
+                // default, as above
+                break;
+            // 1,2 vs 3,4
+            case 2:
+                $player_orders = array(1, 3, 2, 4);
+                break;
+            // 1,4 vs 2,3
+            case 3:
+                $player_orders = array(1, 2, 4, 3);
+                break;
+            // just random
+            case 4:
+                shuffle($player_orders);
+                break;
+        }
+        // and rotate so that dealer is last
+        $dealer = $player_orders[3];
+        while($dealer != $first_dealer_order_number){
+            $player_orders = array_shift($player_orders);
+            $dealer = $player_orders[3];
+        }
         // $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
 
         // // $sql = "INSERT INTO player 
