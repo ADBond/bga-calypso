@@ -138,10 +138,14 @@ class Calypso extends Table
                 break;
         }
         // and rotate so that dealer is last
-        $dealer = $player_orders[3];
-        while($dealer != $first_dealer_order_number){
-            $player_orders[] = array_shift($player_orders);
-            $dealer = $player_orders[3];
+        $dealer = $player_orders[$first_dealer_order_number - 1];
+        while($dealer != 4){
+            // move everyone round the table
+            $player_orders = array_map(
+                function($order){return ($order % 4) + 1;},
+                $player_orders
+            );
+            $dealer = $player_orders[$first_dealer_order_number - 1];
         }
         $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
 
