@@ -145,15 +145,19 @@ class Calypso extends Table
         }
         // $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
 
-        // // $sql = "INSERT INTO player 
-        // //         -- (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
-        // //         (player_id, player_color, player_canal, player_name, player_avatar)
-        // //         VALUES ";
+        // $sql = "INSERT INTO player 
+        //         -- (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
+        //         (player_id, player_color, player_canal, player_name, player_avatar)
+        //         VALUES ";
         $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
 
+        // self::debug("new_order_index is ". implode($new_order_index));
+        // self::dump("player_table_orders", $player_table_orders);
+
         foreach( $players as $player_id => $player ) {
-            // $order = $new_order_index[$player_table_orders[$player_id]];
+            // $order = $new_order_index[$player_table_orders[$player_id]];  // this is being an arse
+            // $old_order = $player_table_orders[$player_id];
             // $suit = $player_suits[$order];
             $color = array_shift( $default_colors );
             // $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] ).

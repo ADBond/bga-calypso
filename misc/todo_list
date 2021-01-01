@@ -1,30 +1,30 @@
 ./calypso.game.php:79:        // TODO: colours
 ./calypso.game.php:86:        // TODO: is this whole process a little unnecessarily complex? or that's just the way it is?? need a think
 ./calypso.game.php:119:        // TODO: then set up partnerships, to re-order player_table (keeping)
-./calypso.game.php:164:            // TODO: delete:
-./calypso.game.php:217:        // TODO: check there is not any naughty secret info here? don't think so
-./calypso.game.php:249:            // TODO: is this not a kind of bullshit way to do this?
-./calypso.game.php:270:        // AB TODO: compute and return the game progression
-./calypso.game.php:305:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
-./calypso.game.php:311:    // TODO: check here and under that there isn't a secret option number 3?
-./calypso.game.php:335:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
-./calypso.game.php:359:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
-./calypso.game.php:363:        // TODO: don't need these notifications long-term
-./calypso.game.php:365:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
-./calypso.game.php:382:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:509:    // TODO: uniformise names
-./calypso.game.php:633:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-./calypso.game.php:635:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:685:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:748:        // TODO: pass this as a variable?
-./calypso.game.php:786:        // TODO: we should get the players in partnership order!
-./calypso.game.php:816:            // TODO: this is also a place where partnershit will change
-./calypso.game.php:833:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:857:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:893:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1067:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1113:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1122:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
+./calypso.game.php:168:            // TODO: delete:
+./calypso.game.php:221:        // TODO: check there is not any naughty secret info here? don't think so
+./calypso.game.php:253:            // TODO: is this not a kind of bullshit way to do this?
+./calypso.game.php:274:        // AB TODO: compute and return the game progression
+./calypso.game.php:309:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
+./calypso.game.php:315:    // TODO: check here and under that there isn't a secret option number 3?
+./calypso.game.php:339:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
+./calypso.game.php:363:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
+./calypso.game.php:367:        // TODO: don't need these notifications long-term
+./calypso.game.php:369:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
+./calypso.game.php:386:        // TODO: this feels horrible - is there a nice way that won't be overkill?
+./calypso.game.php:513:    // TODO: uniformise names
+./calypso.game.php:637:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+./calypso.game.php:639:                // AB TODO: updated db when I've updated the model to allow the field
+./calypso.game.php:689:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+./calypso.game.php:752:        // TODO: pass this as a variable?
+./calypso.game.php:790:        // TODO: we should get the players in partnership order!
+./calypso.game.php:820:            // TODO: this is also a place where partnershit will change
+./calypso.game.php:837:        // TODO: probably want to display this aspect betterly
+./calypso.game.php:861:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:897:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1071:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1117:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1126:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:77:            // TODO: specialise to suits?
