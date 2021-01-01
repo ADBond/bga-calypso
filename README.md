@@ -6,6 +6,25 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* Make some stats, eh?
+  * table:
+    * average points/round
+    * average calypsos completed/round
+  * player:
+    * these per player and per partnership:
+      * calypsos/round
+      * calypso points/round
+      * incomplete calypso cards/round
+      * trickpile cards/round
+      * points/round
+    * per hand:
+      * personal trumps dealt
+      * partner trumps dealt
+      * opponent trumps dealt
+      * tricks won by leading trumps
+      * tricks won trumping in
+      * total tricks won
+
 ## For a different branch
 
 ## To-do list
