@@ -85,78 +85,85 @@ class Calypso extends Table
 
         // TODO: is this whole process a little unnecessarily complex? or that's just the way it is?? need a think
         // choose some player randomly to be first dealer
-        $first_dealer_order_number = bga_rand(1, 4);
-        // Set up personal trump suits
-        // Randomly choose suit for first player, then randomly one of the other two available for next
-        // the rest are then determined
-        $first_player_suit = bga_rand(1, 4);
-        // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
-        $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
-        // choose first player randomly
+        // $first_dealer_order_number = bga_rand(1, 4);
+        // // Set up personal trump suits
+        // // Randomly choose suit for first player, then randomly one of the other two available for next
+        // // the rest are then determined
+        // $first_player_suit = bga_rand(1, 4);
+        // // second players suit will be randomly selected from the opposite partnership - (spades/hearts vs clubs/diamonds)
+        // $second_player_suit = ($first_player_suit <= 2) ? bga_rand(3, 4) : bga_rand(1, 2);
+        // // choose first player randomly
 
-        // use partnership option + player_table_no to decide mapping to these
-        // 4 will be dealer, 2 their partner, then 1 and 3 the other partnership
-        $player_suits = array(
-            1 => $first_player_suit,
-            2 => $second_player_suit,
-            3 => self::getPartnerSuit($first_player_suit),
-            4 => self::getPartnerSuit($second_player_suit)
-        );
+        // // use partnership option + player_table_no to decide mapping to these
+        // // 4 will be dealer, 2 their partner, then 1 and 3 the other partnership
+        // $player_suits = array(
+        //     1 => $first_player_suit,
+        //     2 => $second_player_suit,
+        //     3 => self::getPartnerSuit($first_player_suit),
+        //     4 => self::getPartnerSuit($second_player_suit)
+        // );
 
-        // normalise player_table_order to be 1-4:
-        $player_table_orders = array_map(
-            function($player){return $player['player_table_order'];},
-            $players
-        );
-        // sort by values, keeping key associations intact
-        asort($player_table_orders);
-        $player_table_orders = array_combine(array_keys($player_table_orders), array(1, 2, 3, 4));
+        // // normalise player_table_order to be 1-4:
+        // $player_table_orders = array_map(
+        //     function($player){return $player['player_table_order'];},
+        //     $players
+        // );
+        // // sort by values, keeping key associations intact
+        // asort($player_table_orders);
+        // $player_table_orders = array_combine(array_keys($player_table_orders), array(1, 2, 3, 4));
 
-        $first_dealer_id = array_search($first_dealer_order_number, $player_table_orders);
-        self::setGameStateInitialValue( 'firstHandDealer', $first_dealer_id );
-        self::setGameStateInitialValue( 'currentDealer', $first_dealer_id );
+        // $first_dealer_id = array_search($first_dealer_order_number, $player_table_orders);
+        //self::setGameStateInitialValue( 'firstHandDealer', $first_dealer_id );
+        //self::setGameStateInitialValue( 'currentDealer', $first_dealer_id );
         
-        // TODO: then set up partnerships, to re-order player_table (keeping)
-        // set up partnerships
-        $player_orders = array(1, 2, 3, 4);
-        switch(self::getGameStateValue('partnerships')){
-            // 1,3 vs 2,4
-            case 1:
-                // default, as above
-                break;
-            // 1,2 vs 3,4
-            case 2:
-                $player_orders = array(1, 3, 2, 4);
-                break;
-            // 1,4 vs 2,3
-            case 3:
-                $player_orders = array(1, 2, 4, 3);
-                break;
-            // just random
-            case 4:
-                shuffle($player_orders);
-                break;
-        }
-        // and rotate so that dealer is last
-        while($player_orders[3] != $first_dealer_id){
-            $player_orders = array_shift($player_orders);
-        }
-        $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
+        // // TODO: then set up partnerships, to re-order player_table (keeping)
+        // // set up partnerships
+        // $player_orders = array(1, 2, 3, 4);
+        // switch(self::getGameStateValue('partnerships')){
+        //     // 1,3 vs 2,4
+        //     case 1:
+        //         // default, as above
+        //         break;
+        //     // 1,2 vs 3,4
+        //     case 2:
+        //         $player_orders = array(1, 3, 2, 4);
+        //         break;
+        //     // 1,4 vs 2,3
+        //     case 3:
+        //         $player_orders = array(1, 2, 4, 3);
+        //         break;
+        //     // just random
+        //     case 4:
+        //         shuffle($player_orders);
+        //         break;
+        // }
+        // // and rotate so that dealer is last
+        // while($player_orders[3] != $first_dealer_id){
+        //     $player_orders = array_shift($player_orders);
+        // }
+        // $new_order_index = array_combine(array(1, 2, 3, 4), $player_orders);
 
-        // $sql = "INSERT INTO player 
-        //         -- (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
-        //         (player_id, player_color, player_canal, player_name, player_avatar)
-        //         VALUES ";
+        // // $sql = "INSERT INTO player 
+        // //         -- (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
+        // //         (player_id, player_color, player_canal, player_name, player_avatar)
+        // //         VALUES ";
         $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
+
         foreach( $players as $player_id => $player ) {
-            $order = $new_order_index[$player_table_orders[$player_id]];
-            $suit = $player_suits[$order];
+            // $order = $new_order_index[$player_table_orders[$player_id]];
+            // $suit = $player_suits[$order];
             $color = array_shift( $default_colors );
             // $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] ).
             //         "','".addslashes( $player['player_avatar'] )."','".addslashes( $order ).
             //         "','".addslashes( $suit )."')";
             $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
+        
+            // TODO: delete:
+            if($player["player_table_order"] == 1){
+                self::setGameStateInitialValue( 'firstHandDealer', $player_id );
+                self::setGameStateInitialValue( 'currentDealer', $player_id );
+            }
         }
         $sql .= implode( ',', $values);
         self::DbQuery( $sql );
