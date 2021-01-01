@@ -6,9 +6,6 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~optional renounce flags~~
-* ~~number of rounds set via gameoptions~~
-* teams by gameoptions (13,24 12,34 14,23 random )
 ## For a different branch
 
 ## To-do list
@@ -25,8 +22,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~display in-progress calypsos~~ (and completed? ~~won discards?~~)
 * ~~track dealer etc make sure dealer is updated properly at end of hand~~
 * ~~scoring~~
-* number of rounds/games set via gameoptions
-* team settings via gameoptions
+* ~~number of rounds/games set via gameoptions~~
+* ~~team settings via gameoptions~~
 * stats
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
@@ -75,8 +72,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * Order hand with personal trumps separated?
 * improve scoring table?
 * access old scoring tables
+* animations - let calypso cards & trick pile appear after animation is finished rather than early
 
-## Things to fic
+## Things to fix
 
 * Fix tooltips?? (renounce and dealer button)
 * Fix dealer button animation
