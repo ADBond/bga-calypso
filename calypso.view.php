@@ -47,14 +47,16 @@
             $this->page->reset_subblocks( "renounceindicator" );
             $this->page->reset_subblocks( "calypsocard" );
             $trump_suit = $this->game->getPlayerSuit($player_id);
-            for ($suit = 1; $suit <= 4; $suit ++) {
-                $this->page->insert_block(
-                    "renounceindicator",
-                    array(
-                        "PLAYER_ID" => $player_id,
-                        "CARD_SUIT" => $suit,
-                    )
-                );
+            if($this->game->getGameStateValue('renounceFlags') == 1){
+                for ($suit = 1; $suit <= 4; $suit ++) {
+                    $this->page->insert_block(
+                        "renounceindicator",
+                        array(
+                            "PLAYER_ID" => $player_id,
+                            "CARD_SUIT" => $suit,
+                        )
+                    );
+                }
             }
 
             $this->page->insert_block(
