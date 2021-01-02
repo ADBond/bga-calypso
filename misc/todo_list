@@ -18,11 +18,11 @@
 ./calypso.game.php:793:        // TODO: we should get the players in partnership order!
 ./calypso.game.php:823:            // TODO: this is also a place where partnershit will change
 ./calypso.game.php:840:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:885:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:921:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1095:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1141:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1150:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
+./calypso.game.php:888:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:924:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1098:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1144:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1153:        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:77:            // TODO: specialise to suits?

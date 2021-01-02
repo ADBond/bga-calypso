@@ -11,12 +11,14 @@ a fluid list to remember what needs to be done before pulling in and starting a 
     * average points/round
     * ~~average calypsos completed/round~~
   * player:
-    * these per player and per partnership:
-      * ~~calypsos/round~~ /player
+    * these per player and per partnership (?):
+      * ~~calypsos/round~~ /player done
       * calypso points/round
       * incomplete calypso cards/round
       * trickpile cards/round
+      * total cards won/round
       * points/round
+    * just per player:
       * points/round when first hand leader
     * per hand:
       * personal trumps dealt

@@ -54,7 +54,7 @@ $stats_type = array(
 
         "average_calypsos_per_round" => array(
             "id"=> 10,
-            "name" => totranslate("Average total completed calypsos per round"),
+            "name" => totranslate("Total calypsos per round"),
             "type" => "float"
         ),
 
@@ -64,7 +64,7 @@ $stats_type = array(
     "player" => array(
         // per round statistics
         "calypsos_per_round" => array("id"=> 10,
-                    "name" => totranslate("Average completed calypsos per round (individual)"),
+                    "name" => totranslate("Average calypsos per round (individual)"),
                     "type" => "float" ),
         // "calypsos_per_round_part" => array("id"=> 11,
         //             "name" => totranslate("Average completed calypsos per round (partnership)"),

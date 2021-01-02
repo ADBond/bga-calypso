@@ -868,13 +868,16 @@ class Calypso extends Table
         //         'partnership_score
         // and countsToScores
 
-        $ave_calypso_counter = 0;
-        foreach ( $players as $player_id => $score_info ) {
-            $stat_name = "calypsos_per_round";
+        function updateStat($stat_name, $round_value, $player_id){
             $current_stat_val = self::getStat($stat_name, $player_id);
-            $round_value = $score_info["calypso_count"];
             $new_stat_val = 1.0*(($round_number - 1)*$current_stat_val + $round_value)/$round_number;
             self::setStat($new_stat_val, $stat_name, $player_id);
+            return $new_stat_val;
+        }
+
+        $ave_calypso_counter = 0;
+        foreach ( $players as $player_id => $score_info ) {
+            $new_stat_val = updateStat("calypsos_per_round", $score_info["calypso_count"], $player_id);
             $ave_calypso_counter += $new_stat_val;
         }
         self::setStat($ave_calypso_counter, "average_calypsos_per_round");
