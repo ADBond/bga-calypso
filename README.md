@@ -9,14 +9,15 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * Make some stats, eh?
   * table:
     * average points/round
-    * average calypsos completed/round
+    * ~~average calypsos completed/round~~
   * player:
     * these per player and per partnership:
-      * calypsos/round
+      * ~~calypsos/round~~ /player
       * calypso points/round
       * incomplete calypso cards/round
       * trickpile cards/round
       * points/round
+      * points/round when first hand leader
     * per hand:
       * personal trumps dealt
       * partner trumps dealt
@@ -46,7 +47,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * stats
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
-* stop games ending in ties
+* ~~stop games ending in ties~~
 
 ### Notifications
 
@@ -92,7 +93,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * improve scoring table?
 * access old scoring tables
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
-
+* player boxes should show number of completed calypsos
 ## Things to fix
 
 * Fix tooltips?? (renounce and dealer button)

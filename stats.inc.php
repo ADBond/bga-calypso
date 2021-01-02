@@ -52,44 +52,23 @@ $stats_type = array(
     // Statistics global to table
     "table" => array(
 
-        "turns_number" => array("id"=> 10,
-                    "name" => totranslate("Number of turns"),
-                    "type" => "int" ),
+        "average_calypsos_per_round" => array(
+            "id"=> 10,
+            "name" => totranslate("Average total completed calypsos per round"),
+            "type" => "float"
+        ),
 
-/*
-        Examples:
-
-
-        "table_teststat1" => array(   "id"=> 10,
-                                "name" => totranslate("table test stat 1"), 
-                                "type" => "int" ),
-                                
-        "table_teststat2" => array(   "id"=> 11,
-                                "name" => totranslate("table test stat 2"), 
-                                "type" => "float" )
-*/  
     ),
     
     // Statistics existing for each player
     "player" => array(
+        // per round statistics
+        "calypsos_per_round" => array("id"=> 10,
+                    "name" => totranslate("Average completed calypsos per round (individual)"),
+                    "type" => "float" ),
+        // "calypsos_per_round_part" => array("id"=> 11,
+        //             "name" => totranslate("Average completed calypsos per round (partnership)"),
+        //             "type" => "float" ),
 
-        "turns_number" => array("id"=> 10,
-                    "name" => totranslate("Number of turns"),
-                    "type" => "int" ),
-    
-/*
-        Examples:    
-        
-        
-        "player_teststat1" => array(   "id"=> 10,
-                                "name" => totranslate("player test stat 1"), 
-                                "type" => "int" ),
-                                
-        "player_teststat2" => array(   "id"=> 11,
-                                "name" => totranslate("player test stat 2"), 
-                                "type" => "float" )
-
-*/    
     )
-
 );

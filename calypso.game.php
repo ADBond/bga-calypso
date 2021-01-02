@@ -115,8 +115,7 @@ class Calypso extends Table
         $first_dealer_id = array_search($first_dealer_order_number, $player_table_orders);
         self::setGameStateInitialValue( 'firstHandDealer', $first_dealer_id );
         self::setGameStateInitialValue( 'currentDealer', $first_dealer_id );
-        
-        // TODO: then set up partnerships, to re-order player_table (keeping)
+
         // set up partnerships
         $player_orders = array(1, 2, 3, 4);
         switch(self::getGameStateValue('partnerships')){
@@ -201,6 +200,10 @@ class Calypso extends Table
         // (note: statistics used in this file must be defined in your stats.inc.php file)
         //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
         //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
+        self::initStat('table', 'average_calypsos_per_round', 0);
+
+        self::initStat('player', 'calypsos_per_round', 0);
+        // self::initStat('player', 'calypsos_per_round_part', 0);
 
         self::reloadPlayersBasicInfos();
         $this->activeNextPlayer();
@@ -751,10 +754,7 @@ class Calypso extends Table
         }
     }
 
-    function displayScores(){
-        // TODO: pass this as a variable?
-        $round_number = self::getGameStateValue('roundNumber');
-
+    function displayScores($round_number){
         // give counts and scores different classes so we can style them differently
         // e.g. text-align: left (vs right), different colours(?), weights
         function wrap_class($x, $class_name){
@@ -857,6 +857,27 @@ class Calypso extends Table
                 'scores' => $scores_for_updating
             )
         );
+    }
+
+    function updateRoundStats(){
+        $round_number = self::getGameStateValue('roundNumber');
+        $players = self::getRoundScore($round_number);
+        // calypso_count' => $num_calypsos,
+        //         'part_calypso_count' => $calypso_cards,
+        //         'won_cards_count' => $won_cards,
+        //         'partnership_score
+        // and countsToScores
+
+        $ave_calypso_counter = 0;
+        foreach ( $players as $player_id => $score_info ) {
+            $stat_name = "calypsos_per_round";
+            $current_stat_val = self::getStat($stat_name, $player_id);
+            $round_value = $score_info["calypso_count"];
+            $new_stat_val = 1.0*(($round_number - 1)*$current_stat_val + $round_value)/$round_number;
+            self::setStat($new_stat_val, $stat_name, $player_id);
+            $ave_calypso_counter += $new_stat_val;
+        }
+        self::setStat($ave_calypso_counter, "average_calypsos_per_round");
     }
 
     function checkAllCardsExist(){
@@ -1155,12 +1176,14 @@ class Calypso extends Table
     }
 
     function stEndRound() {
+        $round_number = self::getGameStateValue('roundNumber');
         self::updateScores();
-        self::displayScores();
+        self::displayScores($round_number);
 
+        self::updateRoundStats();
         $num_rounds = self::getGameStateValue( 'totalRounds' );
         
-        if(self::getGameStateValue( 'roundNumber' ) < $num_rounds){
+        if($round_number < $num_rounds){
             $this->gamestate->nextState('nextRound');
         } else {
             $this->gamestate->nextState('endGame');
