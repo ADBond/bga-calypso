@@ -53,22 +53,55 @@ $stats_type = array(
     "table" => array(
 
         "average_calypsos_per_round" => array(
-            "id"=> 10,
+            "id" => 10,
             "name" => totranslate("Total calypsos per round"),
-            "type" => "float"
+            "type" => "float",
         ),
+        "average_points_per_round" => array(
+            "id" => 11,
+            "name" => totranslate("Average individual score per round"),
+            "type" => "float",
+        )
 
     ),
     
     // Statistics existing for each player
     "player" => array(
         // per round statistics
-        "calypsos_per_round" => array("id"=> 10,
-                    "name" => totranslate("Average calypsos per round (individual)"),
-                    "type" => "float" ),
-        // "calypsos_per_round_part" => array("id"=> 11,
-        //             "name" => totranslate("Average completed calypsos per round (partnership)"),
-        //             "type" => "float" ),
-
+        "calypsos_per_round" => array(
+            "id" => 10,
+            "name" => totranslate("Average calypsos per round (individual)"),
+            "type" => "float"
+        ),
+        "calypso_points_per_round" => array(
+            "id" => 12,
+            "name" => totranslate("Average calypso points per round (individual)"),
+            "type" => "float",
+        ),
+        "incomplete_calypso_cards_per_round" => array(
+            "id" => 14,
+            "name" => totranslate("Average incomplete calypso cards per round (individual)"),
+            "type" => "float",
+        ),
+        "trickpile_cards_per_round" => array(
+            "id" => 16,
+            "name" => totranslate("Average trickpile cards per round (individual)"),
+            "type" => "float",
+        ),
+        "points_per_round" => array(
+            "id" => 18,
+            "name" => totranslate("Average points per round (individual)"),
+            "type" => "float",
+        ),
+        "partnership_points_per_round" => array(
+            "id" => 19,
+            "name" => totranslate("Average points per round (partnership)"),
+            "type" => "float",
+        ),
+        "total_cards_won" => array(
+            "id" => 20,
+            "name" => totranslate("Total captured cards per round (individual)"),
+            "type" => "float",
+        ),
     )
 );

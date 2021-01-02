@@ -196,14 +196,18 @@ class Calypso extends Table
 
         $this->cards->createCards( $cards, 'deck' );
 
-        // Init game statistics
-        // (note: statistics used in this file must be defined in your stats.inc.php file)
-        //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
-        //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
+        // Init game statistics - see stats.inc.php
         self::initStat('table', 'average_calypsos_per_round', 0);
+        self::initStat('table', 'average_points_per_round', 0);
 
         self::initStat('player', 'calypsos_per_round', 0);
-        // self::initStat('player', 'calypsos_per_round_part', 0);
+        self::initStat('player', 'calypso_points_per_round', 0);
+        self::initStat('player', 'incomplete_calypso_cards_per_round', 0);
+        self::initStat('player', 'trickpile_cards_per_round', 0);
+        self::initStat('player', 'points_per_round', 0);
+        self::initStat('player', 'partnership_points_per_round', 0);
+        self::initStat('player', 'total_cards_won', 0);
+
 
         self::reloadPlayersBasicInfos();
         $this->activeNextPlayer();
@@ -866,21 +870,37 @@ class Calypso extends Table
         //         'part_calypso_count' => $calypso_cards,
         //         'won_cards_count' => $won_cards,
         //         'partnership_score
-        // and countsToScores
+        //calypso_score' => $calypso_score,
+        // 'part_calypso_score' => $part_calypso_score,
+        // 'won_cards_score' => $won_cards_score,
+        // 'total_score
 
-        function updateStat($stat_name, $round_value, $player_id){
+        $update_stat = function($stat_name, $round_value, $player_id){
+            // global $round_number;
+            $round_number = self::getGameStateValue('roundNumber');
             $current_stat_val = self::getStat($stat_name, $player_id);
             $new_stat_val = 1.0*(($round_number - 1)*$current_stat_val + $round_value)/$round_number;
             self::setStat($new_stat_val, $stat_name, $player_id);
             return $new_stat_val;
-        }
+        };
 
         $ave_calypso_counter = 0;
+        $individual_points_counter = 0;
         foreach ( $players as $player_id => $score_info ) {
-            $new_stat_val = updateStat("calypsos_per_round", $score_info["calypso_count"], $player_id);
+            $new_stat_val = $update_stat("calypsos_per_round", $score_info["calypso_count"], $player_id);
             $ave_calypso_counter += $new_stat_val;
+            $new_stat_val = $update_stat("calypso_points_per_round", $score_info["calypso_score"], $player_id);
+            $new_stat_val = $update_stat("incomplete_calypso_cards_per_round", $score_info["part_calypso_count"], $player_id);
+            $new_stat_val = $update_stat("trickpile_cards_per_round", $score_info["won_cards_count"], $player_id);
+            $new_stat_val = $update_stat("points_per_round", $score_info["total_score"], $player_id);
+            $individual_points_counter += $new_stat_val;
+            $new_stat_val = $update_stat("partnership_points_per_round", $score_info["partnership_score"], $player_id);
+            $total_cards = $score_info["won_cards_count"] + $score_info["part_calypso_count"] + 13*$score_info["calypso_count"];
+            $new_stat_val = $update_stat("total_cards_won", $total_cards, $player_id);
+
         }
         self::setStat($ave_calypso_counter, "average_calypsos_per_round");
+        self::setStat(1.0*$individual_points_counter/4, "average_points_per_round");
     }
 
     function checkAllCardsExist(){

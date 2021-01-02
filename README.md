@@ -8,18 +8,19 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * Make some stats, eh?
   * table:
-    * average points/round
+    * ~~average points/round~~
     * ~~average calypsos completed/round~~
   * player:
-    * these per player and per partnership (?):
-      * ~~calypsos/round~~ /player done
-      * calypso points/round
-      * incomplete calypso cards/round
-      * trickpile cards/round
-      * total cards won/round
-      * points/round
+    * these ~~per player~~ and per partnership (?):
+      * ~~calypsos/round~~
+      * ~~calypso points/round~~
+      * ~~incomplete calypso cards/round~~
+      * ~~trickpile cards/round~~
+      * ~~total cards won/round~~
+      * ~~points/round~~
     * just per player:
       * points/round when first hand leader
+      * fastest calypso (trick number)
     * per hand:
       * personal trumps dealt
       * partner trumps dealt
