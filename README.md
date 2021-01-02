@@ -16,15 +16,15 @@ a fluid list to remember what needs to be done before pulling in and starting a 
       * ~~calypso points/round~~
       * ~~incomplete calypso cards/round~~
       * ~~trickpile cards/round~~
-      * ~~total cards won/round~~
+      * ~~total cards won/round~~ get rid of this, total tricks (below) is better
       * ~~points/round~~
     * just per player:
       * points/round when first hand leader
       * fastest calypso (trick number)
     * per hand:
-      * personal trumps dealt
-      * partner trumps dealt
-      * opponent trumps dealt
+      * ~~personal trumps dealt~~
+      * ~~partner trumps dealt~~
+      * ~~opponent trumps dealt~~
       * tricks won by leading trumps
       * tricks won trumping in
       * total tricks won

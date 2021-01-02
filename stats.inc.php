@@ -98,9 +98,25 @@ $stats_type = array(
             "name" => totranslate("Average points per round (partnership)"),
             "type" => "float",
         ),
-        "total_cards_won" => array(
-            "id" => 20,
-            "name" => totranslate("Total captured cards per round (individual)"),
+        // "total_cards_won" => array(
+        //     "id" => 20,
+        //     "name" => totranslate("Total captured cards per round (individual)"),
+        //     "type" => "float",
+        // ),
+
+        "personal_trumps_per_hand" => array(
+            "id" => 30,
+            "name" => totranslate("Average personal trumps dealt per hand"),
+            "type" => "float",
+        ),
+        "partner_trumps_per_hand" => array(
+            "id" => 31,
+            "name" => totranslate("Average partner trumps dealt per hand"),
+            "type" => "float",
+        ),
+        "opponent_trumps_per_hand" => array(
+            "id" => 32,
+            "name" => totranslate("Average opponent trumps dealt per hand"),
             "type" => "float",
         ),
     )
