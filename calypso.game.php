@@ -284,10 +284,11 @@ class Calypso extends Table
     */
     function getGameProgression()
     {
-        // AB TODO: compute and return the game progression
-        // should be simple arithemetic from total number of hands, usually
+        // TODO: maybe it would be better to do this by trick 
+        $total_rounds = self::getGameStateValue('totalRounds');
+        $last_hand_number = self::getHandNumber() - 1;
 
-        return 0;
+        return round(100.0*$last_hand_number/(4*$total_rounds));
     }
 
 
