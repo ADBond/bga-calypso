@@ -19,7 +19,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
       * ~~total cards won/round~~ ~~get rid of this, total tricks (below) is better~~
       * ~~points/round~~
     * just per player:
-      * points/round when first hand leader
+      * points/round by position (in for a penny...)
       * fastest calypso (trick number)
     * per hand:
       * ~~personal trumps dealt~~
@@ -67,6 +67,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~check that the all the cards exist at all times, and get dealt out over the course of a round~~
   * ~~mostly okay, but needs checking~~
 * ~~Add a separate code licence~~, and make repo public once that's done
+* Use game-level constants in place of magic numbers where possible
 
 ### Display
 

@@ -20,6 +20,12 @@ require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 
 class Calypso extends Table
 {
+	// Trick-winning method constants
+	const TRUMP_LEAD = 1;
+	const FIRST_TRUMP = 2;
+	const OVERTRUMP = 3;
+    const PLAINSUIT = 4;
+
 	function __construct( )
 	{
         //  You can use any number of global variables with IDs between 10 and 99.
@@ -42,6 +48,9 @@ class Calypso extends Table
                          "trumpLead" => 25,
                          // has someone trumped in?
                          "trumpPlayed" => 26,
+                         // track method of current trick winner
+                         // 1=trump_lead, 2=first_trump, 3=overtrump, 4=plainsuit, see constants above
+                         "winningMethod" => 27,
 
                          // what round are we on, and which hand in the round?
                          "roundNumber" => 31,
@@ -500,12 +509,37 @@ class Calypso extends Table
         // no winning card currently
         self::setGameStateInitialValue( 'bestCardSuit', 0 );
         self::setGameStateInitialValue( 'bestCardRank', 0 );
+        // no current winner, so no associated method
+        self::setGameStateValue( 'winningMethod', 0 );
     }
 
-    function setWinner( $best_player_id, $best_card ){
+    function setWinner( $best_player_id, $best_card, $method ){
         self::setGameStateValue( 'currentTrickWinner', $best_player_id );
         self::setGameStateValue( 'bestCardSuit', $best_card['type'] );
         self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
+        self::setGameStateValue( 'winningMethod', $method );
+    }
+
+    function updateWinnerMethodCount($trick_winner_id, $winning_method){
+        switch($winning_method){
+            case self::TRUMP_LEAD:
+                $column = "tricks_won_trump_lead";
+                break;
+            case self::FIRST_TRUMP:
+                $column = "tricks_won_first_trump";
+                break;
+            case self::OVERTRUMP;
+                $column = "tricks_won_overtrump";
+                break;
+            case self::PLAINSUIT;
+                $column = "tricks_won_plainsuit";
+                break;
+            default:
+                $column = "tricks_won_error_should_handle_better";
+                break;
+        }
+        $sql = "UPDATE player SET ".$column."=".$column."+1 WHERE player_id=".$trick_winner_id.";";
+        self::DbQuery($sql);
     }
 
     function getTrickPile($player_id){
@@ -996,11 +1030,12 @@ class Calypso extends Table
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
+                self::setWinner( $player_id, $currentCard, self::TRUMP_LEAD );
             } else {
                 // this _should_ be irrelevant, but can't hurt
                 self::setGameStateValue( 'trumpLead', 0 );
+                self::setWinner( $player_id, $currentCard, self::PLAINSUIT );
             }
-            self::setWinner( $player_id, $currentCard );
         } else {
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
@@ -1013,7 +1048,7 @@ class Calypso extends Table
                 if ( self::getGameStateValue( 'trumpLead' ) == 0 ){
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
                         if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' ) ){
-                            self::setWinner( $player_id, $currentCard );
+                            self::setWinner( $player_id, $currentCard, self::PLAINSUIT );
                         }
                     }
                 }
@@ -1036,12 +1071,12 @@ class Calypso extends Table
                 if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
-                        self::setWinner( $player_id, $currentCard );
+                        self::setWinner( $player_id, $currentCard, self::FIRST_TRUMP );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else {
                         // if trumpPlayed - check if we're higher, in which case we're winning. Otherwise still a loser
                         if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
-                            self::setWinner( $player_id, $currentCard );
+                            self::setWinner( $player_id, $currentCard, self::OVERTRUMP );
                         }
                     }
                 }
@@ -1195,6 +1230,9 @@ class Calypso extends Table
         if ($this->cards->countCardInLocation('cardsontable') == 4) {
             // This is the end of the trick
             $this->processCompletedTrick();
+            $winning_method = self::getGameStateValue('winningMethod');
+            $trick_winner_id = self::getGameStateValue('currentTrickWinner');
+            self::updateWinnerMethodCount($trick_winner_id, $winning_method);
             if ($this->cards->countCardInLocation('hand') == 0) {
                 // End of the hand
                 $this->gamestate->nextState("endHand");
