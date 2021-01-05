@@ -25,9 +25,9 @@ a fluid list to remember what needs to be done before pulling in and starting a 
       * ~~personal trumps dealt~~
       * ~~partner trumps dealt~~
       * ~~opponent trumps dealt~~
-      * tricks won by leading trumps
-      * tricks won trumping in
-      * total tricks won
+      * ~~tricks won by leading trumps~~
+      * ~~tricks won trumping in~~
+      * ~~total tricks won~~
 
 ## For a different branch
 

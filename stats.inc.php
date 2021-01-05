@@ -61,7 +61,29 @@ $stats_type = array(
             "id" => 11,
             "name" => totranslate("Average individual score per round"),
             "type" => "float",
-        )
+        ),
+
+        // may as well keep analagous ids as for player stats
+        "proportion_tricks_won_trump_lead" => array(
+            "id" => 41,
+            "name" => totranslate("Proportion of tricks won by leading trumps"),
+            "type" => "float",
+        ),
+        "proportion_tricks_won_first_trump" => array(
+            "id" => 42,
+            "name" => totranslate("Proportion of tricks won by trumping in first"),
+            "type" => "float",
+        ),
+        "proportion_tricks_won_overtrump" => array(
+            "id" => 43,
+            "name" => totranslate("Proportion of tricks won by overtrumping"),
+            "type" => "float",
+        ),
+        "proportion_tricks_won_plainsuit" => array(
+            "id" => 44,
+            "name" => totranslate("Proportion of tricks won by highest plainsuit card"),
+            "type" => "float",
+        ),
 
     ),
     
@@ -117,6 +139,27 @@ $stats_type = array(
         "opponent_trumps_per_hand" => array(
             "id" => 32,
             "name" => totranslate("Average opponent trumps dealt per hand"),
+            "type" => "float",
+        ),
+
+        "tricks_won_total_per_hand" => array(
+            "id" => 40,
+            "name" => totranslate("Average tricks won per hand"),
+            "type" => "float",
+        ),
+        "tricks_won_trump_lead_per_hand" => array(
+            "id" => 41,
+            "name" => totranslate("Average tricks won by leading trumps per hand"),
+            "type" => "float",
+        ),
+        "tricks_won_first_trump_per_hand" => array(
+            "id" => 42,
+            "name" => totranslate("Average tricks won by trumping in first per hand"),
+            "type" => "float",
+        ),
+        "tricks_won_overtrump_per_hand" => array(
+            "id" => 43,
+            "name" => totranslate("Average tricks won by overtrumping per hand"),
             "type" => "float",
         ),
     )
