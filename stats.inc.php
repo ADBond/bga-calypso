@@ -64,6 +64,12 @@ $stats_type = array(
         ),
 
         // may as well keep analagous ids as for player stats
+        "fastest_calypso" => array(
+            "id" => 35,
+            "name" => totranslate("Fastest calypso (by number of tricks)"),
+            "type" => "int"
+        ),
+
         "proportion_tricks_won_trump_lead" => array(
             "id" => 41,
             "name" => totranslate("Proportion of tricks won by leading trumps"),
@@ -120,6 +126,7 @@ $stats_type = array(
             "name" => totranslate("Average points per round (partnership)"),
             "type" => "float",
         ),
+        
         // "total_cards_won" => array(
         //     "id" => 20,
         //     "name" => totranslate("Total captured cards per round (individual)"),
@@ -140,6 +147,12 @@ $stats_type = array(
             "id" => 32,
             "name" => totranslate("Average opponent trumps dealt per hand"),
             "type" => "float",
+        ),
+
+        "fastest_calypso" => array(
+            "id" => 35,
+            "name" => totranslate("Fastest calypso (by number of tricks)"),
+            "type" => "int"
         ),
 
         "tricks_won_total_per_hand" => array(

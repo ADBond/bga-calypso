@@ -20,7 +20,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
       * ~~points/round~~
     * just per player:
       * points/round by position (in for a penny...)
-      * fastest calypso (trick number)
+      * ~~fastest calypso (trick number)~~
     * per hand:
       * ~~personal trumps dealt~~
       * ~~partner trumps dealt~~
@@ -127,9 +127,12 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Variants
 
+* Seems to be enough around of 'beat the leader' to include as a variant. Maybe doesn't need to be done for alpha though
+  * (i.e. trumping in to trump lead must be higher. Rule as it stands seems better to me, but nice to have both, not in too much danger of configuration hell here.)
+
 ~~Possibly.~~
 
 * ~~See https://boardgamegeek.com/thread/514183/game-got-lost-shuffle for a variant trick-winning rule: last trump-in wins~~
 * ~~From question in that thread also: variant where you must beat leader when trumping in?~~
 
-Not in first pass at any rate - not sure if there's much value to this, and Culbertson at least in fact agrees with usual rule.
+~~Not in first pass at any rate - not sure if there's much value to this, and Culbertson at least in fact agrees with usual rule.~~

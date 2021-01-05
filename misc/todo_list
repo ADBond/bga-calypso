@@ -11,7 +11,6 @@
 ./calypso.game.php:403:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
 ./calypso.game.php:420:        // TODO: this feels horrible - is there a nice way that won't be overkill?
 ./calypso.game.php:461:        // TODO: if I'm going to say why trick was won, then here is ideal.
-./calypso.game.php:497:                // TODO: here we check for fastest calypso, and update as appropriate!
 ./calypso.game.php:585:    // TODO: uniformise names
 ./calypso.game.php:709:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
 ./calypso.game.php:711:                // AB TODO: updated db when I've updated the model to allow the field
@@ -19,12 +18,12 @@
 ./calypso.game.php:859:        // TODO: we should get the players in partnership order!
 ./calypso.game.php:889:            // TODO: this is also a place where partnershit will change
 ./calypso.game.php:906:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:1056:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:1092:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1269:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1323:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1332:        // TODO: this notification should go, as that info should be in player boxes.
-./calypso.game.php:1347:        // TODO: at best this should say hand X is over, or just scrap it altogether
+./calypso.game.php:1068:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:1104:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1281:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1335:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1344:        // TODO: this notification should go, as that info should be in player boxes.
+./calypso.game.php:1359:        // TODO: at best this should say hand X is over, or just scrap it altogether
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:77:            // TODO: specialise to suits?

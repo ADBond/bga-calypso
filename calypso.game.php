@@ -494,7 +494,7 @@ class Calypso extends Table
         ) );
         if(!empty($calypsos_completed)){
             foreach($calypsos_completed as $player_id){
-                // TODO: here we check for fastest calypso, and update as appropriate!
+                self::updateFastestCalypso($player_id);
                 self::notifyAllPlayers(
                     'calypsoComplete',
                     clienttranslate('${player_name} has completed a calypso!'),
@@ -923,6 +923,18 @@ class Calypso extends Table
                 'scores' => $scores_for_updating
             )
         );
+    }
+
+    function updateFastestCalypso($player_id){
+        $fastest = self::getStat("fastest_calypso", $player_id);
+        $trick_number = self::getTrickNumber();
+        if(is_nan($fastest) or $trick_number < $fastest){
+            self::setStat("fastest_calypso, $player_id");
+        }
+        $fastest_overall = self::getStat("fastest_calypso");
+        if(is_nan($fastest_overall) or $trick_number < $fastest_overall){
+            self::setStat("fastest_calypso");
+        }
     }
 
     function getHandNumber(){
