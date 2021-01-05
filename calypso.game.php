@@ -972,6 +972,10 @@ class Calypso extends Table
     function updatePostHandStats(){
         $hands_completed = self::getHandNumber();
         $players = self::getPlayerTrickInfo();
+        $trump_lead_won_all = 0;
+        $first_trump_won_all = 0;
+        $overtrump_won_all = 0;
+        $plainsuit_won_all = 0;
         foreach($players as $player_id => $player_trick_info){
             $total_tricks_won = $player_trick_info["tricks_won_trump_lead"] +
                     $player_trick_info["tricks_won_first_trump"] +
@@ -997,7 +1001,15 @@ class Calypso extends Table
                 "tricks_won_overtrump_per_hand",
                 $player_id
             );
+            $trump_lead_won_all += $player_trick_info["tricks_won_trump_lead"];
+            $first_trump_won_all += $player_trick_info["tricks_won_first_trump"];
+            $overtrump_won_all += $player_trick_info["tricks_won_overtrump"];
+            $plainsuit_won_all += $player_trick_info["tricks_won_plainsuit"];
         }
+        self::setStat(1.0*$trump_lead_won_all/(13*$hands_completed), "proportion_tricks_won_trump_lead");
+        self::setStat(1.0*$first_trump_won_all/(13*$hands_completed), "proportion_tricks_won_first_trump");
+        self::setStat(1.0*$overtrump_won_all/(13*$hands_completed), "proportion_tricks_won_overtrump");
+        self::setStat(1.0*$plainsuit_won_all/(13*$hands_completed), "proportion_tricks_won_plainsuit");
     }
 
     function updateRoundStats(){
