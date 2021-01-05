@@ -55,6 +55,8 @@ class Calypso extends Table
                          // what round are we on, and which hand in the round?
                          "roundNumber" => 31,
                          "handNumber" => 32,
+                         // trick number as well, as convenient for stats/progression
+                         "trickNumber" => 33,
 
                          // gameoptions - see gameoptions.inc.php
                          // how many rounds we play to
@@ -190,6 +192,7 @@ class Calypso extends Table
 
         // pre-game value
         self::setGameStateInitialValue( 'roundNumber', 0 );
+        self::setGameStateInitialValue( 'trickNumber', 0 );
 
         // Create 4 identiical decks of cards
         // see material.inc.php to confirm the labelling
@@ -303,11 +306,9 @@ class Calypso extends Table
     */
     function getGameProgression()
     {
-        // TODO: maybe it would be better to do this by trick 
         $total_rounds = self::getGameStateValue('totalRounds');
-        $last_hand_number = self::getHandNumber() - 1;
-
-        return round(100.0*$last_hand_number/(4*$total_rounds));
+        $tricks_completed = self::getTrickNumber() - 1;
+        return round(100.0*$tricks_completed/(13*4*$total_rounds));
     }
 
 
@@ -493,6 +494,7 @@ class Calypso extends Table
         ) );
         if(!empty($calypsos_completed)){
             foreach($calypsos_completed as $player_id){
+                // TODO: here we check for fastest calypso, and update as appropriate!
                 self::notifyAllPlayers(
                     'calypsoComplete',
                     clienttranslate('${player_name} has completed a calypso!'),
@@ -929,6 +931,12 @@ class Calypso extends Table
         return ($round_number - 1)*4 + $hand_this_round;
     }
 
+    function getTrickNumber(){
+        $hand_number = self::getHandNumber();
+        $trick_this_round = self::getGameStateValue('trickNumber');
+        return ($hand_number - 1)*13 + $trick_this_round;
+    }
+
     function updatePerHandStat($stat_name, $hand_value, $player_id){
         $hand_number = self::getHandNumber();
         $current_stat_val = self::getStat($stat_name, $player_id);
@@ -1233,6 +1241,8 @@ class Calypso extends Table
         $old_hand_number = self::getGameStateValue( 'handNumber' );
         $hand_number = $old_hand_number + 1;
         self::setGameStateValue( 'handNumber', $hand_number );
+        // always start at trick number 1
+        self::setGameStateValue( 'trickNumber', 1 );
         self::notifyAllPlayers(
             "update",
             clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round'),
@@ -1293,8 +1303,14 @@ class Calypso extends Table
 
     function stNextPlayer() {
         if ($this->cards->countCardInLocation('cardsontable') == 4) {
+            
+            // count trick number here, so we can get to 13.
+            $new_trick_number = self::getGameStateValue('trickNumber') + 1;
+            self::setGameStateValue('trickNumber', $new_trick_number);
+
             // This is the end of the trick
             $this->processCompletedTrick();
+
             if ($this->cards->countCardInLocation('hand') == 0) {
                 // End of the hand
                 $this->gamestate->nextState("endHand");
