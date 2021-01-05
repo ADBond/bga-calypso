@@ -101,9 +101,19 @@ $stats_type = array(
             "name" => totranslate("Average calypsos per round (individual)"),
             "type" => "float"
         ),
+        "partnership_calypsos_per_round" => array(
+            "id" => 11,
+            "name" => totranslate("Average calypsos per round (partnership)"),
+            "type" => "float"
+        ),
         "calypso_points_per_round" => array(
             "id" => 12,
             "name" => totranslate("Average calypso points per round (individual)"),
+            "type" => "float",
+        ),
+        "partnership_calypso_points_per_round" => array(
+            "id" => 13,
+            "name" => totranslate("Average calypso points per round (partnership)"),
             "type" => "float",
         ),
         "incomplete_calypso_cards_per_round" => array(
@@ -111,9 +121,19 @@ $stats_type = array(
             "name" => totranslate("Average incomplete calypso cards per round (individual)"),
             "type" => "float",
         ),
+        "partnership_incomplete_calypso_cards_per_round" => array(
+            "id" => 15,
+            "name" => totranslate("Average incomplete calypso cards per round (partnership)"),
+            "type" => "float",
+        ),
         "trickpile_cards_per_round" => array(
             "id" => 16,
             "name" => totranslate("Average trickpile cards per round (individual)"),
+            "type" => "float",
+        ),
+        "partnership_trickpile_cards_per_round" => array(
+            "id" => 17,
+            "name" => totranslate("Average trickpile cards per round (partnership)"),
             "type" => "float",
         ),
         "points_per_round" => array(

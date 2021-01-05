@@ -1,29 +1,30 @@
 ./calypso.game.php:90:        // TODO: colours
 ./calypso.game.php:97:        // TODO: is this whole process a little unnecessarily complex? or that's just the way it is?? need a think
 ./calypso.game.php:181:            // TODO: delete:
-./calypso.game.php:256:        // TODO: check there is not any naughty secret info here? don't think so
-./calypso.game.php:288:            // TODO: is this not a kind of bullshit way to do this?
-./calypso.game.php:343:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
-./calypso.game.php:349:    // TODO: check here and under that there isn't a secret option number 3?
-./calypso.game.php:373:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
-./calypso.game.php:397:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
-./calypso.game.php:401:        // TODO: don't need these notifications long-term
-./calypso.game.php:403:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
-./calypso.game.php:420:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:461:        // TODO: if I'm going to say why trick was won, then here is ideal.
-./calypso.game.php:585:    // TODO: uniformise names
-./calypso.game.php:709:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-./calypso.game.php:711:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:761:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:859:        // TODO: we should get the players in partnership order!
-./calypso.game.php:889:            // TODO: this is also a place where partnershit will change
-./calypso.game.php:906:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:1068:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:1104:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1281:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1335:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1344:        // TODO: this notification should go, as that info should be in player boxes.
-./calypso.game.php:1359:        // TODO: at best this should say hand X is over, or just scrap it altogether
+./calypso.game.php:260:        // TODO: check there is not any naughty secret info here? don't think so
+./calypso.game.php:292:            // TODO: is this not a kind of bullshit way to do this?
+./calypso.game.php:351:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
+./calypso.game.php:357:    // TODO: check here and under that there isn't a secret option number 3?
+./calypso.game.php:381:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
+./calypso.game.php:404:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
+./calypso.game.php:408:        // TODO: don't need these notifications long-term
+./calypso.game.php:410:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
+./calypso.game.php:427:        // TODO: this feels horrible - is there a nice way that won't be overkill?
+./calypso.game.php:468:        // TODO: if I'm going to say why trick was won, then here is ideal.
+./calypso.game.php:592:    // TODO: uniformise names
+./calypso.game.php:716:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+./calypso.game.php:718:                // AB TODO: updated db when I've updated the model to allow the field
+./calypso.game.php:768:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+./calypso.game.php:866:        // TODO: we should get the players in partnership order!
+./calypso.game.php:896:            // TODO: this is also a place where partnershit will change
+./calypso.game.php:913:        // TODO: probably want to display this aspect betterly
+./calypso.game.php:1109:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:1145:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1200:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1324:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1378:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1387:        // TODO: this notification should go, as that info should be in player boxes.
+./calypso.game.php:1402:        // TODO: at best this should say hand X is over, or just scrap it altogether
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:77:            // TODO: specialise to suits?

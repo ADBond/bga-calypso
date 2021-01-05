@@ -218,9 +218,13 @@ class Calypso extends Table
         self::initStat('table', 'proportion_tricks_won_plainsuit', 0);
 
         self::initStat('player', 'calypsos_per_round', 0);
+        self::initStat('player', 'partnership_calypsos_per_round', 0);
         self::initStat('player', 'calypso_points_per_round', 0);
+        self::initStat('player', 'partnership_calypso_points_per_round', 0);
         self::initStat('player', 'incomplete_calypso_cards_per_round', 0);
+        self::initStat('player', 'partnership_incomplete_calypso_cards_per_round', 0);
         self::initStat('player', 'trickpile_cards_per_round', 0);
+        self::initStat('player', 'partnership_trickpile_cards_per_round', 0);
         self::initStat('player', 'points_per_round', 0);
         self::initStat('player', 'partnership_points_per_round', 0);
         // self::initStat('player', 'total_cards_won', 0);
@@ -340,6 +344,10 @@ class Calypso extends Table
         return $query_result[$suit];
     }
 
+    function getPartnerID($player_id){
+        return self::getAdjacentPlayer($player_id, 2);
+    }
+
     // TODO: I think there is an in-built for this? Can't find it for the mo tho
     function getPlayerName($player_id){
         $players = self::loadPlayersBasicInfos();
@@ -374,10 +382,9 @@ class Calypso extends Table
             $new_player_number = ($existing_player_number + $direction_index) % 4;
             $new_player_number = ($new_player_number == 0) ? 4 : $new_player_number;
             if($new_player_number == $player["player_no"]){
-                $new_player = $player_id;
+                return $player_id;
             }
         }
-        return $new_player;
     }
 
     function getPlayerDirections(){
@@ -927,26 +934,39 @@ class Calypso extends Table
 
     function updateFastestCalypso($player_id){
         $fastest = self::getStat("fastest_calypso", $player_id);
-        $trick_number = self::getTrickNumber();
-        if(is_nan($fastest) or $trick_number < $fastest){
-            self::setStat("fastest_calypso, $player_id");
+        $tricks_completed = self::getTrickNumberThisRound() - 1;
+        // un-set stats return 0. We want it unset, as we want it undefined if players never complete
+        if($fastest == 0){
+            self::initStat("player", "fastest_calypso", $trick_number, $player_id);
+        } elseif($trick_number < $fastest){
+            self::setStat("player", "fastest_calypso, $trick_number, $player_id");
         }
         $fastest_overall = self::getStat("fastest_calypso");
-        if(is_nan($fastest_overall) or $trick_number < $fastest_overall){
-            self::setStat("fastest_calypso");
+        if($fastest_overall == 0){
+            self::initStat("table", "fastest_calypso", $trick_number);
+        } elseif($trick_number < $fastest_overall){
+            self::setStat("table", "fastest_calypso", $trick_number);
         }
     }
 
+    // Hand number OVERALL
     function getHandNumber(){
         $hand_this_round = self::getGameStateValue('handNumber');
         $round_number = self::getGameStateValue('roundNumber');
         return ($round_number - 1)*4 + $hand_this_round;
     }
 
+    // trick number OVERALL, not just by round!
     function getTrickNumber(){
         $hand_number = self::getHandNumber();
         $trick_this_round = self::getGameStateValue('trickNumber');
         return ($hand_number - 1)*13 + $trick_this_round;
+    }
+
+    function getTrickNumberThisRound(){
+        $hand_number_this_round = self::getGameStateValue('handNumber');
+        $trick_this_round = self::getGameStateValue('trickNumber');
+        return ($hand_number_this_round - 1)*13 + $trick_this_round;
     }
 
     function updatePerHandStat($stat_name, $hand_value, $player_id){
@@ -1047,11 +1067,32 @@ class Calypso extends Table
         $ave_calypso_counter = 0;
         $individual_points_counter = 0;
         foreach ( $players as $player_id => $score_info ) {
+            $partner_id = self::getPartnerID($player_id);
             $new_stat_val = self::updatePerRoundStat("calypsos_per_round", $score_info["calypso_count"], $player_id);
             $ave_calypso_counter += $new_stat_val;
-            $new_stat_val = self::updatePerRoundStat("calypso_points_per_round", $score_info["calypso_score"], $player_id);
-            $new_stat_val = self::updatePerRoundStat("incomplete_calypso_cards_per_round", $score_info["part_calypso_count"], $player_id);
-            $new_stat_val = self::updatePerRoundStat("trickpile_cards_per_round", $score_info["won_cards_count"], $player_id);
+            self::updatePerRoundStat(
+                "partnership_calypsos_per_round",
+                $score_info["calypso_count"] + $players[$partner_id]["calypso_count"],
+                $player_id
+            );
+            self::updatePerRoundStat("calypso_points_per_round", $score_info["calypso_score"], $player_id);
+            self::updatePerRoundStat(
+                "partnership_calypso_points_per_round",
+                $score_info["calypso_score"] + $players[$partner_id]["calypso_score"],
+                $player_id
+            );
+            self::updatePerRoundStat("incomplete_calypso_cards_per_round", $score_info["part_calypso_count"], $player_id);
+            self::updatePerRoundStat(
+                "partnership_incomplete_calypso_cards_per_round",
+                $score_info["part_calypso_count"] + $players[$partner_id]["part_calypso_count"],
+                $player_id
+            );
+            self::updatePerRoundStat("trickpile_cards_per_round", $score_info["won_cards_count"], $player_id);
+            self::updatePerRoundStat(
+                "partnership_trickpile_cards_per_round",
+                $score_info["won_cards_count"] + $players[$partner_id]["won_cards_count"],
+                $player_id
+            );
             $new_stat_val = self::updatePerRoundStat("points_per_round", $score_info["total_score"], $player_id);
             $individual_points_counter += $new_stat_val;
             $new_stat_val = self::updatePerRoundStat("partnership_points_per_round", $score_info["partnership_score"], $player_id);
@@ -1156,6 +1197,7 @@ class Calypso extends Table
                 if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
+                        // TODO: here we need to implement the optional check of rank
                         self::setWinner( $player_id, $currentCard, self::FIRST_TRUMP );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else {
@@ -1167,13 +1209,14 @@ class Calypso extends Table
                 }
             }
         }
+        $tmp = self::getStat("fastest_calypso");
         // And notify
         self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
                 'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
                 'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
                 'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
                 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
-                'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
+                'trump' => $tmp//$this->suits [self::getPlayerSuit($player_id)] ['name']
              ));
         $this->gamestate->nextState('playCard');
     }
