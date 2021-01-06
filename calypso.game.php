@@ -20,6 +20,12 @@ require_once( APP_GAMEMODULE_PATH.'module/table/table.game.php' );
 
 class Calypso extends Table
 {
+	// Trick-winning method constants
+	const TRUMP_LEAD = 1;
+	const FIRST_TRUMP = 2;
+	const OVERTRUMP = 3;
+    const PLAINSUIT = 4;
+
 	function __construct( )
 	{
         //  You can use any number of global variables with IDs between 10 and 99.
@@ -42,10 +48,15 @@ class Calypso extends Table
                          "trumpLead" => 25,
                          // has someone trumped in?
                          "trumpPlayed" => 26,
+                         // track method of current trick winner
+                         // 1=trump_lead, 2=first_trump, 3=overtrump, 4=plainsuit, see constants above
+                         "winningMethod" => 27,
 
                          // what round are we on, and which hand in the round?
                          "roundNumber" => 31,
                          "handNumber" => 32,
+                         // trick number as well, as convenient for stats/progression
+                         "trickNumber" => 33,
 
                          // gameoptions - see gameoptions.inc.php
                          // how many rounds we play to
@@ -115,8 +126,7 @@ class Calypso extends Table
         $first_dealer_id = array_search($first_dealer_order_number, $player_table_orders);
         self::setGameStateInitialValue( 'firstHandDealer', $first_dealer_id );
         self::setGameStateInitialValue( 'currentDealer', $first_dealer_id );
-        
-        // TODO: then set up partnerships, to re-order player_table (keeping)
+
         // set up partnerships
         $player_orders = array(1, 2, 3, 4);
         switch(self::getGameStateValue('partnerships')){
@@ -182,6 +192,7 @@ class Calypso extends Table
 
         // pre-game value
         self::setGameStateInitialValue( 'roundNumber', 0 );
+        self::setGameStateInitialValue( 'trickNumber', 0 );
 
         // Create 4 identiical decks of cards
         // see material.inc.php to confirm the labelling
@@ -197,10 +208,35 @@ class Calypso extends Table
 
         $this->cards->createCards( $cards, 'deck' );
 
-        // Init game statistics
-        // (note: statistics used in this file must be defined in your stats.inc.php file)
-        //self::initStat( 'table', 'table_teststat1', 0 );    // Init a table statistics
-        //self::initStat( 'player', 'player_teststat1', 0 );  // Init a player statistics (for all players)
+        // Init game statistics - see stats.inc.php
+        self::initStat('table', 'average_calypsos_per_round', 0);
+        self::initStat('table', 'average_points_per_round', 0);
+
+        self::initStat('table', 'proportion_tricks_won_trump_lead', 0);
+        self::initStat('table', 'proportion_tricks_won_first_trump', 0);
+        self::initStat('table', 'proportion_tricks_won_overtrump', 0);
+        self::initStat('table', 'proportion_tricks_won_plainsuit', 0);
+
+        self::initStat('player', 'calypsos_per_round', 0);
+        self::initStat('player', 'partnership_calypsos_per_round', 0);
+        self::initStat('player', 'calypso_points_per_round', 0);
+        self::initStat('player', 'partnership_calypso_points_per_round', 0);
+        self::initStat('player', 'incomplete_calypso_cards_per_round', 0);
+        self::initStat('player', 'partnership_incomplete_calypso_cards_per_round', 0);
+        self::initStat('player', 'trickpile_cards_per_round', 0);
+        self::initStat('player', 'partnership_trickpile_cards_per_round', 0);
+        self::initStat('player', 'points_per_round', 0);
+        self::initStat('player', 'partnership_points_per_round', 0);
+        // self::initStat('player', 'total_cards_won', 0);
+
+        self::initStat('player', 'personal_trumps_per_hand', 0);
+        self::initStat('player', 'partner_trumps_per_hand', 0);
+        self::initStat('player', 'opponent_trumps_per_hand', 0);
+
+        self::initStat('player', 'tricks_won_total_per_hand', 0);
+        self::initStat('player', 'tricks_won_trump_lead_per_hand', 0);
+        self::initStat('player', 'tricks_won_first_trump_per_hand', 0);
+        self::initStat('player', 'tricks_won_overtrump_per_hand', 0);
 
         self::reloadPlayersBasicInfos();
         $this->activeNextPlayer();
@@ -274,10 +310,9 @@ class Calypso extends Table
     */
     function getGameProgression()
     {
-        // AB TODO: compute and return the game progression
-        // should be simple arithemetic from total number of hands, usually
-
-        return 0;
+        $total_rounds = self::getGameStateValue('totalRounds');
+        $tricks_completed = self::getTrickNumber() - 1;
+        return round(100.0*$tricks_completed/(13*4*$total_rounds));
     }
 
 
@@ -307,6 +342,24 @@ class Calypso extends Table
         $sql = "SELECT trump_suit, player_id FROM player WHERE trump_suit=".$suit.";";
         $query_result = self::getCollectionFromDB( $sql, true );
         return $query_result[$suit];
+    }
+
+    function getPartnerID($player_id){
+        return self::getAdjacentPlayer($player_id, 2);
+    }
+
+    function getRoundPlayerNumber($player_id){
+        $first_hand_dealer_id = self::getGameStateValue("firstHandDealer");
+        if($first_hand_dealer_id == $player_id){
+            return 4;
+        }
+        $position_id = $first_hand_dealer_id;
+        $position = 4;
+        while($position_id != $player_id){
+            $position_id = self::getAdjacentPlayer($position_id);
+            $position = ($position % 4) + 1;
+        }
+        return $position;
     }
 
     // TODO: I think there is an in-built for this? Can't find it for the mo tho
@@ -343,10 +396,9 @@ class Calypso extends Table
             $new_player_number = ($existing_player_number + $direction_index) % 4;
             $new_player_number = ($new_player_number == 0) ? 4 : $new_player_number;
             if($new_player_number == $player["player_no"]){
-                $new_player = $player_id;
+                return $player_id;
             }
         }
-        return $new_player;
     }
 
     function getPlayerDirections(){
@@ -419,11 +471,15 @@ class Calypso extends Table
     function processCompletedTrick() {
         $best_value_player_id = self::getGameStateValue( 'currentTrickWinner' );
 
+        $winning_method = self::getGameStateValue('winningMethod');
+        self::updateWinnerMethodCount($best_value_player_id, $winning_method);
+
         // announce who won first, then deal with the admin of what happens to the cards
         self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} wins the trick'), array(
             'player_id' => $best_value_player_id,
             'player_name' => self::getPlayerName($best_value_player_id)
         ) );
+        // TODO: if I'm going to say why trick was won, then here is ideal.
 
         // card gathering logic:
         // $moved_to will track where cards go, so we can send that to js
@@ -459,6 +515,7 @@ class Calypso extends Table
         ) );
         if(!empty($calypsos_completed)){
             foreach($calypsos_completed as $player_id){
+                self::updateFastestCalypso($player_id);
                 self::notifyAllPlayers(
                     'calypsoComplete',
                     clienttranslate('${player_name} has completed a calypso!'),
@@ -489,12 +546,45 @@ class Calypso extends Table
         // no winning card currently
         self::setGameStateInitialValue( 'bestCardSuit', 0 );
         self::setGameStateInitialValue( 'bestCardRank', 0 );
+        // no current winner, so no associated method
+        self::setGameStateValue( 'winningMethod', 0 );
     }
 
-    function setWinner( $best_player_id, $best_card ){
+    function setWinner( $best_player_id, $best_card, $method ){
         self::setGameStateValue( 'currentTrickWinner', $best_player_id );
         self::setGameStateValue( 'bestCardSuit', $best_card['type'] );
         self::setGameStateValue( 'bestCardRank', $best_card['type_arg'] );
+        self::setGameStateValue( 'winningMethod', $method );
+    }
+
+    function updateWinnerMethodCount($trick_winner_id, $winning_method){
+        switch($winning_method){
+            case self::TRUMP_LEAD:
+                $column = "tricks_won_trump_lead";
+                break;
+            case self::FIRST_TRUMP:
+                $column = "tricks_won_first_trump";
+                break;
+            case self::OVERTRUMP;
+                $column = "tricks_won_overtrump";
+                break;
+            case self::PLAINSUIT;
+                $column = "tricks_won_plainsuit";
+                break;
+            default:
+                $column = "tricks_won_error_should_handle_better";
+                break;
+        }
+        $sql = "UPDATE player SET ".$column."=".$column."+1 WHERE player_id=".$trick_winner_id.";";
+        self::DbQuery($sql);
+    }
+
+    function getPlayerTrickInfo(){
+        $players = self::getCollectionFromDb(
+            "SELECT player_id, tricks_won_trump_lead, tricks_won_first_trump, tricks_won_overtrump, tricks_won_plainsuit
+            FROM player;"
+        );
+        return $players;
     }
 
     function getTrickPile($player_id){
@@ -751,10 +841,7 @@ class Calypso extends Table
         }
     }
 
-    function displayScores(){
-        // TODO: pass this as a variable?
-        $round_number = self::getGameStateValue('roundNumber');
-
+    function displayScores($round_number){
         // give counts and scores different classes so we can style them differently
         // e.g. text-align: left (vs right), different colours(?), weights
         function wrap_class($x, $class_name){
@@ -859,6 +946,194 @@ class Calypso extends Table
         );
     }
 
+    function updateFastestCalypso($player_id){
+        $fastest = self::getStat("fastest_calypso", $player_id);
+        $tricks_completed = self::getTrickNumberThisRound() - 1;
+        // un-set stats return 0. We want it unset, as we want it undefined if players never complete
+        if($fastest == 0){
+            self::initStat("player", "fastest_calypso", $tricks_completed, $player_id);
+        } elseif($tricks_completed < $fastest){
+            self::setStat($tricks_completed, "fastest_calypso", $player_id);
+        }
+        $fastest_overall = self::getStat("fastest_calypso");
+        if($fastest_overall == 0){
+            self::initStat("table", "fastest_calypso", $tricks_completed);
+        } elseif($tricks_completed < $fastest_overall){
+            self::setStat($tricks_completed, "fastest_calypso");
+        }
+    }
+
+    // Hand number OVERALL
+    function getHandNumber(){
+        $hand_this_round = self::getGameStateValue('handNumber');
+        $round_number = self::getGameStateValue('roundNumber');
+        return ($round_number - 1)*4 + $hand_this_round;
+    }
+
+    // trick number OVERALL, not just by round!
+    function getTrickNumber(){
+        $hand_number = self::getHandNumber();
+        $trick_this_round = self::getGameStateValue('trickNumber');
+        return ($hand_number - 1)*13 + $trick_this_round;
+    }
+
+    function getTrickNumberThisRound(){
+        $hand_number_this_round = self::getGameStateValue('handNumber');
+        $trick_this_round = self::getGameStateValue('trickNumber');
+        return ($hand_number_this_round - 1)*13 + $trick_this_round;
+    }
+
+    function updatePerHandStat($stat_name, $hand_value, $player_id){
+        $hand_number = self::getHandNumber();
+        $current_stat_val = self::getStat($stat_name, $player_id);
+        $new_stat_val = 1.0*(($hand_number - 1)*$current_stat_val + $hand_value)/$hand_number;
+        self::setStat($new_stat_val, $stat_name, $player_id);
+        return $new_stat_val;
+    }
+
+    function updatePerRoundStat($stat_name, $round_value, $player_id){
+        $round_number = self::getGameStateValue('roundNumber');
+        $current_stat_val = self::getStat($stat_name, $player_id);
+        $new_stat_val = 1.0*(($round_number - 1)*$current_stat_val + $round_value)/$round_number;
+        self::setStat($new_stat_val, $stat_name, $player_id);
+        return $new_stat_val;
+    }
+
+    function updateHandDealtStats(){
+        $players = self::loadPlayersBasicInfos();
+        foreach($players as $player_id => $player){
+            $trump_suit = self::getPlayerSuit($player_id);
+            $partner_suit = self::getPartnerSuit($trump_suit);
+            $player_cards = $this->cards->getCardsInLocation("hand", $player_id);
+            $personal_cards = 0;
+            $partner_cards = 0;
+            $opponent_cards = 0;
+            foreach($player_cards as $card){
+                if($card["type"] == $trump_suit){
+                    $personal_cards++;
+                } elseif ($card["type"] == $partner_suit) {
+                    $partner_cards++;
+                } else{
+                    $opponent_cards++;
+                }
+            }
+            self::updatePerHandStat("personal_trumps_per_hand", $personal_cards, $player_id);
+            self::updatePerHandStat("partner_trumps_per_hand", $partner_cards, $player_id);
+            self::updatePerHandStat("opponent_trumps_per_hand", $opponent_cards, $player_id);   
+        }
+    }
+
+    function updatePostHandStats(){
+        $hands_completed = self::getHandNumber();
+        $players = self::getPlayerTrickInfo();
+        $trump_lead_won_all = 0;
+        $first_trump_won_all = 0;
+        $overtrump_won_all = 0;
+        $plainsuit_won_all = 0;
+        foreach($players as $player_id => $player_trick_info){
+            $total_tricks_won = $player_trick_info["tricks_won_trump_lead"] +
+                    $player_trick_info["tricks_won_first_trump"] +
+                    $player_trick_info["tricks_won_overtrump"] +
+                    $player_trick_info["tricks_won_plainsuit"];
+            self::setStat(
+                $total_tricks_won/$hands_completed,
+                "tricks_won_total_per_hand",
+                $player_id
+            );
+            self::setStat(
+                $player_trick_info["tricks_won_trump_lead"]/$hands_completed,
+                "tricks_won_trump_lead_per_hand",
+                $player_id
+            );
+            self::setStat(
+                $player_trick_info["tricks_won_first_trump"]/$hands_completed,
+                "tricks_won_first_trump_per_hand",
+                $player_id
+            );
+            self::setStat(
+                $player_trick_info["tricks_won_overtrump"]/$hands_completed,
+                "tricks_won_overtrump_per_hand",
+                $player_id
+            );
+            $trump_lead_won_all += $player_trick_info["tricks_won_trump_lead"];
+            $first_trump_won_all += $player_trick_info["tricks_won_first_trump"];
+            $overtrump_won_all += $player_trick_info["tricks_won_overtrump"];
+            $plainsuit_won_all += $player_trick_info["tricks_won_plainsuit"];
+        }
+        self::setStat(1.0*$trump_lead_won_all/(13*$hands_completed), "proportion_tricks_won_trump_lead");
+        self::setStat(1.0*$first_trump_won_all/(13*$hands_completed), "proportion_tricks_won_first_trump");
+        self::setStat(1.0*$overtrump_won_all/(13*$hands_completed), "proportion_tricks_won_overtrump");
+        self::setStat(1.0*$plainsuit_won_all/(13*$hands_completed), "proportion_tricks_won_plainsuit");
+    }
+
+    function updateRoundStats(){
+        $round_number = self::getGameStateValue('roundNumber');
+        $players = self::getRoundScore($round_number);
+        // calypso_count' => $num_calypsos,
+        //         'part_calypso_count' => $calypso_cards,
+        //         'won_cards_count' => $won_cards,
+        //         'partnership_score
+        //calypso_score' => $calypso_score,
+        // 'part_calypso_score' => $part_calypso_score,
+        // 'won_cards_score' => $won_cards_score,
+        // 'total_score
+
+        $ave_calypso_counter = 0;
+        $individual_points_counter = 0;
+        foreach ( $players as $player_id => $score_info ) {
+            $partner_id = self::getPartnerID($player_id);
+            $new_stat_val = self::updatePerRoundStat("calypsos_per_round", $score_info["calypso_count"], $player_id);
+            $ave_calypso_counter += $new_stat_val;
+            self::updatePerRoundStat(
+                "partnership_calypsos_per_round",
+                $score_info["calypso_count"] + $players[$partner_id]["calypso_count"],
+                $player_id
+            );
+            self::updatePerRoundStat("calypso_points_per_round", $score_info["calypso_score"], $player_id);
+            self::updatePerRoundStat(
+                "partnership_calypso_points_per_round",
+                $score_info["calypso_score"] + $players[$partner_id]["calypso_score"],
+                $player_id
+            );
+            self::updatePerRoundStat("incomplete_calypso_cards_per_round", $score_info["part_calypso_count"], $player_id);
+            self::updatePerRoundStat(
+                "partnership_incomplete_calypso_cards_per_round",
+                $score_info["part_calypso_count"] + $players[$partner_id]["part_calypso_count"],
+                $player_id
+            );
+            self::updatePerRoundStat("trickpile_cards_per_round", $score_info["won_cards_count"], $player_id);
+            self::updatePerRoundStat(
+                "partnership_trickpile_cards_per_round",
+                $score_info["won_cards_count"] + $players[$partner_id]["won_cards_count"],
+                $player_id
+            );
+            $new_stat_val = self::updatePerRoundStat("points_per_round", $score_info["total_score"], $player_id);
+            $individual_points_counter += $new_stat_val;
+            $new_stat_val = self::updatePerRoundStat("partnership_points_per_round", $score_info["partnership_score"], $player_id);
+
+            // NB: this assumes each player will be in each position AT MOST ONCE, which should be the case currently
+            // would throw an error if that ever changes (as initStat would be called twice)
+            $player_number_for_round = self::getRoundPlayerNumber($player_id);
+            switch($player_number_for_round){
+                case 1:
+                    $stat_name = "score_first_leader";
+                    break;
+                case 2:
+                    $stat_name = "score_player_two";
+                    break;
+                case 3:
+                    $stat_name = "score_player_three";
+                    break;
+                case 4:
+                    $stat_name = "score_dealer";
+                    break;
+            }
+            self::initStat("player", $stat_name, $score_info["total_score"], $player_id);
+        }
+        self::setStat($ave_calypso_counter, "average_calypsos_per_round");
+        self::setStat(1.0*$individual_points_counter/4, "average_points_per_round");
+    }
+
     function checkAllCardsExist(){
         // all cushty when I've checked :)
         // TODO: this function checks that all cards are *somewhere*
@@ -911,11 +1186,12 @@ class Calypso extends Table
             // set if trumps are lead
             if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
+                self::setWinner( $player_id, $currentCard, self::TRUMP_LEAD );
             } else {
                 // this _should_ be irrelevant, but can't hurt
                 self::setGameStateValue( 'trumpLead', 0 );
+                self::setWinner( $player_id, $currentCard, self::PLAINSUIT );
             }
-            self::setWinner( $player_id, $currentCard );
         } else {
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
@@ -928,7 +1204,7 @@ class Calypso extends Table
                 if ( self::getGameStateValue( 'trumpLead' ) == 0 ){
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
                         if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' ) ){
-                            self::setWinner( $player_id, $currentCard );
+                            self::setWinner( $player_id, $currentCard, self::PLAINSUIT );
                         }
                     }
                 }
@@ -951,24 +1227,26 @@ class Calypso extends Table
                 if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
-                        self::setWinner( $player_id, $currentCard );
+                        // TODO: here we need to implement the optional check of rank
+                        self::setWinner( $player_id, $currentCard, self::FIRST_TRUMP );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else {
                         // if trumpPlayed - check if we're higher, in which case we're winning. Otherwise still a loser
                         if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
-                            self::setWinner( $player_id, $currentCard );
+                            self::setWinner( $player_id, $currentCard, self::OVERTRUMP );
                         }
                     }
                 }
             }
         }
+        $tmp = self::getStat("fastest_calypso");
         // And notify
         self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
                 'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
                 'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
                 'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
                 'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
-                'trump' => $this->suits [self::getPlayerSuit($player_id)] ['name']
+                'trump' => $tmp//$this->suits [self::getPlayerSuit($player_id)] ['name']
              ));
         $this->gamestate->nextState('playCard');
     }
@@ -1048,6 +1326,8 @@ class Calypso extends Table
         $old_hand_number = self::getGameStateValue( 'handNumber' );
         $hand_number = $old_hand_number + 1;
         self::setGameStateValue( 'handNumber', $hand_number );
+        // always start at trick number 1
+        self::setGameStateValue( 'trickNumber', 1 );
         self::notifyAllPlayers(
             "update",
             clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round'),
@@ -1082,6 +1362,8 @@ class Calypso extends Table
             );
         }
 
+        self::updateHandDealtStats();
+
         self::notifyAllPlayers(
             'dealHand',
             clienttranslate('${dealer_name}, deals a new hand of cards'),
@@ -1106,8 +1388,14 @@ class Calypso extends Table
 
     function stNextPlayer() {
         if ($this->cards->countCardInLocation('cardsontable') == 4) {
+            
+            // count trick number here, so we can get to 13.
+            $new_trick_number = self::getGameStateValue('trickNumber') + 1;
+            self::setGameStateValue('trickNumber', $new_trick_number);
+
             // This is the end of the trick
             $this->processCompletedTrick();
+
             if ($this->cards->countCardInLocation('hand') == 0) {
                 // End of the hand
                 $this->gamestate->nextState("endHand");
@@ -1126,7 +1414,7 @@ class Calypso extends Table
     }
 
     function stEndHand() {
-        // TODO: this notification should update how many completed calypsos each player has, and say hand num.
+        // TODO: this notification should go, as that info should be in player boxes.
         $player_calypsos = self::getAllCompletedCalyspos();
         foreach ( $player_calypsos as $player_id => $num_calypsos ) {
             $player_name = self::getPlayerName($player_id);
@@ -1140,6 +1428,8 @@ class Calypso extends Table
             );
         }
 
+        self::updatePostHandStats();
+        // TODO: at best this should say hand X is over, or just scrap it altogether
         self::notifyAllPlayers(
             "update",
             clienttranslate('Hand over!'),
@@ -1155,12 +1445,14 @@ class Calypso extends Table
     }
 
     function stEndRound() {
+        $round_number = self::getGameStateValue('roundNumber');
         self::updateScores();
-        self::displayScores();
+        self::displayScores($round_number);
 
+        self::updateRoundStats();
         $num_rounds = self::getGameStateValue( 'totalRounds' );
         
-        if(self::getGameStateValue( 'roundNumber' ) < $num_rounds){
+        if($round_number < $num_rounds){
             $this->gamestate->nextState('nextRound');
         } else {
             $this->gamestate->nextState('endGame');

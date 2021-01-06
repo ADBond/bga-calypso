@@ -17,6 +17,12 @@
 ALTER TABLE `player` ADD `trump_suit` varchar(16) NOT NULL DEFAULT '0';
 -- how many completed calypsos so far in a round?
 ALTER TABLE `player` ADD `completed_calypsos` int(1) NOT NULL DEFAULT '0';
+-- info on trick-winning data
+-- by leading trump, trumping in (first), overtrumping, and plain-suit
+ALTER TABLE `player` ADD `tricks_won_trump_lead` int(2) NOT NULL DEFAULT '0';
+ALTER TABLE `player` ADD `tricks_won_first_trump` int(2) NOT NULL DEFAULT '0';
+ALTER TABLE `player` ADD `tricks_won_overtrump` int(2) NOT NULL DEFAULT '0';
+ALTER TABLE `player` ADD `tricks_won_plainsuit` int(2) NOT NULL DEFAULT '0';
 
 CREATE TABLE IF NOT EXISTS `card` (
   `card_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -55,3 +61,5 @@ CREATE TABLE IF NOT EXISTS `renounce_flags` (
   FOREIGN KEY (`player_id`)
         REFERENCES `player`(`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- TODO: last trick table?

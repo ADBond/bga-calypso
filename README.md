@@ -24,10 +24,10 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~scoring~~
 * ~~number of rounds/games set via gameoptions~~
 * ~~team settings via gameoptions~~
-* stats
+* ~~stats~~
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
-* stop games ending in ties
+* ~~stop games ending in ties~~
 
 ### Notifications
 
@@ -42,8 +42,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~rename those damn variables to keep a shred of self-consistency check below, do as we go~~
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
 * ~~check that the all the cards exist at all times, and get dealt out over the course of a round~~
-  * mostly okay, but needs checking
+  * ~~mostly okay, but needs checking~~
 * ~~Add a separate code licence~~, and make repo public once that's done
+* Use game-level constants in place of magic numbers where possible
 
 ### Display
 
@@ -66,6 +67,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
   * teams through some light colours, and put in player boxes upstairs (with trump suits)
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
+  * will be tracking this for stats, so should be easy to add in. Probably as a log option?
 * ~~Renounce indicators~~
   * ~~as a gameoption setting~~
 * ~~Direction stuff - should be relative to player! Don't forget to update this!~~
@@ -73,7 +75,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * improve scoring table?
 * access old scoring tables
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
-
+* player boxes should show number of completed calypsos
+* clear display on new round - not sure if there should be a manual 'click' or something to confirm
 ## Things to fix
 
 * Fix tooltips?? (renounce and dealer button)
@@ -86,7 +89,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Things to test
 
-* new round (genuine)
+* new round (genuine)/things all work nicely in multi-round games
 * multiple players complete calypsos in one trick
 * a little browser compatibility
 
@@ -97,13 +100,16 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Misc
 
 * Zombie turn
-* Game progression
+* ~~Game progression~~
 
 ### Variants
+
+* Seems to be enough around of 'beat the leader' to include as a variant. Maybe doesn't need to be done for alpha though
+  * (i.e. trumping in to trump lead must be higher. Rule as it stands seems better to me, but nice to have both, not in too much danger of configuration hell here.)
 
 ~~Possibly.~~
 
 * ~~See https://boardgamegeek.com/thread/514183/game-got-lost-shuffle for a variant trick-winning rule: last trump-in wins~~
 * ~~From question in that thread also: variant where you must beat leader when trumping in?~~
 
-Not in first pass at any rate - not sure if there's much value to this, and Culbertson at least in fact agrees with usual rule.
+~~Not in first pass at any rate - not sure if there's much value to this, and Culbertson at least in fact agrees with usual rule.~~

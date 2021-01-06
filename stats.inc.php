@@ -52,44 +52,169 @@ $stats_type = array(
     // Statistics global to table
     "table" => array(
 
-        "turns_number" => array("id"=> 10,
-                    "name" => totranslate("Number of turns"),
-                    "type" => "int" ),
+        "average_calypsos_per_round" => array(
+            "id" => 10,
+            "name" => totranslate("Total calypsos per round"),
+            "type" => "float",
+        ),
+        "average_points_per_round" => array(
+            "id" => 11,
+            "name" => totranslate("Average individual score per round"),
+            "type" => "float",
+        ),
 
-/*
-        Examples:
+        // may as well keep analagous ids as for player stats
+        "fastest_calypso" => array(
+            "id" => 35,
+            "name" => totranslate("Fastest calypso (by number of tricks)"),
+            "type" => "int"
+        ),
 
+        "proportion_tricks_won_trump_lead" => array(
+            "id" => 41,
+            "name" => totranslate("Proportion of tricks won by leading trumps"),
+            "type" => "float",
+        ),
+        "proportion_tricks_won_first_trump" => array(
+            "id" => 42,
+            "name" => totranslate("Proportion of tricks won by trumping in first"),
+            "type" => "float",
+        ),
+        "proportion_tricks_won_overtrump" => array(
+            "id" => 43,
+            "name" => totranslate("Proportion of tricks won by overtrumping"),
+            "type" => "float",
+        ),
+        "proportion_tricks_won_plainsuit" => array(
+            "id" => 44,
+            "name" => totranslate("Proportion of tricks won by highest plainsuit card"),
+            "type" => "float",
+        ),
 
-        "table_teststat1" => array(   "id"=> 10,
-                                "name" => totranslate("table test stat 1"), 
-                                "type" => "int" ),
-                                
-        "table_teststat2" => array(   "id"=> 11,
-                                "name" => totranslate("table test stat 2"), 
-                                "type" => "float" )
-*/  
     ),
     
     // Statistics existing for each player
     "player" => array(
+        // per round statistics
+        "calypsos_per_round" => array(
+            "id" => 10,
+            "name" => totranslate("Average calypsos per round (individual)"),
+            "type" => "float"
+        ),
+        "partnership_calypsos_per_round" => array(
+            "id" => 11,
+            "name" => totranslate("Average calypsos per round (partnership)"),
+            "type" => "float"
+        ),
+        "calypso_points_per_round" => array(
+            "id" => 12,
+            "name" => totranslate("Average calypso points per round (individual)"),
+            "type" => "float",
+        ),
+        "partnership_calypso_points_per_round" => array(
+            "id" => 13,
+            "name" => totranslate("Average calypso points per round (partnership)"),
+            "type" => "float",
+        ),
+        "incomplete_calypso_cards_per_round" => array(
+            "id" => 14,
+            "name" => totranslate("Average incomplete calypso cards per round (individual)"),
+            "type" => "float",
+        ),
+        "partnership_incomplete_calypso_cards_per_round" => array(
+            "id" => 15,
+            "name" => totranslate("Average incomplete calypso cards per round (partnership)"),
+            "type" => "float",
+        ),
+        "trickpile_cards_per_round" => array(
+            "id" => 16,
+            "name" => totranslate("Average trickpile cards per round (individual)"),
+            "type" => "float",
+        ),
+        "partnership_trickpile_cards_per_round" => array(
+            "id" => 17,
+            "name" => totranslate("Average trickpile cards per round (partnership)"),
+            "type" => "float",
+        ),
+        "points_per_round" => array(
+            "id" => 18,
+            "name" => totranslate("Average points per round (individual)"),
+            "type" => "float",
+        ),
+        "partnership_points_per_round" => array(
+            "id" => 19,
+            "name" => totranslate("Average points per round (partnership)"),
+            "type" => "float",
+        ),
+        
+        // "total_cards_won" => array(
+        //     "id" => 20,
+        //     "name" => totranslate("Total captured cards per round (individual)"),
+        //     "type" => "float",
+        // ),
 
-        "turns_number" => array("id"=> 10,
-                    "name" => totranslate("Number of turns"),
-                    "type" => "int" ),
+        "personal_trumps_per_hand" => array(
+            "id" => 30,
+            "name" => totranslate("Average personal trumps dealt per hand"),
+            "type" => "float",
+        ),
+        "partner_trumps_per_hand" => array(
+            "id" => 31,
+            "name" => totranslate("Average partner trumps dealt per hand"),
+            "type" => "float",
+        ),
+        "opponent_trumps_per_hand" => array(
+            "id" => 32,
+            "name" => totranslate("Average opponent trumps dealt per hand"),
+            "type" => "float",
+        ),
+
+        "fastest_calypso" => array(
+            "id" => 35,
+            "name" => totranslate("Fastest calypso (by number of tricks)"),
+            "type" => "int"
+        ),
+
+        "tricks_won_total_per_hand" => array(
+            "id" => 40,
+            "name" => totranslate("Average tricks won per hand"),
+            "type" => "float",
+        ),
+        "tricks_won_trump_lead_per_hand" => array(
+            "id" => 41,
+            "name" => totranslate("Average tricks won by leading trumps per hand"),
+            "type" => "float",
+        ),
+        "tricks_won_first_trump_per_hand" => array(
+            "id" => 42,
+            "name" => totranslate("Average tricks won by trumping in first per hand"),
+            "type" => "float",
+        ),
+        "tricks_won_overtrump_per_hand" => array(
+            "id" => 43,
+            "name" => totranslate("Average tricks won by overtrumping per hand"),
+            "type" => "float",
+        ),
     
-/*
-        Examples:    
-        
-        
-        "player_teststat1" => array(   "id"=> 10,
-                                "name" => totranslate("player test stat 1"), 
-                                "type" => "int" ),
-                                
-        "player_teststat2" => array(   "id"=> 11,
-                                "name" => totranslate("player test stat 2"), 
-                                "type" => "float" )
-
-*/    
+        "score_first_leader" => array(
+            "id" => 50,
+            "name" => totranslate("Individual score when first leader in first hand of round"),
+            "type" => "int"
+        ),
+        "score_player_two" => array(
+            "id" => 51,
+            "name" => totranslate("Individual score when second player in first hand of round"),
+            "type" => "int"
+        ),
+        "score_player_three" => array(
+            "id" => 52,
+            "name" => totranslate("Individual score when third player in first hand of round"),
+            "type" => "int"
+        ),
+        "score_dealer" => array(
+            "id" => 53,
+            "name" => totranslate("Individual score when dealer in first hand of round"),
+            "type" => "int"
+        ),
     )
-
 );
