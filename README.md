@@ -6,6 +6,11 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* round scoring tables
+* access by-round scoring tables
+* player boxes should show number of completed calypsos
+* clear display on new round - not sure if there should be a manual 'click' or something to confirm
+
 ## For a different branch
 
 ## To-do list
@@ -47,6 +52,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
 * player boxes should show number of completed calypsos
 * clear display on new round - not sure if there should be a manual 'click' or something to confirm
+
 ## Things to fix
 
 * Fix tooltips?? (renounce and dealer button)
