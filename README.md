@@ -6,29 +6,6 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* Make some stats, eh?
-  * table:
-    * ~~average points/round~~
-    * ~~average calypsos completed/round~~
-  * player:
-    * these ~~per player~~ and per partnership (?):
-      * ~~calypsos/round~~
-      * ~~calypso points/round~~
-      * ~~incomplete calypso cards/round~~
-      * ~~trickpile cards/round~~
-      * ~~total cards won/round~~ ~~get rid of this, total tricks (below) is better~~
-      * ~~points/round~~
-    * just per player:
-      * points/round by position (in for a penny...)
-      * ~~fastest calypso (trick number)~~
-    * per hand:
-      * ~~personal trumps dealt~~
-      * ~~partner trumps dealt~~
-      * ~~opponent trumps dealt~~
-      * ~~tricks won by leading trumps~~
-      * ~~tricks won trumping in~~
-      * ~~total tricks won~~
-
 ## For a different branch
 
 ## To-do list
@@ -47,7 +24,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~scoring~~
 * ~~number of rounds/games set via gameoptions~~
 * ~~team settings via gameoptions~~
-* stats
+* ~~stats~~
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
 * ~~Fix js bug at end of a hand that needs refresh~~
 * ~~stop games ending in ties~~

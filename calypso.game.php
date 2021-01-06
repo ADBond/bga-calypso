@@ -348,6 +348,20 @@ class Calypso extends Table
         return self::getAdjacentPlayer($player_id, 2);
     }
 
+    function getRoundPlayerNumber($player_id){
+        $first_hand_dealer_id = self::getGameStateValue("firstHandDealer");
+        if($first_hand_dealer_id == $player_id){
+            return 4;
+        }
+        $position_id = $first_hand_dealer_id;
+        $position = 4;
+        while($position_id != $player_id){
+            $position_id = self::getAdjacentPlayer($position_id);
+            $position = ($position % 4) + 1;
+        }
+        return $position;
+    }
+
     // TODO: I think there is an in-built for this? Can't find it for the mo tho
     function getPlayerName($player_id){
         $players = self::loadPlayersBasicInfos();
@@ -937,15 +951,15 @@ class Calypso extends Table
         $tricks_completed = self::getTrickNumberThisRound() - 1;
         // un-set stats return 0. We want it unset, as we want it undefined if players never complete
         if($fastest == 0){
-            self::initStat("player", "fastest_calypso", $trick_number, $player_id);
-        } elseif($trick_number < $fastest){
-            self::setStat("player", "fastest_calypso, $trick_number, $player_id");
+            self::initStat("player", "fastest_calypso", $tricks_completed, $player_id);
+        } elseif($tricks_completed < $fastest){
+            self::setStat($tricks_completed, "fastest_calypso", $player_id);
         }
         $fastest_overall = self::getStat("fastest_calypso");
         if($fastest_overall == 0){
-            self::initStat("table", "fastest_calypso", $trick_number);
-        } elseif($trick_number < $fastest_overall){
-            self::setStat("table", "fastest_calypso", $trick_number);
+            self::initStat("table", "fastest_calypso", $tricks_completed);
+        } elseif($tricks_completed < $fastest_overall){
+            self::setStat($tricks_completed, "fastest_calypso");
         }
     }
 
@@ -1096,9 +1110,25 @@ class Calypso extends Table
             $new_stat_val = self::updatePerRoundStat("points_per_round", $score_info["total_score"], $player_id);
             $individual_points_counter += $new_stat_val;
             $new_stat_val = self::updatePerRoundStat("partnership_points_per_round", $score_info["partnership_score"], $player_id);
-            // $total_cards = $score_info["won_cards_count"] + $score_info["part_calypso_count"] + 13*$score_info["calypso_count"];
-            // $new_stat_val = $update_stat("total_cards_won", $total_cards, $player_id);
 
+            // NB: this assumes each player will be in each position AT MOST ONCE, which should be the case currently
+            // would throw an error if that ever changes (as initStat would be called twice)
+            $player_number_for_round = self::getRoundPlayerNumber($player_id);
+            switch($player_number_for_round){
+                case 1:
+                    $stat_name = "score_first_leader";
+                    break;
+                case 2:
+                    $stat_name = "score_player_two";
+                    break;
+                case 3:
+                    $stat_name = "score_player_three";
+                    break;
+                case 4:
+                    $stat_name = "score_dealer";
+                    break;
+            }
+            self::initStat("player", $stat_name, $score_info["total_score"], $player_id);
         }
         self::setStat($ave_calypso_counter, "average_calypsos_per_round");
         self::setStat(1.0*$individual_points_counter/4, "average_points_per_round");

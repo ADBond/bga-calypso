@@ -195,5 +195,26 @@ $stats_type = array(
             "name" => totranslate("Average tricks won by overtrumping per hand"),
             "type" => "float",
         ),
+    
+        "score_first_leader" => array(
+            "id" => 50,
+            "name" => totranslate("Individual score when first leader in first hand of round"),
+            "type" => "int"
+        ),
+        "score_player_two" => array(
+            "id" => 51,
+            "name" => totranslate("Individual score when second player in first hand of round"),
+            "type" => "int"
+        ),
+        "score_player_three" => array(
+            "id" => 52,
+            "name" => totranslate("Individual score when third player in first hand of round"),
+            "type" => "int"
+        ),
+        "score_dealer" => array(
+            "id" => 53,
+            "name" => totranslate("Individual score when dealer in first hand of round"),
+            "type" => "int"
+        ),
     )
 );
