@@ -38,6 +38,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * game art
 * see last trick?
+  * maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based
 * optional log detail (c.f. Hungarian Tarock)
 * Set different default colours
 * Check that there's nowt that's colourblind-unfriendly

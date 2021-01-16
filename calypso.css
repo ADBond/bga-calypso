@@ -76,6 +76,26 @@
   font-size: 30px;
 }
 
+.clp-calypso-info {
+  clear: both;
+  width: 64px;
+}
+
+.clp-info-count {
+  font-size: 21.3333333333px;
+  font-weight: bold;
+  margin-left: 42px;
+  padding-top: 5.3333333333px;
+  vertical-align: middle;
+}
+
+.clp-suit-icon {
+  float: left;
+  background-image: url("img/card_suits.jpg");
+  width: 32px;
+  height: 32px;
+}
+
 .clp-player-card-play-area {
   outline: ridge 3px #AAA;
   width: 92px;
@@ -199,11 +219,19 @@
   background-position: 0px 0px;
 }
 
+.clp-suit-icon-1 {
+  background-position: 0px 0px;
+}
+
 .clp-card-space-2 {
   background-position: 0px -96px;
 }
 
 .clp-renounce-2 {
+  background-position: 0px -32px;
+}
+
+.clp-suit-icon-2 {
   background-position: 0px -32px;
 }
 
@@ -215,11 +243,19 @@
   background-position: 0px -64px;
 }
 
+.clp-suit-icon-3 {
+  background-position: 0px -64px;
+}
+
 .clp-card-space-4 {
   background-position: 0px -288px;
 }
 
 .clp-renounce-4 {
+  background-position: 0px -96px;
+}
+
+.clp-suit-icon-4 {
   background-position: 0px -96px;
 }
 

@@ -131,6 +131,13 @@ function (dojo, declare) {
                 console.log("calypso has: " + suit + ", " + rank + ", and...");
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
+            console.log("completed calypo counts");
+            for( player_id in gamedatas.players )
+            {
+                const player = gamedatas.players[player_id];
+                const player_board_div = $(`player_board_${player_id}`);
+                dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
+            }
 
             if(this.renounce_flags_on == "on"){
                 for (i in this.gamedatas.renounce_flags) {

@@ -95,6 +95,33 @@ $title_size: $info_size * 1.5;
 .clp-gametitle {
     font-size: $title_size;
 }
+$icon_size: 32px;
+.clp-calypso-info {
+    clear: both;
+    width: 2*$icon_size;
+    // display: flex;
+    // align-self: center;
+}
+$display_font: 2*$icon_size/3;
+.clp-info-count {
+    font-size: $display_font;
+    font-weight: bold;
+    // margin-left: 10px;
+    margin-left: $icon_size + 10px;
+    // flex-grow: 1;
+    padding-top: ($icon_size - $display_font)/2;
+    vertical-align: middle;
+    // height: $icon_size;
+}
+// TODO: really want this smaller, but need to do the scaling properly.
+// 16px might be too small - maybe 24? the above bits should scale with
+.clp-suit-icon {
+    float: left;
+    background-image: url('img/card_suits.jpg');
+    width: $icon_size;
+    height: $icon_size;
+}
+// construct actual suit icon lower down where we do suity stuff
 
 $card_area_buffer: 20px;
 $card_area_width: $card_width + $card_area_buffer;
@@ -195,6 +222,10 @@ $suit_height: 32px;
         background-position: 0px (-$card_height * ($suit - 1));
     }
     .clp-renounce-#{$suit} {
+        background-position: 0px (-$suit_height * ($suit - 1));
+    }
+    // for display in player boxes:
+    .clp-suit-icon-#{$suit} {
         background-position: 0px (-$suit_height * ($suit - 1));
     }
 }
