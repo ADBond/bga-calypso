@@ -458,13 +458,13 @@ class Calypso extends Table
 
     function getAllCompletedCalyspos(){
         $self = $this;
-        $partnershipOrder = function($player_1, $player_2) use ($self){
+        $partnership_order = function($player_1, $player_2) use ($self){
             return $this::getPlayerPartnership($player_1) == "minor"? -1 : 1;
         };
         $sql = "SELECT player_id id, completed_calypsos num_calypsos FROM player";
         $player_calypsos = self::getCollectionFromDB( $sql, true );
         
-        uksort($player_calypsos, $partnershipOrder);
+        uksort($player_calypsos, $partnership_order);
         return $player_calypsos;
     }
 
@@ -514,6 +514,9 @@ class Calypso extends Table
             'moved_to' => $moved_to,
         ) );
         if(!empty($calypsos_completed)){
+            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
+            // this is updated with latest figures already
+            $total_calypso_counts = self::getAllCompletedCalyspos();
             foreach($calypsos_completed as $player_id){
                 self::updateFastestCalypso($player_id);
                 self::notifyAllPlayers(
@@ -523,6 +526,7 @@ class Calypso extends Table
                         'player_id' => $player_id,
                         'player_name' => self::getPlayerName($player_id),
                         'player_suit' => self::getPlayerSuit($player_id),
+                        'num_calypsos' => $total_calypso_counts[$player_id],
                     )
                 );
             }

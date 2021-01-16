@@ -515,6 +515,8 @@ function (dojo, declare) {
             // What was I about to say above ^ ????
         },
         notif_calypsoComplete : function(notif) {
+            console.log(notif.args);
+            console.log("cally");
             // for each card in calypso, get rid of it, but not too much
             const player_id = notif.args.player_id;
             for (let rank = 2; rank <= 14; rank++) {
@@ -533,6 +535,10 @@ function (dojo, declare) {
                     player_id : player_id
                 }), 'clp-calypsoholder-' + player_id);
             }
+            const player_count_element = `clp-info-count-${player_id}`;
+            console.log(player_count_element)
+            // TODO: should this be delayed/animated?
+            $(player_count_element).textContent = notif.args.num_calypsos;
         },
         notif_actionRequired : function(notif) {
             // nothing needed here
