@@ -280,6 +280,12 @@ class Calypso extends Table
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
 
+        $result['roundscoretable'] = array();
+        for($round = 1; $round <= $result['roundnumber']; $round++){
+            $args_array = self::getDisplayScoresArgs($round);
+            $result['roundscoretable'][$round] = $args_array["score_table"];
+        }
+
         if(self::getGameStateValue('renounceFlags') == 1){
             $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
             $player_flags = array();
@@ -857,7 +863,7 @@ class Calypso extends Table
         }
     }
 
-    function displayScores($round_number){
+    function getDisplayScoresArgs($round_number){
         // give counts and scores different classes so we can style them differently
         // e.g. text-align: left (vs right), different colours(?), weights
         function wrap_class($x, $class_name){
@@ -942,6 +948,14 @@ class Calypso extends Table
         $score_table[] = $individual_scores;
         // TODO: probably want to display this aspect betterly
         $score_table[] = $partnership_scores;
+        return array(
+            "score_table" => $score_table,
+            "scores_for_updating" => $scores_for_updating,
+        );
+    }
+
+    function displayScores($round_number){
+        $args_array = getDisplayScoresArgs($round_number);
 
         $this->notifyAllPlayers(
             "tableWindow",
@@ -949,7 +963,7 @@ class Calypso extends Table
             array(
                 "id" => 'roundScore',
                 "title" => clienttranslate("Scores for the round"),
-                "table" => $score_table,
+                "table" => $args_array["score_table"],
                 "closing" => clienttranslate( "Close" )
             )
         );
@@ -957,7 +971,7 @@ class Calypso extends Table
             'scoreUpdate',
             '',
             array(
-                'scores' => $scores_for_updating
+                'scores' => $args_array["scores_for_updating"],
             )
         );
     }

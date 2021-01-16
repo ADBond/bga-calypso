@@ -139,12 +139,11 @@ function (dojo, declare) {
                 dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
             }
             const totalrounds = this.gamedatas.totalrounds;
-            function makeRoundScore(round){
-                console.log("this wrapper fellow");
-                return () => this.displayRoundScores(round);
-            }
             for(let round = 1; round <= totalrounds; round++){
-                $(`clp-round-scores-button-${round}`).onclick = () => this.displayRoundScores(round);
+                $(`clp-round-scores-button-${round}`).onclick = (
+                    () => this.showResultDialog(round, this.gamedatas.roundscoretable[round])
+                );
+                // this.displayRoundScores(round);
             }
 
             if(this.renounce_flags_on == "on"){
@@ -373,21 +372,39 @@ function (dojo, declare) {
             );
         },
 
-        displayRoundScores: function(round_number){
-            console.log("trigerring this chappy!");
-            this.ajaxcall(
-                "/" + this.game_name + "/" + this.game_name + "/displayScoresWrapper.html",
-                {
-                    round_number: round_number,
-                    lock: true,
-                },
-                this,
-                function (result) {
-                },
-                function (is_error) {
-                }
-            );
-            console.log("worked like a blooming charm!");
+        // displayRoundScores: function(round_number){
+        //     console.log("trigerring this chappy!");
+        //     this.ajaxcall(
+        //         "/" + this.game_name + "/" + this.game_name + "/displayScoresWrapper.html",
+        //         {
+        //             round_number: round_number,
+        //             lock: true,
+        //         },
+        //         this,
+        //         function (result) {
+        //         },
+        //         function (is_error) {
+        //         }
+        //     );
+        //     console.log("worked like a blooming charm!");
+        // },
+
+        // borrowed/modified from W. Michael Shirk's Grosstarock implementation
+        // saved a lot of pain in trying to hack something together!
+        showResultDialog: function (round_number, score_table) {
+            this.scoringDialog = this.displayTableWindow(
+                
+                "roundScore",
+                // TODO: round number in title? need to get to read translation doc properly
+                _("Scores for the round"),
+                score_table,
+                "",
+                this.format_string_recursive(
+                    '<div id="tableWindow_actions"><a id="close_btn" class="bgabutton bgabutton_blue">${close}</a></div>',
+                    { close: _("Close") }
+                )
+			)
+			this.scoringDialog.show()
         },
 
         ///////////////////////////////////////////////////
