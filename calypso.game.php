@@ -846,10 +846,11 @@ class Calypso extends Table
     }
 
     function displayScoresWrapper($round_number){
-        if($round_number >= self::getGameStateValue('currentRound')){
+        // TODO: disable buttons
+        if($round_number >= self::getGameStateValue('roundNumber')){
             // TODO: same translation problem as playCard. When fixed, do it here too :)
             throw new BgaUserException(
-                sprintf(self::_("Round %s is not complete yet - no scores available"), $trick_suit_name)
+                sprintf(self::_("Round %s is not complete yet - no scores available"), $round_number)
             );
         }else{
             displayScores($round_number);

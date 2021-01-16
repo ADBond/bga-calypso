@@ -7,7 +7,8 @@ For devvy stuff check out [dev notes](misc/dev.md).
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
 * round scoring tables
-* access by-round scoring tables
+* ~~access by-round scoring tables~~
+  * Done by server, but should move it all to UI so checking scores doesn't need to use server.
 * ~~player boxes should show number of completed calypsos~~
 * clear display on new round - not sure if there should be a manual 'click' or something to confirm
 

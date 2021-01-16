@@ -139,8 +139,12 @@ function (dojo, declare) {
                 dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
             }
             const totalrounds = this.gamedatas.totalrounds;
+            function makeRoundScore(round){
+                console.log("this wrapper fellow");
+                return () => this.displayRoundScores(round);
+            }
             for(let round = 1; round <= totalrounds; round++){
-                $(`clp-round-scores-button-${round}`).onclick = (() => displayRoundScores(round));
+                $(`clp-round-scores-button-${round}`).onclick = () => this.displayRoundScores(round);
             }
 
             if(this.renounce_flags_on == "on"){
@@ -370,11 +374,12 @@ function (dojo, declare) {
         },
 
         displayRoundScores: function(round_number){
+            console.log("trigerring this chappy!");
             this.ajaxcall(
                 "/" + this.game_name + "/" + this.game_name + "/displayScoresWrapper.html",
                 {
                     round_number: round_number,
-                    lock: false
+                    lock: true,
                 },
                 this,
                 function (result) {
@@ -382,6 +387,7 @@ function (dojo, declare) {
                 function (is_error) {
                 }
             );
+            console.log("worked like a blooming charm!");
         },
 
         ///////////////////////////////////////////////////
