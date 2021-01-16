@@ -456,7 +456,7 @@ class Calypso extends Table
         );
     }
 
-    function getAllCompletedCalyspos(){
+    function getAllCompletedCalypsos(){
         $self = $this;
         $partnership_order = function($player_1, $player_2) use ($self){
             return $this::getPlayerPartnership($player_1) == "minor"? -1 : 1;
@@ -516,7 +516,7 @@ class Calypso extends Table
         if(!empty($calypsos_completed)){
             // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
             // this is updated with latest figures already
-            $total_calypso_counts = self::getAllCompletedCalyspos();
+            $total_calypso_counts = self::getAllCompletedCalypsos();
             foreach($calypsos_completed as $player_id){
                 self::updateFastestCalypso($player_id);
                 self::notifyAllPlayers(
@@ -808,7 +808,7 @@ class Calypso extends Table
 
     // here we actually set the scores
     function updateScores(){
-        $players = self::getAllCompletedCalyspos();
+        $players = self::getAllCompletedCalypsos();
 
         $round_number = self::getGameStateValue( 'roundNumber' );
 
@@ -1419,7 +1419,7 @@ class Calypso extends Table
 
     function stEndHand() {
         // TODO: this notification should go, as that info should be in player boxes.
-        $player_calypsos = self::getAllCompletedCalyspos();
+        $player_calypsos = self::getAllCompletedCalypsos();
         foreach ( $player_calypsos as $player_id => $num_calypsos ) {
             $player_name = self::getPlayerName($player_id);
             self::notifyAllPlayers(

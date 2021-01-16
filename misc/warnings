@@ -1,5 +1,1 @@
 You have probably misspelled calypso some places - a likely source of errors!
-./calypso.game.php:459:    function getAllCompletedCalyspos(){
-./calypso.game.php:519:            $total_calypso_counts = self::getAllCompletedCalyspos();
-./calypso.game.php:811:        $players = self::getAllCompletedCalyspos();
-./calypso.game.php:1422:        $player_calypsos = self::getAllCompletedCalyspos();
