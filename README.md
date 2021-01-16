@@ -57,7 +57,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ## Things to fix
 
-* Fix tooltips?? (renounce and dealer button)
+* ~~Fix tooltips?? (renounce and dealer button)~~
 * Fix dealer button animation
 * New cards in calypso get eaten by calypso animation - need to handle this!
 
