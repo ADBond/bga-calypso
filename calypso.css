@@ -51,10 +51,15 @@
     background-image: url("../img/layout/rounded_b.png");
 } */
 /** Table layout **/
-#clp-table-area {
+#clp-public-area {
   position: relative;
-  left: 50%;
-  transform: translate(-50%);
+  height: 750px;
+}
+
+#clp-table-area {
+  position: absolute;
+  left: 40%;
+  transform: translate(-40%);
   width: 750px;
   height: 750px;
   background-color: #8800DD;
@@ -412,6 +417,39 @@
 
 .clp-score-label {
   text-align: right;
+}
+
+#clp-score-access-table-area {
+  position: absolute;
+  right: 5%;
+  top: 10%;
+  z-index: -5;
+}
+
+.clp-score-button {
+  height: 50px;
+  width: 200px;
+  border: 1px solid #FFFFFF;
+  margin: 5px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 20px;
+  color: #FFFFFF;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.clp-score-button-inactive {
+  background-color: #888888;
+}
+
+.clp-score-button-active {
+  background-color: #8800DD;
+}
+
+.clp-score-button-active:hover {
+  color: #000000;
+  background-color: #FFFFFF;
 }
 
 /*# sourceMappingURL=calypso.css.map */

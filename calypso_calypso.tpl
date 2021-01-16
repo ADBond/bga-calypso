@@ -11,33 +11,48 @@
 
 <div id="clp-game-info" class="clp-game-info"></div>
 
-<div id="clp-table-area">
-    <!-- BEGIN playerhand -->
-    <div class="clp-player-card-play-area clp-player-card-play-area-{DIR}">
-        <div class="clp-player-card-play-area-card" id="clp-player-card-play-area-card-{PLAYER_ID}"></div>
-    </div>
-    <!-- END playerhand -->
-    <!-- BEGIN playercalypso -->
-    <div class="clp-player-personal-area clp-player-personal-area-{DIR}">
-        <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
-            {PLAYER_NAME} - a very long username
+<div id="clp-public-area">
+    <div id="clp-table-area">
+        <!-- BEGIN playerhand -->
+        <div class="clp-player-card-play-area clp-player-card-play-area-{DIR}">
+            <div class="clp-player-card-play-area-card" id="clp-player-card-play-area-card-{PLAYER_ID}"></div>
         </div>
-        <div class="clp-renounce-indicators">
-            <!-- BEGIN renounceindicator -->
-            <div class="clp-renounce-indicator clp-inactive-renounce clp-renounce-{CARD_SUIT}"
-                id="clp-renounce-{PLAYER_ID}-{CARD_SUIT}">
+        <!-- END playerhand -->
+        <!-- BEGIN playercalypso -->
+        <div class="clp-player-personal-area clp-player-personal-area-{DIR}">
+            <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
+                {PLAYER_NAME} - a very long username
             </div>
-            <!-- END renounceindicator -->
+            <div class="clp-renounce-indicators">
+                <!-- BEGIN renounceindicator -->
+                <div class="clp-renounce-indicator clp-inactive-renounce clp-renounce-{CARD_SUIT}"
+                    id="clp-renounce-{PLAYER_ID}-{CARD_SUIT}">
+                </div>
+                <!-- END renounceindicator -->
+            </div>
+            <div class="clp-dealer-indicator-area" id="clp-dealer-{PLAYER_ID}"></div>
+            <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
+                <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}"></div>
+                <div class="clp-trickpile clp-captured-card clp-trickpile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
+            </div>
         </div>
-        <div class="clp-dealer-indicator-area" id="clp-dealer-{PLAYER_ID}"></div>
-        <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
-            <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}"></div>
-            <div class="clp-trickpile clp-captured-card clp-trickpile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
-        </div>
+        <!-- END playercalypso -->
     </div>
-    <!-- END playercalypso -->
-</div>
 
+    <div id="clp-score-access-table-area">
+        <table id="clp-score-access-table">
+            <!-- BEGIN roundscoreaccessrow -->
+            <tr>
+                <td>
+                    <button id="clp-round-scores-button-{ROUND_NUMBER}" class="clp-score-button clp-score-button-inactive">
+                        Round {ROUND_NUMBER} scores
+                    </button>
+                </td>
+            </tr>
+            <!-- END roundscoreaccessrow -->
+        </table>
+    </div>
+</div>
 
 <div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
     <h3>{MY_HAND}</h3>

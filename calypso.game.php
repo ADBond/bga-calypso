@@ -845,6 +845,17 @@ class Calypso extends Table
         }
     }
 
+    function displayScoresWrapper($round_number){
+        if($round_number >= self::getGameStateValue('currentRound')){
+            // TODO: same translation problem as playCard. When fixed, do it here too :)
+            throw new BgaUserException(
+                sprintf(self::_("Round %s is not complete yet - no scores available"), $trick_suit_name)
+            );
+        }else{
+            displayScores($round_number);
+        }
+    }
+
     function displayScores($round_number){
         // give counts and scores different classes so we can style them differently
         // e.g. text-align: left (vs right), different colours(?), weights

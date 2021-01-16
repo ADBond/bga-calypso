@@ -70,10 +70,15 @@ $num_ranks: 13;
 // }
 
 $table_size: 750px;
-#clp-table-area {
+#clp-public-area{
     position: relative;
-    left: 50%;
-    transform: translate(-50%);
+    height: $table_size;
+}
+$left_offset: 40%;
+#clp-table-area {
+    position: absolute;
+    left: $left_offset;
+    transform: translate(-$left_offset);
     width: $table_size;
     height: $table_size;
     background-color: $calypso_colour;
@@ -401,4 +406,37 @@ $personal_area_bottom_offset: 20px;
 }
 .clp-score-label {
     text-align: right;
+}
+
+// score buttons for getting score entries
+#clp-score-access-table-area{
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    z-index: -5;
+}
+$button_height: 50px;
+$button_width: 200px;
+$button_font_size: $info_size;
+.clp-score-button{
+    height: $button_height;
+    width: $button_width;
+    border: 1px solid #FFFFFF;
+    margin: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: $button_font_size;
+    color: #FFFFFF;
+    text-align: center;
+    transition: all 0.2s;
+}
+.clp-score-button-inactive{
+    background-color: #888888;
+}
+.clp-score-button-active{
+    background-color: $calypso_colour;
+}
+.clp-score-button-active:hover{
+    color:#000000;
+    background-color:#FFFFFF;
 }

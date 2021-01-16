@@ -8,7 +8,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * round scoring tables
 * access by-round scoring tables
-* player boxes should show number of completed calypsos
+* ~~player boxes should show number of completed calypsos~~
 * clear display on new round - not sure if there should be a manual 'click' or something to confirm
 
 ## For a different branch

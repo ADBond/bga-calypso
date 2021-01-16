@@ -138,6 +138,10 @@ function (dojo, declare) {
                 const player_board_div = $(`player_board_${player_id}`);
                 dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
             }
+            const totalrounds = this.gamedatas.totalrounds;
+            for(let round = 1; round <= totalrounds; round++){
+                $(`clp-round-scores-button-${round}`).onclick = (() => displayRoundScores(round));
+            }
 
             if(this.renounce_flags_on == "on"){
                 for (i in this.gamedatas.renounce_flags) {
@@ -146,7 +150,7 @@ function (dojo, declare) {
                 }
             }
 
-            this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, this.gamedatas.totalrounds);
+            this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, totalrounds);
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -364,6 +368,22 @@ function (dojo, declare) {
                 } 
             );
         },
+
+        displayRoundScores: function(round_number){
+            this.ajaxcall(
+                "/" + this.game_name + "/" + this.game_name + "/displayScoresWrapper.html",
+                {
+                    round_number: round_number,
+                    lock: false
+                },
+                this,
+                function (result) {
+                },
+                function (is_error) {
+                }
+            );
+        },
+
         ///////////////////////////////////////////////////
         //// Player's action
         
@@ -384,12 +404,18 @@ function (dojo, declare) {
                 if (this.checkAction(action, true)) {
                     // Can play a card
                     let card_id = items[0].id;
-                    this.ajaxcall("/" + this.game_name + "/" + this.game_name + "/" + action + ".html", {
-                        id: card_id,
-                        lock: true
-                    }, this, function (result) {
-                    }, function (is_error) {
-                    });
+                    this.ajaxcall(
+                        "/" + this.game_name + "/" + this.game_name + "/" + action + ".html",
+                        {
+                            id: card_id,
+                            lock: true
+                        },
+                        this,
+                        function (result) {
+                        },
+                        function (is_error) {
+                        }
+                    );
 
                     this.playerHand.unselectAll();
                 } else {
