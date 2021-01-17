@@ -428,7 +428,7 @@
 }
 
 .clp-score-button {
-  height: 50px;
+  height: 60px;
   width: 200px;
   border: 1px solid #FFFFFF;
   margin: 5px;
@@ -452,6 +452,10 @@
 .clp-score-button-active:hover {
   color: #000000;
   background-color: #FFFFFF;
+}
+
+#clp-round-scores-button-overall {
+  margin-top: 20px;
 }
 
 /*# sourceMappingURL=calypso.css.map */

@@ -416,7 +416,7 @@ $personal_area_bottom_offset: 20px;
     top: 10%;
     z-index: 0;
 }
-$button_height: 50px;
+$button_height: 60px;
 $button_width: 200px;
 $button_font_size: $info_size;
 .clp-score-button{
@@ -441,4 +441,7 @@ $button_font_size: $info_size;
 .clp-score-button-active:hover{
     color: #000000;
     background-color: #FFFFFF;
+}
+#clp-round-scores-button-overall{
+    margin-top: 20px;
 }

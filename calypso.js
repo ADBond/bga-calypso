@@ -141,6 +141,16 @@ function (dojo, declare) {
                 dojo.addClass( round_button_id, 'clp-score-button-active' );
                 dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
             }
+            if(currentround != 1){
+                const overall_scores_button_id = 'clp-round-scores-button-overall';
+                $(overall_scores_button_id).onclick = (
+                    // TODO: need to format scores in backend and send them through here
+                    // should change dialog function to take a title again, as we want this different
+                    () => this.showResultDialog(round_number, this.gamedatas.roundscoretable[round_number])
+                );
+                dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
+                dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
+            }
 
             console.log("are the renounce flags on?");
             console.log(this.gamedatas.renounce_flags_on);
