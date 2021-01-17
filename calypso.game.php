@@ -1341,11 +1341,6 @@ class Calypso extends Table
         $round_number = $old_round_number + 1;
         self::setGameStateValue( 'roundNumber', $round_number );
         $total_rounds = self::getGameStateValue( 'totalRounds');
-        self::notifyAllPlayers(
-            "update",
-            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
-            array("round_number" => $round_number, "total_rounds" => $total_rounds)
-        );
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
@@ -1359,6 +1354,21 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'firstHandDealer' );
         }
+        $players = self::loadPlayersBasicInfos();
+        $player_ids = array();
+        // TODO: cleaner with map
+        foreach ( $players as $player_id => $player ) {
+            $player_ids[] = $player_id;
+        }
+        self::notifyAllPlayers(
+            "newRound",
+            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
+            array(
+                "round_number" => $round_number,
+                "total_rounds" => $total_rounds,
+                "player_ids" => $player_ids,
+            )
+        );
         $this->gamestate->nextState("");
     }
 
@@ -1412,7 +1422,7 @@ class Calypso extends Table
                 'dealer_id' => $new_dealer,
                 'round_number' => self::getGameStateValue( 'roundNumber' ),
                 'hand_number' => $hand_number,
-                'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
+                'total_rounds' => self::getGameStateValue( 'totalRounds' ),
             )
         );
         self::notifyAllPlayers( 'actionRequired', clienttranslate('${player_name} must lead a card to the first trick.'), array(

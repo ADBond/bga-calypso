@@ -8,7 +8,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * round scoring tables
 * ~~access by-round scoring tables~~
-  * Done by server, but should move it all to UI so checking scores doesn't need to use server.
+  * ~~Done by server, but should move it all to UI so checking scores doesn't need to use server~~
 * ~~player boxes should show number of completed calypsos~~
 * clear display on new round - not sure if there should be a manual 'click' or something to confirm
 
@@ -50,18 +50,19 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * will be tracking this for stats, so should be easy to add in. Probably as a log option?
 * Order hand with personal trumps separated?
 * improve scoring table?
-* access old scoring tables
+* ~~access old scoring tables~~
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
-* player boxes should show number of completed calypsos
-* clear display on new round - not sure if there should be a manual 'click' or something to confirm
+* ~~player boxes should show number of completed calypsos~~
 
 ## Things to fix
 
-* ~~Fix tooltips?? (renounce and dealer button)~~
+* Fix tooltips?? (renounce and ~~dealer button~~)
 * Fix dealer button animation
 * New cards in calypso get eaten by calypso animation - need to handle this!
   * maybe calypso animation should head to player boxes to help signify scoring being there
 * Lose renounce indicators on refresh :/
+* ~~Wipe accumulated calypsos on new round w/o refresh~~
+* clear display on new round - not sure if there should be a manual 'click' or something to confirm
 
 ### Other UI
 

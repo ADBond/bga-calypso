@@ -172,7 +172,7 @@ function (dojo, declare) {
         //
         onEnteringState: function( stateName, args )
         {
-            console.log( 'Entering state: '+stateName );
+            console.log( 'Entering state: '+ stateName );
             
             switch( stateName )
             {
@@ -503,6 +503,7 @@ function (dojo, declare) {
             dojo.subscribe('debug', this, "notif_debug");
             dojo.subscribe('update', this, "notif_update");
 
+            dojo.subscribe('newRound', this, "notif_newRound");
             // the actual cards that a player receives
             dojo.subscribe('newHand', this, "notif_newHand");
             // admin around hand/dealer changing
@@ -524,6 +525,16 @@ function (dojo, declare) {
             
             dojo.subscribe( 'scoreDisplay', this, "notif_scoreDisplay" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
+        },
+
+        notif_newRound: function(notif) {
+            const player_ids = notif.args.player_ids;
+            console.log(player_ids);
+            for(let player_id of player_ids){
+                const player_count_element = `clp-info-count-${player_id}`;
+                console.log(player_count_element);
+                $(player_count_element).textContent = 0;
+            }
         },
 
         notif_newHand : function(notif) {
