@@ -17,32 +17,33 @@
 ./calypso.game.php:740:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
 ./calypso.game.php:742:                // AB TODO: updated db when I've updated the model to allow the field
 ./calypso.game.php:792:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:855:        // TODO: disable buttons
-./calypso.game.php:857:            // TODO: same translation problem as playCard. When fixed, do it here too :)
-./calypso.game.php:902:        // TODO: we should get the players in partnership order!
-./calypso.game.php:932:            // TODO: this is also a place where partnershit will change
-./calypso.game.php:949:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:1169:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:1205:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1260:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1384:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1438:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1447:        // TODO: this notification should go, as that info should be in player boxes.
-./calypso.game.php:1462:        // TODO: at best this should say hand X is over, or just scrap it altogether
+./calypso.game.php:855:    //     // TODO: disable buttons
+./calypso.game.php:857:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
+./calypso.game.php:903:        // TODO: we should get the players in partnership order!
+./calypso.game.php:933:            // TODO: this is also a place where partnershit will change
+./calypso.game.php:950:        // TODO: probably want to display this aspect betterly
+./calypso.game.php:1179:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:1215:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1270:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1394:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1448:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1457:        // TODO: this notification should go, as that info should be in player boxes.
+./calypso.game.php:1472:        // TODO: at best this should say hand X is over, or just scrap it altogether
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:77:            // TODO: specialise to suits?
 ./calypso.js:95:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:101:            // TODO: center hand in the div if wanted:
-./calypso.js:256:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
-./calypso.js:308:            // TODO: this should stay in css - use class manipulation
-./calypso.js:322:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:398:                // TODO: round number in title? need to get to read translation doc properly
-./calypso.js:540:            // TODO: animate the dealer button moving here
-./calypso.js:580:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:589:            // TODO: should this be delayed/animated?
-./calypso.js:669:            // AB TODO: do we need to do anything here?
-./calypso.js:684:            // TODO: play the card in the user interface.
+./calypso.js:259:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
+./calypso.js:311:            // TODO: this should stay in css - use class manipulation
+./calypso.js:325:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:401:                // TODO: round number in title? need to get to read translation doc properly
+./calypso.js:545:            // TODO: animate the dealer button moving here
+./calypso.js:585:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:594:            // TODO: should this be delayed/animated?
+./calypso.js:604:            // TODO: we use this in setup as well - if it works, then reuse the fucker!
+./calypso.js:688:            // AB TODO: do we need to do anything here?
+./calypso.js:703:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:57:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:121:// TODO: really want this smaller, but need to do the scaling properly.
 ./calypso_style.scss:257:/* TODO: rename - this bounds all of our public info */

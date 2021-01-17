@@ -60,6 +60,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~Fix tooltips?? (renounce and dealer button)~~
 * Fix dealer button animation
 * New cards in calypso get eaten by calypso animation - need to handle this!
+  * maybe calypso animation should head to player boxes to help signify scoring being there
+* Lose renounce indicators on refresh :/
 
 ### Other UI
 

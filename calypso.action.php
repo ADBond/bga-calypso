@@ -49,12 +49,12 @@
     }
 
     // TODO: remove this - it should not need be a server thing
-    public function displayScoresWrapper() {
-        self::setAjaxMode();
-        $round_number = self::getArg("round_number", AT_posint, true);
-        $this->game->displayScoresWrapper($round_number);
-        self::ajaxResponse();
-    }
+    // public function displayScoresWrapper() {
+    //     self::setAjaxMode();
+    //     $round_number = self::getArg("round_number", AT_posint, true);
+    //     $this->game->displayScoresWrapper($round_number);
+    //     self::ajaxResponse();
+    // }
 
     /*
     

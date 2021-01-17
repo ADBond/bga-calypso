@@ -139,11 +139,14 @@ function (dojo, declare) {
                 dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
             }
             const totalrounds = this.gamedatas.totalrounds;
-            for(let round = 1; round <= totalrounds; round++){
-                $(`clp-round-scores-button-${round}`).onclick = (
-                    () => this.showResultDialog(round, this.gamedatas.roundscoretable[round])
+            const currentround = this.gamedatas.roundnumber;
+            for(let round_number = 1; round_number < currentround; round_number++){
+                let round_button_id = `clp-round-scores-button-${round_number}`;
+                $(round_button_id).onclick = (
+                    () => this.showResultDialog(round_number, this.gamedatas.roundscoretable[round_number])
                 );
-                // this.displayRoundScores(round);
+                dojo.addClass( round_button_id, 'clp-score-button-active' );
+                dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
             }
 
             if(this.renounce_flags_on == "on"){
@@ -153,7 +156,7 @@ function (dojo, declare) {
                 }
             }
 
-            this.updateGameStatus(this.gamedatas.handnumber, this.gamedatas.roundnumber, totalrounds);
+            this.updateGameStatus(this.gamedatas.handnumber, currentround, totalrounds);
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -518,6 +521,8 @@ function (dojo, declare) {
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             this.notifqueue.setSynchronous( 'moveCardsToCalypsos', 700 );
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
+            
+            dojo.subscribe( 'scoreDisplay', this, "notif_scoreDisplay" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
         },
 
@@ -591,6 +596,20 @@ function (dojo, declare) {
         },
         notif_actionRequired : function(notif) {
             // nothing needed here
+        },
+
+
+        notif_scoreDisplay: function(notif) {
+            this.showResultDialog(notif.args.round_number, notif.args.table);
+            // TODO: we use this in setup as well - if it works, then reuse the fucker!
+            console.log(notif);
+            const round_button_id = `clp-round-scores-button-${notif.args.round_number}`;
+            console.log(round_button_id);
+            $(round_button_id).onclick = (
+                () => this.showResultDialog(notif.args.round_number, notif.args.table)
+            );
+            dojo.addClass( round_button_id, 'clp-score-button-active' );
+            dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
         },
 
         notif_scoreUpdate : function(notif) {
