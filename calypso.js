@@ -159,11 +159,7 @@ function (dojo, declare) {
 
             // tooltips ahoy:
             console.log("attaching tooltips to classes...");
-            this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
-            this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
-            this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
-            // TODO: specialise to suits?
-            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
+            this.refreshTooltips();
             console.log("...and that my friend is sorted");
 
             console.log( "Ending game setup" );
@@ -336,6 +332,7 @@ function (dojo, declare) {
                 dojo.removeClass( cards_el_id, 'clp-trickpile-full' );
                 dojo.addClass( cards_el_id, 'clp-trickpile-empty' );
             }
+            this.refreshTooltips();
         },
 
         setRenounceFlag : function(player_id, suit){
@@ -343,6 +340,7 @@ function (dojo, declare) {
             console.log("this is happening: " + renounce_el_id);
             dojo.addClass( renounce_el_id, 'clp-active-renounce' );
             dojo.removeClass( renounce_el_id, 'clp-inactive-renounce' );
+            this.refreshTooltips();
         },
 
         clearRenounceFlags: function(players, suits){
@@ -357,7 +355,7 @@ function (dojo, declare) {
                     dojo.addClass( renounce_el_id, 'clp-inactive-renounce' );
                 }
             }
-            
+            this.refreshTooltips();
         },
 
         changeDealer : function(new_dealer_id) {
@@ -381,6 +379,13 @@ function (dojo, declare) {
             );
         },
 
+        refreshTooltips: function() {
+            this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
+            this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
+            // TODO: specialise to suits?
+            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
+        },
         // displayRoundScores: function(round_number){
         //     console.log("trigerring this chappy!");
         //     this.ajaxcall(
