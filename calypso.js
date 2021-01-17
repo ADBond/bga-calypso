@@ -69,13 +69,6 @@ function (dojo, declare) {
                 this.setTrickPile(player_id, player["trick_pile"]);
                 this.setupCalypsoArea(player_id, player_trump);
             }
-            
-            // tooltips ahoy:
-            this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
-            this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
-            this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
-            // TODO: specialise to suits?
-            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
 
             this.playerHand = new ebg.stock(); // new stock object for hand
             this.playerHand.create( this, $('clp-myhand'), this.cardwidth, this.cardheight );
@@ -149,7 +142,11 @@ function (dojo, declare) {
                 dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
             }
 
-            if(this.renounce_flags_on == "on"){
+            console.log("are the renounce flags on?");
+            console.log(this.gamedatas.renounce_flags_on);
+            if(this.gamedatas.renounce_flags_on == "on"){
+                console.log("show me those flags!");
+                console.log(this.gamedatas.renounce_flags);
                 for (i in this.gamedatas.renounce_flags) {
                     let info = this.gamedatas.renounce_flags[i];
                     this.setRenounceFlag(info.player_id, info.suit);
@@ -159,6 +156,15 @@ function (dojo, declare) {
             this.updateGameStatus(this.gamedatas.handnumber, currentround, totalrounds);
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
+
+            // tooltips ahoy:
+            console.log("attaching tooltips to classes...");
+            this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
+            this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
+            // TODO: specialise to suits?
+            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
+            console.log("...and that my friend is sorted");
 
             console.log( "Ending game setup" );
         },

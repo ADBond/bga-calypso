@@ -302,6 +302,7 @@
 
 .clp-active-renounce {
   background-image: url("img/card_suits.jpg");
+  z-index: 3;
 }
 
 .clp-inactive-renounce {

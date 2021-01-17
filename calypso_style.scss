@@ -291,6 +291,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
 .clp-active-renounce {
     // background-color: #FF0000;
     background-image: url('img/card_suits.jpg');
+    z-index: 3;
 }
 .clp-inactive-renounce {
     background-color: $blank_space_colour;
@@ -438,6 +439,6 @@ $button_font_size: $info_size;
     background-color: $calypso_colour;
 }
 .clp-score-button-active:hover{
-    color:#000000;
-    background-color:#FFFFFF;
+    color: #000000;
+    background-color: #FFFFFF;
 }
