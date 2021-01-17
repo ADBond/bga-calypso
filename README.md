@@ -37,7 +37,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Display
 
-* game art
+* ~~game art - broken this out to its own section now mate~~
 * see last trick?
   * maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based
 * optional log detail (c.f. Hungarian Tarock)
@@ -53,6 +53,18 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~access old scoring tables~~
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
 * ~~player boxes should show number of completed calypsos~~
+
+### Images
+
+* Game box concept okay, just refining
+* ~~Need something else for icon~~
+  * Maybe icon is fine actually
+* Banner needs completing (fining edges, proper colours exported)
+* another display image?
+* card back(s) finalise
+* suit icons better
+* placeholder calypso cards better
+* dealer icon
 
 ## Things to fix
 
