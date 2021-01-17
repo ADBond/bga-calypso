@@ -430,6 +430,7 @@ $button_font_size: $info_size;
     color: #FFFFFF;
     text-align: center;
     transition: all 0.2s;
+    box-shadow: #000000 0 1px 0;
 }
 .clp-score-button-inactive{
     background-color: #888888;
@@ -437,6 +438,7 @@ $button_font_size: $info_size;
 }
 .clp-score-button-active{
     background-color: $calypso_colour;
+    cursor: pointer;
 }
 .clp-score-button-active:hover{
     color: #000000;
