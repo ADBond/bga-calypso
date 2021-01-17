@@ -445,3 +445,7 @@ $button_font_size: $info_size;
 #clp-round-scores-button-overall{
     margin-top: 20px;
 }
+// this is in-built bga stuff, rather than hacking it ourselves
+.tableWindow th {
+    text-align: center;
+}

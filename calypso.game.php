@@ -285,6 +285,7 @@ class Calypso extends Table
             $args_array = self::getDisplayScoresArgs($round);
             $result['roundscoretable'][$round] = $args_array["score_table"];
         }
+        $result['overallscoretable'] = self::getDisplayOverallScoresArgs();
 
         if(self::getGameStateValue('renounceFlags') == 1){
             $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
@@ -955,6 +956,41 @@ class Calypso extends Table
         );
     }
 
+    function getDisplayOverallScoresArgs(){
+        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+        $header_names = array( '' );
+        $header_suits = array( '' );
+        $score_table = array();
+        for($round = 1; $round <= self::getGameStateValue("totalRounds"); $round++){
+            // TODO: translate business
+            $round_scores = array( self::score_wrap_label(clienttranslate("Round ".$round." score")) );
+            $players = self::getRoundScore($round);
+            foreach ( $players as $player_id => $score_info ) {
+                // only need to add this once
+                if($round == 1){
+                    $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
+                    $header_names[] = array(
+                        'str' => '${player_name}',
+                        'args' => array( 'player_name' => self::getPlayerName($player_id) ),
+                        'type' => 'header'
+                    );
+                    $header_suits[] = array(
+                        'str' => '${player_suit}',
+                        'args' => array( 'player_suit' => $suit),
+                        'type' => 'header'
+                    );
+                }
+                $round_scores[] = self::score_wrap($score_info['partnership_score']);
+            }
+            if($round == 1){
+                $score_table[] = $header_names;
+                $score_table[] = $header_suits;
+            }
+            $score_table[] = $round_scores;
+        }
+        return $score_table;
+    }
+
     function displayScores($round_number){
         $args_array = self::getDisplayScoresArgs($round_number);
 
@@ -975,6 +1011,7 @@ class Calypso extends Table
             array(
                 "round_number" => $round_number,
                 "table" => $args_array["score_table"],
+                "overall_score" => self::getDisplayOverallScoresArgs(),
             )
         );
         $this->notifyAllPlayers(

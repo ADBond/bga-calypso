@@ -6,7 +6,7 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* round scoring tables
+* ~~round scoring tables~~
 * ~~access by-round scoring tables~~
   * ~~Done by server, but should move it all to UI so checking scores doesn't need to use server~~
 * ~~player boxes should show number of completed calypsos~~
@@ -49,7 +49,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
   * will be tracking this for stats, so should be easy to add in. Probably as a log option?
 * Order hand with personal trumps separated?
-* improve scoring table?
+* ~~improve scoring table?~~
 * ~~access old scoring tables~~
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
 * ~~player boxes should show number of completed calypsos~~

@@ -134,19 +134,13 @@ function (dojo, declare) {
             const totalrounds = this.gamedatas.totalrounds;
             const currentround = this.gamedatas.roundnumber;
             for(let round_number = 1; round_number < currentround; round_number++){
-                let round_button_id = `clp-round-scores-button-${round_number}`;
-                $(round_button_id).onclick = (
-                    () => this.showResultDialog(round_number, this.gamedatas.roundscoretable[round_number])
-                );
-                dojo.addClass( round_button_id, 'clp-score-button-active' );
-                dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
+                this.activateScoreButton(round_number,this.gamedatas.roundscoretable[round_number]);
             }
             if(currentround != 1){
                 const overall_scores_button_id = 'clp-round-scores-button-overall';
                 $(overall_scores_button_id).onclick = (
-                    // TODO: need to format scores in backend and send them through here
-                    // should change dialog function to take a title again, as we want this different
-                    () => this.showResultDialog(round_number, this.gamedatas.roundscoretable[round_number])
+                    () => this.showResultDialog(
+                        0, this.gamedatas.overallscoretable, _("Round-by-round score summary"))
                 );
                 dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
                 dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
@@ -415,20 +409,23 @@ function (dojo, declare) {
 
         // borrowed/modified from W. Michael Shirk's Grosstarock implementation
         // saved a lot of pain in trying to hack something together!
-        showResultDialog: function (round_number, score_table) {
-            this.scoringDialog = this.displayTableWindow(
-                
+        // TODO: fix API - don't need round_number if title supplied!
+        showResultDialog: function (round_number, score_table, title=null) {
+            if(title === null){
+                title = _("Scores for round ") + round_number;
+            }
+            let scoring_dialog = this.displayTableWindow(
                 "roundScore",
-                // TODO: round number in title? need to get to read translation doc properly
-                _("Scores for the round"),
+                title,
                 score_table,
                 "",
                 this.format_string_recursive(
                     '<div id="tableWindow_actions"><a id="close_btn" class="bgabutton bgabutton_blue">${close}</a></div>',
                     { close: _("Close") }
                 )
-			)
-			this.scoringDialog.show()
+            )
+            console.log(scoring_dialog);
+			scoring_dialog.show()
         },
 
         ///////////////////////////////////////////////////
@@ -469,6 +466,16 @@ function (dojo, declare) {
                     this.playerHand.unselectAll();
                 }
             }
+        },
+
+        activateScoreButton: function(round_number, score_table){
+            const round_button_id = `clp-round-scores-button-${round_number}`;
+            console.log(round_button_id);
+            $(round_button_id).onclick = (
+                () => this.showResultDialog(round_number, score_table)
+            );
+            dojo.addClass( round_button_id, 'clp-score-button-active' );
+            dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
         },
         /* Example:
         
@@ -633,15 +640,16 @@ function (dojo, declare) {
 
         notif_scoreDisplay: function(notif) {
             this.showResultDialog(notif.args.round_number, notif.args.table);
-            // TODO: we use this in setup as well - if it works, then reuse the fucker!
-            console.log(notif);
-            const round_button_id = `clp-round-scores-button-${notif.args.round_number}`;
-            console.log(round_button_id);
-            $(round_button_id).onclick = (
-                () => this.showResultDialog(notif.args.round_number, notif.args.table)
+            this.activateScoreButton(notif.args.round_number, notif.args.table);
+            // TODO: again this should be farmed out, ideally to a generalised function?
+            // see setup
+            const overall_scores_button_id = 'clp-round-scores-button-overall';
+            $(overall_scores_button_id).onclick = (
+                () => this.showResultDialog(
+                    notif.args.round_number, notif.args.overall_score, _("Round-by-round score summary"))
             );
-            dojo.addClass( round_button_id, 'clp-score-button-active' );
-            dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
+            dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
+            dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
         },
 
         notif_scoreUpdate : function(notif) {
