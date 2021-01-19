@@ -480,6 +480,7 @@ function (dojo, declare) {
 
                     this.playerHand.unselectAll();
                 } else {
+                    this.showMessage(_("It is not your turn to play a card!"), "error");
                     this.playerHand.unselectAll();
                 }
             }

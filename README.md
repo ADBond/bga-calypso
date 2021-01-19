@@ -69,7 +69,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Other UI
 
-* throw an exception if non-active player clicks on card, rather than silently failing?
+* ~~throw an exception if non-active player clicks on card, rather than silently failing?~~
 
 ### Things to test
 
