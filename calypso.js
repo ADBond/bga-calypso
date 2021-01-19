@@ -236,18 +236,9 @@ function (dojo, declare) {
             {            
                 switch( stateName )
                 {
-/*               
-                 Example:
- 
-                 case 'myGameState':
-                    
-                    // Add 3 action buttons in the action status bar:
-                    
-                    this.addActionButton( 'button_1_id', _('Button 1 label'), 'onMyMethodToCall1' ); 
-                    this.addActionButton( 'button_2_id', _('Button 2 label'), 'onMyMethodToCall2' ); 
-                    this.addActionButton( 'button_3_id', _('Button 3 label'), 'onMyMethodToCall3' ); 
-                    break;
-*/
+                    case 'awaitNewRound':
+                        this.addActionButton( 'clp-confirm-new-round', _('Ready for next round'), 'confirmNewRound');
+                        break;
                 }
             }
         },        
@@ -362,6 +353,18 @@ function (dojo, declare) {
             this.refreshTooltips();
         },
 
+        clearCalypsos: function(player_ids){
+            console.log("clear it up!");
+            for (player_id of player_ids){
+                for(let rank=2; rank <= 14; rank++){
+                    let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
+                    console.log(card_el_id);
+                    dojo.removeClass( card_el_id, 'clp-face-up-card' );
+                    dojo.addClass( card_el_id, 'clp-calypsocard-space' );
+                }
+            }
+        },
+
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'clp-dealer-' + new_dealer_id;
 
@@ -428,6 +431,16 @@ function (dojo, declare) {
 			scoring_dialog.show()
         },
 
+        activateScoreButton: function(round_number, score_table){
+            const round_button_id = `clp-round-scores-button-${round_number}`;
+            console.log(round_button_id);
+            $(round_button_id).onclick = (
+                () => this.showResultDialog(round_number, score_table)
+            );
+            dojo.addClass( round_button_id, 'clp-score-button-active' );
+            dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
+        },
+
         ///////////////////////////////////////////////////
         //// Player's action
         
@@ -468,15 +481,22 @@ function (dojo, declare) {
             }
         },
 
-        activateScoreButton: function(round_number, score_table){
-            const round_button_id = `clp-round-scores-button-${round_number}`;
-            console.log(round_button_id);
-            $(round_button_id).onclick = (
-                () => this.showResultDialog(round_number, score_table)
-            );
-            dojo.addClass( round_button_id, 'clp-score-button-active' );
-            dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
+        confirmNewRound: function(){
+            if (this.checkAction("confirmNewRound", true)) {
+                this.ajaxcall(
+                    "/" + this.game_name + "/" + this.game_name + "/confirmNewRound.html",
+                    {
+                        lock: true
+                    },
+                    this,
+                    function (result) {
+                    },
+                    function (is_error) {
+                    }
+                );
+            }
         },
+
         /* Example:
         
         onMyMethodToCall1: function( evt )
@@ -563,6 +583,8 @@ function (dojo, declare) {
                 console.log(player_count_element);
                 $(player_count_element).textContent = 0;
             }
+            console.log("clear calypsos...");
+            this.clearCalypsos(player_ids);
         },
 
         notif_newHand : function(notif) {

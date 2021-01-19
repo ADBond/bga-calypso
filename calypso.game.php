@@ -1328,6 +1328,11 @@ class Calypso extends Table
         $this->gamestate->nextState('playCard');
     }
 
+    function confirmNewRound(){
+        self::checkAction( "confirmNewRound" );
+        $player_id = $this->getCurrentPlayerId();
+        $this->gamestate->setPlayerNonMultiactive($player_id, "");
+    }
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state arguments
@@ -1544,6 +1549,10 @@ class Calypso extends Table
         } else {
             $this->gamestate->nextState('endGame');
         }
+    }
+
+    function stAwaitNewRound(){
+        $this->gamestate->setAllPlayersMultiactive();
     }
 
 //////////////////////////////////////////////////////////////////////////////

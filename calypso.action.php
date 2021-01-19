@@ -48,6 +48,12 @@
         self::ajaxResponse();
     }
 
+    public function confirmNewRound() {
+        self::setAjaxMode();
+        $this->game->confirmNewRound();
+        self::ajaxResponse();
+    }
+
     // TODO: remove this - it should not need be a server thing
     // public function displayScoresWrapper() {
     //     self::setAjaxMode();
