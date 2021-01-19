@@ -75,6 +75,18 @@
                 )
             );
         }
+
+        $total_rounds = $this->game->getGameStateValue("totalRounds");
+        $this->page->begin_block( $template, "roundscoreaccessrow" );
+        for ($round = 1; $round <= $total_rounds; $round++){
+            $this->page->insert_block(
+                "roundscoreaccessrow",
+                array (
+                    "ROUND_NUMBER" => $round,
+                )
+            );
+        }
+
         // this will make our My Hand text translatable
         $this->tpl['MY_HAND'] = self::_("My hand");
 

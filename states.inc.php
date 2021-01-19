@@ -102,7 +102,7 @@ $machinestates = array(
         "action" => "stNextPlayer",
         "transitions" => array( "nextPlayer" => 31, "nextTrick" => 30, "endHand" => 40 )
     ),
-    
+    // TODO: collecting cards holder text
     
     // End of the hand (scoring, etc...)
     40 => array(
@@ -117,7 +117,16 @@ $machinestates = array(
         "description" => "",
         "type" => "game",
         "action" => "stEndRound",
-        "transitions" => array( "nextRound" => 21, "endGame" => 99 )
+        "transitions" => array( "nextRound" => 42, "endGame" => 99 )
+    ),
+    42 => array(
+        "name" => "awaitNewRound",
+        "description" => clienttranslate('Waiting for others to be ready for the next round'),
+        "descriptionmyturn" => clienttranslate('${you} must confirm you are ready for the next round'),
+        "type" => "multipleactiveplayer",
+        "possibleactions" => array( "confirmNewRound" ),
+        "action" => "stAwaitNewRound",
+        "transitions" => array("" => 21)
     ),
 
     // Final state.

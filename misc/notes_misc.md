@@ -36,6 +36,22 @@ Might be nice to refactor so the code is more readable and these values are hidd
 
 ### bugs
 
+### game_display
+
+H: 400-760px
+W: (any)-(1.5*H)
+
+### typeface options
+
+* Limelight
+* Lobster
+* Pacifico
+* Caesar Dressing
+* Mystery Quest
+* Yellowtail
+* Shrinkhand
+* Ceviche One
+
 #### calypso completed
 
 Not cleared after completing, needs refresh. Think I've already noted this somewhere

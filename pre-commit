@@ -4,5 +4,6 @@
 grep TODO --exclude={pre-commit,calypso.css} --exclude-dir={.git,misc} -n -r . > misc/todo_list
 git add misc/todo_list
 echo "You have probably misspelled calypso some places - a likely source of errors!" > misc/warnings
-grep calyspo --exclude="pre-commit" --exclude-dir={.git,misc} -n -r . >> misc/warnings
+# include either capitalisation to get camel-casey problems
+grep alyspo --exclude="pre-commit" --exclude-dir={.git,misc} -n -r . >> misc/warnings
 git add misc/warnings

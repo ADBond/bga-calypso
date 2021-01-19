@@ -70,15 +70,20 @@ $num_ranks: 13;
 // }
 
 $table_size: 750px;
-#clp-table-area {
+#clp-public-area{
     position: relative;
-    left: 50%;
-    transform: translate(-50%);
+    height: $table_size;
+}
+$left_offset: 40%;
+#clp-table-area {
+    position: absolute;
+    left: $left_offset;
+    transform: translate(-$left_offset);
     width: $table_size;
     height: $table_size;
     background-color: $calypso_colour;
     border-radius: 20px;
-    z-index: -1;
+    z-index: 1;
 }
 
 $info_size: 20px;
@@ -95,6 +100,33 @@ $title_size: $info_size * 1.5;
 .clp-gametitle {
     font-size: $title_size;
 }
+$icon_size: 32px;
+.clp-calypso-info {
+    clear: both;
+    width: 2*$icon_size;
+    // display: flex;
+    // align-self: center;
+}
+$display_font: 2*$icon_size/3;
+.clp-info-count {
+    font-size: $display_font;
+    font-weight: bold;
+    // margin-left: 10px;
+    margin-left: $icon_size + 10px;
+    // flex-grow: 1;
+    padding-top: ($icon_size - $display_font)/2;
+    vertical-align: middle;
+    // height: $icon_size;
+}
+// TODO: really want this smaller, but need to do the scaling properly.
+// 16px might be too small - maybe 24? the above bits should scale with
+.clp-suit-icon {
+    float: left;
+    background-image: url('img/card_suits.jpg');
+    width: $icon_size;
+    height: $icon_size;
+}
+// construct actual suit icon lower down where we do suity stuff
 
 $card_area_buffer: 20px;
 $card_area_width: $card_width + $card_area_buffer;
@@ -197,6 +229,19 @@ $suit_height: 32px;
     .clp-renounce-#{$suit} {
         background-position: 0px (-$suit_height * ($suit - 1));
     }
+    // for display in player boxes:
+    .clp-suit-icon-#{$suit} {
+        background-position: 0px (-$suit_height * ($suit - 1));
+    }
+    @for $rank from 2 through $num_ranks+1 {
+        $x: $card_width * ($rank - 2);
+        $y: $card_height * ($suit - 1);
+        .clp-calypsocard-face-#{$suit}-#{$rank}{
+            z-index: $rank + 14;
+            background-position-x: -$x;
+            background-position-y: -$y;
+        }
+    }
 }
 
 // This is for the actual cards that are won:
@@ -207,7 +252,7 @@ $suit_height: 32px;
 .clp-calypsocard-space {
     outline: solid 1px black;
     /* background-color: #AAA; */
-    z-index: 0;
+    z-index: 2;
     background-image: url('img/cards_layout.jpg'); 
 }
 .clp-captured-card {
@@ -255,6 +300,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
 .clp-active-renounce {
     // background-color: #FF0000;
     background-image: url('img/card_suits.jpg');
+    z-index: 3;
 }
 .clp-inactive-renounce {
     background-color: $blank_space_colour;
@@ -272,7 +318,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     width: $renounce_size;
     height: $renounce_size;
     background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
-    z-index: 1;
+    z-index: 3;
 }
 
 $max_name_size: 200px;
@@ -370,4 +416,47 @@ $personal_area_bottom_offset: 20px;
 }
 .clp-score-label {
     text-align: right;
+}
+
+// score buttons for getting score entries
+#clp-score-access-table-area{
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    z-index: 0;
+}
+$button_height: 60px;
+$button_width: 200px;
+$button_font_size: $info_size;
+.clp-score-button{
+    height: $button_height;
+    width: $button_width;
+    border: 1px solid #FFFFFF;
+    margin: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: $button_font_size;
+    color: #FFFFFF;
+    text-align: center;
+    transition: all 0.2s;
+    box-shadow: #000000 0 1px 0;
+}
+.clp-score-button-inactive{
+    background-color: #888888;
+    opacity: 0.5;
+}
+.clp-score-button-active{
+    background-color: $calypso_colour;
+    cursor: pointer;
+}
+.clp-score-button-active:hover{
+    color: #000000;
+    background-color: #FFFFFF;
+}
+#clp-round-scores-button-overall{
+    margin-top: 20px;
+}
+// this is in-built bga stuff, rather than hacking it ourselves
+.tableWindow th {
+    text-align: center;
 }

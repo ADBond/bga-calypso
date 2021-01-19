@@ -6,6 +6,12 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* ~~round scoring tables~~
+* ~~access by-round scoring tables~~
+  * ~~Done by server, but should move it all to UI so checking scores doesn't need to use server~~
+* ~~player boxes should show number of completed calypsos~~
+* ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
+
 ## For a different branch
 
 ## To-do list
@@ -31,8 +37,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Display
 
-* game art
+* ~~game art - broken this out to its own section now mate~~
 * see last trick?
+  * maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based
 * optional log detail (c.f. Hungarian Tarock)
 * Set different default colours
 * Check that there's nowt that's colourblind-unfriendly
@@ -42,16 +49,33 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
   * will be tracking this for stats, so should be easy to add in. Probably as a log option?
 * Order hand with personal trumps separated?
-* improve scoring table?
-* access old scoring tables
+* ~~improve scoring table?~~
+* ~~access old scoring tables~~
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
-* player boxes should show number of completed calypsos
-* clear display on new round - not sure if there should be a manual 'click' or something to confirm
+* ~~player boxes should show number of completed calypsos~~
+
+### Images
+
+* Game box concept okay, just refining
+* ~~Need something else for icon~~
+  * Maybe icon is fine actually
+* Banner needs completing (fining edges, proper colours exported)
+* another display image?
+* card back(s) finalise
+* suit icons better
+* placeholder calypso cards better
+* dealer icon
+
 ## Things to fix
 
-* Fix tooltips?? (renounce and dealer button)
+* ~~Fix tooltips?? (renounce and dealer button)~~
+* ~~Tooltips don't work when we dynamically switch class - they only attach to elements that have that class at the time of calling~~
 * Fix dealer button animation
 * New cards in calypso get eaten by calypso animation - need to handle this!
+  * maybe calypso animation should head to player boxes to help signify scoring being there
+* ~~Lose renounce indicators on refresh :/~~
+* ~~Wipe accumulated calypsos on new round w/o refresh~~
+* ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
 
 ### Other UI
 

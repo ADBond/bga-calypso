@@ -280,6 +280,13 @@ class Calypso extends Table
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
 
+        $result['roundscoretable'] = array();
+        for($round = 1; $round <= $result['roundnumber']; $round++){
+            $args_array = self::getDisplayScoresArgs($round);
+            $result['roundscoretable'][$round] = $args_array["score_table"];
+        }
+        $result['overallscoretable'] = self::getDisplayOverallScoresArgs();
+
         if(self::getGameStateValue('renounceFlags') == 1){
             $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
             $player_flags = array();
@@ -456,15 +463,15 @@ class Calypso extends Table
         );
     }
 
-    function getAllCompletedCalyspos(){
+    function getAllCompletedCalypsos(){
         $self = $this;
-        $partnershipOrder = function($player_1, $player_2) use ($self){
+        $partnership_order = function($player_1, $player_2) use ($self){
             return $this::getPlayerPartnership($player_1) == "minor"? -1 : 1;
         };
         $sql = "SELECT player_id id, completed_calypsos num_calypsos FROM player";
         $player_calypsos = self::getCollectionFromDB( $sql, true );
         
-        uksort($player_calypsos, $partnershipOrder);
+        uksort($player_calypsos, $partnership_order);
         return $player_calypsos;
     }
 
@@ -514,6 +521,9 @@ class Calypso extends Table
             'moved_to' => $moved_to,
         ) );
         if(!empty($calypsos_completed)){
+            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
+            // this is updated with latest figures already
+            $total_calypso_counts = self::getAllCompletedCalypsos();
             foreach($calypsos_completed as $player_id){
                 self::updateFastestCalypso($player_id);
                 self::notifyAllPlayers(
@@ -523,6 +533,7 @@ class Calypso extends Table
                         'player_id' => $player_id,
                         'player_name' => self::getPlayerName($player_id),
                         'player_suit' => self::getPlayerSuit($player_id),
+                        'num_calypsos' => $total_calypso_counts[$player_id],
                     )
                 );
             }
@@ -804,7 +815,7 @@ class Calypso extends Table
 
     // here we actually set the scores
     function updateScores(){
-        $players = self::getAllCompletedCalyspos();
+        $players = self::getAllCompletedCalypsos();
 
         $round_number = self::getGameStateValue( 'roundNumber' );
 
@@ -841,42 +852,55 @@ class Calypso extends Table
         }
     }
 
-    function displayScores($round_number){
+    // function displayScoresWrapper($round_number){
+    //     // TODO: disable buttons
+    //     if($round_number >= self::getGameStateValue('roundNumber')){
+    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
+    //         throw new BgaUserException(
+    //             sprintf(self::_("Round %s is not complete yet - no scores available"), $round_number)
+    //         );
+    //     }else{
+    //         displayScores($round_number);
+    //     }
+    // }
+
+    function wrap_class($x, $class_name){
+        return '<div class="'.$class_name.'">'.$x.'</div>';
+    }
+    function count_wrap($x){
+        return self::wrap_class($x, "clp-number-entry");
+    }
+    function score_wrap($x){
+        return self::wrap_class($x, "clp-score-entry");
+    }
+    function count_wrap_label($x){
+        return self::wrap_class($x, "clp-number-label");
+    }
+    function score_wrap_label($x){
+        return self::wrap_class($x, "clp-score-label");
+    }
+
+    function getDisplayScoresArgs($round_number){
         // give counts and scores different classes so we can style them differently
         // e.g. text-align: left (vs right), different colours(?), weights
-        function wrap_class($x, $class_name){
-            return '<div class="'.$class_name.'">'.$x.'</div>';
-        }
-        function count_wrap($x){
-            return wrap_class($x, "clp-number-entry");
-        }
-        function score_wrap($x){
-            return wrap_class($x, "clp-score-entry");
-        }
-        function count_wrap_label($x){
-            return wrap_class($x, "clp-number-label");
-        }
-        function score_wrap_label($x){
-            return wrap_class($x, "clp-score-label");
-        }
 
         $scores_for_updating = array();
         $score_table = array();
 
         $header_names = array( '' );
         $header_suits = array( '' );
-        $calypso_counts = array( count_wrap_label(clienttranslate("Completed Calypsos")) );
-        $calypso_scores = array( score_wrap_label(clienttranslate("score")) );
+        $calypso_counts = array( self::count_wrap_label(clienttranslate("Completed Calypsos")) );
+        $calypso_scores = array( self::score_wrap_label(clienttranslate("score")) );
         
-        $part_calypso_counts = array( count_wrap_label(clienttranslate("Cards in incomplete Calypsos")) );
-        $part_calypso_scores = array( score_wrap_label(clienttranslate("score")) );
+        $part_calypso_counts = array( self::count_wrap_label(clienttranslate("Cards in incomplete Calypsos")) );
+        $part_calypso_scores = array( self::score_wrap_label(clienttranslate("score")) );
     
-        $won_card_counts = array( count_wrap_label(clienttranslate("Remaining cards won")) );
-        $won_card_scores = array( score_wrap_label(clienttranslate("score")) );
+        $won_card_counts = array( self::count_wrap_label(clienttranslate("Remaining cards won")) );
+        $won_card_scores = array( self::score_wrap_label(clienttranslate("score")) );
 
-        $individual_scores = array( score_wrap_label(clienttranslate("Total individual score")) );
+        $individual_scores = array( self::score_wrap_label(clienttranslate("Total individual score")) );
         
-        $partnership_scores = array( score_wrap_label(clienttranslate("Total round score")) );
+        $partnership_scores = array( self::score_wrap_label(clienttranslate("Total round score")) );
         // TODO: we should get the players in partnership order!
         // for each player:
         $players = self::getRoundScore($round_number);
@@ -894,18 +918,18 @@ class Calypso extends Table
                 'type' => 'header'
             );
             
-            $calypso_counts[] = count_wrap($score_info['calypso_count']);
-            $calypso_scores[] = score_wrap($score_info['calypso_score']);
+            $calypso_counts[] = self::count_wrap($score_info['calypso_count']);
+            $calypso_scores[] = self::score_wrap($score_info['calypso_score']);
 
-            $part_calypso_counts[] = count_wrap($score_info['part_calypso_count']);
-            $part_calypso_scores[] = score_wrap($score_info['part_calypso_score']);
+            $part_calypso_counts[] = self::count_wrap($score_info['part_calypso_count']);
+            $part_calypso_scores[] = self::score_wrap($score_info['part_calypso_score']);
 
-            $won_card_counts[] = count_wrap($score_info['won_cards_count']);
-            $won_card_scores[] = score_wrap($score_info['won_cards_score']);
+            $won_card_counts[] = self::count_wrap($score_info['won_cards_count']);
+            $won_card_scores[] = self::score_wrap($score_info['won_cards_score']);
 
-            $individual_scores[] = score_wrap($score_info['total_score']);
+            $individual_scores[] = self::score_wrap($score_info['total_score']);
 
-            $partnership_scores[] = score_wrap($score_info['partnership_score']);
+            $partnership_scores[] = self::score_wrap($score_info['partnership_score']);
 
             // TODO: this is also a place where partnershit will change
             $scores_for_updating[] = array('player_id' => $player_id, 'total_score' => $score_info['partnership_score']);
@@ -926,22 +950,75 @@ class Calypso extends Table
         $score_table[] = $individual_scores;
         // TODO: probably want to display this aspect betterly
         $score_table[] = $partnership_scores;
+        return array(
+            "score_table" => $score_table,
+            "scores_for_updating" => $scores_for_updating,
+        );
+    }
 
+    function getDisplayOverallScoresArgs(){
+        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+        $header_names = array( '' );
+        $header_suits = array( '' );
+        $score_table = array();
+        for($round = 1; $round <= self::getGameStateValue("totalRounds"); $round++){
+            // TODO: translate business
+            $round_scores = array( self::score_wrap_label(clienttranslate("Round ".$round." score")) );
+            $players = self::getRoundScore($round);
+            foreach ( $players as $player_id => $score_info ) {
+                // only need to add this once
+                if($round == 1){
+                    $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
+                    $header_names[] = array(
+                        'str' => '${player_name}',
+                        'args' => array( 'player_name' => self::getPlayerName($player_id) ),
+                        'type' => 'header'
+                    );
+                    $header_suits[] = array(
+                        'str' => '${player_suit}',
+                        'args' => array( 'player_suit' => $suit),
+                        'type' => 'header'
+                    );
+                }
+                $round_scores[] = self::score_wrap($score_info['partnership_score']);
+            }
+            if($round == 1){
+                $score_table[] = $header_names;
+                $score_table[] = $header_suits;
+            }
+            $score_table[] = $round_scores;
+        }
+        return $score_table;
+    }
+
+    function displayScores($round_number){
+        $args_array = self::getDisplayScoresArgs($round_number);
+
+        // $this->notifyAllPlayers(
+        //     "tableWindow",
+        //     '',
+        //     array(
+        //         "id" => 'roundScore',
+        //         "title" => clienttranslate("Scores for the round"),
+        //         "table" => $args_array["score_table"],
+        //         "closing" => clienttranslate( "Close" )
+        //     )
+        // );
+        // in place of tableWindow, so we can pass data to client and keep there for re-displaying with buttons
         $this->notifyAllPlayers(
-            "tableWindow",
+            "scoreDisplay",
             '',
             array(
-                "id" => 'roundScore',
-                "title" => clienttranslate("Scores for the round"),
-                "table" => $score_table,
-                "closing" => clienttranslate( "Close" )
+                "round_number" => $round_number,
+                "table" => $args_array["score_table"],
+                "overall_score" => self::getDisplayOverallScoresArgs(),
             )
         );
         $this->notifyAllPlayers(
             'scoreUpdate',
             '',
             array(
-                'scores' => $scores_for_updating
+                'scores' => $args_array["scores_for_updating"],
             )
         );
     }
@@ -1251,6 +1328,11 @@ class Calypso extends Table
         $this->gamestate->nextState('playCard');
     }
 
+    function confirmNewRound(){
+        self::checkAction( "confirmNewRound" );
+        $player_id = $this->getCurrentPlayerId();
+        $this->gamestate->setPlayerNonMultiactive($player_id, "");
+    }
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state arguments
@@ -1301,11 +1383,6 @@ class Calypso extends Table
         $round_number = $old_round_number + 1;
         self::setGameStateValue( 'roundNumber', $round_number );
         $total_rounds = self::getGameStateValue( 'totalRounds');
-        self::notifyAllPlayers(
-            "update",
-            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
-            array("round_number" => $round_number, "total_rounds" => $total_rounds)
-        );
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
@@ -1319,6 +1396,21 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'firstHandDealer' );
         }
+        $players = self::loadPlayersBasicInfos();
+        $player_ids = array();
+        // TODO: cleaner with map
+        foreach ( $players as $player_id => $player ) {
+            $player_ids[] = array("id" => $player_id, "suit" => self::getPlayerSuit($player_id));
+        }
+        self::notifyAllPlayers(
+            "newRound",
+            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
+            array(
+                "round_number" => $round_number,
+                "total_rounds" => $total_rounds,
+                "player_ids" => $player_ids,
+            )
+        );
         $this->gamestate->nextState("");
     }
 
@@ -1372,7 +1464,7 @@ class Calypso extends Table
                 'dealer_id' => $new_dealer,
                 'round_number' => self::getGameStateValue( 'roundNumber' ),
                 'hand_number' => $hand_number,
-                'total_rounds' => self::getGameStateValue( 'totalRounds' ), 
+                'total_rounds' => self::getGameStateValue( 'totalRounds' ),
             )
         );
         self::notifyAllPlayers( 'actionRequired', clienttranslate('${player_name} must lead a card to the first trick.'), array(
@@ -1415,7 +1507,7 @@ class Calypso extends Table
 
     function stEndHand() {
         // TODO: this notification should go, as that info should be in player boxes.
-        $player_calypsos = self::getAllCompletedCalyspos();
+        $player_calypsos = self::getAllCompletedCalypsos();
         foreach ( $player_calypsos as $player_id => $num_calypsos ) {
             $player_name = self::getPlayerName($player_id);
             self::notifyAllPlayers(
@@ -1457,6 +1549,10 @@ class Calypso extends Table
         } else {
             $this->gamestate->nextState('endGame');
         }
+    }
+
+    function stAwaitNewRound(){
+        $this->gamestate->setAllPlayersMultiactive();
     }
 
 //////////////////////////////////////////////////////////////////////////////
