@@ -299,19 +299,20 @@ function (dojo, declare) {
         },
 
         placeCardInCalypso : function(player_id, suit, rank, card_id) {
-            const x = this.cardwidth * (rank - 2);
-            const y = this.cardheight * (suit - 1);
+            // const x = this.cardwidth * (rank - 2);
+            // const y = this.cardheight * (suit - 1);
 
             const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
             console.log(card_el_id);
 
             // TODO: this should stay in css - use class manipulation
-            dojo.style(card_el_id,
-                {
-                    'backgroundPosition': `-${x}px -${y}px`,
-                    'z-index': `${+rank + 14}`,
-                }
-            )
+            // dojo.style(card_el_id,
+            //     {
+            //         'backgroundPosition': `-${x}px -${y}px`,
+            //         'z-index': `${+rank + 14}`,
+            //     }
+            // )
+            dojo.addClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`);
             dojo.addClass( card_el_id, 'clp-face-up-card' );
             dojo.removeClass( card_el_id, 'clp-calypsocard-space' );
         },
@@ -355,12 +356,15 @@ function (dojo, declare) {
 
         clearCalypsos: function(player_ids){
             console.log("clear it up!");
-            for (player_id of player_ids){
+            for (player of player_ids){
+                let player_id = player["id"];
+                let suit = player["suit"];
                 for(let rank=2; rank <= 14; rank++){
                     let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
                     console.log(card_el_id);
                     dojo.removeClass( card_el_id, 'clp-face-up-card' );
                     dojo.addClass( card_el_id, 'clp-calypsocard-space' );
+                    dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`)
                 }
             }
         },
@@ -578,7 +582,8 @@ function (dojo, declare) {
         notif_newRound: function(notif) {
             const player_ids = notif.args.player_ids;
             console.log(player_ids);
-            for(let player_id of player_ids){
+            for(let player of player_ids){
+                let player_id = player["id"];
                 const player_count_element = `clp-info-count-${player_id}`;
                 console.log(player_count_element);
                 $(player_count_element).textContent = 0;

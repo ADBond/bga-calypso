@@ -233,6 +233,15 @@ $suit_height: 32px;
     .clp-suit-icon-#{$suit} {
         background-position: 0px (-$suit_height * ($suit - 1));
     }
+    @for $rank from 2 through $num_ranks+1 {
+        $x: $card_width * ($rank - 2);
+        $y: $card_height * ($suit - 1);
+        .clp-calypsocard-face-#{$suit}-#{$rank}{
+            z-index: $rank + 14;
+            background-position-x: -$x;
+            background-position-y: -$y;
+        }
+    }
 }
 
 // This is for the actual cards that are won:

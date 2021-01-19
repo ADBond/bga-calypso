@@ -1400,7 +1400,7 @@ class Calypso extends Table
         $player_ids = array();
         // TODO: cleaner with map
         foreach ( $players as $player_id => $player ) {
-            $player_ids[] = $player_id;
+            $player_ids[] = array("id" => $player_id, "suit" => self::getPlayerSuit($player_id));
         }
         self::notifyAllPlayers(
             "newRound",

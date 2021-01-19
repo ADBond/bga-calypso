@@ -10,7 +10,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~access by-round scoring tables~~
   * ~~Done by server, but should move it all to UI so checking scores doesn't need to use server~~
 * ~~player boxes should show number of completed calypsos~~
-* clear display on new round - not sure if there should be a manual 'click' or something to confirm
+* ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
 
 ## For a different branch
 
@@ -75,7 +75,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * maybe calypso animation should head to player boxes to help signify scoring being there
 * ~~Lose renounce indicators on refresh :/~~
 * ~~Wipe accumulated calypsos on new round w/o refresh~~
-* clear display on new round - not sure if there should be a manual 'click' or something to confirm
+* ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
 
 ### Other UI
 

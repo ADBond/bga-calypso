@@ -38,23 +38,23 @@
 ./calypso.js:94:            // TODO: center hand in the div if wanted:
 ./calypso.js:256:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
 ./calypso.js:308:            // TODO: this should stay in css - use class manipulation
-./calypso.js:322:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:393:            // TODO: specialise to suits?
-./calypso.js:415:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:606:            // TODO: animate the dealer button moving here
-./calypso.js:646:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:655:            // TODO: should this be delayed/animated?
-./calypso.js:666:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:750:            // AB TODO: do we need to do anything here?
-./calypso.js:765:            // TODO: play the card in the user interface.
+./calypso.js:323:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:397:            // TODO: specialise to suits?
+./calypso.js:419:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:611:            // TODO: animate the dealer button moving here
+./calypso.js:651:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:660:            // TODO: should this be delayed/animated?
+./calypso.js:671:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:755:            // AB TODO: do we need to do anything here?
+./calypso.js:770:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:47:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:56:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:66:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:121:// TODO: really want this smaller, but need to do the scaling properly.
-./calypso_style.scss:257:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:276:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:360:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:367:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:266:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:285:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:369:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:376:// TODO: transform using mixins - see sass project page
 ./dbmodel.sql:65:-- TODO: last trick table?
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text
