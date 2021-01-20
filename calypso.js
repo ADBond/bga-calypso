@@ -371,8 +371,35 @@ function (dojo, declare) {
 
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'clp-dealer-' + new_dealer_id;
+            console.log("new dealer");
+            console.log(new_dealer_area_id);
+            
+            // let old_element_id = $('clp-dealerbutton').parentElement.id;
+            // console.log(old_element_id)
+            // dojo.destroy('clp-dealerbutton');
+            // dojo.place(this.format_block('jstpl_dealerindicator', {
+            //     player_id : player_id
+            // }), old_element_id);
+            // // need to have transforms disabled while we do the animation, or co-ords get screwed up
+            // // for(dir of ["N", "E", "S", "W"]){
+            // //     let div_id = `clp-player-personal-area-${dir}`;
+            // //     dojo.addClass(div_id, 'clp-no-transform');
+            // //     $(div_id).offsetHeight;
+            // // }
+            // // this is the div that is the parent of our tpl
+            // // dojo.addClass("game_play_area", 'clp-no-transform');
+            // // $("game_play_area").offsetHeight;
+            // this.slideToObject('clp-dealerbutton', new_dealer_area_id).play();
+            this.attachToNewParent( 'clp-dealerbutton', new_dealer_area_id );
 
-            this.slideToObject('clp-dealerbutton', new_dealer_area_id).play();
+            // for(dir of ["N", "E", "S", "W"]){
+            //     let div_id  = `clp-player-personal-area-${dir}`;
+            //     dojo.removeClass(div_id , 'clp-no-transform');
+            // }
+            // dojo.removeClass("clp-table-area", 'clp-no-transform');
+            
+            // dojo.removeClass("game_play_area", 'clp-no-transform');
+            // anim.play();
         },
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
@@ -609,7 +636,6 @@ function (dojo, declare) {
         },
 
         notif_dealHand : function(notif) {
-            // TODO: animate the dealer button moving here
             console.log("in deals");
             console.log(notif);
             this.changeDealer(notif.args.dealer_id);

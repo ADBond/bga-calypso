@@ -460,3 +460,8 @@ $button_font_size: $info_size;
 .tableWindow th {
     text-align: center;
 }
+
+// for disabling transform
+.clp-no-transform * {
+    transform: none !important;
+}

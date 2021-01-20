@@ -776,4 +776,8 @@
   text-align: center;
 }
 
+.clp-no-transform * {
+  transform: none !important;
+}
+
 /*# sourceMappingURL=calypso.css.map */

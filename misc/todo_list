@@ -39,14 +39,13 @@
 ./calypso.js:256:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
 ./calypso.js:308:            // TODO: this should stay in css - use class manipulation
 ./calypso.js:323:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:397:            // TODO: specialise to suits?
-./calypso.js:419:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:612:            // TODO: animate the dealer button moving here
-./calypso.js:652:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:661:            // TODO: should this be delayed/animated?
-./calypso.js:672:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:756:            // AB TODO: do we need to do anything here?
-./calypso.js:771:            // TODO: play the card in the user interface.
+./calypso.js:424:            // TODO: specialise to suits?
+./calypso.js:446:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:678:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:687:            // TODO: should this be delayed/animated?
+./calypso.js:698:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:782:            // AB TODO: do we need to do anything here?
+./calypso.js:797:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:47:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:56:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:66:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
