@@ -77,6 +77,7 @@ $table_size: 750px;
 $left_offset: 40%;
 #clp-table-area {
     position: absolute;
+    margin: 100px;
     left: $left_offset;
     transform: translate(-$left_offset);
     width: $table_size;
@@ -135,7 +136,7 @@ $card_area_outline_col: #AAA;
 .clp-player-card-play-area {
     // position: absolute;
     // text-align: center;
-    outline: ridge 3px $card_area_outline_col;
+    // outline: ridge 3px $card_area_outline_col;
     width: $card_area_width;
     height: $card_area_height;
 }
@@ -191,6 +192,7 @@ $top_bottom_offset: $card_area_height + 20px;
 
 #clp-myhand-wrap {
     position: relative;
+    top: 800px;
     // top: 30px;
     left: 50%;
     transform: translate(-50%);
@@ -360,7 +362,7 @@ $max_name_size: 200px;
     height: $card_height;
     right: 0px;
     position: absolute;
-    background-color: $blank_space_colour;
+    // background-color: $blank_space_colour;
     // border: solid 3px black;
 }
 // .clp-trickpile-empty {
