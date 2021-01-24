@@ -21,14 +21,3 @@ Process the `scss` file - from root:
 ```bash
 sass --watch calypso_style.scss calypso.css
 ```
-
-## turning off BGA background
-
-Edit style in `common.css`: as follows (e.g.)
-
-```css
-html {
-/*  background: url("../img/layout/back-main.jpg"); */
-  background-color: #00FF00;
-}
-```

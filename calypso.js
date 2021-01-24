@@ -58,13 +58,14 @@ function (dojo, declare) {
                 let trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
+                // TODO: trump suit icon insert to area.
 
-                // if(player_id == gamedatas.dealer){
-                //     let dealer_area_id = 'clp-dealer-' + player_id;
-                //     dojo.place(this.format_block('jstpl_dealerindicator', {
-                //         player_id : player_id
-                //     }), dealer_area_id);
-                // }
+                if(player_id == gamedatas.dealer){
+                    let dealer_area_id = 'clp-dealer-' + player_id;
+                    dojo.place(this.format_block('jstpl_dealerindicator', {
+                        player_id : player_id
+                    }), dealer_area_id);
+                }
                 this.setTrickPile(player_id, player["trick_pile"]);
                 this.setupCalypsoArea(player_id, player_trump);
             }
@@ -123,16 +124,6 @@ function (dojo, declare) {
                 console.log("calypso has: " + suit + ", " + rank + ", and...");
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
-
-            // hack for showing full calypsos
-            for (let player_id in gamedatas.players) {
-                let player = gamedatas.players[player_id];
-                let suit = player["trump_suit"];
-                for (let rank = 2; rank <= 14; rank++) {
-                    this.placeCardInCalypso(player_id, suit, rank, 1);
-                }
-            }
-
             console.log("completed calypo counts");
             for( player_id in gamedatas.players )
             {

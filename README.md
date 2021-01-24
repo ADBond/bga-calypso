@@ -33,7 +33,6 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
 * ~~Add a separate code licence~~, and make repo public once that's done
 * Use game-level constants in place of magic numbers where possible
-* JS `placeCardInCalypso` has redundant `card_id` paramter
 
 ### Display
 
