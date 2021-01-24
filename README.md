@@ -33,6 +33,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
 * ~~Add a separate code licence~~, and make repo public once that's done
 * Use game-level constants in place of magic numbers where possible
+* JS `placeCardInCalypso` has redundant `card_id` paramter
 
 ### Display
 
@@ -51,10 +52,10 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Images
 
-* Game box concept okay, just refining
+* ~~Game box concept okay, just refining~~
 * ~~Need something else for icon~~
-  * Maybe icon is fine actually
-* Banner needs completing (fining edges, proper colours exported)
+  * ~~Maybe icon is fine actually~~
+* ~~Banner needs completing (fining edges, proper colours exported)~~
 * another display image?
 * card back(s) finalise
 * suit icons better
