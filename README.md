@@ -60,7 +60,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * card back(s) finalise
 * suit icons better
 * placeholder calypso cards better
-* dealer icon
+* ~~dealer icon~~ final version needed
 
 ## Things to fix
 
