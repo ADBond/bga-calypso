@@ -49,6 +49,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * will be tracking this for stats, so should be easy to add in. Probably as a log option?
 * Order hand with personal trumps separated?
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
+* trick-pile/(calypso - though think it's irrelevant here) show small grey bits in corners?
 
 ### Images
 

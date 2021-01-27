@@ -314,10 +314,17 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     // display: inline-block;
     margin: $renounce_padding;
 }
+
+$card_back_image: "back_1.svg";
+$image_scale: $renounce_size*$card_width/$card_height;
+$card_offset: 4px;
 #clp-dealerbutton {
     width: $renounce_size;
     height: $renounce_size;
-    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+    background-image: url('img/#{$card_back_image}'), url('img/#{$card_back_image}');
+    background-repeat: no-repeat, no-repeat;
+    background-position: $card_offset 0, 0 0;
+    background-size: $image_scale, $image_scale;
     z-index: 3;
 }
 
@@ -370,7 +377,7 @@ $max_name_size: 200px;
 .clp-trickpile-full {
     // background-color: #070;
     border-radius: $card_rounding;
-    background-image: url('img/backs.png'); 
+    background-image: url('img/#{$card_back_image}'); 
 }
 
 // TODO: transform using mixins - see sass project page

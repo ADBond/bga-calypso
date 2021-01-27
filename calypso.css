@@ -632,8 +632,10 @@
 #clp-dealerbutton {
   width: 32px;
   height: 32px;
-  background-image: url("img/dealer.png");
-  /* can swap out placeholder image in directory ;) */
+  background-image: url("img/back_1.svg"), url("img/back_1.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-position: 4px 0, 0 0;
+  background-size: 24px, 24px;
   z-index: 3;
 }
 
@@ -681,7 +683,7 @@
 
 .clp-trickpile-full {
   border-radius: 5px;
-  background-image: url("img/backs.png");
+  background-image: url("img/back_1.svg");
 }
 
 .clp-player-personal-area-N {
