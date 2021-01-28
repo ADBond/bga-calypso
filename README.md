@@ -70,6 +70,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * New cards in calypso get eaten by calypso animation - need to handle this!
   * maybe calypso animation should head to player boxes to help signify scoring being there
 * '"X" deals a new hand of cards' is not translating, and not sure why...??
+  * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
+  * doesn't like strings with "." at the end - can break new hand/new round logs with those
 
 ### Other UI
 

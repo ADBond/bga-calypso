@@ -1419,7 +1419,7 @@ class Calypso extends Table
         }
         self::notifyAllPlayers(
             "newRound",
-            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}.'),
+            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
             array(
                 "round_number" => $round_number,
                 "total_rounds" => $total_rounds,
@@ -1437,7 +1437,7 @@ class Calypso extends Table
         self::setGameStateValue( 'trickNumber', 1 );
         self::notifyAllPlayers(
             "update",
-            clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round.'),
+            clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round'),
             array("hand_number" => $hand_number)
         );
         // Deal 13 cards to each player and notify them of their hand
@@ -1473,7 +1473,7 @@ class Calypso extends Table
 
         self::notifyAllPlayers(
             'dealHand',
-            clienttranslate('${dealer_name} deals a new hand of cards.'),
+            clienttranslate('${dealer_name} deals a new hand of cards'),
             array (
                 'dealer_name' => self::getPlayerName($new_dealer),
                 'dealer_id' => $new_dealer,
@@ -1484,7 +1484,7 @@ class Calypso extends Table
         );
         self::notifyAllPlayers(
             'actionRequired',
-            clienttranslate('${player_name} must lead a card to the first trick.'),
+            clienttranslate('${player_name} must lead a card to the first trick'),
             array(
                 'player_name' => self::getActivePlayerName()
             )
