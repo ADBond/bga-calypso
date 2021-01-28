@@ -101,6 +101,27 @@
   height: 32px;
 }
 
+.clp-suit-text {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.clp-suit-text-spades {
+  color: #000;
+}
+
+.clp-suit-text-clubs {
+  color: #000;
+}
+
+.clp-suit-text-hearts {
+  color: #C00;
+}
+
+.clp-suit-text-diamonds {
+  color: #C00;
+}
+
 .clp-player-card-play-area {
   outline: ridge 3px #AAA;
   width: 92px;
@@ -625,7 +646,7 @@
   position: absolute;
   width: 32px;
   height: 32px;
-  left: 200px;
+  left: 215px;
   margin: 4px;
 }
 

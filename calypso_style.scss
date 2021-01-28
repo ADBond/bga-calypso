@@ -126,6 +126,22 @@ $display_font: 2*$icon_size/3;
     width: $icon_size;
     height: $icon_size;
 }
+.clp-suit-text {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.clp-suit-text-spades {
+    color: #000;
+}
+.clp-suit-text-clubs {
+    color: #000;
+}
+.clp-suit-text-hearts {
+    color: #C00;
+}
+.clp-suit-text-diamonds {
+    color: #C00;
+}
 // construct actual suit icon lower down where we do suity stuff
 
 $card_area_buffer: 20px;
@@ -309,7 +325,7 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     position: absolute;
     width: $renounce_size;
     height: $renounce_size;
-    left: 4*($renounce_size + 2*$renounce_padding) + 40px;
+    left: 4*($renounce_size + 2*$renounce_padding) + 55px;
     // background-color: $blank_space_colour;
     // display: inline-block;
     margin: $renounce_padding;

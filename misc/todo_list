@@ -1,37 +1,37 @@
 ./calypso.action.php:57:    // TODO: remove this - it should not need be a server thing
-./calypso.game.php:90:        // TODO: colours
-./calypso.game.php:97:        // TODO: is this whole process a little unnecessarily complex? or that's just the way it is?? need a think
-./calypso.game.php:181:            // TODO: delete:
-./calypso.game.php:260:        // TODO: check there is not any naughty secret info here? don't think so
-./calypso.game.php:299:            // TODO: is this not a kind of bullshit way to do this?
-./calypso.game.php:372:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
-./calypso.game.php:378:    // TODO: check here and under that there isn't a secret option number 3?
-./calypso.game.php:402:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
-./calypso.game.php:425:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
-./calypso.game.php:429:        // TODO: don't need these notifications long-term
-./calypso.game.php:431:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
-./calypso.game.php:448:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:489:        // TODO: if I'm going to say why trick was won, then here is ideal.
-./calypso.game.php:524:            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
-./calypso.game.php:617:    // TODO: uniformise names
-./calypso.game.php:741:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-./calypso.game.php:743:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:793:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:856:    //     // TODO: disable buttons
-./calypso.game.php:858:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
-./calypso.game.php:904:        // TODO: we should get the players in partnership order!
-./calypso.game.php:934:            // TODO: this is also a place where partnershit will change
-./calypso.game.php:951:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:960:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:965:            // TODO: translate business
-./calypso.game.php:1216:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:1252:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1307:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1401:        // TODO: cleaner with map
-./calypso.game.php:1446:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1500:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1509:        // TODO: this notification should go, as that info should be in player boxes.
-./calypso.game.php:1524:        // TODO: at best this should say hand X is over, or just scrap it altogether
+./calypso.game.php:97:        // TODO: colours
+./calypso.game.php:104:        // TODO: is this whole process a little unnecessarily complex? or that's just the way it is?? need a think
+./calypso.game.php:188:            // TODO: delete:
+./calypso.game.php:267:        // TODO: check there is not any naughty secret info here? don't think so
+./calypso.game.php:306:            // TODO: is this not a kind of bullshit way to do this?
+./calypso.game.php:379:    // TODO: I think there is an in-built for this? Can't find it for the mo tho
+./calypso.game.php:385:    // TODO: check here and under that there isn't a secret option number 3?
+./calypso.game.php:409:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
+./calypso.game.php:432:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
+./calypso.game.php:436:        // TODO: don't need these notifications long-term
+./calypso.game.php:438:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
+./calypso.game.php:455:        // TODO: this feels horrible - is there a nice way that won't be overkill?
+./calypso.game.php:496:        // TODO: if I'm going to say why trick was won, then here is ideal.
+./calypso.game.php:531:            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
+./calypso.game.php:624:    // TODO: uniformise names
+./calypso.game.php:748:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+./calypso.game.php:750:                // AB TODO: updated db when I've updated the model to allow the field
+./calypso.game.php:800:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+./calypso.game.php:863:    //     // TODO: disable buttons
+./calypso.game.php:865:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
+./calypso.game.php:911:        // TODO: we should get the players in partnership order!
+./calypso.game.php:941:            // TODO: this is also a place where partnershit will change
+./calypso.game.php:958:        // TODO: probably want to display this aspect betterly
+./calypso.game.php:967:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+./calypso.game.php:972:            // TODO: translate business
+./calypso.game.php:1223:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:1259:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1314:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1416:        // TODO: cleaner with map
+./calypso.game.php:1461:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1519:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1528:        // TODO: this notification should go, as that info should be in player boxes.
+./calypso.game.php:1543:        // TODO: at best this should say hand X is over, or just scrap it altogether
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:88:                        // TODO: here is where we might want to separate out trumps!
@@ -50,10 +50,10 @@
 ./calypso_calypso.tpl:56:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:66:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:121:// TODO: really want this smaller, but need to do the scaling properly.
-./calypso_style.scss:266:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:285:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:376:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:383:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:282:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:301:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:392:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:399:// TODO: transform using mixins - see sass project page
 ./dbmodel.sql:65:-- TODO: last trick table?
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text

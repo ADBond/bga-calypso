@@ -26,6 +26,13 @@ class Calypso extends Table
 	const OVERTRUMP = 3;
     const PLAINSUIT = 4;
 
+    const SUIT_LOOKUP = array(
+        1 => '<span class="clp-suit-text-spades clp-suit-text">♠</span>',
+        2 => '<span class="clp-suit-text-hearts clp-suit-text">♥</span>',
+        3 => '<span class="clp-suit-text-clubs clp-suit-text">♣</span>',
+        4 => '<span class="clp-suit-text-diamonds clp-suit-text">♦</span>',
+    );
+
 	function __construct( )
 	{
         //  You can use any number of global variables with IDs between 10 and 99.
@@ -1316,15 +1323,23 @@ class Calypso extends Table
                 }
             }
         }
-        $tmp = self::getStat("fastest_calypso");
+        // $tmp = self::getStat("fastest_calypso");
         // And notify
-        self::notifyAllPlayers('playCard', clienttranslate('${player_name} [${trump}] plays ${rank_displayed} ${suit_displayed}'), array (
-                'i18n' => array ('suit_displayed','rank_displayed' ),'card_id' => $card_id,'player_id' => $player_id,
-                'player_name' => self::getActivePlayerName(),'rank' => $currentCard ['type_arg'],
+        $suit_played = $currentCard ['type'];
+        self::notifyAllPlayers(
+            'playCard', 
+            clienttranslate('${player_name} (${trump}) plays ${rank_displayed} ${suit_element}'),
+            array (
+                'i18n' => array ('suit_displayed','rank_displayed' ),
+                'card_id' => $card_id,
+                'player_id' => $player_id,
+                'player_name' => self::getActivePlayerName(),
+                'rank' => $currentCard ['type_arg'],
                 'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
-                'suit_displayed' => $this->suits [$currentCard ['type']] ['name'],
-                'trump' => $tmp//$this->suits [self::getPlayerSuit($player_id)] ['name']
-             ));
+                'suit_element' => self::SUIT_LOOKUP[$suit_played],
+                'trump' => self::SUIT_LOOKUP[self::getPlayerSuit($player_id)]
+             )
+        );
         $this->gamestate->nextState('playCard');
     }
 
@@ -1404,7 +1419,7 @@ class Calypso extends Table
         }
         self::notifyAllPlayers(
             "newRound",
-            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
+            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}.'),
             array(
                 "round_number" => $round_number,
                 "total_rounds" => $total_rounds,
@@ -1422,7 +1437,7 @@ class Calypso extends Table
         self::setGameStateValue( 'trickNumber', 1 );
         self::notifyAllPlayers(
             "update",
-            clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round'),
+            clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round.'),
             array("hand_number" => $hand_number)
         );
         // Deal 13 cards to each player and notify them of their hand
@@ -1458,7 +1473,7 @@ class Calypso extends Table
 
         self::notifyAllPlayers(
             'dealHand',
-            clienttranslate('${dealer_name}, deals a new hand of cards'),
+            clienttranslate('${dealer_name} deals a new hand of cards.'),
             array (
                 'dealer_name' => self::getPlayerName($new_dealer),
                 'dealer_id' => $new_dealer,
@@ -1467,9 +1482,13 @@ class Calypso extends Table
                 'total_rounds' => self::getGameStateValue( 'totalRounds' ),
             )
         );
-        self::notifyAllPlayers( 'actionRequired', clienttranslate('${player_name} must lead a card to the first trick.'), array(
-            'player_name' => self::getActivePlayerName()
-        ) );
+        self::notifyAllPlayers(
+            'actionRequired',
+            clienttranslate('${player_name} must lead a card to the first trick.'),
+            array(
+                'player_name' => self::getActivePlayerName()
+            )
+        );
         $this->gamestate->nextState("");
     }
 

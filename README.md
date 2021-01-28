@@ -40,6 +40,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * see last trick?
   * maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based
 * optional log detail (c.f. Hungarian Tarock)
+* notifications including suit icon
 * Set different default colours
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
@@ -49,7 +50,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * will be tracking this for stats, so should be easy to add in. Probably as a log option?
 * Order hand with personal trumps separated?
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
-* trick-pile/(calypso - though think it's irrelevant here) show small grey bits in corners?
+* trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
 
 ### Images
 
@@ -68,6 +69,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * Fix dealer button animation
 * New cards in calypso get eaten by calypso animation - need to handle this!
   * maybe calypso animation should head to player boxes to help signify scoring being there
+* '"X" deals a new hand of cards' is not translating, and not sure why...??
 
 ### Other UI
 
