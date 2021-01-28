@@ -7,9 +7,9 @@ For devvy stuff check out [dev notes](misc/dev.md).
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
-* Fix dealer button animation
+* ~~Fix dealer button animation - not really fixed but removed. Fine for now~~
 * New cards in calypso get eaten by calypso animation - need to handle this!
-  * maybe calypso animation should head to player boxes to help signify scoring being there
+  * ~~maybe calypso animation should head to player boxes to help signify scoring being there - parking this idea~~
 
 ## For a different branch
 
@@ -30,15 +30,17 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Dev
 
 * ~~rename those damn variables to keep a shred of self-consistency check below, do as we go~~
-  *  a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?
+  *  ~~a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?~~
+  * leaving this to general refactoring
 * ~~Add a separate code licence~~, and make repo public once that's done
 * Use game-level constants in place of magic numbers where possible
 * JS `placeCardInCalypso` has redundant `card_id` paramter
 
 ### Display
 
-* see last trick?
-  * maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based
+* ~~see last trick?~~
+  * ~~maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based~~
+  * not for alpha. revisit if desired at a later stage.
 * optional log detail (c.f. Hungarian Tarock)
 * notifications including suit icon
 * Set different default colours
@@ -59,10 +61,10 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * ~~Maybe icon is fine actually~~
 * ~~Banner needs completing (fining edges, proper colours exported)~~
 * another display image?
-* card back(s) finalise
+* ~~card back(s) finalise~~
 * suit icons better
 * placeholder calypso cards better
-* ~~dealer icon~~ final version needed
+* ~~dealer icon final version needed~~
 
 ## Things to fix
 

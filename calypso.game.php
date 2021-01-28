@@ -1330,7 +1330,7 @@ class Calypso extends Table
             'playCard', 
             clienttranslate('${player_name} (${trump}) plays ${rank_displayed} ${suit_element}'),
             array (
-                'i18n' => array ('suit_displayed','rank_displayed' ),
+                'i18n' => array ('rank_displayed'),
                 'card_id' => $card_id,
                 'player_id' => $player_id,
                 'player_name' => self::getActivePlayerName(),
