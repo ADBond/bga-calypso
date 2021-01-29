@@ -8,8 +8,11 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
 * ~~Fix dealer button animation - not really fixed but removed. Fine for now~~
-* New cards in calypso get eaten by calypso animation - need to handle this!
+* ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
+  * details to fiddle with - maybe make calypso a _teeny_ bit quicker to go off??
+  * ditch transformation on calypso cards before they go off? (so they go in the right direction?)
   * ~~maybe calypso animation should head to player boxes to help signify scoring being there - parking this idea~~
+* Ditch calypso completed summaries at end of hands
 
 ## For a different branch
 
@@ -42,7 +45,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * ~~maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based~~
   * not for alpha. revisit if desired at a later stage.
 * optional log detail (c.f. Hungarian Tarock)
-* notifications including suit icon
+* ~~notifications including suit icon~~
 * Set different default colours
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
@@ -68,9 +71,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ## Things to fix
 
-* Fix dealer button animation
+* ~~Fix dealer button animation~~
 * New cards in calypso get eaten by calypso animation - need to handle this!
-  * maybe calypso animation should head to player boxes to help signify scoring being there
+  * ~~maybe calypso animation should head to player boxes to help signify scoring being there~~
 * '"X" deals a new hand of cards' is not translating, and not sure why...??
   * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
   * doesn't like strings with "." at the end - can break new hand/new round logs with those

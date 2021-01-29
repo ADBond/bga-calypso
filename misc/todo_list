@@ -13,39 +13,39 @@
 ./calypso.game.php:455:        // TODO: this feels horrible - is there a nice way that won't be overkill?
 ./calypso.game.php:496:        // TODO: if I'm going to say why trick was won, then here is ideal.
 ./calypso.game.php:531:            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
-./calypso.game.php:624:    // TODO: uniformise names
-./calypso.game.php:748:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-./calypso.game.php:750:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:800:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:863:    //     // TODO: disable buttons
-./calypso.game.php:865:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
-./calypso.game.php:911:        // TODO: we should get the players in partnership order!
-./calypso.game.php:941:            // TODO: this is also a place where partnershit will change
-./calypso.game.php:958:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:967:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:972:            // TODO: translate business
-./calypso.game.php:1223:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:1259:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1314:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1416:        // TODO: cleaner with map
-./calypso.game.php:1461:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1519:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1528:        // TODO: this notification should go, as that info should be in player boxes.
-./calypso.game.php:1543:        // TODO: at best this should say hand X is over, or just scrap it altogether
+./calypso.game.php:633:    // TODO: uniformise names
+./calypso.game.php:757:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+./calypso.game.php:759:                // AB TODO: updated db when I've updated the model to allow the field
+./calypso.game.php:809:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+./calypso.game.php:872:    //     // TODO: disable buttons
+./calypso.game.php:874:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
+./calypso.game.php:920:        // TODO: we should get the players in partnership order!
+./calypso.game.php:950:            // TODO: this is also a place where partnershit will change
+./calypso.game.php:967:        // TODO: probably want to display this aspect betterly
+./calypso.game.php:976:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+./calypso.game.php:981:            // TODO: translate business
+./calypso.game.php:1232:        // TODO: this function checks that all cards are *somewhere*
+./calypso.game.php:1268:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1323:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1425:        // TODO: cleaner with map
+./calypso.game.php:1470:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1528:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1537:        // TODO: this notification should go, as that info should be in player boxes.
+./calypso.game.php:1552:        // TODO: at best this should say hand X is over, or just scrap it altogether
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:88:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:94:            // TODO: center hand in the div if wanted:
 ./calypso.js:256:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
-./calypso.js:308:            // TODO: this should stay in css - use class manipulation
-./calypso.js:323:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:424:            // TODO: specialise to suits?
-./calypso.js:446:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:678:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:687:            // TODO: should this be delayed/animated?
-./calypso.js:698:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:782:            // AB TODO: do we need to do anything here?
-./calypso.js:797:            // TODO: play the card in the user interface.
+./calypso.js:309:            // TODO: this should stay in css - use class manipulation
+./calypso.js:324:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:425:            // TODO: specialise to suits?
+./calypso.js:447:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:688:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:712:            // TODO: should this be delayed/animated?
+./calypso.js:723:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:807:            // AB TODO: do we need to do anything here?
+./calypso.js:822:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:47:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:56:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:66:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

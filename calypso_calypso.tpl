@@ -81,6 +81,10 @@ var jstpl_dealerindicator = '<div id="clp-dealerbutton" class="clp-dealerbutton"
 var jstpl_calypsocard = '<div class="clp-calypsocard-space clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}"\
                             id="clp-calypsocard-${player_id}-${rank}">\
                         </div>'
+var jstpl_calypsocard_existing = '<div class="clp-calypsocard clp-captured-card clp-calypsocard-face-${suit}-${rank}\
+                                clp-face-up-card clp-calypsocard-${rank} clp-card-space-${suit}"\
+                                id="clp-calypsocard-${player_id}-${rank}">\
+                            </div>'
 var jstpl_player_calypso_info = '<div class="clp-calypso-info">\
                                     <div id="clp-suit-indicator-info-${id}" class="clp-suit-icon clp-suit-icon-${trump_suit}">\
                                     </div>\

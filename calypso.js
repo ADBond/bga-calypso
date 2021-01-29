@@ -303,6 +303,7 @@ function (dojo, declare) {
             // const y = this.cardheight * (suit - 1);
 
             const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
+            console.log("just a simple card going into a calypso - what could be better than that?");
             console.log(card_el_id);
 
             // TODO: this should stay in css - use class manipulation
@@ -664,6 +665,15 @@ function (dojo, declare) {
         notif_calypsoComplete : function(notif) {
             console.log(notif.args);
             console.log("cally");
+            
+            // put any cards to the new calypso in their RIGHTFUL PLACE
+            console.log("here's your man with the cards");
+            console.log(notif.args.cards_to_fresh_calypso);
+            console.log(notif.args);
+            let fresh_cards = Object.values(notif.args.cards_to_fresh_calypso);
+            let fresh_ranks = fresh_cards.map(card => +card["rank"]);
+            console.log(fresh_cards);
+            console.log(fresh_ranks);
             // for each card in calypso, get rid of it, but not too much
             const player_id = notif.args.player_id;
             for (let rank = 2; rank <= 14; rank++) {
@@ -676,12 +686,27 @@ function (dojo, declare) {
                 anim.play();
 
                 // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-                dojo.place(this.format_block('jstpl_calypsocard', {
-                    rank : rank,
-                    suit : notif.args.player_suit,
-                    player_id : player_id
-                }), 'clp-calypsoholder-' + player_id);
+                console.log("yeeeah boiii");
+                if(fresh_ranks.includes(rank)){
+                    console.log("success " + rank);
+                    dojo.place(this.format_block('jstpl_calypsocard_existing', {
+                        rank : rank,
+                        suit : notif.args.player_suit,
+                        player_id : player_id
+                    }), 'clp-calypsoholder-' + player_id);
+                } else{
+                    console.log("no success " + rank);
+                    dojo.place(this.format_block('jstpl_calypsocard', {
+                        rank : rank,
+                        suit : notif.args.player_suit,
+                        player_id : player_id
+                    }), 'clp-calypsoholder-' + player_id);
+                }
             }
+            // for (let card of Object.values(notif.args.cards_to_fresh_calypso)){
+            //     console.log(card);
+            //     this.placeCardInCalypso(card["owner"], card["suit"], card["rank"], card["card_id"]);
+            // }
             const player_count_element = `clp-info-count-${player_id}`;
             console.log(player_count_element)
             // TODO: should this be delayed/animated?

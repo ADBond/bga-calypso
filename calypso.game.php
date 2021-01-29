@@ -532,6 +532,13 @@ class Calypso extends Table
             // this is updated with latest figures already
             $total_calypso_counts = self::getAllCompletedCalypsos();
             foreach($calypsos_completed as $player_id){
+                # get only those cards for the relevant calypso
+                # possibly a better pattern than this, but hey-ho
+                $fresh_cards = array_filter( $moved_to_second_batch, function($card){
+                    global $player_id;
+                    return $card['owner'] == $player_id;
+                });
+                $fresh_cards = $moved_to_second_batch;
                 self::updateFastestCalypso($player_id);
                 self::notifyAllPlayers(
                     'calypsoComplete',
@@ -541,6 +548,8 @@ class Calypso extends Table
                         'player_name' => self::getPlayerName($player_id),
                         'player_suit' => self::getPlayerSuit($player_id),
                         'num_calypsos' => $total_calypso_counts[$player_id],
+                        'cards_to_fresh_calypso' => $fresh_cards,
+                        'dummy' => $moved_to_second_batch,
                     )
                 );
             }
