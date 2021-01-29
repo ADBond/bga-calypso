@@ -684,7 +684,7 @@ function (dojo, declare) {
 
                 // dojo.addClass("clp-public-area", "clp-no-transform");
                 // let anim = this.slideToObject(card_el_id, `player_board_${player_id}` );
-                let anim = this.slideToObject(card_el_id, `clp-trickpile-${player_id}` );
+                let anim = this.slideToObject(card_el_id, `clp-calypsopile-${player_id}` );
                 // dojo.removeClass("clp-public-area", "clp-no-transform");
                 // let anim = this.slideToObject(card_el_id, null );
                 dojo.connect(anim, 'onEnd', function(node) {

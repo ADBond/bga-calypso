@@ -239,24 +239,28 @@ $calypso_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
 }
 $suit_height: 32px;
 @for $suit from 1 through 4 {
+    $y: $card_height * ($suit - 1);
     .clp-card-space-#{$suit} {
-        background-position: 0px (-$card_height * ($suit - 1));
+        background-position: 0px (-$y);
     }
     .clp-renounce-#{$suit} {
-        background-position: 0px (-$suit_height * ($suit - 1));
+        background-position: 0px (-$y);
     }
     // for display in player boxes:
     .clp-suit-icon-#{$suit} {
-        background-position: 0px (-$suit_height * ($suit - 1));
+        background-position: 0px (-$y);
     }
     @for $rank from 2 through $num_ranks+1 {
         $x: $card_width * ($rank - 2);
-        $y: $card_height * ($suit - 1);
         .clp-calypsocard-face-#{$suit}-#{$rank}{
             z-index: $rank + 14;
             background-position-x: -$x;
             background-position-y: -$y;
         }
+    }
+    .clp-calypsopile-full-#{$suit} {
+        background-position-x: -$card_width * (14 - 2);  // for the ace
+        background-position-y: -$y;
     }
 }
 
@@ -384,8 +388,23 @@ $max_name_size: 200px;
     right: 0px;
     position: absolute;
     background-color: $blank_space_colour;
+    z-index: 3;
     // border: solid 3px black;
 }
+.clp-calypsopile {
+    width: $card_width;
+    height: $card_height;
+    right: 0px;
+    position: absolute;
+    bottom: 20px;
+    background-color: #AA0;
+    z-index: 2;
+    // border: solid 3px black;
+}
+.clp-calypsopile-full {
+    background-image: url('img/cards.jpg');
+}
+
 // .clp-trickpile-empty {
     
 // }

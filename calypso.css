@@ -327,16 +327,21 @@
   background-position-y: 0px;
 }
 
+.clp-calypsopile-full-1 {
+  background-position-x: -864px;
+  background-position-y: 0px;
+}
+
 .clp-card-space-2 {
   background-position: 0px -96px;
 }
 
 .clp-renounce-2 {
-  background-position: 0px -32px;
+  background-position: 0px -96px;
 }
 
 .clp-suit-icon-2 {
-  background-position: 0px -32px;
+  background-position: 0px -96px;
 }
 
 .clp-calypsocard-face-2-2 {
@@ -417,16 +422,21 @@
   background-position-y: -96px;
 }
 
+.clp-calypsopile-full-2 {
+  background-position-x: -864px;
+  background-position-y: -96px;
+}
+
 .clp-card-space-3 {
   background-position: 0px -192px;
 }
 
 .clp-renounce-3 {
-  background-position: 0px -64px;
+  background-position: 0px -192px;
 }
 
 .clp-suit-icon-3 {
-  background-position: 0px -64px;
+  background-position: 0px -192px;
 }
 
 .clp-calypsocard-face-3-2 {
@@ -507,16 +517,21 @@
   background-position-y: -192px;
 }
 
+.clp-calypsopile-full-3 {
+  background-position-x: -864px;
+  background-position-y: -192px;
+}
+
 .clp-card-space-4 {
   background-position: 0px -288px;
 }
 
 .clp-renounce-4 {
-  background-position: 0px -96px;
+  background-position: 0px -288px;
 }
 
 .clp-suit-icon-4 {
-  background-position: 0px -96px;
+  background-position: 0px -288px;
 }
 
 .clp-calypsocard-face-4-2 {
@@ -593,6 +608,11 @@
 
 .clp-calypsocard-face-4-14 {
   z-index: 28;
+  background-position-x: -864px;
+  background-position-y: -288px;
+}
+
+.clp-calypsopile-full-4 {
   background-position-x: -864px;
   background-position-y: -288px;
 }
@@ -700,6 +720,21 @@
   right: 0px;
   position: absolute;
   background-color: #999;
+  z-index: 3;
+}
+
+.clp-calypsopile {
+  width: 72px;
+  height: 96px;
+  right: 0px;
+  position: absolute;
+  bottom: 20px;
+  background-color: #AA0;
+  z-index: 2;
+}
+
+.clp-calypsopile-full {
+  background-image: url("img/cards.jpg");
 }
 
 .clp-trickpile-full {
