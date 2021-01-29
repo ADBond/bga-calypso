@@ -10,7 +10,8 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~Fix dealer button animation - not really fixed but removed. Fine for now~~
 * ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
   * details to fiddle with - maybe make calypso a _teeny_ bit quicker to go off??
-  * ditch transformation on calypso cards before they go off? (so they go in the right direction?)
+  * ~~ditch transformation on calypso cards before they go off? (so they go in the right direction?)~~
+  * calypsos to trickpile (or possibly their own _new_ space??)
   * ~~maybe calypso animation should head to player boxes to help signify scoring being there - parking this idea~~
 * Ditch calypso completed summaries at end of hands
 

@@ -675,14 +675,26 @@ function (dojo, declare) {
             console.log(fresh_cards);
             console.log(fresh_ranks);
             // for each card in calypso, get rid of it, but not too much
+            
+            dojo.addClass("clp-public-area", "clp-no-transform");
             const player_id = notif.args.player_id;
             for (let rank = 2; rank <= 14; rank++) {
                 let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
 
-                let anim = this.slideToObject(card_el_id, `overall_player_board_${player_id}` );
+
+                // dojo.addClass("clp-public-area", "clp-no-transform");
+                // let anim = this.slideToObject(card_el_id, `player_board_${player_id}` );
+                let anim = this.slideToObject(card_el_id, `clp-trickpile-${player_id}` );
+                // dojo.removeClass("clp-public-area", "clp-no-transform");
+                // let anim = this.slideToObject(card_el_id, null );
                 dojo.connect(anim, 'onEnd', function(node) {
                     dojo.destroy(node);
                 });
+                // dojo.connect(anim, 'onEnd', function(node) {
+                //     dojo.destroy(node);
+                // dojo.removeClass("clp-public-area", "clp-no-transform");
+                //
+                // });
                 anim.play();
 
                 // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
@@ -703,6 +715,7 @@ function (dojo, declare) {
                     }), 'clp-calypsoholder-' + player_id);
                 }
             }
+            dojo.removeClass("clp-public-area", "clp-no-transform");
             // for (let card of Object.values(notif.args.cards_to_fresh_calypso)){
             //     console.log(card);
             //     this.placeCardInCalypso(card["owner"], card["suit"], card["rank"], card["card_id"]);

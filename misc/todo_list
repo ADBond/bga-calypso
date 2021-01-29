@@ -41,11 +41,11 @@
 ./calypso.js:324:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
 ./calypso.js:425:            // TODO: specialise to suits?
 ./calypso.js:447:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:688:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:712:            // TODO: should this be delayed/animated?
-./calypso.js:723:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:807:            // AB TODO: do we need to do anything here?
-./calypso.js:822:            // TODO: play the card in the user interface.
+./calypso.js:700:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:725:            // TODO: should this be delayed/animated?
+./calypso.js:736:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:820:            // AB TODO: do we need to do anything here?
+./calypso.js:835:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:47:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:56:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:66:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
