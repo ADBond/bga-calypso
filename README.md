@@ -7,13 +7,17 @@ For devvy stuff check out [dev notes](misc/dev.md).
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
+  * and sim for trickpile/calypsopile
 * ~~Fix dealer button animation - not really fixed but removed. Fine for now~~
 * ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
   * details to fiddle with - maybe make calypso a _teeny_ bit quicker to go off??
   * ~~ditch transformation on calypso cards before they go off? (so they go in the right direction?)~~
-  * calypsos to trickpile (or possibly their own _new_ space??)
+  * ~~calypsos to trickpile (or possibly their own _new_ space??)~~
   * ~~maybe calypso animation should head to player boxes to help signify scoring being there - parking this idea~~
+* tooltips for calypsopile (only when full)
 * Ditch calypso completed summaries at end of hands
+* something a little jazzier for updating score in player board? maybe - have a look at some other games
+* slight border round face-down cards?
 
 ## For a different branch
 
@@ -36,6 +40,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~rename those damn variables to keep a shred of self-consistency check below, do as we go~~
   *  ~~a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?~~
   * leaving this to general refactoring
+  * have at least a proper go-through to tidy at least a _little_
 * ~~Add a separate code licence~~, and make repo public once that's done
 * Use game-level constants in place of magic numbers where possible
 * JS `placeCardInCalypso` has redundant `card_id` paramter

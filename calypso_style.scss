@@ -258,7 +258,7 @@ $suit_height: 32px;
             background-position-y: -$y;
         }
     }
-    .clp-calypsopile-full-#{$suit} {
+    .clp-calypsopile-#{$suit} {
         background-position-x: -$card_width * (14 - 2);  // for the ace
         background-position-y: -$y;
     }
@@ -382,22 +382,24 @@ $max_name_size: 200px;
     outline: solid 3px black;
     position: absolute;
 }
+$calypso_card_overlap: 12px;
 .clp-trickpile {
     width: $card_width;
     height: $card_height;
-    right: 0px;
+    right: 0;
     position: absolute;
     background-color: $blank_space_colour;
     z-index: 3;
     // border: solid 3px black;
 }
+// mess about with left/right overlap etc for trickpile/calypsopile appearance
 .clp-calypsopile {
     width: $card_width;
     height: $card_height;
-    right: 0px;
+    right: $calypso_card_overlap;
     position: absolute;
-    bottom: 20px;
-    background-color: #AA0;
+    bottom: $calypso_card_overlap;
+    // background-color: #AA0;  // for testing
     z-index: 2;
     // border: solid 3px black;
 }

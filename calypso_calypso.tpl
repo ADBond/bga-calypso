@@ -34,7 +34,10 @@
             <div class="clp-player-all-captured-cards" id="clp-player-all-captured-cards-{PLAYER_ID}">
                 <div class="clp-calypsoholder" id="clp-calypsoholder-{PLAYER_ID}"></div>
                 <div class="clp-trickpile clp-captured-card clp-trickpile-empty" id="clp-trickpile-{PLAYER_ID}"></div>
-                <div class="clp-calypsopile clp-captured-card clp-calypsopile-full clp-calypsopile-full-2" id="clp-calypsopile-{PLAYER_ID}"></div>
+                <div
+                    class="clp-calypsopile clp-captured-card clp-calypsopile-empty clp-calypsopile-{TRUMP_SUIT}" 
+                    id="clp-calypsopile-{PLAYER_ID}">
+                </div>
             </div>
         </div>
         <!-- END playercalypso -->

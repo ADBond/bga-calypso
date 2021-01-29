@@ -130,6 +130,7 @@ function (dojo, declare) {
                 const player = gamedatas.players[player_id];
                 const player_board_div = $(`player_board_${player_id}`);
                 dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
+                this.setCalypsoPile(player_id, player["completed_calypsos"]);
             }
             const totalrounds = this.gamedatas.totalrounds;
             const currentround = this.gamedatas.roundnumber;
@@ -332,6 +333,20 @@ function (dojo, declare) {
             this.refreshTooltips();
         },
 
+        setCalypsoPile: function(player_id, value) {
+            const cards_el_id = `clp-calypsopile-${player_id}`;
+            console.log("shiny new pile");
+            console.log(cards_el_id);
+            if(value > 0){
+                dojo.addClass( cards_el_id, 'clp-calypsopile-full' );
+                dojo.removeClass( cards_el_id, 'clp-calypsopile-empty' );
+            } else {
+                dojo.removeClass( cards_el_id, 'clp-calypsopile-full' );
+                dojo.addClass( cards_el_id, 'clp-calypsopile-empty' );
+            }
+            this.refreshTooltips();
+        },
+
         setRenounceFlag : function(player_id, suit){
             const renounce_el_id = `clp-renounce-${player_id}-${suit}`;
             console.log("this is happening: " + renounce_el_id);
@@ -367,6 +382,13 @@ function (dojo, declare) {
                     dojo.addClass( card_el_id, 'clp-calypsocard-space' );
                     dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`)
                 }
+            }
+        },
+        clearCalypsoPiles: function(player_ids){
+            console.log("all gone my friend, all gone. like the turning of the tides...");
+            for (player of player_ids){
+                let player_id = player["id"];
+                this.setCalypsoPile(player_id, 0);
             }
         },
 
@@ -422,6 +444,7 @@ function (dojo, declare) {
             this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
             this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
             this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "clp-calypsopile-full", _( "This player has completed one or more calypsos" ), "" );
             // TODO: specialise to suits?
             this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
         },
@@ -619,6 +642,7 @@ function (dojo, declare) {
             }
             console.log("clear calypsos...");
             this.clearCalypsos(player_ids);
+            this.clearCalypsoPiles(player_ids);
         },
 
         notif_newHand : function(notif) {
@@ -724,6 +748,7 @@ function (dojo, declare) {
             console.log(player_count_element)
             // TODO: should this be delayed/animated?
             $(player_count_element).textContent = notif.args.num_calypsos;
+            this.setCalypsoPile(player_id, notif.args.num_calypsos);
         },
         notif_actionRequired : function(notif) {
             // nothing needed here

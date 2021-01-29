@@ -72,6 +72,7 @@
                     "PLAYER_ID" => $player_id, "DIR" => $directions[$player_id],
                     "PLAYER_COLOUR" => $players[$player_id]["player_color"],
                     "PLAYER_NAME" => $players[$player_id]["player_name"],
+                    "TRUMP_SUIT" => $trump_suit,
                 )
             );
         }
