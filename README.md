@@ -14,10 +14,11 @@ a fluid list to remember what needs to be done before pulling in and starting a 
   * ~~ditch transformation on calypso cards before they go off? (so they go in the right direction?)~~
   * ~~calypsos to trickpile (or possibly their own _new_ space??)~~
   * ~~maybe calypso animation should head to player boxes to help signify scoring being there - parking this idea~~
-* tooltips for calypsopile (only when full)
-* Ditch calypso completed summaries at end of hands
+* ~~tooltips for calypsopile (only when full)~~
+* ~~Ditch calypso completed summaries at end of hands~~
 * something a little jazzier for updating score in player board? maybe - have a look at some other games
 * slight border round face-down cards?
+* z-index crap? (current)
 
 ## For a different branch
 

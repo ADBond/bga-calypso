@@ -37,23 +37,24 @@
 ./calypso.js:88:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:94:            // TODO: center hand in the div if wanted:
 ./calypso.js:257:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
-./calypso.js:310:            // TODO: this should stay in css - use class manipulation
-./calypso.js:325:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:448:            // TODO: specialise to suits?
-./calypso.js:470:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:724:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:749:            // TODO: should this be delayed/animated?
-./calypso.js:761:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:845:            // AB TODO: do we need to do anything here?
-./calypso.js:860:            // TODO: play the card in the user interface.
+./calypso.js:281:                z : 90,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
+./calypso.js:309:            // TODO: this should stay in css - use class manipulation
+./calypso.js:324:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:447:            // TODO: specialise to suits?
+./calypso.js:469:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:723:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:748:            // TODO: should this be delayed/animated?
+./calypso.js:760:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:844:            // AB TODO: do we need to do anything here?
+./calypso.js:859:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:51:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:60:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:121:// TODO: really want this smaller, but need to do the scaling properly.
-./calypso_style.scss:286:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:305:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:413:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:420:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:287:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:306:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:414:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:421:// TODO: transform using mixins - see sass project page
 ./dbmodel.sql:65:-- TODO: last trick table?
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text

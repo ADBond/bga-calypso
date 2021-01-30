@@ -78,7 +78,7 @@
 // Javascript HTML templates
 
 var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}"\
-                            style="background-position:-${x}px -${y}px">\
+                            style="background-position:-${x}px -${y}px; z-index:${z}">\
                         </div>';
 var jstpl_dealerindicator = '<div id="clp-dealerbutton" class="clp-dealerbutton"></div>';
 var jstpl_calypsocard = '<div class="clp-calypsocard-space clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}"\

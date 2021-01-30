@@ -1535,18 +1535,18 @@ class Calypso extends Table
 
     function stEndHand() {
         // TODO: this notification should go, as that info should be in player boxes.
-        $player_calypsos = self::getAllCompletedCalypsos();
-        foreach ( $player_calypsos as $player_id => $num_calypsos ) {
-            $player_name = self::getPlayerName($player_id);
-            self::notifyAllPlayers(
-                "update",
-                clienttranslate('${player_name} has ${num_calypsos} completed calypso(s)'),
-                array(
-                    'player_name' => $player_name,
-                    'num_calypsos' => $num_calypsos
-                )
-            );
-        }
+        // $player_calypsos = self::getAllCompletedCalypsos();
+        // foreach ( $player_calypsos as $player_id => $num_calypsos ) {
+        //     $player_name = self::getPlayerName($player_id);
+        //     self::notifyAllPlayers(
+        //         "update",
+        //         clienttranslate('${player_name} has ${num_calypsos} completed calypso(s)'),
+        //         array(
+        //             'player_name' => $player_name,
+        //             'num_calypsos' => $num_calypsos
+        //         )
+        //     );
+        // }
 
         self::updatePostHandStats();
         // TODO: at best this should say hand X is over, or just scrap it altogether

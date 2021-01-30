@@ -275,11 +275,10 @@ function (dojo, declare) {
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
-            // player_id => direction
             dojo.place(this.format_block('jstpl_cardontable', {
-                // these ranks relate to getting the right card from sprite
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
+                z : 90,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
