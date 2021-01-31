@@ -116,6 +116,7 @@ function (dojo, declare) {
                 // TODO: set hoverable here? but then also need to do it when your turn comes around
                 // this.setupNewHandCard(card_el);
             }
+            this.setHandActiveness(this.isCurrentPlayerActive());
 
             // Cards played on table
             for (i in this.gamedatas.cardsontable) {
@@ -197,6 +198,9 @@ function (dojo, declare) {
             switch( stateName )
             {
             
+                case 'playerTurn':
+                    this.setHandActiveness(this.isCurrentPlayerActive());
+                    break;
             /* Example:
             
             case 'myGameState':
@@ -303,6 +307,17 @@ function (dojo, declare) {
             console.log("element is:")
             console.log($(card_div_id));
         },
+        
+        setHandActiveness(active){
+            let hand_div_id = "clp-myhand";
+            if(active){
+                dojo.addClass(hand_div_id, "clp-active-hand");
+                dojo.removeClass(hand_div_id, "clp-inactive-hand");
+            } else{
+                dojo.removeClass(hand_div_id, "clp-active-hand");
+                dojo.addClass(hand_div_id, "clp-inactive-hand");
+            }
+        },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
             dojo.place(this.format_block('jstpl_cardontable', {
@@ -312,6 +327,10 @@ function (dojo, declare) {
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
+            // would be nicer to do as class, but makes animation weird somehow
+            dojo.style(`clp-card-on-table-${player_id}`, "top", "0");
+            // dojo.style(`clp-card-on-table-${player_id}`, "border", "solid 1px black");
+            // dojo.addClass('clp-card-on-table-' + player_id, "clp-selected-card");
             if (player_id != this.player_id) {
                 // Move card from their general area
                 this.placeOnObject('clp-card-on-table-' + player_id, 'clp-player-all-captured-cards-' + player_id);
@@ -321,11 +340,26 @@ function (dojo, declare) {
                 if ($('clp-myhand_item_' + card_id)) {
                     this.placeOnObject('clp-card-on-table-' + player_id, 'clp-myhand_item_' + card_id);
                     this.playerHand.removeFromStockById(card_id);
+
+                    this.setHandActiveness(false);
                 }
             }
 
             // In any case: move it to its final destination
-            this.slideToObject('clp-card-on-table-' + player_id, 'clp-player-card-play-area-card-' + player_id).play();
+            let anim = this.slideToObject('clp-card-on-table-' + player_id, 'clp-player-card-play-area-card-' + player_id);
+            // dojo.connect(anim, 'onStart', function(node) {
+            //     dojo.addClass('node', "clp-selected-card");
+            //     console.log("drop tyles");
+            // });
+
+            // dojo.connect(anim, 'onEnd', function(node) {
+            //     dojo.removeClass('node', "clp-selected-card");
+            //     console.log("drop tyles");
+            // });
+    
+            anim.play();
+            
+            // dojo.removeClass('clp-card-on-table-' + player_id, "clp-selected-card");
         },
 
         placeCardInCalypso : function(player_id, suit, rank, card_id) {
@@ -557,8 +591,11 @@ function (dojo, declare) {
                         function (is_error) {
                         }
                     );
-
+                    console.log("it;s this");
+                    console.log(this.playerHand.getItemDivId(card_id));
+                    let card_div_id = this.playerHand.getItemDivId(card_id);
                     this.playerHand.unselectAll();
+                    // dojo.addClass(this.playerHand.getItemDivId(card_id), "clp-selected-card");
                 } else {
                     this.showMessage(_("It is not your turn to play a card!"), "error");
                     this.playerHand.unselectAll();

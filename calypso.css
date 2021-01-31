@@ -185,9 +185,12 @@
   top: 10px !important;
 }
 
-.clp-hand-card:hover {
-  border: solid 1px black;
+.clp-active-hand .clp-hand-card:hover, .clp-selected-card {
   top: 0 !important;
+}
+
+.clp-inactive-hand .clp-hand-card {
+  cursor: default !important;
 }
 
 /*** cards on table ***/

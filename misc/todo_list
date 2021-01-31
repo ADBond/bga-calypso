@@ -38,27 +38,26 @@
 ./calypso.js:96:            // TODO: decide on overlap or not
 ./calypso.js:115:                // TODO: probably delete this function
 ./calypso.js:116:                // TODO: set hoverable here? but then also need to do it when your turn comes around
-./calypso.js:270:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
-./calypso.js:311:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
-./calypso.js:339:            // TODO: this should stay in css - use class manipulation
-./calypso.js:354:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:477:            // TODO: specialise to suits?
-./calypso.js:499:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:751:                    // TODO: still clips a litlle, might be removed too early
-./calypso.js:760:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:786:            // TODO: should this be delayed/animated?
-./calypso.js:808:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:892:            // AB TODO: do we need to do anything here?
-./calypso.js:907:            // TODO: play the card in the user interface.
+./calypso.js:274:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
+./calypso.js:326:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
+./calypso.js:373:            // TODO: this should stay in css - use class manipulation
+./calypso.js:388:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:511:            // TODO: specialise to suits?
+./calypso.js:533:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:788:                    // TODO: still clips a litlle, might be removed too early
+./calypso.js:797:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:823:            // TODO: should this be delayed/animated?
+./calypso.js:845:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:929:            // AB TODO: do we need to do anything here?
+./calypso.js:944:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:51:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:60:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:127:// TODO: really want this smaller, but need to do the scaling properly.
-./calypso_style.scss:234:// TODO: this is nice, but should disable when not turn
-./calypso_style.scss:312:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:331:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:445:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:452:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:314:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:333:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:447:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:454:// TODO: transform using mixins - see sass project page
 ./dbmodel.sql:65:-- TODO: last trick table?
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text

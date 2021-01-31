@@ -231,10 +231,12 @@ $top_bottom_offset: $card_area_height + 20px;
     top: 10px !important;
     // z-index: 30 !important;
 }
-// TODO: this is nice, but should disable when not turn
-.clp-hand-card:hover {
-    border: solid 1px black;
+.clp-active-hand .clp-hand-card:hover, .clp-selected-card {
+    // border: solid 1px black;
     top: 0 !important;
+}
+.clp-inactive-hand .clp-hand-card {
+    cursor: default !important;
 }
 
 $card_rounding: 5px;
