@@ -443,9 +443,9 @@ function (dojo, declare) {
             this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
             this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
             this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
-            this.addTooltipToClass( "clp-calypsopile-full", _( "This player has completed one or more calypsos" ), "" );
+            this.addTooltipToClass( "clp-calypsopile-full", _( "This player has completed one or more calypsos this round" ), "" );
             // TODO: specialise to suits?
-            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
+            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit this hand" ), "" );
         },
         // displayRoundScores: function(round_number){
         //     console.log("trigerring this chappy!");
@@ -697,10 +697,14 @@ function (dojo, declare) {
             let fresh_ranks = fresh_cards.map(card => +card["rank"]);
             console.log(fresh_cards);
             console.log(fresh_ranks);
+            const player_id = notif.args.player_id;
             // for each card in calypso, get rid of it, but not too much
             
+            // make some modifications that we will undo at the end of the method
+            // for correct animation calculation
             dojo.addClass("clp-public-area", "clp-no-transform");
-            const player_id = notif.args.player_id;
+            // to stop calypso cards clipping through trickpile
+            dojo.addClass(`clp-trickpile-${player_id}`, "clp-very-high");
             for (let rank = 2; rank <= 14; rank++) {
                 let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
 
@@ -712,6 +716,9 @@ function (dojo, declare) {
                 // let anim = this.slideToObject(card_el_id, null );
                 dojo.connect(anim, 'onEnd', function(node) {
                     dojo.destroy(node);
+                    dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
+                    console.log("don't worry it has happened!");
+                    // TODO: still clips a litlle, might be removed too early
                 });
                 // dojo.connect(anim, 'onEnd', function(node) {
                 //     dojo.destroy(node);

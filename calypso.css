@@ -182,7 +182,6 @@
 
 .clp-card-on-table {
   position: absolute;
-  z-index: 50;
 }
 
 /*** calypsos ***/
@@ -721,7 +720,11 @@
   right: 0;
   position: absolute;
   background-color: #999;
-  z-index: 30;
+  z-index: 4;
+}
+
+.clp-very-high {
+  z-index: 35;
 }
 
 .clp-calypsopile {

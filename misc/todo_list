@@ -42,19 +42,20 @@
 ./calypso.js:324:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
 ./calypso.js:447:            // TODO: specialise to suits?
 ./calypso.js:469:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:723:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:748:            // TODO: should this be delayed/animated?
-./calypso.js:760:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:844:            // AB TODO: do we need to do anything here?
-./calypso.js:859:            // TODO: play the card in the user interface.
+./calypso.js:721:                    // TODO: still clips a litlle, might be removed too early
+./calypso.js:730:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:755:            // TODO: should this be delayed/animated?
+./calypso.js:767:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:851:            // AB TODO: do we need to do anything here?
+./calypso.js:866:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:51:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:60:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:121:// TODO: really want this smaller, but need to do the scaling properly.
 ./calypso_style.scss:287:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:306:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:414:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:421:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:420:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:427:// TODO: transform using mixins - see sass project page
 ./dbmodel.sql:65:-- TODO: last trick table?
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text
