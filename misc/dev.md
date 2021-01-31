@@ -32,3 +32,15 @@ html {
   background-color: #00FF00;
 }
 ```
+
+## compatibility
+
+Do smt like (and origin)
+
+```css
+ -webkit-transform: rotate(45deg);
+     -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+       -o-transform: rotate(45deg);
+          transform: rotate(45deg);
+```

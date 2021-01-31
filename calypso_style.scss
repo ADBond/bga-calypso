@@ -116,8 +116,14 @@ $display_font: 2*$icon_size/3;
     // flex-grow: 1;
     padding-top: ($icon_size - $display_font)/2;
     vertical-align: middle;
+    
+    // transition: 2s;
     // height: $icon_size;
 }
+// temp class to apply when updating, to highlight. Might delete
+// .clp-score-big {
+//     font-size: 2em;
+// }
 // TODO: really want this smaller, but need to do the scaling properly.
 // 16px might be too small - maybe 24? the above bits should scale with
 .clp-suit-icon {

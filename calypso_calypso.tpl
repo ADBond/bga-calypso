@@ -76,6 +76,7 @@
 <script type="text/javascript">
 
 // Javascript HTML templates
+// var jstpl_tempscore = '<div class="clp-score-big" id="clp-new-tmp-count">${new_count}<div>'
 
 var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}"\
                             style="background-position:-${x}px -${y}px; z-index:${z}">\

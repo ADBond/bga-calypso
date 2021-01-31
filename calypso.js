@@ -751,10 +751,21 @@ function (dojo, declare) {
             //     this.placeCardInCalypso(card["owner"], card["suit"], card["rank"], card["card_id"]);
             // }
             const player_count_element = `clp-info-count-${player_id}`;
+            const new_num_calypsos = notif.args.num_calypsos;
             console.log(player_count_element)
             // TODO: should this be delayed/animated?
-            $(player_count_element).textContent = notif.args.num_calypsos;
-            this.setCalypsoPile(player_id, notif.args.num_calypsos);
+            $(player_count_element).textContent = new_num_calypsos;
+            // dojo.addClass(player_count_element, "clp-score-big");
+            // dojo.removeClass(player_count_element, "clp-score-big");
+            this.setCalypsoPile(player_id, new_num_calypsos);
+            // dojo.place(this.format_block('jstpl_tempscore', {
+            //     new_count : new_num_calypsos
+            // }), 'clp-game-info');
+            // anim = this.slideToObject( "clp-new-tmp-count", player_count_element);
+            // dojo.connect(anim, 'onEnd', function(node) {
+            //     dojo.destroy(node);
+            // });
+            // anim.play();
         },
         notif_actionRequired : function(notif) {
             // nothing needed here
