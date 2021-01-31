@@ -170,6 +170,24 @@
   left: 50%;
   transform: translate(-50%);
   width: 70%;
+  height: 115.2px;
+}
+
+#clp-myhand {
+  z-index: 50;
+}
+
+.clp-hand-card {
+  z-index: 30;
+}
+
+.clp-hand-card[style] {
+  top: 10px !important;
+}
+
+.clp-hand-card:hover {
+  border: solid 1px black;
+  top: 0 !important;
 }
 
 /*** cards on table ***/
@@ -182,6 +200,7 @@
 
 .clp-card-on-table {
   position: absolute;
+  z-index: 50;
 }
 
 /*** calypsos ***/

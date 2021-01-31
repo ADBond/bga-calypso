@@ -73,8 +73,6 @@ function (dojo, declare) {
             this.playerHand = new ebg.stock(); // new stock object for hand
             this.playerHand.create( this, $('clp-myhand'), this.cardwidth, this.cardheight );
 
-            this.playerHand.image_items_per_row = 13;
-
             const num_decks = 4;
             for (let suit = 1; suit <= 4; suit++) {
                 for (let rank = 2; rank <= 14; rank++) {
@@ -87,12 +85,19 @@ function (dojo, declare) {
                         // but a sensible default answer seems to be 'yes'
                         // TODO: here is where we might want to separate out trumps!
                         // i.e. (other two, alternating colour) (my partners trumps) (my trumps)
-                        this.playerHand.addItemType(card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type);
+                        this.playerHand.addItemType(
+                            card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type
+                        );
                     }
                 }
             }
-            // TODO: center hand in the div if wanted:
             this.playerHand.centerItems = true;
+            this.playerHand.image_items_per_row = 13;
+            // TODO: decide on overlap or not
+            this.playerHand.setOverlap( 70, 0 );
+            this.playerHand.extraClasses = "clp-hand-card";
+
+            // this.playerHand.onItemCreate = dojo.hitch( this, 'setupNewHandCard' ); 
 
             dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
 
@@ -101,7 +106,15 @@ function (dojo, declare) {
                 let card = this.gamedatas.hand[i];
                 let suit = card.type;
                 let rank = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, rank), card.id);
+                let unique_type = this.getCardUniqueType(suit, rank);
+                this.playerHand.addToStockWithId(unique_type, card.id);
+                let card_el = this.playerHand.getItemDivId(card.id);
+                console.log("handy");
+                console.log(card.id);
+                console.log(card_el);
+                // TODO: probably delete this function
+                // TODO: set hoverable here? but then also need to do it when your turn comes around
+                // this.setupNewHandCard(card_el);
             }
 
             // Cards played on table
@@ -274,11 +287,28 @@ function (dojo, declare) {
             }
         },
 
+        setupNewHandCard: function( card_div_id ) {
+           // function for when cards are made in players' hand
+            console.log("hand card");
+            console.log(card_div_id);
+            // console.log(card_type_id);
+            // console.log(card_id)
+    
+            // dojo.attr(card_id, "style", "");
+            let current_z = dojo.style(card_div_id, "z-index");
+            console.log(current_z)
+            dojo.setStyle(card_div_id, "z-index", current_z + 20);
+            dojo.style(card_div_id, "color", "red");
+            dojo.style(card_div_id, "opacity", "");
+            console.log("element is:")
+            console.log($(card_div_id));
+        },
+
         playCardOnTable : function(player_id, suit, rank, card_id) {
             dojo.place(this.format_block('jstpl_cardontable', {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
-                z : 90,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
+                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
