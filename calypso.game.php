@@ -1368,9 +1368,6 @@ class Calypso extends Table
         game state.
     */
 
-    function argGiveCards() {  // Temp
-        return array ();
-      }
     /*
     
     Example for game state "MyGameState":

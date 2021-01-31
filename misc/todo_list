@@ -27,11 +27,11 @@
 ./calypso.game.php:1232:        // TODO: this function checks that all cards are *somewhere*
 ./calypso.game.php:1268:            // TODO: really not convinced I've got the translation stuff right here.
 ./calypso.game.php:1323:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1425:        // TODO: cleaner with map
-./calypso.game.php:1470:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1528:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1537:        // TODO: this notification should go, as that info should be in player boxes.
-./calypso.game.php:1552:        // TODO: at best this should say hand X is over, or just scrap it altogether
+./calypso.game.php:1422:        // TODO: cleaner with map
+./calypso.game.php:1467:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1525:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1534:        // TODO: this notification should go, as that info should be in player boxes.
+./calypso.game.php:1549:        // TODO: at best this should say hand X is over, or just scrap it altogether
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:61:                // TODO: trump suit icon insert to area.
 ./calypso.js:88:                        // TODO: here is where we might want to separate out trumps!
@@ -52,10 +52,10 @@
 ./calypso_calypso.tpl:60:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:121:// TODO: really want this smaller, but need to do the scaling properly.
-./calypso_style.scss:287:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:306:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:420:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:427:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:288:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:307:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:421:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:428:// TODO: transform using mixins - see sass project page
 ./dbmodel.sql:65:-- TODO: last trick table?
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text

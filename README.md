@@ -19,7 +19,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * something a little jazzier for updating score in player board? maybe - have a look at some other games
 * slight border round face-down cards?
 * ~~z-index crap? (current)~~ played cards go under trickpile (even empty), and calypso (even empty). Has that always been so?
-* wrong suits showing in player boxes!!
+* ~~wrong suits showing in player boxes!!~~
 * animate round end clearing?
 * total scores in round-by-round
   * final scores not updating in player boxes (okay on refresh)
