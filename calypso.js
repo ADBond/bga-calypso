@@ -149,10 +149,18 @@ function (dojo, declare) {
             }
             const totalrounds = this.gamedatas.totalrounds;
             const currentround = this.gamedatas.roundnumber;
+            // TODO: need fancier checking here, in case we are in awaitNewRound
             for(let round_number = 1; round_number < currentround; round_number++){
-                this.activateScoreButton(round_number,this.gamedatas.roundscoretable[round_number]);
+                this.activateScoreButton(round_number, this.gamedatas.roundscoretable[round_number]);
             }
-            if(currentround != 1){
+            const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
+            console.log("have a butchers at this:");
+            console.log(awaiting_new_round);
+            console.log(gamedatas.gamestate);
+            if(awaiting_new_round){
+                this.activateScoreButton(currentround, this.gamedatas.roundscoretable[currentround]);
+            }
+            if(currentround != 1 | awaiting_new_round){
                 const overall_scores_button_id = 'clp-round-scores-button-overall';
                 $(overall_scores_button_id).onclick = (
                     () => this.showResultDialog(
@@ -501,6 +509,7 @@ function (dojo, declare) {
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
+            // TODO: look here for your js translation needs!
             $("clp-game-info").innerHTML =  dojo.string.substitute(
                 '<div class="clp-gametitle">' + _("Calypso") + "</div>" + 
                     "<br>" + _("Round ${roundnumber} of ${totalrounds}") +

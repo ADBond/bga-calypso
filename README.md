@@ -29,6 +29,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~total scores in round-by-round~~
 * ~~potentially 'secret' info in trickpile size??~~
 * Score tables suit icons
+* ~~score buttons not updated on refresh while waiting for new round~~
 
 ## For a different branch
 

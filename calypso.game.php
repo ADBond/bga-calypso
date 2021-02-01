@@ -293,6 +293,8 @@ class Calypso extends Table
         }
         $result['overallscoretable'] = self::getDisplayOverallScoresArgs();
 
+        // N.B. we automatically send over game state anyhow, so need to set that here
+
         if(self::getGameStateValue('renounceFlags') == 1){
             $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
             $player_flags = array();
