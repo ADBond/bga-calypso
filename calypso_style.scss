@@ -383,6 +383,8 @@ $max_name_size: 200px;
     font-weight: bold;
     height: $renounce_size;
     width: $max_name_size;
+    // a little outline, so it's still visible when it's close to b/g (as noticed with white in Love Letter)
+    // text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

@@ -9,7 +9,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
   * ~~and sim for trickpile~~
   * and for calypsopile - needs checking
-  * cards in calypso let's try and slip under existing cards in animation - but not worth it now if it's a huge pain
+  * ~~cards in calypso let's try and slip under existing cards in animation - but not worth it now if it's a huge pain (it is. park it.)~~
 * ~~Fix dealer button animation - not really fixed but removed. Fine for now~~
 * ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
   * details to fiddle with - maybe make calypso a _teeny_ bit quicker to go off??
@@ -71,7 +71,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~ When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT~~
   * ~~will be tracking this for stats, so should be easy to add in. Probably as a log option?~~ overkill - add if requested
 * Order hand with personal trumps separated?
-* animations - let calypso cards & trick pile appear after animation is finished rather than early
+* ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
 
 ### Images

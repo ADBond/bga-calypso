@@ -710,7 +710,7 @@ function (dojo, declare) {
                 console.log(player_count_element);
                 $(player_count_element).textContent = 0;
             }
-            console.log("clear calypsos...");
+            // console.log("clear calypsos...");
             this.clearCalypsos(player_ids);
             this.clearCalypsoPiles(player_ids);
         },
@@ -731,15 +731,15 @@ function (dojo, declare) {
         },
 
         notif_dealHand : function(notif) {
-            console.log("in deals");
-            console.log(notif);
+            // console.log("in deals");
+            // console.log(notif);
             this.changeDealer(notif.args.dealer_id);
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
         },
 
         notif_clearRenounceFlags: function(notif) {
-            console.log("clearing houd");
-            console.log(notif);
+            // console.log("clearing houd");
+            // console.log(notif);
             this.clearRenounceFlags(notif.args.players, notif.args.suits);
         },
 
@@ -761,13 +761,13 @@ function (dojo, declare) {
             console.log("cally");
             
             // put any cards to the new calypso in their RIGHTFUL PLACE
-            console.log("here's your man with the cards");
-            console.log(notif.args.cards_to_fresh_calypso);
-            console.log(notif.args);
+            // console.log("here's your man with the cards");
+            // console.log(notif.args.cards_to_fresh_calypso);
+            // console.log(notif.args);
             let fresh_cards = Object.values(notif.args.cards_to_fresh_calypso);
             let fresh_ranks = fresh_cards.map(card => +card["rank"]);
-            console.log(fresh_cards);
-            console.log(fresh_ranks);
+            // console.log(fresh_cards);
+            // console.log(fresh_ranks);
             const player_id = notif.args.player_id;
             // for each card in calypso, get rid of it, but not too much
             
@@ -801,14 +801,14 @@ function (dojo, declare) {
                 // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
                 console.log("yeeeah boiii");
                 if(fresh_ranks.includes(rank)){
-                    console.log("success " + rank);
+                    // console.log("success " + rank);
                     dojo.place(this.format_block('jstpl_calypsocard_existing', {
                         rank : rank,
                         suit : notif.args.player_suit,
                         player_id : player_id
                     }), 'clp-calypsoholder-' + player_id);
                 } else{
-                    console.log("no success " + rank);
+                    // console.log("no success " + rank);
                     dojo.place(this.format_block('jstpl_calypsocard', {
                         rank : rank,
                         suit : notif.args.player_suit,
@@ -823,7 +823,7 @@ function (dojo, declare) {
             // }
             const player_count_element = `clp-info-count-${player_id}`;
             const new_num_calypsos = notif.args.num_calypsos;
-            console.log(player_count_element)
+            // console.log(player_count_element)
             // TODO: should this be delayed/animated?
             $(player_count_element).textContent = new_num_calypsos;
             // dojo.addClass(player_count_element, "clp-score-big");
@@ -882,12 +882,12 @@ function (dojo, declare) {
         },
 
         notif_moveCardsToCalypsos : function(notif) {
-            function finishAnim(anim) {
-                dojo.connect(anim, 'onEnd', function(node) {
-                    dojo.destroy(node);
-                });
-                anim.play();
-            }
+            // function finishAnim(anim) {
+            //     dojo.connect(anim, 'onEnd', function(node) {
+            //         dojo.destroy(node);
+            //     });
+            //     anim.play();
+            // }
             const winner_id = notif.args.player_id;
             const moved_to = notif.args.moved_to;
             console.log(moved_to);
@@ -895,9 +895,11 @@ function (dojo, declare) {
                 let send_to_id = moved_to[player]["owner"];
                 let send_from_id = moved_to[player]["originating_player"];
                 let anim, final_func, final_args;
-                console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
+                // console.log(`player ${send_from_id} and what happens is ${send_to_id}`);
+                
                 if(send_to_id === 0){
                     // card is just going to trick pile
+                    // this.placeOnObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
                     anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
                     dojo.connect(anim, 'onEnd', (node) => {
                         dojo.destroy(node);
@@ -913,6 +915,7 @@ function (dojo, declare) {
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
+                    // this.placeOnObject('clp-card-on-table-' + send_from_id, `clp-calypsocard-${calypso_player_id}-${rank}`);
                     anim = this.slideToObject(
                         'clp-card-on-table-' + send_from_id,
                         `clp-calypsocard-${calypso_player_id}-${rank}`
@@ -928,6 +931,7 @@ function (dojo, declare) {
                 // on destinations. That's backwards mate!
                 // final_func(...final_args);
                 
+                // anim.duration = 30000;
                 anim.play();
             }
             
