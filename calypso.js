@@ -858,6 +858,7 @@ function (dojo, declare) {
         },
 
         notif_scoreUpdate : function(notif) {
+            // TODO here need real total, not just round total. adjust in php
             notif.args.scores.forEach(
                 score_info => (
                     this.scoreCtrl[score_info.player_id].toValue(score_info.total_score)
@@ -865,9 +866,8 @@ function (dojo, declare) {
             );
         },
 
-        // This is what happens after trick - we need to modify!
         notif_moveCardsToWinner : function(notif) {
-            // Move all cards on table to given table, then destroy them
+            // Move all cards on table to winners' card space, ready to be sent on
             const winner_id = notif.args.winner_id;
             for ( let player_id in this.gamedatas.players) {
                 let anim = this.slideToObject(
@@ -888,7 +888,6 @@ function (dojo, declare) {
                 });
                 anim.play();
             }
-            // Move all cards on table to given table, then destroy them
             const winner_id = notif.args.player_id;
             const moved_to = notif.args.moved_to;
             console.log(moved_to);
@@ -919,6 +918,8 @@ function (dojo, declare) {
                     // final_args = [send_to_id, suit, rank, card_id];
                     this.placeCardInCalypso(send_to_id, suit, rank, card_id);
                 }
+                // TODO: this function is what needs fiddling with - play animation after we've set flags
+                // on destinations. That's backwards mate!
                 finishAnim(anim);
                 // final_func(...final_args);
             }

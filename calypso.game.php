@@ -264,7 +264,6 @@ class Calypso extends Table
     {
         $result = array();
 
-        // TODO: check there is not any naughty secret info here? don't think so
         $current_player_id = self::getCurrentPlayerId();
     
         $sql = "SELECT player_id id, player_score score, trump_suit trump_suit, ".
@@ -272,16 +271,14 @@ class Calypso extends Table
         $result['players'] = self::getCollectionFromDb( $sql );
 
         foreach($result['players'] as $player_id => $info){
-            // TODO: also here, do I need the actual number?
-            $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id); 
+            // hide actual number in pile, just for display of backs or not
+            $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id) > 0 ? 1 : 0; 
         }
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
 
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
-        // TODO: do I just need the number here?
-        $result['trickpile'] = $this->cards->getCardsInLocation( 'trickpile' );
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
 
@@ -386,6 +383,7 @@ class Calypso extends Table
 
     // TODO: check here and under that there isn't a secret option number 3?
     function getPlayerPartnership($player_id) {
+        // TODO here and elsewhere move to defined constants
         // use bridge terminology
         // 3, 4 is clubs, diamonds -> 'minor' suits
         $player_suit = self::getPlayerSuit($player_id);

@@ -21,11 +21,12 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~z-index crap? (current)~~ ~~played cards go under trickpile (even empty), and calypso (even empty). Has that always been so?~~
   * ~~certainly not new, current dev branch (9af4f0c) already has this problem, just not noticed previously~~
   * ~~animated element belongs to destination - that's where the z-index needs to be set!~~
+  * tidy up z-index attributes we peppered everywhere but no longer need
 * ~~wrong suits showing in player boxes!!~~
 * animate round end clearing?
 * total scores in round-by-round
   * final scores not updating in player boxes (okay on refresh)
-* potentially 'secret' info in trickpile size??
+* ~~potentially 'secret' info in trickpile size??~~
 
 ## For a different branch
 
@@ -65,8 +66,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
   * teams through some light colours, and put in player boxes upstairs (with trump suits)
-* When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
-  * will be tracking this for stats, so should be easy to add in. Probably as a log option?
+* ~~ When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT~~
+  * ~~will be tracking this for stats, so should be easy to add in. Probably as a log option?~~ overkill - add if requested
 * Order hand with personal trumps separated?
 * animations - let calypso cards & trick pile appear after animation is finished rather than early
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
@@ -86,7 +87,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ## Things to fix
 
 * ~~Fix dealer button animation~~
-* New cards in calypso get eaten by calypso animation - need to handle this!
+* ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
   * ~~maybe calypso animation should head to player boxes to help signify scoring being there~~
 * '"X" deals a new hand of cards' is not translating, and not sure why...??
   * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
@@ -98,7 +99,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Things to test
 
-* new round (genuine)/things all work nicely in multi-round games
+* ~~new round (genuine)/things all work nicely in multi-round games~~
 * multiple players complete calypsos in one trick
 * a little browser compatibility
 
