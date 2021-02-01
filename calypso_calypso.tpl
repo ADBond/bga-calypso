@@ -13,6 +13,7 @@
 
 <div id="clp-public-area">
     <div id="clp-table-area">
+        <div id="clp-table-centre"></div>
         <!-- BEGIN playerhand -->
         <div class="clp-player-card-play-area clp-player-card-play-area-{DIR}">
             <div class="clp-player-card-play-area-card" id="clp-player-card-play-area-card-{PLAYER_ID}"></div>
@@ -94,6 +95,7 @@ var jstpl_player_calypso_info = '<div class="clp-calypso-info">\
                                     </div>\
                                     <div class="clp-info-count" id="clp-info-count-${id}">${completed_calypsos}</span>\
                                 </div>';
+var jstpl_suiticon = '<div id="clp-suit-for-score" class="clp-suit-icon clp-suit-icon-${trump_suit}"></div>'
 </script>
 
 {OVERALL_GAME_FOOTER}

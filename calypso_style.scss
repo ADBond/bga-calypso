@@ -85,6 +85,16 @@ $left_offset: 40%;
     border-radius: 20px;
     z-index: 1;
 }
+// just need this positioned roughly
+#clp-table-centre {
+    position: absolute;
+    left: $table_size/2;
+    top: $table_size/2;
+    width: 0;
+    height: 0;
+    // and let this be higher than clp-card-play-area so that animations of suits go over top
+    z-index: 41;
+}
 
 $info_size: 20px;
 $title_size: $info_size * 1.5;

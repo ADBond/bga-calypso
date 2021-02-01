@@ -44,19 +44,19 @@
 ./calypso.js:537:        // TODO: fix API - don't need round_number if title supplied!
 ./calypso.js:792:                    // TODO: still clips a litlle, might be removed too early
 ./calypso.js:801:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:827:            // TODO: should this be delayed/animated?
-./calypso.js:849:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:861:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:930:                // TODO: this function is what needs fiddling with - play animation after we've set flags
-./calypso.js:946:            // AB TODO: do we need to do anything here?
-./calypso.js:961:            // TODO: play the card in the user interface.
-./calypso_calypso.tpl:51:                    <!-- TODO: translation, maybe inject text later-->
-./calypso_calypso.tpl:60:                    <!-- TODO: translation, maybe inject text later-->
-./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
-./calypso_style.scss:127:// TODO: really want this smaller, but need to do the scaling properly.
-./calypso_style.scss:316:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:335:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:451:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:458:// TODO: transform using mixins - see sass project page
+./calypso.js:828:            // TODO: should this be delayed/animated?
+./calypso.js:895:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:907:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:976:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:992:            // AB TODO: do we need to do anything here?
+./calypso.js:1007:            // TODO: play the card in the user interface.
+./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
+./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
+./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
+./calypso_style.scss:137:// TODO: really want this smaller, but need to do the scaling properly.
+./calypso_style.scss:326:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:345:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:461:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:468:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text

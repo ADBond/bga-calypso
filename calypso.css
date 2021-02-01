@@ -67,6 +67,15 @@
   z-index: 1;
 }
 
+#clp-table-centre {
+  position: absolute;
+  left: 375px;
+  top: 375px;
+  width: 0;
+  height: 0;
+  z-index: 41;
+}
+
 .clp-game-info {
   position: absolute;
   font-weight: bold;

@@ -757,8 +757,8 @@ function (dojo, declare) {
             // What was I about to say above ^ ????
         },
         notif_calypsoComplete : function(notif) {
-            console.log(notif.args);
-            console.log("cally");
+            // console.log(notif.args);
+            // console.log("cally");
             
             // put any cards to the new calypso in their RIGHTFUL PLACE
             // console.log("here's your man with the cards");
@@ -799,7 +799,7 @@ function (dojo, declare) {
                 anim.play();
 
                 // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-                console.log("yeeeah boiii");
+                // console.log("yeeeah boiii");
                 if(fresh_ranks.includes(rank)){
                     // console.log("success " + rank);
                     dojo.place(this.format_block('jstpl_calypsocard_existing', {
@@ -821,14 +821,60 @@ function (dojo, declare) {
             //     console.log(card);
             //     this.placeCardInCalypso(card["owner"], card["suit"], card["rank"], card["card_id"]);
             // }
+            
             const player_count_element = `clp-info-count-${player_id}`;
             const new_num_calypsos = notif.args.num_calypsos;
             // console.log(player_count_element)
             // TODO: should this be delayed/animated?
-            $(player_count_element).textContent = new_num_calypsos;
+            this.setCalypsoPile(player_id, new_num_calypsos);
+
+            // have transform woes if we try to use calypsopile
+            // const anim_origin = `clp-calypsopile-${player_id}`;
+            const anim_origin = "clp-table-centre";
+            // dojo.addClass("game_play_area", 'clp-no-transform');
+            let anim = this.slideTemporaryObject(
+                this.format_block('jstpl_suiticon', {
+                    trump_suit : notif.args.player_suit,
+                 }),
+                anim_origin,
+                anim_origin,
+                player_count_element
+            );
+
+            // this.placeOnObject(suit_id, 'clp-table-centre');
+            // let anim = this.slideToObject(suit_id, player_count_element);
+            dojo.connect(anim, 'onEnd', function(node) {
+                // dojo.destroy(node);
+                $(player_count_element).textContent = new_num_calypsos;
+            });
+            anim.duration = 300;
+            anim.play();
+            // just trying out chaining in principle:
+            // let anim_1 = dojo.animateProperty(
+            //     {
+            //         node: player_count_element,
+            //         properties: {
+            //             fontSize: 60,
+            //         }
+            //     }
+            // );
+            // // anim_1.duration = 20000;
+            // let anim_2 = dojo.animateProperty(
+            //     {
+            //         node: player_count_element,
+            //         properties: {
+            //             fontSize: 22,
+            //         }
+            //     }
+            // );
+            // // anim_2.duration = 20000;
+            // let combined = dojo.fx.chain([anim_1, anim_2]);
+            // console.log("combined");
+            // console.log(combined);
+            // // combined.duration = 30000;
+            // combined.play();
             // dojo.addClass(player_count_element, "clp-score-big");
             // dojo.removeClass(player_count_element, "clp-score-big");
-            this.setCalypsoPile(player_id, new_num_calypsos);
             // dojo.place(this.format_block('jstpl_tempscore', {
             //     new_count : new_num_calypsos
             // }), 'clp-game-info');
@@ -908,8 +954,8 @@ function (dojo, declare) {
                     // final_func = this.setTrickPile;
                     // final_args = [winner_id, true];
                 } else{
-                    console.log("stuff to see");
-                    console.log(moved_to);
+                    // console.log("stuff to see");
+                    // console.log(moved_to);
                     // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
                     let rank = moved_to[player]["rank"];
