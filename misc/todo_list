@@ -41,11 +41,11 @@
 ./calypso.js:335:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
 ./calypso.js:385:            // TODO: this should stay in css - use class manipulation
 ./calypso.js:400:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:512:            // TODO: look here for your js translation needs!
-./calypso.js:530:            // TODO: specialise to suits?
-./calypso.js:552:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:808:                    // TODO: still clips a litlle, might be removed too early
-./calypso.js:817:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:514:            // TODO: look here for your js translation needs!
+./calypso.js:532:            // TODO: specialise to suits?
+./calypso.js:554:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:601:                    // TODO: still clips a litlle, might be removed too early
+./calypso.js:610:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
 ./calypso.js:844:            // TODO: should this be delayed/animated?
 ./calypso.js:911:            // TODO: again this should be farmed out, ideally to a generalised function?
 ./calypso.js:923:            // TODO here need real total, not just round total. adjust in php
