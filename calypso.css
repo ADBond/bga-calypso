@@ -826,8 +826,11 @@
 }
 
 .clp-table-suit {
-  display: flex;
-  justify-content: center;
+  display: block;
+  background-image: url("img/card_suits.jpg");
+  width: 32px;
+  height: 32px;
+  margin: auto;
 }
 
 #clp-score-access-table-area {

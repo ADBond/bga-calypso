@@ -510,8 +510,12 @@ $personal_area_bottom_offset: 20px;
     text-align: right;
 }
 .clp-table-suit {
-    display: flex;
-    justify-content: center;
+    display: block;
+    // set stuff here as icon is float:left
+    background-image: url('img/card_suits.jpg');
+    width: $icon_size;
+    height: $icon_size;
+    margin: auto;
 }
 
 // score buttons for getting score entries

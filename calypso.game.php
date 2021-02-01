@@ -898,8 +898,8 @@ class Calypso extends Table
         return self::wrap_class($x, "clp-score-label");
     }
     function suit_element_for_score_table($suit){
-        // return 2;//"<div class=\"clp-suit-icon-${suit} clp-suit-icon clp-table-suit\"></div>";
-        return self::SUIT_LOOKUP[$suit];
+        return "<div class=\"clp-suit-icon-${suit} clp-table-suit\"></div>";
+        // return self::SUIT_LOOKUP[$suit];
     }
 
     function getDisplayScoresArgs($round_number){
