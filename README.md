@@ -6,8 +6,10 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* animations - let calypso cards & trick pile appear after animation is finished rather than early
-  * and sim for trickpile/calypsopile
+* ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
+  * ~~and sim for trickpile~~
+  * and for calypsopile - needs checking
+  * cards in calypso let's try and slip under existing cards in animation - but not worth it now if it's a huge pain
 * ~~Fix dealer button animation - not really fixed but removed. Fine for now~~
 * ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
   * details to fiddle with - maybe make calypso a _teeny_ bit quicker to go off??
@@ -17,7 +19,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~tooltips for calypsopile (only when full)~~
 * ~~Ditch calypso completed summaries at end of hands~~
 * something a little jazzier for updating score in player board? maybe - have a look at some other games
-* slight border round face-down cards?
+* slight border round face-down cards? (to distinguish calypsopile)
 * ~~z-index crap? (current)~~ ~~played cards go under trickpile (even empty), and calypso (even empty). Has that always been so?~~
   * ~~certainly not new, current dev branch (9af4f0c) already has this problem, just not noticed previously~~
   * ~~animated element belongs to destination - that's where the z-index needs to be set!~~

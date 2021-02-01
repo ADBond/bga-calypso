@@ -899,7 +899,10 @@ function (dojo, declare) {
                 if(send_to_id === 0){
                     // card is just going to trick pile
                     anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
-                    this.setTrickPile(winner_id, 1);
+                    dojo.connect(anim, 'onEnd', (node) => {
+                        dojo.destroy(node);
+                        this.setTrickPile(winner_id, 1);
+                    });
                     // final_func = this.setTrickPile;
                     // final_args = [winner_id, true];
                 } else{
@@ -914,15 +917,20 @@ function (dojo, declare) {
                         'clp-card-on-table-' + send_from_id,
                         `clp-calypsocard-${calypso_player_id}-${rank}`
                     );
+                    dojo.connect(anim, 'onEnd', (node) => {
+                        dojo.destroy(node);
+                        this.placeCardInCalypso(send_to_id, suit, rank, card_id);
+                    });
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];
-                    this.placeCardInCalypso(send_to_id, suit, rank, card_id);
                 }
                 // TODO: this function is what needs fiddling with - play animation after we've set flags
                 // on destinations. That's backwards mate!
-                finishAnim(anim);
                 // final_func(...final_args);
+                
+                anim.play();
             }
+            
         },
         
         notif_debug : function(notif) {

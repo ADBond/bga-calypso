@@ -61,5 +61,3 @@ CREATE TABLE IF NOT EXISTS `renounce_flags` (
   FOREIGN KEY (`player_id`)
         REFERENCES `player`(`player_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
--- TODO: last trick table?
