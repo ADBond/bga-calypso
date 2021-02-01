@@ -977,6 +977,8 @@ class Calypso extends Table
         $header_names = array( '' );
         $header_suits = array( '' );
         $score_table = array();
+        $overall_scores = array(self::score_wrap_label(clienttranslate("Total score")));
+        $player_score_totals = array();
         for($round = 1; $round <= self::getGameStateValue("totalRounds"); $round++){
             // TODO: translate business
             $round_scores = array( self::score_wrap_label(clienttranslate("Round ".$round." score")) );
@@ -995,6 +997,9 @@ class Calypso extends Table
                         'args' => array( 'player_suit' => $suit),
                         'type' => 'header'
                     );
+                    $player_score_totals[$player_id] = $score_info['partnership_score'];
+                } else{
+                    $player_score_totals[$player_id] += $score_info['partnership_score'];
                 }
                 $round_scores[] = self::score_wrap($score_info['partnership_score']);
             }
@@ -1004,6 +1009,10 @@ class Calypso extends Table
             }
             $score_table[] = $round_scores;
         }
+        foreach ($player_score_totals as $player_id => $total_score){
+            $overall_scores[] = self::score_wrap($total_score);
+        }
+        $score_table[] = $overall_scores;
         return $score_table;
     }
 

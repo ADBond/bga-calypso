@@ -19,15 +19,13 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~tooltips for calypsopile (only when full)~~
 * ~~Ditch calypso completed summaries at end of hands~~
 * ~~something a little jazzier for updating score in player board? maybe - have a look at some other games~~
-* slight border round face-down cards? (to distinguish calypsopile)
 * ~~z-index crap? (current)~~ ~~played cards go under trickpile (even empty), and calypso (even empty). Has that always been so?~~
   * ~~certainly not new, current dev branch (9af4f0c) already has this problem, just not noticed previously~~
   * ~~animated element belongs to destination - that's where the z-index needs to be set!~~
   * tidy up z-index attributes we peppered everywhere but no longer need
 * ~~wrong suits showing in player boxes!!~~
 * animate round end clearing?
-* total scores in round-by-round
-  * final scores not updating in player boxes (okay on refresh)
+* ~~total scores in round-by-round~~
 * ~~potentially 'secret' info in trickpile size??~~
 
 ## For a different branch
@@ -73,6 +71,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * Order hand with personal trumps separated?
 * ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
+  * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
 
 ### Images
 
@@ -94,6 +93,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * '"X" deals a new hand of cards' is not translating, and not sure why...??
   * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
   * doesn't like strings with "." at the end - can break new hand/new round logs with those
+* final scores not updating in player boxes (round 2+)(okay on refresh)
 
 ### Other UI
 
