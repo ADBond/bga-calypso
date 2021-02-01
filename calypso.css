@@ -111,7 +111,7 @@
 }
 
 .clp-suit-text {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: bold;
 }
 
@@ -823,6 +823,11 @@
 
 .clp-score-label {
   text-align: right;
+}
+
+.clp-table-suit {
+  display: flex;
+  justify-content: center;
 }
 
 #clp-score-access-table-area {

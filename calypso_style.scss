@@ -143,7 +143,7 @@ $display_font: 2*$icon_size/3;
     height: $icon_size;
 }
 .clp-suit-text {
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: bold;
 }
 .clp-suit-text-spades {
@@ -508,6 +508,10 @@ $personal_area_bottom_offset: 20px;
 }
 .clp-score-label {
     text-align: right;
+}
+.clp-table-suit {
+    display: flex;
+    justify-content: center;
 }
 
 // score buttons for getting score entries

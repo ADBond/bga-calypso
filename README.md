@@ -23,12 +23,13 @@ a fluid list to remember what needs to be done before pulling in and starting a 
   * ~~certainly not new, current dev branch (9af4f0c) already has this problem, just not noticed previously~~
   * ~~animated element belongs to destination - that's where the z-index needs to be set!~~
   * tidy up z-index attributes we peppered everywhere but no longer need
+  * cardontable, myhand, hand-card, cardontable. think those are it - check that animations still run smoothly when removely
 * ~~wrong suits showing in player boxes!!~~
 * animate round end clearing?
   * ~~trickpiles not cleared~~
 * ~~total scores in round-by-round~~
 * ~~potentially 'secret' info in trickpile size??~~
-* Score tables suit icons
+* ~~Score tables suit icons~~
 * ~~score buttons not updated on refresh while waiting for new round~~
 
 ## For a different branch

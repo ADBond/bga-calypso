@@ -897,6 +897,10 @@ class Calypso extends Table
     function score_wrap_label($x){
         return self::wrap_class($x, "clp-score-label");
     }
+    function suit_element_for_score_table($suit){
+        // return 2;//"<div class=\"clp-suit-icon-${suit} clp-suit-icon clp-table-suit\"></div>";
+        return self::SUIT_LOOKUP[$suit];
+    }
 
     function getDisplayScoresArgs($round_number){
         // give counts and scores different classes so we can style them differently
@@ -924,7 +928,8 @@ class Calypso extends Table
         $players = self::getRoundScore($round_number);
         foreach ( $players as $player_id => $score_info ) {
             // and display header
-            $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
+            $suit = self::getPlayerSuit($player_id);
+            // $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
             $header_names[] = array(
                 'str' => '${player_name}',
                 'args' => array( 'player_name' => self::getPlayerName($player_id) ),
@@ -932,7 +937,7 @@ class Calypso extends Table
             );
             $header_suits[] = array(
                 'str' => '${player_suit}',
-                'args' => array( 'player_suit' => $suit),
+                'args' => array( 'player_suit' => self::suit_element_for_score_table($suit)),
                 'type' => 'header'
             );
             
@@ -988,7 +993,8 @@ class Calypso extends Table
             foreach ( $players as $player_id => $score_info ) {
                 // only need to add this once
                 if($round == 1){
-                    $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
+                    $suit = self::getPlayerSuit($player_id);
+                    // $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
                     $header_names[] = array(
                         'str' => '${player_name}',
                         'args' => array( 'player_name' => self::getPlayerName($player_id) ),
@@ -996,7 +1002,7 @@ class Calypso extends Table
                     );
                     $header_suits[] = array(
                         'str' => '${player_suit}',
-                        'args' => array( 'player_suit' => $suit),
+                        'args' => array( 'player_suit' => self::suit_element_for_score_table($suit)),
                         'type' => 'header'
                     );
                     $player_score_totals[$player_id] = $score_info['partnership_score'];
