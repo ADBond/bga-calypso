@@ -126,6 +126,7 @@
   outline: ridge 3px #AAA;
   width: 92px;
   height: 116px;
+  z-index: 40;
 }
 
 .clp-player-card-play-area-N {

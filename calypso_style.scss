@@ -160,6 +160,8 @@ $card_area_outline_col: #AAA;
     outline: ridge 3px $card_area_outline_col;
     width: $card_area_width;
     height: $card_area_height;
+    // this needs to be above other table elements to animated cards pass over them when played
+    z-index: 40;
 }
 
 $left_right_offset: $card_area_width + 20px;

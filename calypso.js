@@ -51,6 +51,8 @@ function (dojo, declare) {
         
         setup: function( gamedatas )
         {
+            console.log("here is what i can see");
+            console.log(gamedatas);
             for( let player_id in gamedatas.players )
             {
                 let player = gamedatas.players[player_id];
@@ -58,7 +60,6 @@ function (dojo, declare) {
                 let trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
-                // TODO: trump suit icon insert to area.
 
                 if(player_id == gamedatas.dealer){
                     let dealer_area_id = 'clp-dealer-' + player_id;
@@ -70,7 +71,7 @@ function (dojo, declare) {
                 this.setupCalypsoArea(player_id, player_trump);
             }
 
-            this.playerHand = new ebg.stock(); // new stock object for hand
+            this.playerHand = new ebg.stock();
             this.playerHand.create( this, $('clp-myhand'), this.cardwidth, this.cardheight );
 
             const num_decks = 4;
@@ -331,6 +332,8 @@ function (dojo, declare) {
             dojo.style(`clp-card-on-table-${player_id}`, "top", "0");
             // dojo.style(`clp-card-on-table-${player_id}`, "border", "solid 1px black");
             // dojo.addClass('clp-card-on-table-' + player_id, "clp-selected-card");
+            console.log("the style");
+            console.log($(`clp-card-on-table-${player_id}`));
             if (player_id != this.player_id) {
                 // Move card from their general area
                 this.placeOnObject('clp-card-on-table-' + player_id, 'clp-player-all-captured-cards-' + player_id);
@@ -356,7 +359,8 @@ function (dojo, declare) {
             //     dojo.removeClass('node', "clp-selected-card");
             //     console.log("drop tyles");
             // });
-    
+            // for debugging z-index stuff:
+            // anim.duration = 30000;
             anim.play();
             
             // dojo.removeClass('clp-card-on-table-' + player_id, "clp-selected-card");

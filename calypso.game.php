@@ -272,6 +272,7 @@ class Calypso extends Table
         $result['players'] = self::getCollectionFromDb( $sql );
 
         foreach($result['players'] as $player_id => $info){
+            // TODO: also here, do I need the actual number?
             $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id); 
         }
 
@@ -279,6 +280,7 @@ class Calypso extends Table
 
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
+        // TODO: do I just need the number here?
         $result['trickpile'] = $this->cards->getCardsInLocation( 'trickpile' );
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
