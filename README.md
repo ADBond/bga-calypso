@@ -25,8 +25,10 @@ a fluid list to remember what needs to be done before pulling in and starting a 
   * tidy up z-index attributes we peppered everywhere but no longer need
 * ~~wrong suits showing in player boxes!!~~
 * animate round end clearing?
+  * ~~trickpiles not cleared~~
 * ~~total scores in round-by-round~~
 * ~~potentially 'secret' info in trickpile size??~~
+* Score tables suit icons
 
 ## For a different branch
 

@@ -458,6 +458,12 @@ function (dojo, declare) {
                 this.setCalypsoPile(player_id, 0);
             }
         },
+        clearTrickPiles: function(player_ids){
+            for (player of player_ids){
+                let player_id = player["id"];
+                this.setTrickPile(player_id, 0);
+            }
+        },
 
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'clp-dealer-' + new_dealer_id;
@@ -713,6 +719,7 @@ function (dojo, declare) {
             // console.log("clear calypsos...");
             this.clearCalypsos(player_ids);
             this.clearCalypsoPiles(player_ids);
+            this.clearTrickPiles(player_ids);
         },
 
         notif_newHand : function(notif) {

@@ -40,16 +40,16 @@
 ./calypso.js:327:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
 ./calypso.js:377:            // TODO: this should stay in css - use class manipulation
 ./calypso.js:392:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:515:            // TODO: specialise to suits?
-./calypso.js:537:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:792:                    // TODO: still clips a litlle, might be removed too early
-./calypso.js:801:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:828:            // TODO: should this be delayed/animated?
-./calypso.js:895:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:907:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:976:                // TODO: this function is what needs fiddling with - play animation after we've set flags
-./calypso.js:992:            // AB TODO: do we need to do anything here?
-./calypso.js:1007:            // TODO: play the card in the user interface.
+./calypso.js:521:            // TODO: specialise to suits?
+./calypso.js:543:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:799:                    // TODO: still clips a litlle, might be removed too early
+./calypso.js:808:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:835:            // TODO: should this be delayed/animated?
+./calypso.js:902:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:914:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:983:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:999:            // AB TODO: do we need to do anything here?
+./calypso.js:1014:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
