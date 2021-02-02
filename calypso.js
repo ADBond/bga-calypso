@@ -447,6 +447,7 @@ function (dojo, declare) {
 
         clearCalypsos: function(player_ids){
             console.log("clear it up!");
+            let all_player_animations = [];
             for (player of player_ids){
                 let player_id = player["id"];
                 let suit = player["suit"];
@@ -457,9 +458,13 @@ function (dojo, declare) {
                 //     dojo.addClass( card_el_id, 'clp-calypsocard-space' );
                 //     dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`)
                 // }
-                this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile");
+                animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, duration=1000);
+                all_player_animations.push(dojo.fx.combine(animations));
             }
-            
+            dojo.fx.combine(all_player_animations).play();
+            for (player of player_ids){
+                let player_id = player["id"];
+            }
         },
         clearCalypsoPiles: function(player_ids){
             console.log("all gone my friend, all gone. like the turning of the tides...");
@@ -580,32 +585,51 @@ function (dojo, declare) {
             dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
         },
 
-        animateCalypso: function(player_id, player_suit, fresh_ranks, to_prefix="clp-calypsopile"){
+        animateCalypso: function(player_id, player_suit, fresh_ranks, to_prefix="clp-calypsopile", play=true, delay=30){
             // make some modifications that we will undo at the end of the method
             // for correct animation calculation
             dojo.addClass("clp-public-area", "clp-no-transform");
             // to stop calypso cards clipping through trickpile
+            // TODO: think about this mate, not sure here
             dojo.addClass(`clp-trickpile-${player_id}`, "clp-very-high");
+            let animations = [];
+            let anim;
+            let current_delay = 0;
             for (let rank = 2; rank <= 14; rank++) {
                 let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
-                if(!$(card_el_id)) continue;
                 // dojo.addClass("clp-public-area", "clp-no-transform");
                 // let anim = this.slideToObject(card_el_id, `player_board_${player_id}` );
-                let anim = this.slideToObject(card_el_id, `${to_prefix}-${player_id}` );
+                if(!dojo.hasClass(card_el_id, "clp-calypsocard-space")){
+                    anim = this.slideToObject(card_el_id, `${to_prefix}-${player_id}` );
+                    dojo.connect(anim, 'onEnd', function(node) {
+                        dojo.destroy(node);
+                        dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
+                        console.log("don't worry it has happened!");
+                        // TODO: still clips a litlle, might be removed too early
+                    });
+                    // dojo.connect(anim, 'onEnd', function(node) {
+                    //     dojo.destroy(node);
+                    // dojo.removeClass("clp-public-area", "clp-no-transform");
+                    //
+                    // });
+                } else{
+                    // dummy animation so that timings still work
+                    anim = dojo.animateProperty({
+                        node: card_el_id,
+                        properties: {}
+                    });
+                }
+                if(play){
+                    anim.play();
+                } else{
+                    anim.delay = current_delay;
+                    current_delay += delay;
+                    anim.duration = 10000;
+                }
+                animations.push(anim);
                 // dojo.removeClass("clp-public-area", "clp-no-transform");
                 // let anim = this.slideToObject(card_el_id, null );
-                dojo.connect(anim, 'onEnd', function(node) {
-                    dojo.destroy(node);
-                    dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
-                    console.log("don't worry it has happened!");
-                    // TODO: still clips a litlle, might be removed too early
-                });
-                // dojo.connect(anim, 'onEnd', function(node) {
-                //     dojo.destroy(node);
-                // dojo.removeClass("clp-public-area", "clp-no-transform");
-                //
-                // });
-                anim.play();
+                
 
                 // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
                 // console.log("yeeeah boiii");
@@ -626,6 +650,7 @@ function (dojo, declare) {
                 }
             }
             dojo.removeClass("clp-public-area", "clp-no-transform");
+            return animations;
         },
 
         ///////////////////////////////////////////////////
