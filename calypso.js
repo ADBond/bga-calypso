@@ -458,10 +458,16 @@ function (dojo, declare) {
                 //     dojo.addClass( card_el_id, 'clp-calypsocard-space' );
                 //     dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`)
                 // }
-                // animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, duration=1000);
-                animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, duration=30);
+                // animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, delay=1000);
+                animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, delay=100);
                 all_player_animations.push(dojo.fx.combine(animations));
             }
+            let combined_animation = dojo.fx.combine(all_player_animations);
+            dojo.connect(combined_animation, 'onEnd', function(node) {
+                dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
+                console.log("don't worry it has happened!");
+                // TODO: still clips a litlle, might be removed too early
+            });
             return dojo.fx.combine(all_player_animations);
             // for (player of player_ids){
             //     let player_id = player["id"];
@@ -487,8 +493,9 @@ function (dojo, declare) {
                 //     anim, "onPlay",
                 //     dojo.hitch(this, () => this.setTrickPile(player_id, 0) )
                 // );
-                // anim.duration = 5000;
+                // anim.duration = 30000;
                 // this.setTrickPile(player_id, 0);
+                anim.duration = 400;
                 animations.push(anim);
             }
             return dojo.fx.combine(animations);
@@ -617,7 +624,7 @@ function (dojo, declare) {
                     anim = this.slideToObject(card_el_id, `${to_prefix}-${player_id}` );
                     dojo.connect(anim, 'onEnd', function(node) {
                         dojo.destroy(node);
-                        dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
+                        // dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
                         console.log("don't worry it has happened!");
                         // TODO: still clips a litlle, might be removed too early
                     });
@@ -638,7 +645,7 @@ function (dojo, declare) {
                 } else{
                     anim.delay = current_delay;
                     current_delay += delay;
-                    // anim.duration = 10000;
+                    anim.duration = 400;
                 }
                 animations.push(anim);
                 // dojo.removeClass("clp-public-area", "clp-no-transform");
