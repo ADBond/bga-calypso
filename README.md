@@ -98,6 +98,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
   * doesn't like strings with "." at the end - can break new hand/new round logs with those
 * final scores not updating in player boxes (round 2+)(okay on refresh)
+* ~~multi-calypso trick means leaves copies of leftover cards in all calypsos (e.g. 2x cal + 2sp -> 2sp, 2ht in calypso. fine on refresh, so js issue, but comes through wrong in notif)~~
 
 ### Other UI
 
@@ -106,7 +107,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Things to test
 
 * ~~new round (genuine)/things all work nicely in multi-round games~~
-* multiple players complete calypsos in one trick
+* ~~multiple players complete calypsos in one trick~~
 * a little browser compatibility
 
 ### Meta

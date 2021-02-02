@@ -41,18 +41,18 @@
 ./calypso.js:335:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
 ./calypso.js:385:            // TODO: this should stay in css - use class manipulation
 ./calypso.js:400:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:519:            // TODO: look here for your js translation needs!
-./calypso.js:537:            // TODO: specialise to suits?
-./calypso.js:559:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:593:            // TODO: think about this mate, not sure here
-./calypso.js:608:                        // TODO: still clips a litlle, might be removed too early
-./calypso.js:634:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:869:            // TODO: should this be delayed/animated?
-./calypso.js:936:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:948:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:1017:                // TODO: this function is what needs fiddling with - play animation after we've set flags
-./calypso.js:1033:            // AB TODO: do we need to do anything here?
-./calypso.js:1048:            // TODO: play the card in the user interface.
+./calypso.js:524:            // TODO: look here for your js translation needs!
+./calypso.js:542:            // TODO: specialise to suits?
+./calypso.js:564:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:598:            // TODO: think about this mate, not sure here
+./calypso.js:613:                        // TODO: still clips a litlle, might be removed too early
+./calypso.js:639:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:874:            // TODO: should this be delayed/animated?
+./calypso.js:941:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:953:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:1022:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:1038:            // AB TODO: do we need to do anything here?
+./calypso.js:1053:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
