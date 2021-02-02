@@ -25,7 +25,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
   * tidy up z-index attributes we peppered everywhere but no longer need
   * cardontable, myhand, hand-card, cardontable. think those are it - check that animations still run smoothly when removely
 * ~~wrong suits showing in player boxes!!~~
-* animate round end clearing?
+* ~~animate round end clearing?~~
   * ~~trickpiles not cleared~~
 * ~~total scores in round-by-round~~
 * ~~potentially 'secret' info in trickpile size??~~

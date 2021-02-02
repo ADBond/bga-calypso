@@ -48,12 +48,12 @@
 ./calypso.js:614:            // TODO: think about this mate, not sure here
 ./calypso.js:629:                        // TODO: still clips a litlle, might be removed too early
 ./calypso.js:655:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:905:            // TODO: should this be delayed/animated?
-./calypso.js:972:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:984:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:1053:                // TODO: this function is what needs fiddling with - play animation after we've set flags
-./calypso.js:1069:            // AB TODO: do we need to do anything here?
-./calypso.js:1084:            // TODO: play the card in the user interface.
+./calypso.js:907:            // TODO: should this be delayed/animated?
+./calypso.js:974:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:986:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:1055:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:1071:            // AB TODO: do we need to do anything here?
+./calypso.js:1086:            // TODO: play the card in the user interface.
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

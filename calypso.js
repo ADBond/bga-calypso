@@ -821,24 +821,26 @@ function (dojo, declare) {
                 console.log(player_count_element);
                 $(player_count_element).textContent = 0;
             }
-            // console.log("clear calypsos...");
-            this.clearCalypsoPiles(player_ids);
-            let cleanup_animation = this.clearCalypsos(player_ids);
-            dojo.connect(
-                cleanup_animation, "onEnd",
-                dojo.hitch(this, () => {
-                    this.clearTrickPiles(player_ids);
-                    player_ids.forEach(player_id => this.setTrickPile(player_id["id"], 0));
-                    this.refreshTooltips();
-                })
-            );
-            cleanup_animation.play();
-            // dojo.fx.chain(
-            //     [
-            //         this.clearCalypsos(player_ids),
-            //         this.clearTrickPiles(player_ids)
-            //     ]
-            // ).play();
+            if(notif.args.round_number != 1){
+                // console.log("clear calypsos...");
+                this.clearCalypsoPiles(player_ids);
+                let cleanup_animation = this.clearCalypsos(player_ids);
+                dojo.connect(
+                    cleanup_animation, "onEnd",
+                    dojo.hitch(this, () => {
+                        this.clearTrickPiles(player_ids);
+                        player_ids.forEach(player_id => this.setTrickPile(player_id["id"], 0));
+                        this.refreshTooltips();
+                    })
+                );
+                cleanup_animation.play();
+                // dojo.fx.chain(
+                //     [
+                //         this.clearCalypsos(player_ids),
+                //         this.clearTrickPiles(player_ids)
+                //     ]
+                // ).play();
+            }
         },
 
         notif_newHand : function(notif) {
