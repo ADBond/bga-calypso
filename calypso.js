@@ -458,13 +458,14 @@ function (dojo, declare) {
                 //     dojo.addClass( card_el_id, 'clp-calypsocard-space' );
                 //     dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`)
                 // }
-                animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, duration=1000);
+                // animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, duration=1000);
+                animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, duration=30);
                 all_player_animations.push(dojo.fx.combine(animations));
             }
-            dojo.fx.combine(all_player_animations).play();
-            for (player of player_ids){
-                let player_id = player["id"];
-            }
+            return dojo.fx.combine(all_player_animations);
+            // for (player of player_ids){
+            //     let player_id = player["id"];
+            // }
         },
         clearCalypsoPiles: function(player_ids){
             console.log("all gone my friend, all gone. like the turning of the tides...");
@@ -474,10 +475,23 @@ function (dojo, declare) {
             }
         },
         clearTrickPiles: function(player_ids){
+            let animations = [];
             for (player of player_ids){
                 let player_id = player["id"];
+                let anim = this.slideTemporaryObject(
+                    '<div class="clp-trickpile-full clp-trickpile" style="z-index:30"></div>',
+                    "clp-table-centre",
+                    `clp-trickpile-${player_id}`, "clp-table-centre",
+                );
+                // dojo.connect(
+                //     anim, "onPlay",
+                //     dojo.hitch(this, () => this.setTrickPile(player_id, 0) )
+                // );
+                // anim.duration = 5000;
                 // this.setTrickPile(player_id, 0);
+                animations.push(anim);
             }
+            return dojo.fx.combine(animations);
         },
 
         changeDealer : function(new_dealer_id) {
@@ -624,7 +638,7 @@ function (dojo, declare) {
                 } else{
                     anim.delay = current_delay;
                     current_delay += delay;
-                    anim.duration = 10000;
+                    // anim.duration = 10000;
                 }
                 animations.push(anim);
                 // dojo.removeClass("clp-public-area", "clp-no-transform");
@@ -801,13 +815,28 @@ function (dojo, declare) {
                 $(player_count_element).textContent = 0;
             }
             // console.log("clear calypsos...");
-            this.clearCalypsos(player_ids);
             this.clearCalypsoPiles(player_ids);
-            this.clearTrickPiles(player_ids);
+            let cleanup_animation = this.clearCalypsos(player_ids);
+            dojo.connect(
+                cleanup_animation, "onEnd",
+                dojo.hitch(this, () => {
+                    this.clearTrickPiles(player_ids);
+                    player_ids.forEach(player_id => this.setTrickPile(player_id["id"], 0));
+                    this.refreshTooltips();
+                })
+            );
+            cleanup_animation.play();
+            // dojo.fx.chain(
+            //     [
+            //         this.clearCalypsos(player_ids),
+            //         this.clearTrickPiles(player_ids)
+            //     ]
+            // ).play();
         },
 
         notif_newHand : function(notif) {
             this.playerHand.removeAll();
+            // refresh tooltips helps for after new-round animations
             //this.playerHand.updateDisplay();
             
             console.log(notif.args.cards);

@@ -57,6 +57,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~Add a separate code licence~~, and make repo public once that's done
 * Use game-level constants in place of magic numbers where possible
 * JS `placeCardInCalypso` has redundant `card_id` paramter
+* `global` trick can now be killed in favour of `use` which is much nicer
 
 ### Display
 
@@ -76,6 +77,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
+* tooltips don't get removed once added
 
 ### Images
 
