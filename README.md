@@ -6,8 +6,9 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* optional log detail (c.f. Hungarian Tarock)
+* ~~optional log detail (c.f. Hungarian Tarock)~~
 * Start off saying who has which trump suit, and who is partnered with whom
+  * teams through some light colours, and put in player boxes upstairs (with trump suits)
 * delete needless notifications
 * Make sure I deal with the translation stuff properly, stop string concatenation etc.
   * make sure parameters use i18n etc
@@ -45,7 +46,6 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
-  * teams through some light colours, and put in player boxes upstairs (with trump suits)
 * Order hand with personal trumps separated?
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
@@ -78,6 +78,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Misc
 
 * Zombie turn
+* Check timings
+* Pre-alpha checklist
 
 ### Variants
 

@@ -33,6 +33,9 @@ class Calypso extends Table
         4 => '<span class="clp-suit-text-diamonds clp-suit-text">♦</span>',
     );
 
+    // game option stuff - see gameoptions.inc.php
+    const DETAILED_LOG_ON = 1;
+
 	function __construct( )
 	{
         //  You can use any number of global variables with IDs between 10 and 99.
@@ -72,6 +75,8 @@ class Calypso extends Table
                          "renounceFlags" => 101,
                          // how do we pair players for partnerships?
                          "partnerships" => 102,
+                         // detailed log option
+                         "detailedLog" => 103,
 
                           ) );
 
@@ -1347,9 +1352,14 @@ class Calypso extends Table
         // $tmp = self::getStat("fastest_calypso");
         // And notify
         $suit_played = $currentCard ['type'];
+        if(self::getGameStateValue("detailedLog") == self::DETAILED_LOG_ON){
+            $log_entry = clienttranslate('${player_name} (${trump}) plays ${rank_displayed} ${suit_element}');
+        } else{
+            $log_entry = "";
+        }
         self::notifyAllPlayers(
             'playCard', 
-            clienttranslate('${player_name} (${trump}) plays ${rank_displayed} ${suit_element}'),
+            $log_entry,
             array (
                 'i18n' => array ('rank_displayed'),
                 'card_id' => $card_id,
