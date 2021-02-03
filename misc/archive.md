@@ -23,6 +23,9 @@
   * ~~partly done but needs checking/careful eye~~
 * ~~check that the all the cards exist at all times, and get dealt out over the course of a round~~
   * ~~mostly okay, but needs checking~~
+* ~~rename those damn variables to keep a shred of self-consistency check below, do as we go~~
+  *  ~~a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?~~
+  * leaving this to general refactoring
 
 ### Display
 
@@ -41,8 +44,22 @@
 * ~~access old scoring tables~~
 * ~~player boxes should show number of completed calypsos~~
 * ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
+* ~~see last trick?~~
+  * ~~maybe optional, as this is not possible exactly in real life, but might be useful for e.g. turn-based~~
+  * not for alpha. revisit if desired at a later stage.
+* ~~notifications including suit icon~~
+* ~~ When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT~~
+  * ~~will be tracking this for stats, so should be easy to add in. Probably as a log option?~~ overkill - add if requested
+* ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
 
 ### Images
+
+* ~~Game box concept okay, just refining~~
+* ~~Need something else for icon~~
+  * ~~Maybe icon is fine actually~~
+* ~~Banner needs completing (fining edges, proper colours exported)~~
+* ~~card back(s) finalise~~
+* ~~dealer icon final version needed~~
 
 ## Things to fix
 
@@ -51,10 +68,19 @@
 * ~~Lose renounce indicators on refresh :/~~
 * ~~Wipe accumulated calypsos on new round w/o refresh~~
 * ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
+* ~~multi-calypso trick means leaves copies of leftover cards in all calypsos (e.g. 2x cal + 2sp -> 2sp, 2ht in calypso. fine on refresh, so js issue, but comes through wrong in notif)~~
+* ~~Fix dealer button animation~~
+* ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
+  * ~~maybe calypso animation should head to player boxes to help signify scoring being there~~
 
 ### Other UI
 
+* ~~throw an exception if non-active player clicks on card, rather than silently failing?~~
+
 ### Things to test
+
+* ~~new round (genuine)/things all work nicely in multi-round games~~
+* ~~multiple players complete calypsos in one trick~~
 
 ### Meta
 
@@ -70,3 +96,33 @@
 * ~~From question in that thread also: variant where you must beat leader when trumping in?~~
 
 ~~Not in first pass at any rate - not sure if there's much value to this, and Culbertson at least in fact agrees with usual rule.~~
+
+## Branch stuff (incomplete)
+
+### PR 10
+
+* ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
+  * ~~and sim for trickpile~~
+  * ~~and for calypsopile - needs checking~~
+  * ~~cards in calypso let's try and slip under existing cards in animation - but not worth it now if it's a huge pain (it is. park it.)~~
+* ~~Fix dealer button animation - not really fixed but removed. Fine for now~~
+* ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
+  * details to fiddle with - maybe make calypso a _teeny_ bit quicker to go off??
+  * ~~ditch transformation on calypso cards before they go off? (so they go in the right direction?)~~
+  * ~~calypsos to trickpile (or possibly their own _new_ space??)~~
+  * ~~maybe calypso animation should head to player boxes to help signify scoring being there - parking this idea~~
+* ~~tooltips for calypsopile (only when full)~~
+* ~~Ditch calypso completed summaries at end of hands~~
+* ~~something a little jazzier for updating score in player board? maybe - have a look at some other games~~
+* ~~z-index crap? (current)~~ ~~played cards go under trickpile (even empty), and calypso (even empty). Has that always been so?~~
+  * ~~certainly not new, current dev branch (9af4f0c) already has this problem, just not noticed previously~~
+  * ~~animated element belongs to destination - that's where the z-index needs to be set!~~
+  * ~~tidy up z-index attributes we peppered everywhere but no longer need~~
+  * ~~cardontable, myhand, hand-card, cardontable. think those are it - check that animations still run smoothly when removely~~
+* ~~wrong suits showing in player boxes!!~~
+* ~~animate round end clearing?~~
+  * ~~trickpiles not cleared~~
+* ~~total scores in round-by-round~~
+* ~~potentially 'secret' info in trickpile size??~~
+* ~~Score tables suit icons~~
+* ~~score buttons not updated on refresh while waiting for new round~~
