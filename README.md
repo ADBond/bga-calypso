@@ -12,9 +12,10 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~delete needless notifications~~
 * Make sure I deal with the translation stuff properly, stop string concatenation etc.
   * make sure parameters use i18n etc
-* '"X" deals a new hand of cards' is not translating, and not sure why...??
-  * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
-  * doesn't like strings with "." at the end - can break new hand/new round logs with those
+* ~~'"X" deals a new hand of cards' is not translating, and not sure why...??~~
+  * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
+  * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
+  * think one error in translation text was meaning others not going through pipeline? all cushty now tho
 
 ## For a different branch
 

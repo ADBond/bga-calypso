@@ -538,8 +538,9 @@ function (dojo, declare) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
             // TODO: look here for your js translation needs!
+            // don't need to translate game title
             $("clp-game-info").innerHTML =  dojo.string.substitute(
-                '<div class="clp-gametitle">' + _("Calypso") + "</div>" + 
+                '<div class="clp-gametitle">Calypso</div>' + 
                     "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
                     "<br>" + _("Hand ${handnumber} of 4"),
                 {

@@ -20,9 +20,9 @@
 ./calypso.game.php:973:            // TODO: translate business
 ./calypso.game.php:1256:            // TODO: really not convinced I've got the translation stuff right here.
 ./calypso.game.php:1311:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1415:        // TODO: cleaner with map
-./calypso.game.php:1472:            // TODO: clearRenounceFlags delete
-./calypso.game.php:1529:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1411:        // TODO: cleaner with map
+./calypso.game.php:1468:            // TODO: clearRenounceFlags delete
+./calypso.game.php:1525:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:87:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:97:            // TODO: decide on overlap or not
@@ -35,15 +35,15 @@
 ./calypso.js:400:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
 ./calypso.js:469:                // TODO: still clips a litlle, might be removed too early
 ./calypso.js:540:            // TODO: look here for your js translation needs!
-./calypso.js:558:            // TODO: specialise to suits?
-./calypso.js:580:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:614:            // TODO: think about this mate, not sure here
-./calypso.js:629:                        // TODO: still clips a litlle, might be removed too early
-./calypso.js:655:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:908:            // TODO: should this be delayed/animated?
-./calypso.js:975:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:987:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:1056:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:559:            // TODO: specialise to suits?
+./calypso.js:581:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:615:            // TODO: think about this mate, not sure here
+./calypso.js:630:                        // TODO: still clips a litlle, might be removed too early
+./calypso.js:656:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:909:            // TODO: should this be delayed/animated?
+./calypso.js:976:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:988:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:1057:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

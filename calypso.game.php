@@ -543,7 +543,7 @@ class Calypso extends Table
                 // TODO: guess we can delete dummy, just need to check it's not referenced on client-side
                 self::notifyAllPlayers(
                     'calypsoComplete',
-                    clienttranslate('${player_name} has completed a calypso!'),
+                    clienttranslate('${player_name} has completed a calypso'),
                     array(
                         'player_id' => $player_id,
                         'player_name' => self::getPlayerName($player_id),
@@ -897,10 +897,10 @@ class Calypso extends Table
 
         $header_names = array( '' );
         $header_suits = array( '' );
-        $calypso_counts = array( self::count_wrap_label(clienttranslate("Completed Calypsos")) );
+        $calypso_counts = array( self::count_wrap_label(clienttranslate("Completed calypsos")) );
         $calypso_scores = array( self::score_wrap_label(clienttranslate("score")) );
         
-        $part_calypso_counts = array( self::count_wrap_label(clienttranslate("Cards in incomplete Calypsos")) );
+        $part_calypso_counts = array( self::count_wrap_label(clienttranslate("Cards in incomplete calypsos")) );
         $part_calypso_scores = array( self::score_wrap_label(clienttranslate("score")) );
     
         $won_card_counts = array( self::count_wrap_label(clienttranslate("Remaining cards won")) );
@@ -971,7 +971,7 @@ class Calypso extends Table
         $player_score_totals = array();
         for($round = 1; $round <= self::getGameStateValue("totalRounds"); $round++){
             // TODO: translate business
-            $round_scores = array( self::score_wrap_label(clienttranslate("Round ".$round." score")) );
+            $round_scores = array( self::score_wrap_label(clienttranslate("Round ${round} score")) );
             $players = self::getRoundScore($round);
             foreach ( $players as $player_id => $score_info ) {
                 // only need to add this once
@@ -1386,10 +1386,6 @@ class Calypso extends Table
         Here, you can create methods defined as "game state actions" (see "action" property in states.inc.php).
         The action method of state X is called everytime the current game state is set to X.
     */
-    function dummy(){
-        throw new BgaUserException( self::_("Don't see this!") );
-    }
-
     function stNewRound() {
         // before we start the round, we are at hand number 0
         self::setGameStateValue( 'handNumber', 0 );
