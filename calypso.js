@@ -51,6 +51,8 @@ function (dojo, declare) {
         
         setup: function( gamedatas )
         {
+            console.log("here is what i can see");
+            console.log(gamedatas);
             for( let player_id in gamedatas.players )
             {
                 let player = gamedatas.players[player_id];
@@ -58,7 +60,6 @@ function (dojo, declare) {
                 let trump_lookup = {
                     1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
                 };
-                // TODO: trump suit icon insert to area.
 
                 if(player_id == gamedatas.dealer){
                     let dealer_area_id = 'clp-dealer-' + player_id;
@@ -70,10 +71,8 @@ function (dojo, declare) {
                 this.setupCalypsoArea(player_id, player_trump);
             }
 
-            this.playerHand = new ebg.stock(); // new stock object for hand
+            this.playerHand = new ebg.stock();
             this.playerHand.create( this, $('clp-myhand'), this.cardwidth, this.cardheight );
-
-            this.playerHand.image_items_per_row = 13;
 
             const num_decks = 4;
             for (let suit = 1; suit <= 4; suit++) {
@@ -87,12 +86,19 @@ function (dojo, declare) {
                         // but a sensible default answer seems to be 'yes'
                         // TODO: here is where we might want to separate out trumps!
                         // i.e. (other two, alternating colour) (my partners trumps) (my trumps)
-                        this.playerHand.addItemType(card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type);
+                        this.playerHand.addItemType(
+                            card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type
+                        );
                     }
                 }
             }
-            // TODO: center hand in the div if wanted:
             this.playerHand.centerItems = true;
+            this.playerHand.image_items_per_row = 13;
+            // TODO: decide on overlap or not
+            this.playerHand.setOverlap( 70, 0 );
+            this.playerHand.extraClasses = "clp-hand-card";
+
+            // this.playerHand.onItemCreate = dojo.hitch( this, 'setupNewHandCard' ); 
 
             dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
 
@@ -101,8 +107,17 @@ function (dojo, declare) {
                 let card = this.gamedatas.hand[i];
                 let suit = card.type;
                 let rank = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, rank), card.id);
+                let unique_type = this.getCardUniqueType(suit, rank);
+                this.playerHand.addToStockWithId(unique_type, card.id);
+                let card_el = this.playerHand.getItemDivId(card.id);
+                console.log("handy");
+                console.log(card.id);
+                console.log(card_el);
+                // TODO: probably delete this function
+                // TODO: set hoverable here? but then also need to do it when your turn comes around
+                // this.setupNewHandCard(card_el);
             }
+            this.setHandActiveness(this.isCurrentPlayerActive());
 
             // Cards played on table
             for (i in this.gamedatas.cardsontable) {
@@ -130,13 +145,22 @@ function (dojo, declare) {
                 const player = gamedatas.players[player_id];
                 const player_board_div = $(`player_board_${player_id}`);
                 dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
+                this.setCalypsoPile(player_id, player["completed_calypsos"]);
             }
             const totalrounds = this.gamedatas.totalrounds;
             const currentround = this.gamedatas.roundnumber;
+            // TODO: need fancier checking here, in case we are in awaitNewRound
             for(let round_number = 1; round_number < currentround; round_number++){
-                this.activateScoreButton(round_number,this.gamedatas.roundscoretable[round_number]);
+                this.activateScoreButton(round_number, this.gamedatas.roundscoretable[round_number]);
             }
-            if(currentround != 1){
+            const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
+            console.log("have a butchers at this:");
+            console.log(awaiting_new_round);
+            console.log(gamedatas.gamestate);
+            if(awaiting_new_round){
+                this.activateScoreButton(currentround, this.gamedatas.roundscoretable[currentround]);
+            }
+            if(currentround != 1 | awaiting_new_round){
                 const overall_scores_button_id = 'clp-round-scores-button-overall';
                 $(overall_scores_button_id).onclick = (
                     () => this.showResultDialog(
@@ -183,6 +207,9 @@ function (dojo, declare) {
             switch( stateName )
             {
             
+                case 'playerTurn':
+                    this.setHandActiveness(this.isCurrentPlayerActive());
+                    break;
             /* Example:
             
             case 'myGameState':
@@ -273,15 +300,48 @@ function (dojo, declare) {
             }
         },
 
+        setupNewHandCard: function( card_div_id ) {
+           // function for when cards are made in players' hand
+            console.log("hand card");
+            console.log(card_div_id);
+            // console.log(card_type_id);
+            // console.log(card_id)
+    
+            // dojo.attr(card_id, "style", "");
+            let current_z = dojo.style(card_div_id, "z-index");
+            console.log(current_z)
+            dojo.setStyle(card_div_id, "z-index", current_z + 20);
+            dojo.style(card_div_id, "color", "red");
+            dojo.style(card_div_id, "opacity", "");
+            console.log("element is:")
+            console.log($(card_div_id));
+        },
+        
+        setHandActiveness(active){
+            let hand_div_id = "clp-myhand";
+            if(active){
+                dojo.addClass(hand_div_id, "clp-active-hand");
+                dojo.removeClass(hand_div_id, "clp-inactive-hand");
+            } else{
+                dojo.removeClass(hand_div_id, "clp-active-hand");
+                dojo.addClass(hand_div_id, "clp-inactive-hand");
+            }
+        },
+
         playCardOnTable : function(player_id, suit, rank, card_id) {
-            // player_id => direction
             dojo.place(this.format_block('jstpl_cardontable', {
-                // these ranks relate to getting the right card from sprite
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
+                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
+            // would be nicer to do as class, but makes animation weird somehow
+            dojo.style(`clp-card-on-table-${player_id}`, "top", "0");
+            // dojo.style(`clp-card-on-table-${player_id}`, "border", "solid 1px black");
+            // dojo.addClass('clp-card-on-table-' + player_id, "clp-selected-card");
+            console.log("the style");
+            console.log($(`clp-card-on-table-${player_id}`));
             if (player_id != this.player_id) {
                 // Move card from their general area
                 this.placeOnObject('clp-card-on-table-' + player_id, 'clp-player-all-captured-cards-' + player_id);
@@ -291,11 +351,27 @@ function (dojo, declare) {
                 if ($('clp-myhand_item_' + card_id)) {
                     this.placeOnObject('clp-card-on-table-' + player_id, 'clp-myhand_item_' + card_id);
                     this.playerHand.removeFromStockById(card_id);
+
+                    this.setHandActiveness(false);
                 }
             }
 
             // In any case: move it to its final destination
-            this.slideToObject('clp-card-on-table-' + player_id, 'clp-player-card-play-area-card-' + player_id).play();
+            let anim = this.slideToObject('clp-card-on-table-' + player_id, 'clp-player-card-play-area-card-' + player_id);
+            // dojo.connect(anim, 'onStart', function(node) {
+            //     dojo.addClass('node', "clp-selected-card");
+            //     console.log("drop tyles");
+            // });
+
+            // dojo.connect(anim, 'onEnd', function(node) {
+            //     dojo.removeClass('node', "clp-selected-card");
+            //     console.log("drop tyles");
+            // });
+            // for debugging z-index stuff:
+            // anim.duration = 30000;
+            anim.play();
+            
+            // dojo.removeClass('clp-card-on-table-' + player_id, "clp-selected-card");
         },
 
         placeCardInCalypso : function(player_id, suit, rank, card_id) {
@@ -303,6 +379,7 @@ function (dojo, declare) {
             // const y = this.cardheight * (suit - 1);
 
             const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
+            console.log("just a simple card going into a calypso - what could be better than that?");
             console.log(card_el_id);
 
             // TODO: this should stay in css - use class manipulation
@@ -327,6 +404,20 @@ function (dojo, declare) {
             } else {
                 dojo.removeClass( cards_el_id, 'clp-trickpile-full' );
                 dojo.addClass( cards_el_id, 'clp-trickpile-empty' );
+            }
+            this.refreshTooltips();
+        },
+
+        setCalypsoPile: function(player_id, value) {
+            const cards_el_id = `clp-calypsopile-${player_id}`;
+            console.log("shiny new pile");
+            console.log(cards_el_id);
+            if(value > 0){
+                dojo.addClass( cards_el_id, 'clp-calypsopile-full' );
+                dojo.removeClass( cards_el_id, 'clp-calypsopile-empty' );
+            } else {
+                dojo.removeClass( cards_el_id, 'clp-calypsopile-full' );
+                dojo.addClass( cards_el_id, 'clp-calypsopile-empty' );
             }
             this.refreshTooltips();
         },
@@ -356,28 +447,97 @@ function (dojo, declare) {
 
         clearCalypsos: function(player_ids){
             console.log("clear it up!");
+            let all_player_animations = [];
             for (player of player_ids){
                 let player_id = player["id"];
                 let suit = player["suit"];
-                for(let rank=2; rank <= 14; rank++){
-                    let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
-                    console.log(card_el_id);
-                    dojo.removeClass( card_el_id, 'clp-face-up-card' );
-                    dojo.addClass( card_el_id, 'clp-calypsocard-space' );
-                    dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`)
-                }
+                // for(let rank=2; rank <= 14; rank++){
+                //     let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
+                //     console.log(card_el_id);
+                //     dojo.removeClass( card_el_id, 'clp-face-up-card' );
+                //     dojo.addClass( card_el_id, 'clp-calypsocard-space' );
+                //     dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`)
+                // }
+                // animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, delay=1000);
+                animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, delay=100);
+                all_player_animations.push(dojo.fx.combine(animations));
             }
+            let combined_animation = dojo.fx.combine(all_player_animations);
+            dojo.connect(combined_animation, 'onEnd', function(node) {
+                dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
+                console.log("don't worry it has happened!");
+                // TODO: still clips a litlle, might be removed too early
+            });
+            return dojo.fx.combine(all_player_animations);
+            // for (player of player_ids){
+            //     let player_id = player["id"];
+            // }
+        },
+        clearCalypsoPiles: function(player_ids){
+            console.log("all gone my friend, all gone. like the turning of the tides...");
+            for (player of player_ids){
+                let player_id = player["id"];
+                this.setCalypsoPile(player_id, 0);
+            }
+        },
+        clearTrickPiles: function(player_ids){
+            let animations = [];
+            for (player of player_ids){
+                let player_id = player["id"];
+                let anim = this.slideTemporaryObject(
+                    '<div class="clp-trickpile-full clp-trickpile" style="z-index:30"></div>',
+                    "clp-table-centre",
+                    `clp-trickpile-${player_id}`, "clp-table-centre",
+                );
+                // dojo.connect(
+                //     anim, "onPlay",
+                //     dojo.hitch(this, () => this.setTrickPile(player_id, 0) )
+                // );
+                // anim.duration = 30000;
+                // this.setTrickPile(player_id, 0);
+                anim.duration = 400;
+                animations.push(anim);
+            }
+            return dojo.fx.combine(animations);
         },
 
         changeDealer : function(new_dealer_id) {
             const new_dealer_area_id = 'clp-dealer-' + new_dealer_id;
+            console.log("new dealer");
+            console.log(new_dealer_area_id);
+            
+            // let old_element_id = $('clp-dealerbutton').parentElement.id;
+            // console.log(old_element_id)
+            // dojo.destroy('clp-dealerbutton');
+            // dojo.place(this.format_block('jstpl_dealerindicator', {
+            //     player_id : player_id
+            // }), old_element_id);
+            // // need to have transforms disabled while we do the animation, or co-ords get screwed up
+            // // for(dir of ["N", "E", "S", "W"]){
+            // //     let div_id = `clp-player-personal-area-${dir}`;
+            // //     dojo.addClass(div_id, 'clp-no-transform');
+            // //     $(div_id).offsetHeight;
+            // // }
+            // // this is the div that is the parent of our tpl
+            // // dojo.addClass("game_play_area", 'clp-no-transform');
+            // // $("game_play_area").offsetHeight;
+            // this.slideToObject('clp-dealerbutton', new_dealer_area_id).play();
+            this.attachToNewParent( 'clp-dealerbutton', new_dealer_area_id );
 
-            this.slideToObject('clp-dealerbutton', new_dealer_area_id).play();
+            // for(dir of ["N", "E", "S", "W"]){
+            //     let div_id  = `clp-player-personal-area-${dir}`;
+            //     dojo.removeClass(div_id , 'clp-no-transform');
+            // }
+            // dojo.removeClass("clp-table-area", 'clp-no-transform');
+            
+            // dojo.removeClass("game_play_area", 'clp-no-transform');
+            // anim.play();
         },
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
+            // TODO: look here for your js translation needs!
             $("clp-game-info").innerHTML =  dojo.string.substitute(
                 '<div class="clp-gametitle">' + _("Calypso") + "</div>" + 
                     "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
@@ -394,8 +554,9 @@ function (dojo, declare) {
             this.addTooltipToClass( "clp-dealerbutton", _( "This player is the dealer for this hand" ), "" );
             this.addTooltipToClass( "clp-trickpile-full", _( "This player has some cards in their trick-pile" ), "" );
             this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
+            this.addTooltipToClass( "clp-calypsopile-full", _( "This player has completed one or more calypsos this round" ), "" );
             // TODO: specialise to suits?
-            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit" ), "" );
+            this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit this hand" ), "" );
         },
         // displayRoundScores: function(round_number){
         //     console.log("trigerring this chappy!");
@@ -445,6 +606,74 @@ function (dojo, declare) {
             dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
         },
 
+        animateCalypso: function(player_id, player_suit, fresh_ranks, to_prefix="clp-calypsopile", play=true, delay=30){
+            // make some modifications that we will undo at the end of the method
+            // for correct animation calculation
+            dojo.addClass("clp-public-area", "clp-no-transform");
+            // to stop calypso cards clipping through trickpile
+            // TODO: think about this mate, not sure here
+            dojo.addClass(`clp-trickpile-${player_id}`, "clp-very-high");
+            let animations = [];
+            let anim;
+            let current_delay = 0;
+            for (let rank = 2; rank <= 14; rank++) {
+                let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
+                // dojo.addClass("clp-public-area", "clp-no-transform");
+                // let anim = this.slideToObject(card_el_id, `player_board_${player_id}` );
+                if(!dojo.hasClass(card_el_id, "clp-calypsocard-space")){
+                    anim = this.slideToObject(card_el_id, `${to_prefix}-${player_id}` );
+                    dojo.connect(anim, 'onEnd', function(node) {
+                        dojo.destroy(node);
+                        // dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
+                        console.log("don't worry it has happened!");
+                        // TODO: still clips a litlle, might be removed too early
+                    });
+                    // dojo.connect(anim, 'onEnd', function(node) {
+                    //     dojo.destroy(node);
+                    // dojo.removeClass("clp-public-area", "clp-no-transform");
+                    //
+                    // });
+                } else{
+                    // dummy animation so that timings still work
+                    anim = dojo.animateProperty({
+                        node: card_el_id,
+                        properties: {}
+                    });
+                }
+                if(play){
+                    anim.play();
+                } else{
+                    anim.delay = current_delay;
+                    current_delay += delay;
+                    anim.duration = 400;
+                }
+                animations.push(anim);
+                // dojo.removeClass("clp-public-area", "clp-no-transform");
+                // let anim = this.slideToObject(card_el_id, null );
+                
+
+                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+                // console.log("yeeeah boiii");
+                if(fresh_ranks.includes(rank)){
+                    // console.log("success " + rank);
+                    dojo.place(this.format_block('jstpl_calypsocard_existing', {
+                        rank : rank,
+                        suit : player_suit,
+                        player_id : player_id
+                    }), 'clp-calypsoholder-' + player_id);
+                } else{
+                    // console.log("no success " + rank);
+                    dojo.place(this.format_block('jstpl_calypsocard', {
+                        rank : rank,
+                        suit : player_suit,
+                        player_id : player_id
+                    }), 'clp-calypsoholder-' + player_id);
+                }
+            }
+            dojo.removeClass("clp-public-area", "clp-no-transform");
+            return animations;
+        },
+
         ///////////////////////////////////////////////////
         //// Player's action
         
@@ -477,9 +706,13 @@ function (dojo, declare) {
                         function (is_error) {
                         }
                     );
-
+                    console.log("it;s this");
+                    console.log(this.playerHand.getItemDivId(card_id));
+                    let card_div_id = this.playerHand.getItemDivId(card_id);
                     this.playerHand.unselectAll();
+                    // dojo.addClass(this.playerHand.getItemDivId(card_id), "clp-selected-card");
                 } else {
+                    this.showMessage(_("It is not your turn to play a card!"), "error");
                     this.playerHand.unselectAll();
                 }
             }
@@ -588,12 +821,31 @@ function (dojo, declare) {
                 console.log(player_count_element);
                 $(player_count_element).textContent = 0;
             }
-            console.log("clear calypsos...");
-            this.clearCalypsos(player_ids);
+            if(notif.args.round_number != 1){
+                // console.log("clear calypsos...");
+                this.clearCalypsoPiles(player_ids);
+                let cleanup_animation = this.clearCalypsos(player_ids);
+                dojo.connect(
+                    cleanup_animation, "onEnd",
+                    dojo.hitch(this, () => {
+                        this.clearTrickPiles(player_ids);
+                        player_ids.forEach(player_id => this.setTrickPile(player_id["id"], 0));
+                        this.refreshTooltips();
+                    })
+                );
+                cleanup_animation.play();
+                // dojo.fx.chain(
+                //     [
+                //         this.clearCalypsos(player_ids),
+                //         this.clearTrickPiles(player_ids)
+                //     ]
+                // ).play();
+            }
         },
 
         notif_newHand : function(notif) {
             this.playerHand.removeAll();
+            // refresh tooltips helps for after new-round animations
             //this.playerHand.updateDisplay();
             
             console.log(notif.args.cards);
@@ -608,16 +860,15 @@ function (dojo, declare) {
         },
 
         notif_dealHand : function(notif) {
-            // TODO: animate the dealer button moving here
-            console.log("in deals");
-            console.log(notif);
+            // console.log("in deals");
+            // console.log(notif);
             this.changeDealer(notif.args.dealer_id);
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
         },
 
         notif_clearRenounceFlags: function(notif) {
-            console.log("clearing houd");
-            console.log(notif);
+            // console.log("clearing houd");
+            // console.log(notif);
             this.clearRenounceFlags(notif.args.players, notif.args.suits);
         },
 
@@ -635,30 +886,82 @@ function (dojo, declare) {
             // What was I about to say above ^ ????
         },
         notif_calypsoComplete : function(notif) {
-            console.log(notif.args);
-            console.log("cally");
-            // for each card in calypso, get rid of it, but not too much
+            // console.log(notif.args);
+            // console.log("cally");
+            
+            // put any cards to the new calypso in their RIGHTFUL PLACE
+            // console.log("here's your man with the cards");
+            // console.log(notif.args.cards_to_fresh_calypso);
+            // console.log(notif.args);
+            let fresh_cards = Object.values(notif.args.cards_to_fresh_calypso);
+            let fresh_ranks = fresh_cards.map(card => +card["rank"]);
+            // console.log(fresh_cards);
+            // console.log(fresh_ranks);
             const player_id = notif.args.player_id;
-            for (let rank = 2; rank <= 14; rank++) {
-                let card_el_id = `clp-calypsocard-${player_id}-${rank}`;
-
-                let anim = this.slideToObject(card_el_id, `overall_player_board_${player_id}` );
-                dojo.connect(anim, 'onEnd', function(node) {
-                    dojo.destroy(node);
-                });
-                anim.play();
-
-                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-                dojo.place(this.format_block('jstpl_calypsocard', {
-                    rank : rank,
-                    suit : notif.args.player_suit,
-                    player_id : player_id
-                }), 'clp-calypsoholder-' + player_id);
-            }
+            // for each card in calypso, get rid of it, but not too much
+            this.animateCalypso(player_id, notif.args.player_suit, fresh_ranks, to_prefix="clp-calypsopile");
+            
             const player_count_element = `clp-info-count-${player_id}`;
-            console.log(player_count_element)
+            const new_num_calypsos = notif.args.num_calypsos;
+            // console.log(player_count_element)
             // TODO: should this be delayed/animated?
-            $(player_count_element).textContent = notif.args.num_calypsos;
+            this.setCalypsoPile(player_id, new_num_calypsos);
+
+            // have transform woes if we try to use calypsopile
+            // const anim_origin = `clp-calypsopile-${player_id}`;
+            const anim_origin = "clp-table-centre";
+            // dojo.addClass("game_play_area", 'clp-no-transform');
+            let anim = this.slideTemporaryObject(
+                this.format_block('jstpl_suiticon', {
+                    trump_suit : notif.args.player_suit,
+                 }),
+                anim_origin,
+                anim_origin,
+                player_count_element
+            );
+
+            // this.placeOnObject(suit_id, 'clp-table-centre');
+            // let anim = this.slideToObject(suit_id, player_count_element);
+            dojo.connect(anim, 'onEnd', function(node) {
+                // dojo.destroy(node);
+                $(player_count_element).textContent = new_num_calypsos;
+            });
+            anim.duration = 300;
+            anim.play();
+            // just trying out chaining in principle:
+            // let anim_1 = dojo.animateProperty(
+            //     {
+            //         node: player_count_element,
+            //         properties: {
+            //             fontSize: 60,
+            //         }
+            //     }
+            // );
+            // // anim_1.duration = 20000;
+            // let anim_2 = dojo.animateProperty(
+            //     {
+            //         node: player_count_element,
+            //         properties: {
+            //             fontSize: 22,
+            //         }
+            //     }
+            // );
+            // // anim_2.duration = 20000;
+            // let combined = dojo.fx.chain([anim_1, anim_2]);
+            // console.log("combined");
+            // console.log(combined);
+            // // combined.duration = 30000;
+            // combined.play();
+            // dojo.addClass(player_count_element, "clp-score-big");
+            // dojo.removeClass(player_count_element, "clp-score-big");
+            // dojo.place(this.format_block('jstpl_tempscore', {
+            //     new_count : new_num_calypsos
+            // }), 'clp-game-info');
+            // anim = this.slideToObject( "clp-new-tmp-count", player_count_element);
+            // dojo.connect(anim, 'onEnd', function(node) {
+            //     dojo.destroy(node);
+            // });
+            // anim.play();
         },
         notif_actionRequired : function(notif) {
             // nothing needed here
@@ -680,6 +983,7 @@ function (dojo, declare) {
         },
 
         notif_scoreUpdate : function(notif) {
+            // TODO here need real total, not just round total. adjust in php
             notif.args.scores.forEach(
                 score_info => (
                     this.scoreCtrl[score_info.player_id].toValue(score_info.total_score)
@@ -687,9 +991,8 @@ function (dojo, declare) {
             );
         },
 
-        // This is what happens after trick - we need to modify!
         notif_moveCardsToWinner : function(notif) {
-            // Move all cards on table to given table, then destroy them
+            // Move all cards on table to winners' card space, ready to be sent on
             const winner_id = notif.args.winner_id;
             for ( let player_id in this.gamedatas.players) {
                 let anim = this.slideToObject(
@@ -704,13 +1007,12 @@ function (dojo, declare) {
         },
 
         notif_moveCardsToCalypsos : function(notif) {
-            function finishAnim(anim) {
-                dojo.connect(anim, 'onEnd', function(node) {
-                    dojo.destroy(node);
-                });
-                anim.play();
-            }
-            // Move all cards on table to given table, then destroy them
+            // function finishAnim(anim) {
+            //     dojo.connect(anim, 'onEnd', function(node) {
+            //         dojo.destroy(node);
+            //     });
+            //     anim.play();
+            // }
             const winner_id = notif.args.player_id;
             const moved_to = notif.args.moved_to;
             console.log(moved_to);
@@ -718,32 +1020,46 @@ function (dojo, declare) {
                 let send_to_id = moved_to[player]["owner"];
                 let send_from_id = moved_to[player]["originating_player"];
                 let anim, final_func, final_args;
-                console.log(`player ${send_from_id} and what happens is ${send_to_id}`)
+                // console.log(`player ${send_from_id} and what happens is ${send_to_id}`);
+                
                 if(send_to_id === 0){
                     // card is just going to trick pile
+                    // this.placeOnObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
                     anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
-                    this.setTrickPile(winner_id, 1);
+                    dojo.connect(anim, 'onEnd', (node) => {
+                        dojo.destroy(node);
+                        this.setTrickPile(winner_id, 1);
+                    });
                     // final_func = this.setTrickPile;
                     // final_args = [winner_id, true];
                 } else{
-                    console.log("stuff to see");
-                    console.log(moved_to);
+                    // console.log("stuff to see");
+                    // console.log(moved_to);
                     // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
                     let card_id = moved_to[player]["card_id"];
+                    // this.placeOnObject('clp-card-on-table-' + send_from_id, `clp-calypsocard-${calypso_player_id}-${rank}`);
                     anim = this.slideToObject(
                         'clp-card-on-table-' + send_from_id,
                         `clp-calypsocard-${calypso_player_id}-${rank}`
                     );
+                    dojo.connect(anim, 'onEnd', (node) => {
+                        dojo.destroy(node);
+                        this.placeCardInCalypso(send_to_id, suit, rank, card_id);
+                    });
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];
-                    this.placeCardInCalypso(send_to_id, suit, rank, card_id);
                 }
-                finishAnim(anim);
+                // TODO: this function is what needs fiddling with - play animation after we've set flags
+                // on destinations. That's backwards mate!
                 // final_func(...final_args);
+                
+                // anim.duration = 30000;
+                anim.play();
             }
+            
         },
         
         notif_debug : function(notif) {

@@ -67,6 +67,15 @@
   z-index: 1;
 }
 
+#clp-table-centre {
+  position: absolute;
+  left: 375px;
+  top: 375px;
+  width: 0;
+  height: 0;
+  z-index: 41;
+}
+
 .clp-game-info {
   position: absolute;
   font-weight: bold;
@@ -101,10 +110,32 @@
   height: 32px;
 }
 
+.clp-suit-text {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.clp-suit-text-spades {
+  color: #000;
+}
+
+.clp-suit-text-clubs {
+  color: #000;
+}
+
+.clp-suit-text-hearts {
+  color: #C00;
+}
+
+.clp-suit-text-diamonds {
+  color: #C00;
+}
+
 .clp-player-card-play-area {
   outline: ridge 3px #AAA;
   width: 92px;
   height: 116px;
+  z-index: 40;
 }
 
 .clp-player-card-play-area-N {
@@ -149,6 +180,19 @@
   left: 50%;
   transform: translate(-50%);
   width: 70%;
+  height: 115.2px;
+}
+
+.clp-hand-card[style] {
+  top: 10px !important;
+}
+
+.clp-active-hand .clp-hand-card:hover, .clp-selected-card {
+  top: 0 !important;
+}
+
+.clp-inactive-hand .clp-hand-card {
+  cursor: default !important;
 }
 
 /*** cards on table ***/
@@ -306,6 +350,11 @@
   background-position-y: 0px;
 }
 
+.clp-calypsopile-1 {
+  background-position-x: -864px;
+  background-position-y: 0px;
+}
+
 .clp-card-space-2 {
   background-position: 0px -96px;
 }
@@ -392,6 +441,11 @@
 
 .clp-calypsocard-face-2-14 {
   z-index: 28;
+  background-position-x: -864px;
+  background-position-y: -96px;
+}
+
+.clp-calypsopile-2 {
   background-position-x: -864px;
   background-position-y: -96px;
 }
@@ -486,6 +540,11 @@
   background-position-y: -192px;
 }
 
+.clp-calypsopile-3 {
+  background-position-x: -864px;
+  background-position-y: -192px;
+}
+
 .clp-card-space-4 {
   background-position: 0px -288px;
 }
@@ -576,6 +635,11 @@
   background-position-y: -288px;
 }
 
+.clp-calypsopile-4 {
+  background-position-x: -864px;
+  background-position-y: -288px;
+}
+
 .clp-calypsocard-space {
   outline: solid 1px black;
   /* background-color: #AAA; */
@@ -625,15 +689,17 @@
   position: absolute;
   width: 32px;
   height: 32px;
-  left: 200px;
+  left: 215px;
   margin: 4px;
 }
 
 #clp-dealerbutton {
   width: 32px;
   height: 32px;
-  background-image: url("img/dealer.png");
-  /* can swap out placeholder image in directory ;) */
+  background-image: url("img/back_1.svg"), url("img/back_1.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-position: 4px 0, 0 0;
+  background-size: 24px, 24px;
   z-index: 3;
 }
 
@@ -674,14 +740,32 @@
 .clp-trickpile {
   width: 72px;
   height: 96px;
-  right: 0px;
+  right: 0;
   position: absolute;
   background-color: #999;
+  z-index: 4;
+}
+
+.clp-very-high {
+  z-index: 35;
+}
+
+.clp-calypsopile {
+  width: 72px;
+  height: 96px;
+  right: 12px;
+  position: absolute;
+  bottom: 12px;
+  z-index: 2;
+}
+
+.clp-calypsopile-full {
+  background-image: url("img/cards.jpg");
 }
 
 .clp-trickpile-full {
   border-radius: 5px;
-  background-image: url("img/backs.png");
+  background-image: url("img/back_1.svg");
 }
 
 .clp-player-personal-area-N {
@@ -732,6 +816,14 @@
   text-align: right;
 }
 
+.clp-table-suit {
+  display: block;
+  background-image: url("img/card_suits.jpg");
+  width: 32px;
+  height: 32px;
+  margin: auto;
+}
+
 #clp-score-access-table-area {
   position: absolute;
   right: 5%;
@@ -774,6 +866,10 @@
 
 .tableWindow th {
   text-align: center;
+}
+
+.clp-no-transform * {
+  transform: none !important;
 }
 
 /*# sourceMappingURL=calypso.css.map */

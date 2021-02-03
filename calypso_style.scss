@@ -85,6 +85,16 @@ $left_offset: 40%;
     border-radius: 20px;
     z-index: 1;
 }
+// just need this positioned roughly
+#clp-table-centre {
+    position: absolute;
+    left: $table_size/2;
+    top: $table_size/2;
+    width: 0;
+    height: 0;
+    // and let this be higher than clp-card-play-area so that animations of suits go over top
+    z-index: 41;
+}
 
 $info_size: 20px;
 $title_size: $info_size * 1.5;
@@ -116,8 +126,14 @@ $display_font: 2*$icon_size/3;
     // flex-grow: 1;
     padding-top: ($icon_size - $display_font)/2;
     vertical-align: middle;
+    
+    // transition: 2s;
     // height: $icon_size;
 }
+// temp class to apply when updating, to highlight. Might delete
+// .clp-score-big {
+//     font-size: 2em;
+// }
 // TODO: really want this smaller, but need to do the scaling properly.
 // 16px might be too small - maybe 24? the above bits should scale with
 .clp-suit-icon {
@@ -125,6 +141,22 @@ $display_font: 2*$icon_size/3;
     background-image: url('img/card_suits.jpg');
     width: $icon_size;
     height: $icon_size;
+}
+.clp-suit-text {
+    font-size: 1.4em;
+    font-weight: bold;
+}
+.clp-suit-text-spades {
+    color: #000;
+}
+.clp-suit-text-clubs {
+    color: #000;
+}
+.clp-suit-text-hearts {
+    color: #C00;
+}
+.clp-suit-text-diamonds {
+    color: #C00;
 }
 // construct actual suit icon lower down where we do suity stuff
 
@@ -138,6 +170,8 @@ $card_area_outline_col: #AAA;
     outline: ridge 3px $card_area_outline_col;
     width: $card_area_width;
     height: $card_area_height;
+    // this needs to be above other table elements to animated cards pass over them when played
+    z-index: 40;
 }
 
 $left_right_offset: $card_area_width + 20px;
@@ -195,6 +229,26 @@ $top_bottom_offset: $card_area_height + 20px;
     left: 50%;
     transform: translate(-50%);
     width: 70%;
+    height: 1.2*$card_height;
+}
+// #clp-myhand {
+//     z-index: 50;
+// }
+// .clp-hand-card {
+//     // make them high up so they travel over table stuff except not really
+//     z-index: 30;
+//     // bottom: 0 !important;
+// }
+.clp-hand-card[style] {
+    top: 10px !important;
+    // z-index: 30 !important;
+}
+.clp-active-hand .clp-hand-card:hover, .clp-selected-card {
+    // border: solid 1px black;
+    top: 0 !important;
+}
+.clp-inactive-hand .clp-hand-card {
+    cursor: default !important;
 }
 
 $card_rounding: 5px;
@@ -208,6 +262,7 @@ $card_rounding: 5px;
 
 .clp-card-on-table {
     position: absolute;
+    // z-index: 50;  // above trickpile, but not working quite right
 }
 
 /*** calypsos ***/
@@ -223,24 +278,29 @@ $calypso_pure_width: $each_card_offset*($num_ranks - 1) + $card_width;
 }
 $suit_height: 32px;
 @for $suit from 1 through 4 {
+    $y_card: $card_height * ($suit - 1);
+    $y_icon: $suit_height * ($suit - 1);
     .clp-card-space-#{$suit} {
-        background-position: 0px (-$card_height * ($suit - 1));
+        background-position: 0px (-$y_card);
     }
     .clp-renounce-#{$suit} {
-        background-position: 0px (-$suit_height * ($suit - 1));
+        background-position: 0px (-$y_icon);
     }
     // for display in player boxes:
     .clp-suit-icon-#{$suit} {
-        background-position: 0px (-$suit_height * ($suit - 1));
+        background-position: 0px (-$y_icon);
     }
     @for $rank from 2 through $num_ranks+1 {
         $x: $card_width * ($rank - 2);
-        $y: $card_height * ($suit - 1);
         .clp-calypsocard-face-#{$suit}-#{$rank}{
             z-index: $rank + 14;
             background-position-x: -$x;
-            background-position-y: -$y;
+            background-position-y: -$y_card;
         }
+    }
+    .clp-calypsopile-#{$suit} {
+        background-position-x: -$card_width * (14 - 2);  // for the ace
+        background-position-y: -$y_card;
     }
 }
 
@@ -309,15 +369,22 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     position: absolute;
     width: $renounce_size;
     height: $renounce_size;
-    left: 4*($renounce_size + 2*$renounce_padding) + 40px;
+    left: 4*($renounce_size + 2*$renounce_padding) + 55px;
     // background-color: $blank_space_colour;
     // display: inline-block;
     margin: $renounce_padding;
 }
+
+$card_back_image: "back_1.svg";
+$image_scale: $renounce_size*$card_width/$card_height;
+$card_offset: 4px;
 #clp-dealerbutton {
     width: $renounce_size;
     height: $renounce_size;
-    background-image: url('img/dealer.png');  /* can swap out placeholder image in directory ;) */
+    background-image: url('img/#{$card_back_image}'), url('img/#{$card_back_image}');
+    background-repeat: no-repeat, no-repeat;
+    background-position: $card_offset 0, 0 0;
+    background-size: $image_scale, $image_scale;
     z-index: 3;
 }
 
@@ -326,6 +393,8 @@ $max_name_size: 200px;
     font-weight: bold;
     height: $renounce_size;
     width: $max_name_size;
+    // a little outline, so it's still visible when it's close to b/g (as noticed with white in Love Letter)
+    // text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -355,14 +424,37 @@ $max_name_size: 200px;
     outline: solid 3px black;
     position: absolute;
 }
+$calypso_card_overlap: 12px;
 .clp-trickpile {
     width: $card_width;
     height: $card_height;
-    right: 0px;
+    right: 0;
     position: absolute;
     background-color: $blank_space_colour;
+    z-index: 4;
+    // z-index: 30;  // want calypso cards to be underneath!
+    // border: solid 1px black;
+}
+// convenience class to temporarily put things on top1
+// as z-index was causing problems with animations when static
+.clp-very-high {
+    z-index: 35;
+}
+// mess about with left/right overlap etc for trickpile/calypsopile appearance
+.clp-calypsopile {
+    width: $card_width;
+    height: $card_height;
+    right: $calypso_card_overlap;
+    position: absolute;
+    bottom: $calypso_card_overlap;
+    // background-color: #AA0;  // for testing
+    z-index: 2;
     // border: solid 3px black;
 }
+.clp-calypsopile-full {
+    background-image: url('img/cards.jpg');
+}
+
 // .clp-trickpile-empty {
     
 // }
@@ -370,7 +462,7 @@ $max_name_size: 200px;
 .clp-trickpile-full {
     // background-color: #070;
     border-radius: $card_rounding;
-    background-image: url('img/backs.png'); 
+    background-image: url('img/#{$card_back_image}'); 
 }
 
 // TODO: transform using mixins - see sass project page
@@ -417,6 +509,14 @@ $personal_area_bottom_offset: 20px;
 .clp-score-label {
     text-align: right;
 }
+.clp-table-suit {
+    display: block;
+    // set stuff here as icon is float:left
+    background-image: url('img/card_suits.jpg');
+    width: $icon_size;
+    height: $icon_size;
+    margin: auto;
+}
 
 // score buttons for getting score entries
 #clp-score-access-table-area{
@@ -459,4 +559,9 @@ $button_font_size: $info_size;
 // this is in-built bga stuff, rather than hacking it ourselves
 .tableWindow th {
     text-align: center;
+}
+
+// for disabling transform
+.clp-no-transform * {
+    transform: none !important;
 }

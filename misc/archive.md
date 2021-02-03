@@ -26,6 +26,7 @@
 
 ### Display
 
+* ~~game art - broken this out to its own section now mate~~
 * ~~Animate completed calypso & removing it w/o refresh~~
 * ~~Little piles for won cards to be sink for any misc won cards, instead of player panels~~
   * ~~Maybe cards should move to player, and then to wherever (to make it clear who won the trick?)~~
@@ -36,16 +37,20 @@
 * ~~Display game state info somewhere (round `x` of `y`, hand `w` of `z`)~~
   * ~~done but needs a bit of zhuzhing up~~
 * ~~Say the game name somewhere? Or something distinctive. Covered under the above zhuzhing~~
-* When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT
-  * will be tracking this for stats, so should be easy to add in. Probably as a log option?
-* Order hand with personal trumps separated?
-* improve scoring table?
-* access old scoring tables
-* animations - let calypso cards & trick pile appear after animation is finished rather than early
-* player boxes should show number of completed calypsos
-* clear display on new round - not sure if there should be a manual 'click' or something to confirm
+* ~~improve scoring table?~~
+* ~~access old scoring tables~~
+* ~~player boxes should show number of completed calypsos~~
+* ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
+
+### Images
 
 ## Things to fix
+
+* ~~Fix tooltips?? (renounce and dealer button)~~
+* ~~Tooltips don't work when we dynamically switch class - they only attach to elements that have that class at the time of calling~~
+* ~~Lose renounce indicators on refresh :/~~
+* ~~Wipe accumulated calypsos on new round w/o refresh~~
+* ~~clear display on new round - not sure if there should be a manual 'click' or something to confirm~~
 
 ### Other UI
 
