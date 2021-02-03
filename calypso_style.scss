@@ -231,14 +231,14 @@ $top_bottom_offset: $card_area_height + 20px;
     width: 70%;
     height: 1.2*$card_height;
 }
-#clp-myhand {
-    z-index: 50;
-}
-.clp-hand-card {
-    // make them high up so they travel over table stuff except not really
-    z-index: 30;
-    // bottom: 0 !important;
-}
+// #clp-myhand {
+//     z-index: 50;
+// }
+// .clp-hand-card {
+//     // make them high up so they travel over table stuff except not really
+//     z-index: 30;
+//     // bottom: 0 !important;
+// }
 .clp-hand-card[style] {
     top: 10px !important;
     // z-index: 30 !important;
@@ -262,7 +262,7 @@ $card_rounding: 5px;
 
 .clp-card-on-table {
     position: absolute;
-    z-index: 50;  // above trickpile, but not working quite right
+    // z-index: 50;  // above trickpile, but not working quite right
 }
 
 /*** calypsos ***/

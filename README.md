@@ -22,8 +22,8 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~z-index crap? (current)~~ ~~played cards go under trickpile (even empty), and calypso (even empty). Has that always been so?~~
   * ~~certainly not new, current dev branch (9af4f0c) already has this problem, just not noticed previously~~
   * ~~animated element belongs to destination - that's where the z-index needs to be set!~~
-  * tidy up z-index attributes we peppered everywhere but no longer need
-  * cardontable, myhand, hand-card, cardontable. think those are it - check that animations still run smoothly when removely
+  * ~~tidy up z-index attributes we peppered everywhere but no longer need~~
+  * ~~cardontable, myhand, hand-card, cardontable. think those are it - check that animations still run smoothly when removely~~
 * ~~wrong suits showing in player boxes!!~~
 * ~~animate round end clearing?~~
   * ~~trickpiles not cleared~~
