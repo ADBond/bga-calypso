@@ -280,7 +280,6 @@ function (dojo, declare) {
         
         */
         // Get card unique identifier based on its suit and rank
-        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
         getCardUniqueType : function(suit, rank) {
             return (suit - 1) * 13 + (rank - 2);
         },
@@ -329,6 +328,7 @@ function (dojo, declare) {
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
+            // TODO: this can all be css
             dojo.place(this.format_block('jstpl_cardontable', {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
@@ -1064,28 +1064,13 @@ function (dojo, declare) {
         
         notif_debug : function(notif) {
             console.log("debug message received ;)")
+            // TODO: delete this whole pointless notif
             // dummy
         },
 
         notif_update : function(notif) {
-            // AB TODO: do we need to do anything here?
             // is there any point in this? Probably no
-            // I imagine it will be best to split this out into individual notifications
-            // e.g. newHand (animate dealer button etc)
         }
-        /*
-        Example:
-        
-        notif_cardPlayed: function( notif )
-        {
-            console.log( 'notif_cardPlayed' );
-            console.log( notif );
-            
-            // Note: notif.args contains the arguments specified during you "notifyAllPlayers" / "notifyPlayer" PHP call
-            
-            // TODO: play the card in the user interface.
-        },    
-        
-        */
+
    });             
 });

@@ -18,26 +18,20 @@
 ./calypso.game.php:811:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
 ./calypso.game.php:874:    //     // TODO: disable buttons
 ./calypso.game.php:876:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
-./calypso.game.php:926:        // TODO: we should get the players in partnership order!
-./calypso.game.php:957:            // TODO: this is also a place where partnershit will change
-./calypso.game.php:974:        // TODO: probably want to display this aspect betterly
-./calypso.game.php:983:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:990:            // TODO: translate business
-./calypso.game.php:1249:        // TODO: this function checks that all cards are *somewhere*
-./calypso.game.php:1285:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1340:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1439:        // TODO: cleaner with map
-./calypso.game.php:1484:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1542:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.game.php:1551:        // TODO: this notification should go, as that info should be in player boxes.
-./calypso.game.php:1566:        // TODO: at best this should say hand X is over, or just scrap it altogether
+./calypso.game.php:980:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+./calypso.game.php:987:            // TODO: translate business
+./calypso.game.php:1280:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1335:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1434:        // TODO: cleaner with map
+./calypso.game.php:1479:            // TODO: dealHand notif should sort out revoke flags on client side
+./calypso.game.php:1537:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:87:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:97:            // TODO: decide on overlap or not
 ./calypso.js:116:                // TODO: probably delete this function
 ./calypso.js:117:                // TODO: set hoverable here? but then also need to do it when your turn comes around
 ./calypso.js:152:            // TODO: need fancier checking here, in case we are in awaitNewRound
-./calypso.js:283:        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
+./calypso.js:331:            // TODO: this can all be css
 ./calypso.js:335:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
 ./calypso.js:385:            // TODO: this should stay in css - use class manipulation
 ./calypso.js:400:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
@@ -52,8 +46,7 @@
 ./calypso.js:974:            // TODO: again this should be farmed out, ideally to a generalised function?
 ./calypso.js:986:            // TODO here need real total, not just round total. adjust in php
 ./calypso.js:1055:                // TODO: this function is what needs fiddling with - play animation after we've set flags
-./calypso.js:1071:            // AB TODO: do we need to do anything here?
-./calypso.js:1086:            // TODO: play the card in the user interface.
+./calypso.js:1067:            // TODO: delete this whole pointless notif
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

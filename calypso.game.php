@@ -923,7 +923,6 @@ class Calypso extends Table
         $individual_scores = array( self::score_wrap_label(clienttranslate("Total individual score")) );
         
         $partnership_scores = array( self::score_wrap_label(clienttranslate("Total round score")) );
-        // TODO: we should get the players in partnership order!
         // for each player:
         $players = self::getRoundScore($round_number);
         foreach ( $players as $player_id => $score_info ) {
@@ -954,7 +953,6 @@ class Calypso extends Table
 
             $partnership_scores[] = self::score_wrap($score_info['partnership_score']);
 
-            // TODO: this is also a place where partnershit will change
             $scores_for_updating[] = array('player_id' => $player_id, 'total_score' => $score_info['partnership_score']);
         }
 
@@ -971,7 +969,6 @@ class Calypso extends Table
         $score_table[] = $won_card_scores;
 
         $score_table[] = $individual_scores;
-        // TODO: probably want to display this aspect betterly
         $score_table[] = $partnership_scores;
         return array(
             "score_table" => $score_table,
@@ -1245,8 +1242,6 @@ class Calypso extends Table
     }
 
     function checkAllCardsExist(){
-        // all cushty when I've checked :)
-        // TODO: this function checks that all cards are *somewhere*
         // not sure when/if to call this - probably only during dev
         $locations = array(
             'hand',
@@ -1548,27 +1543,8 @@ class Calypso extends Table
     }
 
     function stEndHand() {
-        // TODO: this notification should go, as that info should be in player boxes.
-        // $player_calypsos = self::getAllCompletedCalypsos();
-        // foreach ( $player_calypsos as $player_id => $num_calypsos ) {
-        //     $player_name = self::getPlayerName($player_id);
-        //     self::notifyAllPlayers(
-        //         "update",
-        //         clienttranslate('${player_name} has ${num_calypsos} completed calypso(s)'),
-        //         array(
-        //             'player_name' => $player_name,
-        //             'num_calypsos' => $num_calypsos
-        //         )
-        //     );
-        // }
 
         self::updatePostHandStats();
-        // TODO: at best this should say hand X is over, or just scrap it altogether
-        self::notifyAllPlayers(
-            "update",
-            clienttranslate('Hand over!'),
-            array()
-        );
         $num_hands = 4;
         
         if(self::getGameStateValue( 'handNumber' ) == $num_hands){
