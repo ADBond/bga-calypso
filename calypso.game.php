@@ -1485,12 +1485,12 @@ class Calypso extends Table
                     "suits" => [1, 2, 3, 4],
                     "renounce_flags_clear" => true,
                 )
-            )
+            );
         }
         self::notifyAllPlayers(
             'dealHand',
             clienttranslate('${dealer_name} deals a new hand of cards'),
-            $deal_hand_args,
+            $deal_hand_args
         );
         self::notifyAllPlayers(
             'actionRequired',
