@@ -1445,7 +1445,7 @@ class Calypso extends Table
         $player_ids = array();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
-            self::notifyPlayer($player_id, 'newHand', '', array ('cards' => $cards ));
+            self::notifyPlayer($player_id, 'newCards', '', array ('cards' => $cards ));
 
             $player_ids[] = $player_id;
         }
@@ -1456,31 +1456,41 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
-        if(self::getGameStateValue('renounceFlags') == 1){
-            self::clearRenounceFlags();
-            // TODO: dealHand notif should sort out revoke flags on client side - see below
-            self::notifyAllPlayers(
-                'clearRenounceFlags',
-                "",
-                array (
-                    "players" => $player_ids,
-                    "suits" => [1, 2, 3, 4],
-                )
-            );
-        }
+        
 
         self::updateHandDealtStats();
 
+        $deal_hand_args = array (
+            'dealer_name' => self::getPlayerName($new_dealer),
+            'dealer_id' => $new_dealer,
+            'round_number' => self::getGameStateValue( 'roundNumber' ),
+            'hand_number' => $hand_number,
+            'total_rounds' => self::getGameStateValue( 'totalRounds' ),
+        );
+        if(self::getGameStateValue('renounceFlags') == 1){
+            self::clearRenounceFlags();
+            // TODO: clearRenounceFlags delete
+            // self::notifyAllPlayers(
+            //     'clearRenounceFlags',
+            //     "",
+            //     array (
+            //         "players" => $player_ids,
+            //         "suits" => [1, 2, 3, 4],
+            //     )
+            // );
+            $deal_hand_args = array_merge(
+                $deal_hand_args,
+                array (
+                    "players" => $player_ids,
+                    "suits" => [1, 2, 3, 4],
+                    "renounce_flags_clear" => true,
+                )
+            )
+        }
         self::notifyAllPlayers(
             'dealHand',
             clienttranslate('${dealer_name} deals a new hand of cards'),
-            array (
-                'dealer_name' => self::getPlayerName($new_dealer),
-                'dealer_id' => $new_dealer,
-                'round_number' => self::getGameStateValue( 'roundNumber' ),
-                'hand_number' => $hand_number,
-                'total_rounds' => self::getGameStateValue( 'totalRounds' ),
-            )
+            $deal_hand_args,
         );
         self::notifyAllPlayers(
             'actionRequired',

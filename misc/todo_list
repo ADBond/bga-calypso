@@ -21,8 +21,8 @@
 ./calypso.game.php:1256:            // TODO: really not convinced I've got the translation stuff right here.
 ./calypso.game.php:1311:                        // TODO: here we need to implement the optional check of rank
 ./calypso.game.php:1415:        // TODO: cleaner with map
-./calypso.game.php:1461:            // TODO: dealHand notif should sort out revoke flags on client side - see below
-./calypso.game.php:1519:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1472:            // TODO: clearRenounceFlags delete
+./calypso.game.php:1529:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:87:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:97:            // TODO: decide on overlap or not
@@ -40,10 +40,10 @@
 ./calypso.js:614:            // TODO: think about this mate, not sure here
 ./calypso.js:629:                        // TODO: still clips a litlle, might be removed too early
 ./calypso.js:655:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:905:            // TODO: should this be delayed/animated?
-./calypso.js:972:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:984:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:1053:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:908:            // TODO: should this be delayed/animated?
+./calypso.js:975:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:987:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:1056:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

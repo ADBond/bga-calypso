@@ -790,14 +790,14 @@ function (dojo, declare) {
 
             dojo.subscribe('newRound', this, "notif_newRound");
             // the actual cards that a player receives
-            dojo.subscribe('newHand', this, "notif_newHand");
+            dojo.subscribe('newCards', this, "notif_newCards");
             // admin around hand/dealer changing
             dojo.subscribe('dealHand', this, "notif_dealHand");
         
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe('renounceFlag', this, "notif_renounceFlag");
-            dojo.subscribe('clearRenounceFlags', this, "notif_clearRenounceFlags");
+            // dojo.subscribe('clearRenounceFlags', this, "notif_clearRenounceFlags");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
@@ -843,7 +843,7 @@ function (dojo, declare) {
             }
         },
 
-        notif_newHand : function(notif) {
+        notif_newCards : function(notif) {
             this.playerHand.removeAll();
             // refresh tooltips helps for after new-round animations
             //this.playerHand.updateDisplay();
@@ -864,13 +864,16 @@ function (dojo, declare) {
             // console.log(notif);
             this.changeDealer(notif.args.dealer_id);
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
+            if(notif.args.renounce_flags_clear){
+                this.clearRenounceFlags(notif.args.players, notif.args.suits);
+            }
         },
 
-        notif_clearRenounceFlags: function(notif) {
-            // console.log("clearing houd");
-            // console.log(notif);
-            this.clearRenounceFlags(notif.args.players, notif.args.suits);
-        },
+        // notif_clearRenounceFlags: function(notif) {
+        //     // console.log("clearing houd");
+        //     // console.log(notif);
+        //     this.clearRenounceFlags(notif.args.players, notif.args.suits);
+        // },
 
         notif_playCard : function(notif) {
             this.playCardOnTable(notif.args.player_id, notif.args.suit, notif.args.rank, notif.args.card_id);
