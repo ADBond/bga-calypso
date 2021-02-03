@@ -205,24 +205,10 @@ function (dojo, declare) {
             console.log( 'Entering state: '+ stateName );
             
             switch( stateName )
-            {
-            
+            {            
                 case 'playerTurn':
                     this.setHandActiveness(this.isCurrentPlayerActive());
                     break;
-            /* Example:
-            
-            case 'myGameState':
-            
-                // Show some HTML block at this game state
-                dojo.style( 'my_html_block_id', 'display', 'block' );
-                
-                break;
-           */
-           
-           
-            case 'dummmy':
-                break;
             }
         },
 
@@ -235,18 +221,6 @@ function (dojo, declare) {
             
             switch( stateName )
             {
-            
-            /* Example:
-            
-            case 'myGameState':
-            
-                // Hide the HTML block we are displaying only during this game state
-                dojo.style( 'my_html_block_id', 'display', 'none' );
-                
-                break;
-           */
-           
-           
             case 'dummmy':
                 break;
             }               
@@ -581,7 +555,10 @@ function (dojo, declare) {
         // TODO: fix API - don't need round_number if title supplied!
         showResultDialog: function (round_number, score_table, title=null) {
             if(title === null){
-                title = _("Scores for round ") + round_number;
+                title = dojo.string.substitute(
+                    _("Round ${round_number} score"),
+                    {round_number: round_number}
+                );
             }
             let scoring_dialog = this.displayTableWindow(
                 "roundScore",
@@ -735,41 +712,6 @@ function (dojo, declare) {
             }
         },
 
-        /* Example:
-        
-        onMyMethodToCall1: function( evt )
-        {
-            console.log( 'onMyMethodToCall1' );
-            
-            // Preventing default browser reaction
-            dojo.stopEvent( evt );
-
-            // Check that this action is possible (see "possibleactions" in states.inc.php)
-            if( ! this.checkAction( 'myAction' ) )
-            {   return; }
-
-            this.ajaxcall( "/calypso/calypso/myAction.html", { 
-                                                                    lock: true, 
-                                                                    myArgument1: arg1, 
-                                                                    myArgument2: arg2,
-                                                                    ...
-                                                                 }, 
-                         this, function( result ) {
-                            
-                            // What to do after the server call if it succeeded
-                            // (most of the time: nothing)
-                            
-                         }, function( is_error) {
-
-                            // What to do after the server call in anyway (success or failure)
-                            // (most of the time: nothing)
-
-                         } );        
-        },        
-        
-        */
-
-        
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications
 

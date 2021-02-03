@@ -543,7 +543,7 @@ class Calypso extends Table
                 // TODO: guess we can delete dummy, just need to check it's not referenced on client-side
                 self::notifyAllPlayers(
                     'calypsoComplete',
-                    clienttranslate('${player_name} has completed a calypso'),
+                    clienttranslate('${player_name} completes a calypso'),
                     array(
                         'player_id' => $player_id,
                         'player_name' => self::getPlayerName($player_id),
@@ -869,7 +869,7 @@ class Calypso extends Table
     // }
 
     function wrap_class($x, $class_name){
-        return '<div class="'.$class_name.'">'.$x.'</div>';
+        return "<div class=\"${class_name}\">${x}</div>";
     }
     function count_wrap($x){
         return self::wrap_class($x, "clp-number-entry");
@@ -969,13 +969,13 @@ class Calypso extends Table
         $score_table = array();
         $overall_scores = array(self::score_wrap_label(clienttranslate("Total score")));
         $player_score_totals = array();
-        for($round = 1; $round <= self::getGameStateValue("totalRounds"); $round++){
+        for($round_number = 1; $round_number <= self::getGameStateValue("totalRounds"); $round_number++){
             // TODO: translate business
-            $round_scores = array( self::score_wrap_label(clienttranslate("Round ${round} score")) );
-            $players = self::getRoundScore($round);
+            $round_scores = array( self::score_wrap_label(clienttranslate("Round ${round_number} score")) );
+            $players = self::getRoundScore($round_number);
             foreach ( $players as $player_id => $score_info ) {
                 // only need to add this once
-                if($round == 1){
+                if($round_number == 1){
                     $suit = self::getPlayerSuit($player_id);
                     // $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
                     $header_names[] = array(
@@ -994,7 +994,7 @@ class Calypso extends Table
                 }
                 $round_scores[] = self::score_wrap($score_info['partnership_score']);
             }
-            if($round == 1){
+            if($round_number == 1){
                 $score_table[] = $header_names;
                 $score_table[] = $header_suits;
             }
