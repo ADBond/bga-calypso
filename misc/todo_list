@@ -7,24 +7,22 @@
 ./calypso.game.php:393:        // TODO here and elsewhere move to defined constants
 ./calypso.game.php:416:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
 ./calypso.game.php:439:    // TODO: this changes the dealer, and is only done between hands - reflect that in name
-./calypso.game.php:443:        // TODO: don't need these notifications long-term
-./calypso.game.php:445:        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
-./calypso.game.php:462:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:503:        // TODO: if I'm going to say why trick was won, then here is ideal.
-./calypso.game.php:538:            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
-./calypso.game.php:640:    // TODO: uniformise names
-./calypso.game.php:764:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-./calypso.game.php:766:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:816:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:879:    //     // TODO: disable buttons
-./calypso.game.php:881:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
-./calypso.game.php:985:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:992:            // TODO: translate business
-./calypso.game.php:1285:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1340:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1444:        // TODO: cleaner with map
-./calypso.game.php:1489:            // TODO: dealHand notif should sort out revoke flags on client side
-./calypso.game.php:1547:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:452:        // TODO: this feels horrible - is there a nice way that won't be overkill?
+./calypso.game.php:531:            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
+./calypso.game.php:543:                // TODO: guess we can delete dummy, just need to check it's not referenced on client-side
+./calypso.game.php:630:    // TODO: uniformise names
+./calypso.game.php:750:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+./calypso.game.php:752:                // AB TODO: updated db when I've updated the model to allow the field
+./calypso.game.php:797:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
+./calypso.game.php:860:    //     // TODO: disable buttons
+./calypso.game.php:862:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
+./calypso.game.php:966:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+./calypso.game.php:973:            // TODO: translate business
+./calypso.game.php:1256:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1311:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1415:        // TODO: cleaner with map
+./calypso.game.php:1461:            // TODO: dealHand notif should sort out revoke flags on client side - see below
+./calypso.game.php:1519:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:87:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:97:            // TODO: decide on overlap or not
@@ -42,11 +40,10 @@
 ./calypso.js:614:            // TODO: think about this mate, not sure here
 ./calypso.js:629:                        // TODO: still clips a litlle, might be removed too early
 ./calypso.js:655:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:907:            // TODO: should this be delayed/animated?
-./calypso.js:974:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:986:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:1055:                // TODO: this function is what needs fiddling with - play animation after we've set flags
-./calypso.js:1067:            // TODO: delete this whole pointless notif
+./calypso.js:905:            // TODO: should this be delayed/animated?
+./calypso.js:972:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:984:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:1053:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

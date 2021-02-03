@@ -9,7 +9,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~optional log detail (c.f. Hungarian Tarock)~~
 * Start off saying who has which trump suit, and who is partnered with whom
   * teams through some light colours, and put in player boxes upstairs (with trump suits)
-* delete needless notifications
+* ~~delete needless notifications~~
 * Make sure I deal with the translation stuff properly, stop string concatenation etc.
   * make sure parameters use i18n etc
 * '"X" deals a new hand of cards' is not translating, and not sure why...??
@@ -25,6 +25,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Logic
 
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
+* player preference for auto-confirm new round
 
 ### Notifications
 
@@ -63,6 +64,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * doesn't like strings with "." at the end - can break new hand/new round logs with those
 * final scores not updating in player boxes (round 2+)(okay on refresh)
 * tooltips don't get removed once added
+* Hand display buggered on mobile (think overlap is culprit)
 
 ### Other UI
 

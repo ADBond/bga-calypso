@@ -785,8 +785,8 @@ function (dojo, declare) {
             console.log('notifications subscriptions setup');
 
             // generic stuff, mostly for dev
-            dojo.subscribe('debug', this, "notif_debug");
-            dojo.subscribe('update', this, "notif_update");
+            // dojo.subscribe('debug', this, "notif_debug");
+            dojo.subscribe('newHandBegin', this, "notif_newHandBegin");
 
             dojo.subscribe('newRound', this, "notif_newRound");
             // the actual cards that a player receives
@@ -882,8 +882,6 @@ function (dojo, declare) {
 
         notif_trickWin : function(notif) {
             // We do nothing here (just wait in order players can view the 4 cards played before they're gone.
-            // Actually,
-            // What was I about to say above ^ ????
         },
         notif_calypsoComplete : function(notif) {
             // console.log(notif.args);
@@ -964,7 +962,7 @@ function (dojo, declare) {
             // anim.play();
         },
         notif_actionRequired : function(notif) {
-            // nothing needed here
+            // waiting for player to play a card
         },
 
 
@@ -1061,15 +1059,9 @@ function (dojo, declare) {
             }
             
         },
-        
-        notif_debug : function(notif) {
-            console.log("debug message received ;)")
-            // TODO: delete this whole pointless notif
-            // dummy
-        },
 
-        notif_update : function(notif) {
-            // is there any point in this? Probably no
+        notif_newHandBegin : function(notif) {
+            // just says a new hand is starting
         }
 
    });             

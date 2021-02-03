@@ -440,19 +440,9 @@ class Calypso extends Table
     function updateDealer($direction_index=1, $relevant_dealer='currentDealer') {
         $current_dealer = self::getGameStateValue($relevant_dealer);
 
-        // TODO: don't need these notifications long-term
-        // self::notifyAllPlayers( 'debug', clienttranslate('${player_name} was the dealer, but they are done'), array(
-        //     'player_name' => self::getPlayerName($current_dealer)  // TODO: give them colour, like in playCard
-        // ) );
         $new_dealer = self::getAdjacentPlayer($current_dealer, $direction_index);
-        // self::notifyAllPlayers( 'debug', clienttranslate('${player_name} will be the next dealer'), array(
-        //     'player_name' => self::getPlayerName($new_dealer)
-        // ) );
         $first_leader = self::getAdjacentPlayer($new_dealer);
-        // self::notifyAllPlayers( 'debug', clienttranslate('${leader} is first leader, ${dealer} is dealer'), array(
-        //     'leader' => self::getPlayerName($first_leader),
-        //     'dealer' => self::getPlayerName($new_dealer),
-        // ) );
+
         $this->gamestate->changeActivePlayer( $first_leader );
         return $new_dealer;
     }
@@ -496,11 +486,14 @@ class Calypso extends Table
         self::updateWinnerMethodCount($best_value_player_id, $winning_method);
 
         // announce who won first, then deal with the admin of what happens to the cards
-        self::notifyAllPlayers( 'trickWin', clienttranslate('${player_name} wins the trick'), array(
-            'player_id' => $best_value_player_id,
-            'player_name' => self::getPlayerName($best_value_player_id)
-        ) );
-        // TODO: if I'm going to say why trick was won, then here is ideal.
+        self::notifyAllPlayers(
+            'trickWin',
+            clienttranslate('${player_name} wins the trick'),
+            array(
+                'player_id' => $best_value_player_id,
+                'player_name' => self::getPlayerName($best_value_player_id)
+            )
+        );
 
         // card gathering logic:
         // $moved_to will track where cards go, so we can send that to js
@@ -547,6 +540,7 @@ class Calypso extends Table
                     }
                 );
                 self::updateFastestCalypso($player_id);
+                // TODO: guess we can delete dummy, just need to check it's not referenced on client-side
                 self::notifyAllPlayers(
                     'calypsoComplete',
                     clienttranslate('${player_name} has completed a calypso!'),
@@ -562,10 +556,6 @@ class Calypso extends Table
             }
         }
         $this->gamestate->changeActivePlayer( $best_value_player_id );
-    }
-
-    function debugMessage( $message, $array=array() ){
-        self::notifyAllPlayers( 'message', $message, $array );
     }
 
     function initialiseTrick(){ 
@@ -756,11 +746,7 @@ class Calypso extends Table
                 $calypso_so_far
             );
             $calypso_string = implode( ",", $ranks_so_far );
-            // self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
-            //     'player_id' => $player_id,
-            //     'player_name' => $players[ $player_id ]['player_name'],
-            //     'calypso_string' => $calypso_string,
-            // ) );
+
             if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
                 $this->cards->moveAllCardsInLocation( 'calypso', 'full_calypsos', $player_id, $player_id );
                 // AB TODO: updated db when I've updated the model to allow the field
@@ -773,11 +759,6 @@ class Calypso extends Table
                 $calypso_so_far
             );
             $calypso_string = implode( ",", $ranks_so_far );
-            // self::debugMessage( clienttranslate('${player_name} has ${calypso_string}'), array(
-            //     'player_id' => $player_id,
-            //     'player_name' => self::getPlayerName($player_id),
-            //     'calypso_string' => $calypso_string,
-            // ) );
         }
         return $calypsos_completed;
     }
@@ -1029,16 +1010,6 @@ class Calypso extends Table
     function displayScores($round_number){
         $args_array = self::getDisplayScoresArgs($round_number);
 
-        // $this->notifyAllPlayers(
-        //     "tableWindow",
-        //     '',
-        //     array(
-        //         "id" => 'roundScore',
-        //         "title" => clienttranslate("Scores for the round"),
-        //         "table" => $args_array["score_table"],
-        //         "closing" => clienttranslate( "Close" )
-        //     )
-        // );
         // in place of tableWindow, so we can pass data to client and keep there for re-displaying with buttons
         $this->notifyAllPlayers(
             "scoreDisplay",
@@ -1463,8 +1434,9 @@ class Calypso extends Table
         self::setGameStateValue( 'handNumber', $hand_number );
         // always start at trick number 1
         self::setGameStateValue( 'trickNumber', 1 );
+
         self::notifyAllPlayers(
-            "update",
+            "newHandBegin",
             clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round'),
             array("hand_number" => $hand_number)
         );
@@ -1486,7 +1458,7 @@ class Calypso extends Table
         }
         if(self::getGameStateValue('renounceFlags') == 1){
             self::clearRenounceFlags();
-            // TODO: dealHand notif should sort out revoke flags on client side
+            // TODO: dealHand notif should sort out revoke flags on client side - see below
             self::notifyAllPlayers(
                 'clearRenounceFlags',
                 "",
