@@ -8,7 +8,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * ~~optional log detail (c.f. Hungarian Tarock)~~
 * Start off saying who has which trump suit, and who is partnered with whom
-  * teams through some light colours, and put in player boxes upstairs (with trump suits)
+  * ~~teams through some light colours, and put in player boxes upstairs (with trump suits)~~
 * ~~delete needless notifications~~
 * ~~Make sure I deal with the translation stuff properly, stop string concatenation etc.~~
   * ~~make sure parameters use i18n etc~~
@@ -18,6 +18,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
   * think one error in translation text was meaning others not going through pipeline? all cushty now tho
   * completes calypso text not right, think it's similar - check back!
 * ~~is starting -> starts~~
+* `Round ${round_number} score` need to sub value properly
 
 ## For a different branch
 

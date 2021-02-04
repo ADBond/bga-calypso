@@ -659,10 +659,17 @@
   text-align: center;
   width: 494px;
   height: 156px;
-  outline: solid 1px black;
   padding: 10px;
   /* TODO: while I figure out what to do: */
   background: rgba(255, 255, 255, 0.75);
+}
+
+.clp-player-personal-area-1, .clp-player-personal-area-2 {
+  outline: solid 5px #1b9e77;
+}
+
+.clp-player-personal-area-3, .clp-player-personal-area-4 {
+  outline: solid 5px #d95f02;
 }
 
 .clp-renounce-indicators {

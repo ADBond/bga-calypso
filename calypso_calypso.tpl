@@ -20,7 +20,10 @@
         </div>
         <!-- END playerhand -->
         <!-- BEGIN playercalypso -->
-        <div class="clp-player-personal-area clp-player-personal-area-{DIR}" id="clp-player-personal-area-{DIR}">
+        <div
+            class="clp-player-personal-area clp-player-personal-area-{DIR} clp-player-personal-area-{TRUMP_SUIT}"
+            id="clp-player-personal-area-{DIR}"
+        >
             <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
                 {PLAYER_NAME} - a very long username
             </div>

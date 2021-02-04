@@ -340,10 +340,24 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     text-align: center;
     width: $personal_area_width;
     height: $personal_area_height;
-    outline: solid 1px black;
+    // outline: solid 1px black;
     padding: $calypso_zone_side_padding;
     /* TODO: while I figure out what to do: */
     background: rgba(255, 255, 255, 0.75);
+}
+// TODO: better way to do this!
+// $minor_colour: #f7f7f7; // #d95f02; // rgba(170, 175, 255, 0.75);
+// $major_colour: #969696; // #1b9e77; // rgba(255, 255, 175, 0.75);
+// $minor_colour: #f7f7f7; // #d95f02; // rgba(170, 175, 255, 0.75);
+// $major_colour: #969696; // #1b9e77; // rgba(255, 255, 175, 0.75);
+$minor_colour: #d95f02; // rgba(170, 175, 255, 0.75);
+$major_colour: #1b9e77; // rgba(255, 255, 175, 0.75);
+$border_width: 5px;
+.clp-player-personal-area-1, .clp-player-personal-area-2 {
+    outline: solid $border_width $major_colour;
+}
+.clp-player-personal-area-3, .clp-player-personal-area-4 {
+    outline: solid $border_width $minor_colour;
 }
 
 .clp-renounce-indicators {
