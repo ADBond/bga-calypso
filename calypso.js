@@ -554,12 +554,26 @@ function (dojo, declare) {
         // saved a lot of pain in trying to hack something together!
         // TODO: fix API - don't need round_number if title supplied!
         showResultDialog: function (round_number, score_table, title=null) {
+            // console.log("tabley bizzos");
+            // console.log(score_table);
             if(title === null){
                 title = dojo.string.substitute(
                     _("Round ${round_number} score"),
                     {round_number: round_number}
                 );
             }
+            wrap_class = (table_entry) => {
+                // console.log(table_entry);
+                if(typeof table_entry === 'object' && table_entry.hasOwnProperty('to_wrap')){
+                    console.log("wrap");
+                    let items = table_entry["to_wrap"];
+                    return `<div class=\"${items.class_name}\">${items.string}</div>`;
+                }
+                // console.log("don't wrap");
+                return table_entry;
+            }
+            score_table = score_table.map((row) => row.map(wrap_class));
+            // console.log(score_table);
             let scoring_dialog = this.displayTableWindow(
                 "roundScore",
                 title,

@@ -16,13 +16,13 @@
 ./calypso.game.php:797:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
 ./calypso.game.php:860:    //     // TODO: disable buttons
 ./calypso.game.php:862:    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
-./calypso.game.php:966:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:973:            // TODO: translate business
-./calypso.game.php:1256:            // TODO: really not convinced I've got the translation stuff right here.
-./calypso.game.php:1311:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1411:        // TODO: cleaner with map
-./calypso.game.php:1468:            // TODO: clearRenounceFlags delete
-./calypso.game.php:1525:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:972:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+./calypso.game.php:979:            // TODO: translate business
+./calypso.game.php:1262:            // TODO: really not convinced I've got the translation stuff right here.
+./calypso.game.php:1317:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1417:        // TODO: cleaner with map
+./calypso.game.php:1474:            // TODO: clearRenounceFlags delete
+./calypso.game.php:1531:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
 ./calypso.js:87:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:97:            // TODO: decide on overlap or not
@@ -37,13 +37,13 @@
 ./calypso.js:514:            // TODO: look here for your js translation needs!
 ./calypso.js:533:            // TODO: specialise to suits?
 ./calypso.js:555:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:592:            // TODO: think about this mate, not sure here
-./calypso.js:607:                        // TODO: still clips a litlle, might be removed too early
-./calypso.js:633:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:851:            // TODO: should this be delayed/animated?
-./calypso.js:918:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:930:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:999:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:606:            // TODO: think about this mate, not sure here
+./calypso.js:621:                        // TODO: still clips a litlle, might be removed too early
+./calypso.js:647:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:865:            // TODO: should this be delayed/animated?
+./calypso.js:932:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:944:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:1013:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:52:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:61:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:71:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->

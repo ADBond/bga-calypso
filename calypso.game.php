@@ -869,7 +869,13 @@ class Calypso extends Table
     // }
 
     function wrap_class($x, $class_name){
-        return "<div class=\"${class_name}\">${x}</div>";
+        // return "<div class=\"${class_name}\">${x}</div>";
+        return array(
+            "to_wrap" => array(
+                "string" => $x,
+                "class_name" => $class_name,
+            ),
+        );
     }
     function count_wrap($x){
         return self::wrap_class($x, "clp-number-entry");
@@ -925,7 +931,7 @@ class Calypso extends Table
                 'args' => array( 'player_suit' => self::suit_element_for_score_table($suit)),
                 'type' => 'header'
             );
-            
+
             $calypso_counts[] = self::count_wrap($score_info['calypso_count']);
             $calypso_scores[] = self::score_wrap($score_info['calypso_score']);
 
@@ -1414,7 +1420,7 @@ class Calypso extends Table
         }
         self::notifyAllPlayers(
             "newRound",
-            clienttranslate('A new round of hands is starting - round ${round_number} of ${total_rounds}'),
+            clienttranslate('A new round of hands starts - round ${round_number} of ${total_rounds}'),
             array(
                 "round_number" => $round_number,
                 "total_rounds" => $total_rounds,
@@ -1433,7 +1439,7 @@ class Calypso extends Table
 
         self::notifyAllPlayers(
             "newHandBegin",
-            clienttranslate('A new hand is starting - hand ${hand_number} of 4 in the current round'),
+            clienttranslate('A new hand starts - hand ${hand_number} of 4 in the current round'),
             array("hand_number" => $hand_number)
         );
         // Deal 13 cards to each player and notify them of their hand
