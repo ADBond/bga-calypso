@@ -9,6 +9,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~optional log detail (c.f. Hungarian Tarock)~~
 * Start off saying who has which trump suit, and who is partnered with whom
   * ~~teams through some light colours, and put in player boxes upstairs (with trump suits)~~
+  * put all playerbox stuff in single div
 * ~~delete needless notifications~~
 * ~~Make sure I deal with the translation stuff properly, stop string concatenation etc.~~
   * ~~make sure parameters use i18n etc~~

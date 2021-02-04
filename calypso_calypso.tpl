@@ -25,7 +25,7 @@
             id="clp-player-personal-area-{DIR}"
         >
             <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
-                {PLAYER_NAME} - a very long username
+                {PLAYER_NAME}
             </div>
             <div class="clp-renounce-indicators">
                 <!-- BEGIN renounceindicator -->
@@ -98,6 +98,7 @@ var jstpl_player_calypso_info = '<div class="clp-calypso-info">\
                                     </div>\
                                     <div class="clp-info-count" id="clp-info-count-${id}">${completed_calypsos}</span>\
                                 </div>';
+var jstpl_player_teamname = '<div class="clp-teamname clp-teamname-${team_name}">${team_name_display}</div>';
 var jstpl_suiticon = '<div id="clp-suit-for-score" class="clp-suit-icon clp-suit-icon-${trump_suit}"></div>'
 </script>
 

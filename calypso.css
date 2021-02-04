@@ -672,6 +672,20 @@
   outline: solid 5px #d95f02;
 }
 
+.clp-teamname {
+  font-weight: bold;
+  margin: 5px;
+  text-align: center;
+}
+
+.clp-teamname-major {
+  color: #1b9e77;
+}
+
+.clp-teamname-minor {
+  color: #d95f02;
+}
+
 .clp-renounce-indicators {
   position: absolute;
 }

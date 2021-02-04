@@ -26,13 +26,14 @@ function (dojo, declare) {
         constructor: function(){
             console.log('calypso constructor');
 
-            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
             this.cardwidth = 72;
             this.cardheight = 96;
 
-            // Here, you can init the global letiables of your user interface
-            // Example:
-            // this.myGlobalValue = 0;
+            // see material.inc.php
+            this.spades = 1;
+            this.hearts = 2;
+            this.clubs = 3;
+            this.diamonds = 4;
 
         },
         
@@ -57,9 +58,6 @@ function (dojo, declare) {
             {
                 let player = gamedatas.players[player_id];
                 let player_trump = player["trump_suit"];
-                let trump_lookup = {
-                    1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
-                };
 
                 if(player_id == gamedatas.dealer){
                     let dealer_area_id = 'clp-dealer-' + player_id;
@@ -140,12 +138,36 @@ function (dojo, declare) {
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
             console.log("completed calypo counts");
+            let team_lookup = {
+                [this.spades]: "major",
+                [this.hearts]: "major",
+                [this.clubs]: "minor",
+                [this.diamonds]: "minor",
+            };
+            let team_lookup_display = {
+                [this.spades]: _("Team major suits"),
+                [this.hearts]: _("Team major suits"),
+                [this.clubs]: _("Team minor suits"),
+                [this.diamonds]: _("Team minor suits"),
+            };
             for( player_id in gamedatas.players )
             {
                 const player = gamedatas.players[player_id];
                 const player_board_div = $(`player_board_${player_id}`);
                 dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
                 this.setCalypsoPile(player_id, player["completed_calypsos"]);
+
+                dojo.place(
+                    this.format_block(
+                        'jstpl_player_teamname',
+                        {
+                            team_name: team_lookup[player["trump_suit"]],
+                            team_name_display: team_lookup_display[player["trump_suit"]],
+                        }
+                    ),
+                    player_board_div
+                );
+                
             }
             const totalrounds = this.gamedatas.totalrounds;
             const currentround = this.gamedatas.roundnumber;

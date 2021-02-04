@@ -23,35 +23,33 @@
 ./calypso.game.php:1417:        // TODO: cleaner with map
 ./calypso.game.php:1474:            // TODO: clearRenounceFlags delete
 ./calypso.game.php:1531:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-./calypso.js:29:            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
-./calypso.js:87:                        // TODO: here is where we might want to separate out trumps!
-./calypso.js:97:            // TODO: decide on overlap or not
-./calypso.js:116:                // TODO: probably delete this function
-./calypso.js:117:                // TODO: set hoverable here? but then also need to do it when your turn comes around
-./calypso.js:152:            // TODO: need fancier checking here, in case we are in awaitNewRound
-./calypso.js:305:            // TODO: this can all be css
-./calypso.js:309:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
-./calypso.js:359:            // TODO: this should stay in css - use class manipulation
-./calypso.js:374:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:443:                // TODO: still clips a litlle, might be removed too early
-./calypso.js:514:            // TODO: look here for your js translation needs!
-./calypso.js:533:            // TODO: specialise to suits?
-./calypso.js:555:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:606:            // TODO: think about this mate, not sure here
-./calypso.js:621:                        // TODO: still clips a litlle, might be removed too early
-./calypso.js:647:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:865:            // TODO: should this be delayed/animated?
-./calypso.js:932:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:944:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:1013:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:85:                        // TODO: here is where we might want to separate out trumps!
+./calypso.js:95:            // TODO: decide on overlap or not
+./calypso.js:114:                // TODO: probably delete this function
+./calypso.js:115:                // TODO: set hoverable here? but then also need to do it when your turn comes around
+./calypso.js:174:            // TODO: need fancier checking here, in case we are in awaitNewRound
+./calypso.js:327:            // TODO: this can all be css
+./calypso.js:331:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
+./calypso.js:381:            // TODO: this should stay in css - use class manipulation
+./calypso.js:396:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:465:                // TODO: still clips a litlle, might be removed too early
+./calypso.js:536:            // TODO: look here for your js translation needs!
+./calypso.js:555:            // TODO: specialise to suits?
+./calypso.js:577:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:628:            // TODO: think about this mate, not sure here
+./calypso.js:643:                        // TODO: still clips a litlle, might be removed too early
+./calypso.js:669:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:887:            // TODO: should this be delayed/animated?
+./calypso.js:954:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:966:            // TODO here need real total, not just round total. adjust in php
+./calypso.js:1035:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:55:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:64:                    <!-- TODO: translation, maybe inject text later-->
 ./calypso_calypso.tpl:74:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_style.scss:137:// TODO: really want this smaller, but need to do the scaling properly.
 ./calypso_style.scss:326:/* TODO: rename - this bounds all of our public info */
 ./calypso_style.scss:345:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:348:// TODO: better way to do this!
-./calypso_style.scss:475:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:482:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:487:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:494:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:135:    // TODO: actually write this properly
 ./states.inc.php:105:    // TODO: collecting cards holder text
