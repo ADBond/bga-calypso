@@ -34,6 +34,10 @@ Might be nice to refactor so the code is more readable and these values are hidd
 3. Clubs
 4. Diamonds
 
+### translations
+
+Need to use bga svn to refresh for dummy translations
+
 ### bugs
 
 ### game_display

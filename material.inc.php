@@ -40,3 +40,12 @@ $this->ranks_label = array(
   13 => clienttranslate('K'),
   14 => clienttranslate('A')
 );
+
+// $this->score_labels = array(
+//   "calypso_count",
+//   "incomplete_calypso_count",
+//   "trickpile_count",
+//   "individual_score",
+//   "partnership_score",
+
+// )

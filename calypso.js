@@ -137,7 +137,7 @@ function (dojo, declare) {
                 console.log("calypso has: " + suit + ", " + rank + ", and...");
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
-            console.log("completed calypo counts");
+            console.log("completed calypso counts");
             let team_lookup = {
                 [this.spades]: "major",
                 [this.hearts]: "major",
@@ -169,8 +169,8 @@ function (dojo, declare) {
                 );
                 
             }
-            const totalrounds = this.gamedatas.totalrounds;
-            const currentround = this.gamedatas.roundnumber;
+            const totalrounds = gamedatas.totalrounds;
+            const currentround = gamedatas.roundnumber;
             // TODO: need fancier checking here, in case we are in awaitNewRound
             for(let round_number = 1; round_number < currentround; round_number++){
                 this.activateScoreButton(round_number, this.gamedatas.roundscoretable[round_number]);
@@ -191,6 +191,14 @@ function (dojo, declare) {
                 dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
                 dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
             }
+            // button text!
+            for(let round_number = 1; round_number <= totalrounds; round_number++){
+                $(`clp-round-scores-button-${round_number}`).textContent = dojo.string.substitute(
+                    _("Round ${round_number} scores"),
+                    {round_number: round_number}
+                );
+            }
+            $("clp-round-scores-button-overall").textContent = _("Round-by-round scores");
 
             console.log("are the renounce flags on?");
             console.log(this.gamedatas.renounce_flags_on);
@@ -589,7 +597,13 @@ function (dojo, declare) {
                 if(typeof table_entry === 'object' && table_entry.hasOwnProperty('to_wrap')){
                     console.log("wrap");
                     let items = table_entry["to_wrap"];
-                    return `<div class=\"${items.class_name}\">${items.string}</div>`;
+                    // maybe having it concatenated here is good so client knows to translate properly?
+                    return '<div class=\"' + items.class_name + '\">' + items.string + '</div>';
+                } else if(typeof table_entry === 'object' && table_entry.hasOwnProperty('for_round_number')){
+                    return dojo.string.substitute(
+                        _("Round ${round_number} score"),
+                        {round_number: table_entry["round_number"]}
+                    );
                 }
                 // console.log("don't wrap");
                 return table_entry;

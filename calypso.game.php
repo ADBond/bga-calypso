@@ -877,6 +877,15 @@ class Calypso extends Table
             ),
         );
     }
+    // we pass this to js to construct appropriate string so we can generate in loop
+    // w/o messing up translations
+    function round_number_wrap($round_number){
+        return array(
+            "for_round_number" => array(
+                "round_number" => $round_number,
+            ),
+        );
+    }
     function count_wrap($x){
         return self::wrap_class($x, "clp-number-entry");
     }
@@ -977,7 +986,7 @@ class Calypso extends Table
         $player_score_totals = array();
         for($round_number = 1; $round_number <= self::getGameStateValue("totalRounds"); $round_number++){
             // TODO: translate business
-            $round_scores = array( self::score_wrap_label(clienttranslate("Round ${round_number} score")) );
+            $round_scores = array( self::score_wrap_label(self::round_number_wrap($round_number)) );
             $players = self::getRoundScore($round_number);
             foreach ( $players as $player_id => $score_info ) {
                 // only need to add this once

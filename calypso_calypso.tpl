@@ -52,18 +52,14 @@
             <!-- BEGIN roundscoreaccessrow -->
             <tr>
                 <td>
-                    <!-- TODO: translation, maybe inject text later-->
                     <button id="clp-round-scores-button-{ROUND_NUMBER}" class="clp-score-button clp-score-button-inactive">
-                        Round {ROUND_NUMBER} scores
                     </button>
                 </td>
             </tr>
             <!-- END roundscoreaccessrow -->
             <tr>
                 <td>
-                    <!-- TODO: translation, maybe inject text later-->
                     <button id="clp-round-scores-button-overall" class="clp-score-button clp-score-button-inactive">
-                        Round-by-round scores
                     </button>
                 </td>
             </tr>
