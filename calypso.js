@@ -592,20 +592,27 @@ function (dojo, declare) {
                     {round_number: round_number}
                 );
             }
+            wrap_translation = (text_entry) => {
+                if(typeof text_entry === 'object' && text_entry.hasOwnProperty('for_round_number')){
+                    console.log("yee");
+                    return dojo.string.substitute(
+                        _("Round ${round_number} score"),
+                        {round_number: text_entry["for_round_number"]["round_number"]}
+                    );
+                }
+                return text_entry;
+            }
             wrap_class = (table_entry) => {
-                // console.log(table_entry);
+                console.log(table_entry)
+                console.log(table_entry);
                 if(typeof table_entry === 'object' && table_entry.hasOwnProperty('to_wrap')){
                     console.log("wrap");
                     let items = table_entry["to_wrap"];
                     // maybe having it concatenated here is good so client knows to translate properly?
-                    return '<div class=\"' + items.class_name + '\">' + items.string + '</div>';
-                } else if(typeof table_entry === 'object' && table_entry.hasOwnProperty('for_round_number')){
-                    return dojo.string.substitute(
-                        _("Round ${round_number} score"),
-                        {round_number: table_entry["round_number"]}
-                    );
+                    // return '<div class=\"' + items.class_name + '\">' + wrap_translation(items.string) + '</div>';
+                    return items.string;
                 }
-                // console.log("don't wrap");
+                console.log("don't wrap");
                 return table_entry;
             }
             score_table = score_table.map((row) => row.map(wrap_class));

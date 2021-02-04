@@ -16,10 +16,11 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~'"X" deals a new hand of cards' is not translating, and not sure why...??~~
   * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
   * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
-  * think one error in translation text was meaning others not going through pipeline? all cushty now tho
-  * completes calypso text not right, think it's similar - check back!
+  * ~~think one error in translation text was meaning others not going through pipeline? all cushty now tho~~
+  * ~~completes calypso text not right, think it's similar - check back!~~
+* score table translations - use materials
 * ~~is starting -> starts~~
-* `Round ${round_number} score` need to sub value properly
+* ~~`Round ${round_number} score` need to sub value properly~~
 
 ## For a different branch
 
