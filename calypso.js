@@ -175,10 +175,14 @@ function (dojo, declare) {
             for(let round_number = 1; round_number < currentround; round_number++){
                 this.activateScoreButton(round_number, this.gamedatas.roundscoretable[round_number]);
             }
-            const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
+            // const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
             console.log("have a butchers at this:");
             console.log(awaiting_new_round);
             console.log(gamedatas.gamestate);
+
+            // TODO: delete this: just for quicker testing translations
+            const awaiting_new_round = true;
+
             if(awaiting_new_round){
                 this.activateScoreButton(currentround, this.gamedatas.roundscoretable[currentround]);
             }
