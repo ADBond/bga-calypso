@@ -18,9 +18,10 @@ a fluid list to remember what needs to be done before pulling in and starting a 
   * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
   * ~~think one error in translation text was meaning others not going through pipeline? all cushty now tho~~
   * ~~completes calypso text not right, think it's similar - check back!~~
-* score table translations - use materials
+* ~~score table translations - use materials ~~ Actually don't just do in js
 * ~~is starting -> starts~~
 * ~~`Round ${round_number} score` need to sub value properly~~
+* check translation stuff in score-box after round now that we've fiddled
 
 ## For a different branch
 

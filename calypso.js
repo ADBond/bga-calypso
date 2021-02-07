@@ -175,13 +175,13 @@ function (dojo, declare) {
             for(let round_number = 1; round_number < currentround; round_number++){
                 this.activateScoreButton(round_number, this.gamedatas.roundscoretable[round_number]);
             }
-            // const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
+            const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
             console.log("have a butchers at this:");
-            console.log(awaiting_new_round);
+            // console.log(awaiting_new_round);
             console.log(gamedatas.gamestate);
 
             // TODO: delete this: just for quicker testing translations
-            const awaiting_new_round = true;
+            // const awaiting_new_round = true;
 
             if(awaiting_new_round){
                 this.activateScoreButton(currentround, this.gamedatas.roundscoretable[currentround]);
@@ -599,12 +599,22 @@ function (dojo, declare) {
             wrap_translation = (text_entry) => {
                 if(typeof text_entry === 'object' && text_entry.hasOwnProperty('for_round_number')){
                     console.log("yee");
+                    console.log(text_entry);
                     return dojo.string.substitute(
                         _("Round ${round_number} score"),
                         {round_number: text_entry["for_round_number"]["round_number"]}
                     );
                 }
-                return text_entry;
+                const lookup = {
+                    "calypso_count": _("Completed calypsos"),
+                    "incomplete_calypso_count": _("Cards in incomplete calypsos"),
+                    "trickpile_count": _("Cards in trickpile"),
+                    "individual_score": _("Total individual score"),
+                    "partnership_score": _("Total round score (partnership)"),
+                    "score": _("score"),
+                    "total_score": _("Total score"),
+                };
+                return lookup[text_entry] || text_entry;
             }
             wrap_class = (table_entry) => {
                 console.log(table_entry)
@@ -613,8 +623,8 @@ function (dojo, declare) {
                     console.log("wrap");
                     let items = table_entry["to_wrap"];
                     // maybe having it concatenated here is good so client knows to translate properly?
-                    // return '<div class=\"' + items.class_name + '\">' + wrap_translation(items.string) + '</div>';
-                    return items.string;
+                    return '<div class=\"' + items.class_name + '\">' + wrap_translation(items.string_key) + '</div>';
+                    // return wrap_translation(items.string);
                 }
                 console.log("don't wrap");
                 return table_entry;

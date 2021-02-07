@@ -872,7 +872,7 @@ class Calypso extends Table
         // return "<div class=\"${class_name}\">${x}</div>";
         return array(
             "to_wrap" => array(
-                "string" => $x,
+                "string_key" => $x,
                 "class_name" => $class_name,
             ),
         );
@@ -912,18 +912,20 @@ class Calypso extends Table
 
         $header_names = array( '' );
         $header_suits = array( '' );
-        $calypso_counts = array( self::count_wrap_label(clienttranslate("Completed calypsos")) );
-        $calypso_scores = array( self::score_wrap_label(clienttranslate("score")) );
+        // just pass keys to front-end at let that handle the labels, as can't get translation working this end
+        // probably conceptually nicer having it in the js anyhow
+        $calypso_counts = array( self::count_wrap_label("calypso_count"));
+        $calypso_scores = array( self::score_wrap_label("score"));
         
-        $part_calypso_counts = array( self::count_wrap_label(clienttranslate("Cards in incomplete calypsos")) );
-        $part_calypso_scores = array( self::score_wrap_label(clienttranslate("score")) );
+        $part_calypso_counts = array( self::count_wrap_label("incomplete_calypso_count"));
+        $part_calypso_scores = array( self::score_wrap_label("score"));
     
-        $won_card_counts = array( self::count_wrap_label(clienttranslate("Remaining cards won")) );
-        $won_card_scores = array( self::score_wrap_label(clienttranslate("score")) );
+        $won_card_counts = array( self::count_wrap_label("trickpile_count"));
+        $won_card_scores = array( self::score_wrap_label("score"));
 
-        $individual_scores = array( self::score_wrap_label(clienttranslate("Total individual score")) );
+        $individual_scores = array( self::score_wrap_label("individual_score"));
         
-        $partnership_scores = array( self::score_wrap_label(clienttranslate("Total round score")) );
+        $partnership_scores = array( self::score_wrap_label("partnership_score"));
         // for each player:
         $players = self::getRoundScore($round_number);
         foreach ( $players as $player_id => $score_info ) {
@@ -982,7 +984,7 @@ class Calypso extends Table
         $header_names = array( '' );
         $header_suits = array( '' );
         $score_table = array();
-        $overall_scores = array(self::score_wrap_label(clienttranslate("Total score")));
+        $overall_scores = array(self::score_wrap_label("total_score"));
         $player_score_totals = array();
         for($round_number = 1; $round_number <= self::getGameStateValue("totalRounds"); $round_number++){
             // TODO: translate business
