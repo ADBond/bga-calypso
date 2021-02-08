@@ -65,7 +65,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Things to test
 
-* a little browser compatibility
+* ~~a little browser compatibility~~ just take this as it comes now, after fixing mobile
 
 ### Meta
 
@@ -81,3 +81,11 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * Seems to be enough around of 'beat the leader' to include as a variant. Maybe doesn't need to be done for alpha though
   * (i.e. trumping in to trump lead must be higher. Rule as it stands seems better to me, but nice to have both, not in too much danger of configuration hell here.)
+
+## Browser compatibility
+
+Checked:
+
+* Firefox (85.0.1)
+* Edge (88.0.705.63)
+* Chrome (88.0.4324.150)
