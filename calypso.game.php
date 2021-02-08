@@ -401,7 +401,7 @@ class Calypso extends Table
     }
 
     function getPartnershipPlayers($partnership){
-        if($parnership == 'minor'){
+        if($partnership == 'minor'){
             return array(self::getPlayerIDFromSuit(3), self::getPlayerIDFromSuit(4));
         }
         return array(self::getPlayerIDFromSuit(1), self::getPlayerIDFromSuit(2));
@@ -1354,9 +1354,10 @@ class Calypso extends Table
                 'player_id' => $player_id,
                 'player_name' => self::getActivePlayerName(),
                 'rank' => $currentCard ['type_arg'],
-                'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],'suit' => $currentCard ['type'],
+                'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],
+                'suit' => $currentCard ['type'],
                 'suit_element' => self::SUIT_LOOKUP[$suit_played],
-                'trump' => self::SUIT_LOOKUP[self::getPlayerSuit($player_id)]
+                'trump' => self::SUIT_LOOKUP[self::getPlayerSuit($player_id)],
              )
         );
         $this->gamestate->nextState('playCard');
@@ -1403,6 +1404,26 @@ class Calypso extends Table
         Here, you can create methods defined as "game state actions" (see "action" property in states.inc.php).
         The action method of state X is called everytime the current game state is set to X.
     */
+    function stNewGame() {
+        foreach(array("major", "minor") as $partnership){
+            $partnership_player_ids = self::getPartnershipPlayers($partnership);
+            foreach($partnership_player_ids as $player_id) {
+                self::notifyAllPlayers(
+                    'newGame',
+                    clienttranslate(
+                        '${player_name} has personal trump suit ${player_suit}, and is on the ${partnership_name} team'
+                    ),
+                    array(
+                        'player_name' => self::getPlayerName($player_id),
+                        'player_suit' => self::SUIT_LOOKUP[self::getPlayerSuit($player_id)],
+                        'partnership_name' => $this->partnerships_label[$partnership]["name"]
+                    )
+                );
+            }
+        }
+        $this->gamestate->nextState("");
+    }
+
     function stNewRound() {
         // before we start the round, we are at hand number 0
         self::setGameStateValue( 'handNumber', 0 );
@@ -1474,7 +1495,8 @@ class Calypso extends Table
         self::updateHandDealtStats();
 
         $deal_hand_args = array (
-            'dealer_name' => self::getPlayerName($new_dealer),
+            // call it player name for colouring purposes
+            'player_name' => self::getPlayerName($new_dealer),
             'dealer_id' => $new_dealer,
             'round_number' => self::getGameStateValue( 'roundNumber' ),
             'hand_number' => $hand_number,
@@ -1502,7 +1524,7 @@ class Calypso extends Table
         }
         self::notifyAllPlayers(
             'dealHand',
-            clienttranslate('${dealer_name} deals a new hand of cards'),
+            clienttranslate('${player_name} deals a new hand of cards'),
             $deal_hand_args
         );
         self::notifyAllPlayers(

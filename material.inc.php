@@ -40,3 +40,8 @@ $this->ranks_label = array(
   13 => clienttranslate('K'),
   14 => clienttranslate('A')
 );
+
+$this->partnerships_label = array(
+  "major" => array( 'name' => clienttranslate("major suits")),
+  "minor" => array( 'name' => clienttranslate("minor suits"))
+);

@@ -145,10 +145,10 @@ function (dojo, declare) {
                 [this.diamonds]: "minor",
             };
             let team_lookup_display = {
-                [this.spades]: _("Team major suits"),
-                [this.hearts]: _("Team major suits"),
-                [this.clubs]: _("Team minor suits"),
-                [this.diamonds]: _("Team minor suits"),
+                [this.spades]: _("Major suits team"),
+                [this.hearts]: _("Major suits team"),
+                [this.clubs]: _("Minor suits team"),
+                [this.diamonds]: _("Minor suits team"),
             };
             for( player_id in gamedatas.players )
             {
@@ -801,6 +801,8 @@ function (dojo, declare) {
 
             // generic stuff, mostly for dev
             // dojo.subscribe('debug', this, "notif_debug");
+            dojo.subscribe('newGame', this, "notif_newGame");
+
             dojo.subscribe('newHandBegin', this, "notif_newHandBegin");
 
             dojo.subscribe('newRound', this, "notif_newRound");
@@ -825,6 +827,12 @@ function (dojo, declare) {
             
             dojo.subscribe( 'scoreDisplay', this, "notif_scoreDisplay" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
+        },
+
+        notif_newGame: function(notif) {
+            // currently just displaying log information, but could always add some animation here
+            console.log("new game bizniss");
+            console.log(notif.args);
         },
 
         notif_newRound: function(notif) {
