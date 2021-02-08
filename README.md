@@ -6,6 +6,13 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* tooltips don't get removed once added
+* Hand display buggered on mobile (think overlap is culprit)
+* hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh
+* trim down (misc/todo_list) a decent amount
+* Set different default colours
+* Check that there's nowt that's colourblind-unfriendly
+  * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
 
 ## For a different branch
 
