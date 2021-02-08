@@ -16,6 +16,12 @@
 * ~~Fix js bug at end of a hand that needs refresh~~
 * ~~stop games ending in ties~~
 
+### Translations
+
+* ~~Make sure I deal with the translation stuff properly, stop string concatenation etc.~~
+  * ~~make sure parameters use i18n etc~~
+* ~~Start off saying who has which trump suit, and who is partnered with whom~~
+
 
 ### Dev
 
@@ -51,6 +57,7 @@
 * ~~ When someone wins trick, do I want to say why? (e.g. player lead their trump suit etc.)?? FFT~~
   * ~~will be tracking this for stats, so should be easy to add in. Probably as a log option?~~ overkill - add if requested
 * ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
+* ~~get rid of ... a very long username thingy~~
 
 ### Images
 
@@ -72,6 +79,10 @@
 * ~~Fix dealer button animation~~
 * ~~New cards in calypso get eaten by calypso animation - need to handle this!~~
   * ~~maybe calypso animation should head to player boxes to help signify scoring being there~~
+* ~~'"X" deals a new hand of cards' is not translating, and not sure why...??~~
+  * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
+  * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
+* ~~final scores not updating in player boxes (round 2+)(okay on refresh)~~
 
 ### Other UI
 
@@ -126,3 +137,24 @@
 * ~~potentially 'secret' info in trickpile size??~~
 * ~~Score tables suit icons~~
 * ~~score buttons not updated on refresh while waiting for new round~~
+
+### PR 11
+
+* ~~optional log detail (c.f. Hungarian Tarock)~~
+* ~~Start off saying who has which trump suit, and who is partnered with whom~~
+  * ~~teams through some light colours, and put in player boxes upstairs (with trump suits)~~
+  * ~~put all playerbox stuff in single div~~
+  * ~~style that div my man~~
+* ~~delete needless notifications~~
+* ~~Make sure I deal with the translation stuff properly, stop string concatenation etc.~~
+  * ~~make sure parameters use i18n etc~~
+* ~~'"X" deals a new hand of cards' is not translating, and not sure why...??~~
+  * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
+  * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
+  * ~~think one error in translation text was meaning others not going through pipeline? all cushty now tho~~
+  * ~~completes calypso text not right, think it's similar - check back!~~
+* ~~score table translations - use materials ~~ Actually don't just do in js
+* ~~is starting -> starts~~
+* ~~`Round ${round_number} score` need to sub value properly~~
+* ~~check translation stuff in score-box after round now that we've fiddled~~
+
