@@ -20,9 +20,9 @@
 ./calypso.game.php:990:            // TODO: translate business
 ./calypso.game.php:1273:            // TODO: really not convinced I've got the translation stuff right here.
 ./calypso.game.php:1328:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1449:        // TODO: cleaner with map
-./calypso.game.php:1507:            // TODO: clearRenounceFlags delete
-./calypso.game.php:1564:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
+./calypso.game.php:1450:        // TODO: cleaner with map
+./calypso.game.php:1508:            // TODO: clearRenounceFlags delete
+./calypso.game.php:1565:            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
 ./calypso.js:85:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:95:            // TODO: decide on overlap or not
 ./calypso.js:114:                // TODO: probably delete this function
@@ -42,8 +42,7 @@
 ./calypso.js:705:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
 ./calypso.js:931:            // TODO: should this be delayed/animated?
 ./calypso.js:998:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:1010:            // TODO here need real total, not just round total. adjust in php
-./calypso.js:1079:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:1078:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
 ./calypso_style.scss:146:// TODO: really want this smaller, but need to do the scaling properly.

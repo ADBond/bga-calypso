@@ -1416,7 +1416,8 @@ class Calypso extends Table
                     array(
                         'player_name' => self::getPlayerName($player_id),
                         'player_suit' => self::SUIT_LOOKUP[self::getPlayerSuit($player_id)],
-                        'partnership_name' => $this->partnerships_label[$partnership]["name"]
+                        'partnership_name' => $this->partnerships_label[$partnership]["name"],
+                        'i18n' => array ('partnership_name'),
                     )
                 );
             }

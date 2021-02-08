@@ -1007,10 +1007,9 @@ function (dojo, declare) {
         },
 
         notif_scoreUpdate : function(notif) {
-            // TODO here need real total, not just round total. adjust in php
             notif.args.scores.forEach(
                 score_info => (
-                    this.scoreCtrl[score_info.player_id].toValue(score_info.total_score)
+                    this.scoreCtrl[score_info.player_id].incValue(score_info.total_score)
                 )
             );
         },
