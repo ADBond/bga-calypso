@@ -64,6 +64,10 @@ $game_options = array(
     102 => array(
         'name' => totranslate('Partnerships'),
         'values' => array(
+            4 => array(
+                'name' => totranslate('Random'),
+                'description' => totranslate('Partnerships are allocated randomly')
+            ),
             1 => array(
                 'name' => totranslate('By table order - 1st and 3rd against 2nd and 4th'),
             ),
@@ -73,9 +77,19 @@ $game_options = array(
             3 => array(
                 'name' => totranslate('By table order - 1st and 4th against 2nd and 3rd'),
             ),
-            4 => array(
-                'name' => totranslate('Random'),
-                'description' => totranslate('Partnerships are allocated randomly')
+        )
+    ),
+    // I like it in Hungarian Tarokk as an option, so keep it here. Just like real life!
+    103 => array(
+        'name' => totranslate('Game log detail'),
+        'values' => array(
+            1 => array(
+                'name' => totranslate('All cards played are entered into the gamelog'),
+                'tmdisplay' => totranslate('Cards played in gamelog')
+            ),
+            2 => array(
+                'name' => totranslate('Only trick winners are entered into the gamelog'),
+                'tmdisplay' => totranslate('Cards played not in gamelog')
             ),
         )
     ),

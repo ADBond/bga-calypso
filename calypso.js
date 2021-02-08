@@ -26,13 +26,14 @@ function (dojo, declare) {
         constructor: function(){
             console.log('calypso constructor');
 
-            // TODO: may want to tweak these numbers - from Hearts (w=72, h=96)
             this.cardwidth = 72;
             this.cardheight = 96;
 
-            // Here, you can init the global letiables of your user interface
-            // Example:
-            // this.myGlobalValue = 0;
+            // see material.inc.php
+            this.spades = 1;
+            this.hearts = 2;
+            this.clubs = 3;
+            this.diamonds = 4;
 
         },
         
@@ -57,9 +58,6 @@ function (dojo, declare) {
             {
                 let player = gamedatas.players[player_id];
                 let player_trump = player["trump_suit"];
-                let trump_lookup = {
-                    1: "spades", 2: "hearts", 3: "clubs", 4: "diamonds"
-                };
 
                 if(player_id == gamedatas.dealer){
                     let dealer_area_id = 'clp-dealer-' + player_id;
@@ -139,24 +137,53 @@ function (dojo, declare) {
                 console.log("calypso has: " + suit + ", " + rank + ", and...");
                 this.placeCardInCalypso(player_id, suit, rank, card.id);
             }
-            console.log("completed calypo counts");
+            console.log("completed calypso counts");
+            let team_lookup = {
+                [this.spades]: "major",
+                [this.hearts]: "major",
+                [this.clubs]: "minor",
+                [this.diamonds]: "minor",
+            };
+            let team_lookup_display = {
+                [this.spades]: _("Major suits team"),
+                [this.hearts]: _("Major suits team"),
+                [this.clubs]: _("Minor suits team"),
+                [this.diamonds]: _("Minor suits team"),
+            };
             for( player_id in gamedatas.players )
             {
                 const player = gamedatas.players[player_id];
                 const player_board_div = $(`player_board_${player_id}`);
-                dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
+                // dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
                 this.setCalypsoPile(player_id, player["completed_calypsos"]);
+                
+                dojo.place(
+                    this.format_block(
+                        'jstpl_playerbox_additions',
+                        {
+                            team_name: team_lookup[player["trump_suit"]],
+                            team_name_display: team_lookup_display[player["trump_suit"]],
+                            ...player,
+                        }
+                    ),
+                    player_board_div
+                );
+                
             }
-            const totalrounds = this.gamedatas.totalrounds;
-            const currentround = this.gamedatas.roundnumber;
+            const totalrounds = gamedatas.totalrounds;
+            const currentround = gamedatas.roundnumber;
             // TODO: need fancier checking here, in case we are in awaitNewRound
             for(let round_number = 1; round_number < currentround; round_number++){
                 this.activateScoreButton(round_number, this.gamedatas.roundscoretable[round_number]);
             }
             const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
             console.log("have a butchers at this:");
-            console.log(awaiting_new_round);
+            // console.log(awaiting_new_round);
             console.log(gamedatas.gamestate);
+
+            // TODO: delete this: just for quicker testing translations
+            // const awaiting_new_round = true;
+
             if(awaiting_new_round){
                 this.activateScoreButton(currentround, this.gamedatas.roundscoretable[currentround]);
             }
@@ -169,6 +196,14 @@ function (dojo, declare) {
                 dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
                 dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
             }
+            // button text!
+            for(let round_number = 1; round_number <= totalrounds; round_number++){
+                $(`clp-round-scores-button-${round_number}`).textContent = dojo.string.substitute(
+                    _("Round ${round_number} scores"),
+                    {round_number: round_number}
+                );
+            }
+            $("clp-round-scores-button-overall").textContent = _("Round-by-round scores");
 
             console.log("are the renounce flags on?");
             console.log(this.gamedatas.renounce_flags_on);
@@ -205,24 +240,10 @@ function (dojo, declare) {
             console.log( 'Entering state: '+ stateName );
             
             switch( stateName )
-            {
-            
+            {            
                 case 'playerTurn':
                     this.setHandActiveness(this.isCurrentPlayerActive());
                     break;
-            /* Example:
-            
-            case 'myGameState':
-            
-                // Show some HTML block at this game state
-                dojo.style( 'my_html_block_id', 'display', 'block' );
-                
-                break;
-           */
-           
-           
-            case 'dummmy':
-                break;
             }
         },
 
@@ -235,18 +256,6 @@ function (dojo, declare) {
             
             switch( stateName )
             {
-            
-            /* Example:
-            
-            case 'myGameState':
-            
-                // Hide the HTML block we are displaying only during this game state
-                dojo.style( 'my_html_block_id', 'display', 'none' );
-                
-                break;
-           */
-           
-           
             case 'dummmy':
                 break;
             }               
@@ -280,7 +289,6 @@ function (dojo, declare) {
         
         */
         // Get card unique identifier based on its suit and rank
-        // TODO: Can we make this a bit nicer to deal with e.g. w/classes?
         getCardUniqueType : function(suit, rank) {
             return (suit - 1) * 13 + (rank - 2);
         },
@@ -329,6 +337,7 @@ function (dojo, declare) {
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
+            // TODO: this can all be css
             dojo.place(this.format_block('jstpl_cardontable', {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
@@ -538,8 +547,9 @@ function (dojo, declare) {
             console.log("update that banner!");
             console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
             // TODO: look here for your js translation needs!
+            // don't need to translate game title
             $("clp-game-info").innerHTML =  dojo.string.substitute(
-                '<div class="clp-gametitle">' + _("Calypso") + "</div>" + 
+                '<div class="clp-gametitle">Calypso</div>' + 
                     "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
                     "<br>" + _("Hand ${handnumber} of 4"),
                 {
@@ -579,9 +589,49 @@ function (dojo, declare) {
         // saved a lot of pain in trying to hack something together!
         // TODO: fix API - don't need round_number if title supplied!
         showResultDialog: function (round_number, score_table, title=null) {
+            // console.log("tabley bizzos");
+            // console.log(score_table);
             if(title === null){
-                title = _("Scores for round ") + round_number;
+                title = dojo.string.substitute(
+                    _("Round ${round_number} score"),
+                    {round_number: round_number}
+                );
             }
+            wrap_translation = (text_entry) => {
+                if(typeof text_entry === 'object' && text_entry.hasOwnProperty('for_round_number')){
+                    console.log("yee");
+                    console.log(text_entry);
+                    return dojo.string.substitute(
+                        _("Round ${round_number} score"),
+                        {round_number: text_entry["for_round_number"]["round_number"]}
+                    );
+                }
+                const lookup = {
+                    "calypso_count": _("Completed calypsos"),
+                    "incomplete_calypso_count": _("Cards in incomplete calypsos"),
+                    "trickpile_count": _("Cards in trickpile"),
+                    "individual_score": _("Total individual score"),
+                    "partnership_score": _("Total round score (partnership)"),
+                    "score": _("score"),
+                    "total_score": _("Total score"),
+                };
+                return lookup[text_entry] || text_entry;
+            }
+            wrap_class = (table_entry) => {
+                console.log(table_entry)
+                console.log(table_entry);
+                if(typeof table_entry === 'object' && table_entry.hasOwnProperty('to_wrap')){
+                    console.log("wrap");
+                    let items = table_entry["to_wrap"];
+                    // maybe having it concatenated here is good so client knows to translate properly?
+                    return '<div class=\"' + items.class_name + '\">' + wrap_translation(items.string_key) + '</div>';
+                    // return wrap_translation(items.string);
+                }
+                console.log("don't wrap");
+                return table_entry;
+            }
+            score_table = score_table.map((row) => row.map(wrap_class));
+            // console.log(score_table);
             let scoring_dialog = this.displayTableWindow(
                 "roundScore",
                 title,
@@ -734,41 +784,6 @@ function (dojo, declare) {
             }
         },
 
-        /* Example:
-        
-        onMyMethodToCall1: function( evt )
-        {
-            console.log( 'onMyMethodToCall1' );
-            
-            // Preventing default browser reaction
-            dojo.stopEvent( evt );
-
-            // Check that this action is possible (see "possibleactions" in states.inc.php)
-            if( ! this.checkAction( 'myAction' ) )
-            {   return; }
-
-            this.ajaxcall( "/calypso/calypso/myAction.html", { 
-                                                                    lock: true, 
-                                                                    myArgument1: arg1, 
-                                                                    myArgument2: arg2,
-                                                                    ...
-                                                                 }, 
-                         this, function( result ) {
-                            
-                            // What to do after the server call if it succeeded
-                            // (most of the time: nothing)
-                            
-                         }, function( is_error) {
-
-                            // What to do after the server call in anyway (success or failure)
-                            // (most of the time: nothing)
-
-                         } );        
-        },        
-        
-        */
-
-        
         ///////////////////////////////////////////////////
         //// Reaction to cometD notifications
 
@@ -785,19 +800,21 @@ function (dojo, declare) {
             console.log('notifications subscriptions setup');
 
             // generic stuff, mostly for dev
-            dojo.subscribe('debug', this, "notif_debug");
-            dojo.subscribe('update', this, "notif_update");
+            // dojo.subscribe('debug', this, "notif_debug");
+            dojo.subscribe('newGame', this, "notif_newGame");
+
+            dojo.subscribe('newHandBegin', this, "notif_newHandBegin");
 
             dojo.subscribe('newRound', this, "notif_newRound");
             // the actual cards that a player receives
-            dojo.subscribe('newHand', this, "notif_newHand");
+            dojo.subscribe('newCards', this, "notif_newCards");
             // admin around hand/dealer changing
             dojo.subscribe('dealHand', this, "notif_dealHand");
         
             dojo.subscribe('playCard', this, "notif_playCard");
 
             dojo.subscribe('renounceFlag', this, "notif_renounceFlag");
-            dojo.subscribe('clearRenounceFlags', this, "notif_clearRenounceFlags");
+            // dojo.subscribe('clearRenounceFlags', this, "notif_clearRenounceFlags");
 
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             dojo.subscribe('actionRequired', this, "notif_actionRequired");
@@ -810,6 +827,12 @@ function (dojo, declare) {
             
             dojo.subscribe( 'scoreDisplay', this, "notif_scoreDisplay" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
+        },
+
+        notif_newGame: function(notif) {
+            // currently just displaying log information, but could always add some animation here
+            console.log("new game bizniss");
+            console.log(notif.args);
         },
 
         notif_newRound: function(notif) {
@@ -843,7 +866,7 @@ function (dojo, declare) {
             }
         },
 
-        notif_newHand : function(notif) {
+        notif_newCards : function(notif) {
             this.playerHand.removeAll();
             // refresh tooltips helps for after new-round animations
             //this.playerHand.updateDisplay();
@@ -864,13 +887,16 @@ function (dojo, declare) {
             // console.log(notif);
             this.changeDealer(notif.args.dealer_id);
             this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
+            if(notif.args.renounce_flags_clear){
+                this.clearRenounceFlags(notif.args.players, notif.args.suits);
+            }
         },
 
-        notif_clearRenounceFlags: function(notif) {
-            // console.log("clearing houd");
-            // console.log(notif);
-            this.clearRenounceFlags(notif.args.players, notif.args.suits);
-        },
+        // notif_clearRenounceFlags: function(notif) {
+        //     // console.log("clearing houd");
+        //     // console.log(notif);
+        //     this.clearRenounceFlags(notif.args.players, notif.args.suits);
+        // },
 
         notif_playCard : function(notif) {
             this.playCardOnTable(notif.args.player_id, notif.args.suit, notif.args.rank, notif.args.card_id);
@@ -882,8 +908,6 @@ function (dojo, declare) {
 
         notif_trickWin : function(notif) {
             // We do nothing here (just wait in order players can view the 4 cards played before they're gone.
-            // Actually,
-            // What was I about to say above ^ ????
         },
         notif_calypsoComplete : function(notif) {
             // console.log(notif.args);
@@ -964,7 +988,7 @@ function (dojo, declare) {
             // anim.play();
         },
         notif_actionRequired : function(notif) {
-            // nothing needed here
+            // waiting for player to play a card
         },
 
 
@@ -983,10 +1007,9 @@ function (dojo, declare) {
         },
 
         notif_scoreUpdate : function(notif) {
-            // TODO here need real total, not just round total. adjust in php
             notif.args.scores.forEach(
                 score_info => (
-                    this.scoreCtrl[score_info.player_id].toValue(score_info.total_score)
+                    this.scoreCtrl[score_info.player_id].incValue(score_info.total_score)
                 )
             );
         },
@@ -1061,31 +1084,10 @@ function (dojo, declare) {
             }
             
         },
-        
-        notif_debug : function(notif) {
-            console.log("debug message received ;)")
-            // dummy
-        },
 
-        notif_update : function(notif) {
-            // AB TODO: do we need to do anything here?
-            // is there any point in this? Probably no
-            // I imagine it will be best to split this out into individual notifications
-            // e.g. newHand (animate dealer button etc)
+        notif_newHandBegin : function(notif) {
+            // just says a new hand is starting
         }
-        /*
-        Example:
-        
-        notif_cardPlayed: function( notif )
-        {
-            console.log( 'notif_cardPlayed' );
-            console.log( notif );
-            
-            // Note: notif.args contains the arguments specified during you "notifyAllPlayers" / "notifyPlayer" PHP call
-            
-            // TODO: play the card in the user interface.
-        },    
-        
-        */
+
    });             
 });

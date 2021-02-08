@@ -58,7 +58,7 @@ $machinestates = array(
         "description" => clienttranslate("Game setup"),
         "type" => "manager",
         "action" => "stGameSetup",
-        "transitions" => array( "" => 21 )
+        "transitions" => array( "" => 22 )
     ),
 
     /// New hand
@@ -76,6 +76,13 @@ $machinestates = array(
         "type" => "game",
         "action" => "stNewRound",
         "transitions" => array( "" => 20 )
+    ),
+    22 => array(
+        "name" => "newGame",
+        "description" => "",
+        "type" => "game",
+        "action" => "stNewGame",
+        "transitions" => array( "" => 21 )
     ),
 
     // Trick

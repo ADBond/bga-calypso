@@ -6,6 +6,23 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* ~~optional log detail (c.f. Hungarian Tarock)~~
+* ~~Start off saying who has which trump suit, and who is partnered with whom~~
+  * ~~teams through some light colours, and put in player boxes upstairs (with trump suits)~~
+  * ~~put all playerbox stuff in single div~~
+  * ~~style that div my man~~
+* ~~delete needless notifications~~
+* ~~Make sure I deal with the translation stuff properly, stop string concatenation etc.~~
+  * ~~make sure parameters use i18n etc~~
+* ~~'"X" deals a new hand of cards' is not translating, and not sure why...??~~
+  * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
+  * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
+  * ~~think one error in translation text was meaning others not going through pipeline? all cushty now tho~~
+  * ~~completes calypso text not right, think it's similar - check back!~~
+* ~~score table translations - use materials ~~ Actually don't just do in js
+* ~~is starting -> starts~~
+* ~~`Round ${round_number} score` need to sub value properly~~
+* ~~check translation stuff in score-box after round now that we've fiddled~~
 
 ## For a different branch
 
@@ -16,12 +33,14 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Logic
 
 * anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
+* player preference for auto-confirm new round
+  * not for alpha
 
 ### Notifications
 
-* Make sure I deal with the translation stuff properly, stop string concatenation etc.
-  * make sure parameters use i18n etc
-* Start off saying who has which trump suit, and who is partnered with whom
+* ~~Make sure I deal with the translation stuff properly, stop string concatenation etc.~~
+  * ~~make sure parameters use i18n etc~~
+* ~~Start off saying who has which trump suit, and who is partnered with whom~~
 
 ### Dev
 
@@ -33,16 +52,15 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Display
 
-* optional log detail (c.f. Hungarian Tarock)
 * Set different default colours
 * Check that there's nowt that's colourblind-unfriendly
   * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
   * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
-  * teams through some light colours, and put in player boxes upstairs (with trump suits)
 * Order hand with personal trumps separated?
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
-* tooltips don't get removed once added
+  * NFA
+* ~~get rid of ... a very long username thingy~~
 
 ### Images
 
@@ -52,10 +70,13 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ## Things to fix
 
-* '"X" deals a new hand of cards' is not translating, and not sure why...??
-  * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
-  * doesn't like strings with "." at the end - can break new hand/new round logs with those
-* final scores not updating in player boxes (round 2+)(okay on refresh)
+* ~~'"X" deals a new hand of cards' is not translating, and not sure why...??~~
+  * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
+  * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
+* ~~final scores not updating in player boxes (round 2+)(okay on refresh)~~
+* tooltips don't get removed once added
+* Hand display buggered on mobile (think overlap is culprit)
+* hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh
 
 ### Other UI
 
@@ -71,6 +92,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Misc
 
 * Zombie turn
+* Check timings
+* Pre-alpha checklist
 
 ### Variants
 

@@ -90,17 +90,23 @@
   font-size: 30px;
 }
 
+.clp-playerbox-additions {
+  clear: both;
+}
+
 .clp-calypso-info {
   clear: both;
   width: 64px;
+  margin: 5px auto;
+  display: flex;
 }
 
 .clp-info-count {
   font-size: 21.3333333333px;
   font-weight: bold;
-  margin-left: 42px;
+  margin-left: 10px;
   padding-top: 5.3333333333px;
-  vertical-align: middle;
+  flex-grow: 1;
 }
 
 .clp-suit-icon {
@@ -659,10 +665,36 @@
   text-align: center;
   width: 494px;
   height: 156px;
-  outline: solid 1px black;
   padding: 10px;
   /* TODO: while I figure out what to do: */
   background: rgba(255, 255, 255, 0.75);
+}
+
+.clp-player-personal-area-1, .clp-player-personal-area-2 {
+  outline: solid 5px #9fff3f;
+}
+
+.clp-player-personal-area-3, .clp-player-personal-area-4 {
+  outline: solid 5px #ffff3f;
+}
+
+.clp-teamname {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin: 5px;
+  text-align: center;
+  background-color: #AAA;
+  display: block;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.clp-teamname-major {
+  color: #9fff3f;
+}
+
+.clp-teamname-minor {
+  color: #ffff3f;
 }
 
 .clp-renounce-indicators {
