@@ -111,21 +111,30 @@ $title_size: $info_size * 1.5;
     font-size: $title_size;
 }
 $icon_size: 32px;
+.clp-playerbox-additions {
+    clear: both;
+    // background-color: #AAA;
+}
 .clp-calypso-info {
     clear: both;
     width: 2*$icon_size;
     // display: flex;
     // align-self: center;
+    margin: 5px auto;
+    // float: left;
+    display:flex;
+    
 }
 $display_font: 2*$icon_size/3;
 .clp-info-count {
     font-size: $display_font;
     font-weight: bold;
-    // margin-left: 10px;
-    margin-left: $icon_size + 10px;
+    margin-left: 10px;
+    // margin-left: $icon_size + 10px;
     // flex-grow: 1;
     padding-top: ($icon_size - $display_font)/2;
-    vertical-align: middle;
+    // vertical-align: middle;
+    flex-grow: 1;
     
     // transition: 2s;
     // height: $icon_size;
@@ -373,9 +382,9 @@ $border_width: 5px;
     margin: 5px;
     text-align: center;
     // background-color: rgba(#000, 0.7);
-    background-color: #777;
+    background-color: #AAA;
     // width: max-content;
-    display: inline-block;
+    display: block;
     padding: 6px;
     border-radius: 5px;
 }

@@ -58,7 +58,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * Order hand with personal trumps separated?
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
-* get rid of ... a very long username thingy
+* ~~get rid of ... a very long username thingy~~
 
 ### Images
 
@@ -68,9 +68,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ## Things to fix
 
-* '"X" deals a new hand of cards' is not translating, and not sure why...??
-  * some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"
-  * doesn't like strings with "." at the end - can break new hand/new round logs with those
+* ~~'"X" deals a new hand of cards' is not translating, and not sure why...??~~
+  * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
+  * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
 * final scores not updating in player boxes (round 2+)(okay on refresh)
 * tooltips don't get removed once added
 * Hand display buggered on mobile (think overlap is culprit)

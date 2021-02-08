@@ -90,17 +90,23 @@
   font-size: 30px;
 }
 
+.clp-playerbox-additions {
+  clear: both;
+}
+
 .clp-calypso-info {
   clear: both;
   width: 64px;
+  margin: 5px auto;
+  display: flex;
 }
 
 .clp-info-count {
   font-size: 21.3333333333px;
   font-weight: bold;
-  margin-left: 42px;
+  margin-left: 10px;
   padding-top: 5.3333333333px;
-  vertical-align: middle;
+  flex-grow: 1;
 }
 
 .clp-suit-icon {
@@ -677,8 +683,8 @@
   font-size: 1.2em;
   margin: 5px;
   text-align: center;
-  background-color: #777;
-  display: inline-block;
+  background-color: #AAA;
+  display: block;
   padding: 6px;
   border-radius: 5px;
 }
