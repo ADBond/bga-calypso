@@ -11,8 +11,9 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh
 * trim down (misc/todo_list) a decent amount
 * Set different default colours
-* Check that there's nowt that's colourblind-unfriendly
-  * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
+* ~~Check that there's nowt that's colourblind-unfriendly~~
+  * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
+  * doesn't matter for player names so just keep them as-is. Checked okay (I think) for where it matters more.
 
 ## For a different branch
 

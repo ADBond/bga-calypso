@@ -99,8 +99,32 @@ $gameinfos = array(
 // Diplomacy of the game, from 0 (no interaction in this game) to 5 (totally based on interaction and discussion between players)
 'diplomacy' => 1,
 
+// standard colour options:
+// yes
+// default
+    #ffffff White
+    #008000 Green
+    #982fff Purple
+    #f07f16 Orange
+// rest that are okay
+    #e94190 Pink
+    #0000ff Blue
+    #ff0000 Red
+    #000000 Black
+// probably not
+    #ffa500 Yellow
+    #72c3b1 Cyan
+// no
+    #bdd002 Khaki green (which is a shame)
+    #7b7b7b Gray
+
 // Colors attributed to players
-'player_colors' => array( "ff0000", "008000", "0000ff", "ffa500", "773300" ),
+'player_colors' => array(
+    // default set
+    "ffffff", "008000", "982fff", "f07f16",
+    // and others that fit
+    "e94190", "0000ff", "ff0000", "000000",
+),
 
 // Favorite colors support : if set to "true", support attribution of favorite colors based on player's preferences (see reattributeColorsBasedOnPreferences PHP method)
 // NB: this parameter is used only to flag games supporting this feature; you must use (or not use) reattributeColorsBasedOnPreferences PHP method to actually enable or disable the feature.
