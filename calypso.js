@@ -154,15 +154,16 @@ function (dojo, declare) {
             {
                 const player = gamedatas.players[player_id];
                 const player_board_div = $(`player_board_${player_id}`);
-                dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
+                // dojo.place( this.format_block('jstpl_player_calypso_info', player ), player_board_div );
                 this.setCalypsoPile(player_id, player["completed_calypsos"]);
-
+                
                 dojo.place(
                     this.format_block(
-                        'jstpl_player_teamname',
+                        'jstpl_playerbox_additions',
                         {
                             team_name: team_lookup[player["trump_suit"]],
                             team_name_display: team_lookup_display[player["trump_suit"]],
+                            ...player,
                         }
                     ),
                     player_board_div

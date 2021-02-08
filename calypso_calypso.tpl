@@ -76,26 +76,41 @@
 <script type="text/javascript">
 
 // Javascript HTML templates
-// var jstpl_tempscore = '<div class="clp-score-big" id="clp-new-tmp-count">${new_count}<div>'
-
+// for cards to play to tricks
 var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}"\
                             style="background-position:-${x}px -${y}px; z-index:${z}">\
                         </div>';
+// animating dealer changing. TODO: deprecated??
 var jstpl_dealerindicator = '<div id="clp-dealerbutton" class="clp-dealerbutton"></div>';
+// animating moving card to calypso
 var jstpl_calypsocard = '<div class="clp-calypsocard-space clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}"\
                             id="clp-calypsocard-${player_id}-${rank}">\
-                        </div>'
+                        </div>';
+// for cards that remain in place after calypso goes
 var jstpl_calypsocard_existing = '<div class="clp-calypsocard clp-captured-card clp-calypsocard-face-${suit}-${rank}\
                                 clp-face-up-card clp-calypsocard-${rank} clp-card-space-${suit}"\
                                 id="clp-calypsocard-${player_id}-${rank}">\
-                            </div>'
+                            </div>';
+// up in player boxes
+var jstpl_playerbox_additions = '<div class="clp-playerbox-additions" class="clp-playerbox-additions">\
+        <div class="clp-calypso-info">\
+            <div id="clp-suit-indicator-info-${id}" class="clp-suit-icon clp-suit-icon-${trump_suit}">\
+            </div>\
+            <span class="clp-info-count" id="clp-info-count-${id}">${completed_calypsos}</span>\
+        </div>\
+        <div class="clp-teamname clp-teamname-${team_name}">${team_name_display}</div>\
+    </div>';
+/*
 var jstpl_player_calypso_info = '<div class="clp-calypso-info">\
                                     <div id="clp-suit-indicator-info-${id}" class="clp-suit-icon clp-suit-icon-${trump_suit}">\
                                     </div>\
                                     <div class="clp-info-count" id="clp-info-count-${id}">${completed_calypsos}</span>\
                                 </div>';
 var jstpl_player_teamname = '<div class="clp-teamname clp-teamname-${team_name}">${team_name_display}</div>';
-var jstpl_suiticon = '<div id="clp-suit-for-score" class="clp-suit-icon clp-suit-icon-${trump_suit}"></div>'
+*/
+// animate calypso count increment
+var jstpl_suiticon = '<div id="clp-suit-for-score" class="clp-suit-icon clp-suit-icon-${trump_suit}"></div>';
+
 </script>
 
 {OVERALL_GAME_FOOTER}
