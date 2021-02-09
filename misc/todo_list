@@ -14,21 +14,21 @@
 ./calypso.js:114:                // TODO: probably delete this function
 ./calypso.js:115:                // TODO: set hoverable here? but then also need to do it when your turn comes around
 ./calypso.js:175:            // TODO: need fancier checking here, in case we are in awaitNewRound
-./calypso.js:184:            // TODO: delete this: just for quicker testing translations
-./calypso.js:340:            // TODO: this can all be css
-./calypso.js:344:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
-./calypso.js:394:            // TODO: this should stay in css - use class manipulation
-./calypso.js:409:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
-./calypso.js:478:                // TODO: still clips a litlle, might be removed too early
-./calypso.js:549:            // TODO: look here for your js translation needs!
-./calypso.js:568:            // TODO: specialise to suits?
-./calypso.js:590:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:664:            // TODO: think about this mate, not sure here
-./calypso.js:679:                        // TODO: still clips a litlle, might be removed too early
-./calypso.js:705:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:931:            // TODO: should this be delayed/animated?
-./calypso.js:998:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:1078:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:186:            // TODO: delete this: just for quicker testing translations
+./calypso.js:342:            // TODO: this can all be css
+./calypso.js:346:                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
+./calypso.js:396:            // TODO: this should stay in css - use class manipulation
+./calypso.js:411:            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
+./calypso.js:480:                // TODO: still clips a litlle, might be removed too early
+./calypso.js:551:            // TODO: look here for your js translation needs!
+./calypso.js:570:            // TODO: specialise to suits?
+./calypso.js:592:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:666:            // TODO: think about this mate, not sure here
+./calypso.js:681:                        // TODO: still clips a litlle, might be removed too early
+./calypso.js:707:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:933:            // TODO: should this be delayed/animated?
+./calypso.js:1000:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:1080:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
 ./calypso_style.scss:146:// TODO: really want this smaller, but need to do the scaling properly.

@@ -9,10 +9,11 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * tooltips don't get removed once added
 * ~~Hand display buggered on mobile (think overlap is culprit)~~
   * ~~believe this is an artifact of hand height being too small - happens also on window shrink~~
-* hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh
+* ~~hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh~~
+  * need to check, but can wait til i'm doing a job-lot
 * trim down (./misc/todo_list) a decent amount
   * started with 54 - get down to at most 30
-* Set different default colours
+* ~~Set different default colours~~
 * ~~Check that there's nowt that's colourblind-unfriendly~~
   * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
   * doesn't matter for player names so just keep them as-is. Checked okay (I think) for where it matters more.
