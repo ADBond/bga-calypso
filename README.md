@@ -6,7 +6,7 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* tooltips don't get removed once added
+* ~~tooltips don't get removed once added~~
 * ~~Hand display buggered on mobile (think overlap is culprit)~~
   * ~~believe this is an artifact of hand height being too small - happens also on window shrink~~
 * ~~hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh~~
@@ -43,9 +43,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Display
 
-* Set different default colours
-* Check that there's nowt that's colourblind-unfriendly
-  * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
+* ~~Set different default colours~~
+* ~~Check that there's nowt that's colourblind-unfriendly~~
+  * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
   * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
 * Order hand with personal trumps separated?
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
@@ -60,9 +60,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ## Things to fix
 
-* tooltips don't get removed once added
-* Hand display buggered on mobile (think overlap is culprit)
-* hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh
+* ~~tooltips don't get removed once added~~
+* ~~Hand display buggered on mobile (think overlap is culprit)~~
+* ~~hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh~~
 
 ### Other UI
 
@@ -79,7 +79,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * Zombie turn
 * Check timings
-* Pre-alpha checklist
+* ~~Pre-alpha checklist - all covered~~
 
 ### Variants
 

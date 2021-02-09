@@ -22,13 +22,13 @@
 ./calypso.js:480:                // TODO: still clips a litlle, might be removed too early
 ./calypso.js:551:            // TODO: look here for your js translation needs!
 ./calypso.js:570:            // TODO: specialise to suits?
-./calypso.js:592:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:666:            // TODO: think about this mate, not sure here
-./calypso.js:681:                        // TODO: still clips a litlle, might be removed too early
-./calypso.js:707:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:933:            // TODO: should this be delayed/animated?
-./calypso.js:1000:            // TODO: again this should be farmed out, ideally to a generalised function?
-./calypso.js:1080:                // TODO: this function is what needs fiddling with - play animation after we've set flags
+./calypso.js:599:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:673:            // TODO: think about this mate, not sure here
+./calypso.js:688:                        // TODO: still clips a litlle, might be removed too early
+./calypso.js:714:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:940:            // TODO: should this be delayed/animated?
+./calypso.js:1007:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:1087:                // TODO: this function is what needs fiddling with - play animation after we've set flags
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
 ./calypso_style.scss:146:// TODO: really want this smaller, but need to do the scaling properly.

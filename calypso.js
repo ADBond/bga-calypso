@@ -569,6 +569,13 @@ function (dojo, declare) {
             this.addTooltipToClass( "clp-calypsopile-full", _( "This player has completed one or more calypsos this round" ), "" );
             // TODO: specialise to suits?
             this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit this hand" ), "" );
+            let elements_without_tooltips = dojo.query(".clp-inactive-renounce, .clp-calypsopile-empty");
+            // let empty_calypsopiles = dojo.query(".clp-calypsopile-empty");
+            console.log(elements_without_tooltips);
+            for(let element in elements_without_tooltips){
+                this.removeTooltip(element["id"]);
+            }
+            
         },
         // displayRoundScores: function(round_number){
         //     console.log("trigerring this chappy!");
