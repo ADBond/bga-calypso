@@ -6,9 +6,9 @@
 ./calypso.game.php:737:                // AB TODO: updated db when I've updated the model to allow the field
 ./calypso.game.php:782:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
 ./calypso.game.php:956:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:1299:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1421:        // TODO: cleaner with map
-./calypso.game.php:1479:            // TODO: clearRenounceFlags delete
+./calypso.game.php:1302:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1424:        // TODO: cleaner with map
+./calypso.game.php:1482:            // TODO: clearRenounceFlags delete
 ./calypso.js:85:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:113:                // TODO: probably delete this function
 ./calypso.js:114:                // TODO: set hoverable here? but then also need to do it when your turn comes around

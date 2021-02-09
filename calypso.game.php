@@ -1233,12 +1233,15 @@ class Calypso extends Table
         Each time a player is doing some game action, one of the methods below is called.
         (note: each method below must match an input method in calypso.action.php)
     */
-    function playCard($card_id) {
+    function playCard($card_id, $player_id=null) {
         self::checkAction("playCard");
         //self::checkAllCardsExist();
-        $player_id = self::getActivePlayerId();
-        $currentCard = $this->cards->getCard($card_id);
-        if ( !self::validPlay($player_id, $currentCard) ){
+        if(is_null($player_id)){
+            $player_id = self::getActivePlayerId();
+        }
+        
+        $current_card = $this->cards->getCard($card_id);
+        if ( !self::validPlay($player_id, $current_card) ){
             $trick_suit = self::getGameStateValue( 'trickSuit' );
             // if they're trying to revoke, warn, and remind them of the suit they should be playing
             $trick_suit_name = $this->suits[$trick_suit]['nametr'];
@@ -1251,29 +1254,29 @@ class Calypso extends Table
         $current_trick_suit = self::getGameStateValue( 'trickSuit' );
         // case of the first card of the trick:
         if( $current_trick_suit == 0 ) {
-            self::setGameStateValue( 'trickSuit', $currentCard['type'] );
+            self::setGameStateValue( 'trickSuit', $current_card['type'] );
             // set if trumps are lead
-            if ( $currentCard['type'] == self::getPlayerSuit($player_id) ) {
+            if ( $current_card['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
-                self::setWinner( $player_id, $currentCard, self::TRUMP_LEAD );
+                self::setWinner( $player_id, $current_card, self::TRUMP_LEAD );
             } else {
                 // this _should_ be irrelevant, but can't hurt
                 self::setGameStateValue( 'trumpLead', 0 );
-                self::setWinner( $player_id, $currentCard, self::PLAINSUIT );
+                self::setWinner( $player_id, $current_card, self::PLAINSUIT );
             }
         } else {
             // Here we check if the played card is 'better' than what we have so far
             // if it is, then set current player as winner
             // if they follow suit:
-            if ( $currentCard['type'] == $current_trick_suit ){
+            if ( $current_card['type'] == $current_trick_suit ){
                 // if trump lead then this ain't a winner, so do nothing
                 // if trump was not lead:
                 // check if trump is winning, and if not, check if this card is higher
                 // set as winner only if it is
                 if ( self::getGameStateValue( 'trumpLead' ) == 0 ){
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
-                        if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' ) ){
-                            self::setWinner( $player_id, $currentCard, self::PLAINSUIT );
+                        if ( $current_card['type_arg'] > self::getGameStateValue( 'bestCardRank' ) ){
+                            self::setWinner( $player_id, $current_card, self::PLAINSUIT );
                         }
                     }
                 }
@@ -1293,16 +1296,16 @@ class Calypso extends Table
                 
                 // if they don't play their trump don't worry - it's a loser
                 // if they do...
-                if ( $currentCard['type'] == self::getPlayerSuit($player_id) ){
+                if ( $current_card['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
                         // TODO: here we need to implement the optional check of rank
-                        self::setWinner( $player_id, $currentCard, self::FIRST_TRUMP );
+                        self::setWinner( $player_id, $current_card, self::FIRST_TRUMP );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else {
                         // if trumpPlayed - check if we're higher, in which case we're winning. Otherwise still a loser
-                        if ( $currentCard['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
-                            self::setWinner( $player_id, $currentCard, self::OVERTRUMP );
+                        if ( $current_card['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
+                            self::setWinner( $player_id, $current_card, self::OVERTRUMP );
                         }
                     }
                 }
@@ -1310,7 +1313,7 @@ class Calypso extends Table
         }
         // $tmp = self::getStat("fastest_calypso");
         // And notify
-        $suit_played = $currentCard ['type'];
+        $suit_played = $current_card ['type'];
         if(self::getGameStateValue("detailedLog") == self::DETAILED_LOG_ON){
             $log_entry = clienttranslate('${player_name} (${trump}) plays ${rank_displayed} ${suit_element}');
         } else{
@@ -1324,9 +1327,9 @@ class Calypso extends Table
                 'card_id' => $card_id,
                 'player_id' => $player_id,
                 'player_name' => self::getActivePlayerName(),
-                'rank' => $currentCard ['type_arg'],
-                'rank_displayed' => $this->ranks_label [$currentCard ['type_arg']],
-                'suit' => $currentCard ['type'],
+                'rank' => $current_card ['type_arg'],
+                'rank_displayed' => $this->ranks_label [$current_card ['type_arg']],
+                'suit' => $current_card ['type'],
                 'suit_element' => self::SUIT_LOOKUP[$suit_played],
                 'trump' => self::SUIT_LOOKUP[self::getPlayerSuit($player_id)],
              )
@@ -1593,8 +1596,19 @@ class Calypso extends Table
     	
         if ($state['type'] === "activeplayer") {
             switch ($statename) {
-                default:
-                    $this->gamestate->nextState( "zombiePass" );
+                case "playerTurn":
+                    // $this->gamestate->nextState( "zombiePass" );
+                    $cards_in_hand = $this->cards->getCardsInLocation(
+						"hand", $active_player
+					);
+                    // go through cards in hand and play the first one that's legal
+					foreach ($cards_in_hand as $card) {
+                        if ( self::validPlay($active_player, $card) ){
+                            $card_to_play = $card;
+                            break;
+                        }
+					}
+					$this->playCard($card_to_play['id'], $active_player);
                 	break;
             }
 
@@ -1602,7 +1616,7 @@ class Calypso extends Table
         }
 
         if ($state['type'] === "multipleactiveplayer") {
-            // Make sure player is in a non blocking status for role turn
+            // Make sure player is in a non blocking status on new round
             $this->gamestate->setPlayerNonMultiactive( $active_player, '' );
             
             return;

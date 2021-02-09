@@ -6,6 +6,13 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* ~~Zombie turn~~
+* another display image?
+* suit icons better
+* placeholder calypso cards better
+* todos under 20
+* fix tooltip removal properly
+
 ## For a different branch
 
 ## To-do list
@@ -50,7 +57,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Things to test
 
-* check tooltips get removed after new round
+* ~~check tooltips get removed after new round - didn't work but will fix~~
 * check score table game end refresh
 
 ### Meta
@@ -59,7 +66,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Misc
 
-* Zombie turn
+* ~~Zombie turn~~
 * Check timings
 * ~~Pre-alpha checklist - all covered~~
 
