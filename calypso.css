@@ -111,7 +111,7 @@
 
 .clp-suit-icon {
   float: left;
-  background-image: url("img/card_suits.jpg");
+  background-image: url("img/card_suits.png");
   width: 32px;
   height: 32px;
 }
@@ -702,7 +702,8 @@
 }
 
 .clp-active-renounce {
-  background-image: url("img/card_suits.jpg");
+  background-color: #B8B8B8;
+  background-image: url("img/card_suits.png");
   z-index: 3;
 }
 
@@ -843,7 +844,7 @@
 
 .clp-table-suit {
   display: block;
-  background-image: url("img/card_suits.jpg");
+  background-image: url("img/card_suits.png");
   width: 32px;
   height: 32px;
   margin: auto;

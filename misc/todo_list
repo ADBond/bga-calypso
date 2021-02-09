@@ -1,22 +1,17 @@
 ./calypso.game.php:381:        // TODO here and elsewhere move to defined constants
 ./calypso.game.php:404:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
 ./calypso.game.php:439:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:615:    // TODO: uniformise names
-./calypso.game.php:735:            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
-./calypso.game.php:737:                // AB TODO: updated db when I've updated the model to allow the field
-./calypso.game.php:782:        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-./calypso.game.php:956:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:1302:                        // TODO: here we need to implement the optional check of rank
-./calypso.game.php:1424:        // TODO: cleaner with map
-./calypso.game.php:1482:            // TODO: clearRenounceFlags delete
+./calypso.game.php:953:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+./calypso.game.php:1299:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:1421:        // TODO: cleaner with map
+./calypso.game.php:1479:            // TODO: clearRenounceFlags delete
 ./calypso.js:85:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:313:            // TODO: this can all be css
-./calypso.js:366:            // TODO: this should stay in css - use class manipulation
-./calypso.js:533:            // TODO: specialise to suits?
-./calypso.js:565:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:639:            // TODO: think about this mate, not sure here
-./calypso.js:677:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:969:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:524:            // TODO: specialise to suits?
+./calypso.js:556:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:630:            // TODO: think about this mate, not sure here
+./calypso.js:668:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:960:            // TODO: again this should be farmed out, ideally to a generalised function?
 ./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
 ./calypso_style.scss:511:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:159:    // TODO: actually write this properly

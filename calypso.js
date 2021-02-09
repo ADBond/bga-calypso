@@ -356,20 +356,11 @@ function (dojo, declare) {
         },
 
         placeCardInCalypso : function(player_id, suit, rank, card_id) {
-            // const x = this.cardwidth * (rank - 2);
-            // const y = this.cardheight * (suit - 1);
-
             const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
             console.log("just a simple card going into a calypso - what could be better than that?");
             console.log(card_el_id);
 
-            // TODO: this should stay in css - use class manipulation
-            // dojo.style(card_el_id,
-            //     {
-            //         'backgroundPosition': `-${x}px -${y}px`,
-            //         'z-index': `${+rank + 14}`,
-            //     }
-            // )
+
             dojo.addClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`);
             dojo.addClass( card_el_id, 'clp-face-up-card' );
             dojo.removeClass( card_el_id, 'clp-calypsocard-space' );

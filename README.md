@@ -8,7 +8,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 
 * ~~Zombie turn~~
 * another display image?
-* suit icons better
+* ~~suit icons better~~
 * placeholder calypso cards better
 * todos under 20
 * ~~fix tooltip removal properly~~
@@ -23,7 +23,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying
 * player preference for auto-confirm new round
-  * not for alpha
+  * not for alpha (NFA)
 
 ### Notifications
 
@@ -39,6 +39,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Display
 
 * Order hand with personal trumps separated?
+  * NFA
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
   * NFA

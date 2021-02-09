@@ -146,7 +146,7 @@ $display_font: 2*$icon_size/3;
 // 16px might be too small - maybe 24? the above bits should scale with
 .clp-suit-icon {
     float: left;
-    background-image: url('img/card_suits.jpg');
+    background-image: url('img/card_suits.png');
     width: $icon_size;
     height: $icon_size;
 }
@@ -405,8 +405,8 @@ $border_width: 5px;
 }
 
 .clp-active-renounce {
-    // background-color: #FF0000;
-    background-image: url('img/card_suits.jpg');
+    background-color: #B8B8B8;
+    background-image: url('img/card_suits.png');
     z-index: 3;
 }
 .clp-inactive-renounce {
@@ -555,7 +555,7 @@ $personal_area_bottom_offset: 20px;
 .clp-table-suit {
     display: block;
     // set stuff here as icon is float:left
-    background-image: url('img/card_suits.jpg');
+    background-image: url('img/card_suits.png');
     width: $icon_size;
     height: $icon_size;
     margin: auto;

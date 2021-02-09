@@ -612,7 +612,6 @@ class Calypso extends Table
         );
     }
 
-    // TODO: uniformise names
     function setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards ){
         $round_number = self::getGameStateValue('roundNumber');
         $sql_query = "
@@ -732,9 +731,8 @@ class Calypso extends Table
             );
             $calypso_string = implode( ",", $ranks_so_far );
 
-            if(sizeof($calypso_so_far) == 13){  // AB TODO: is this robust enough?
+            if(sizeof($calypso_so_far) == 13){
                 $this->cards->moveAllCardsInLocation( 'calypso', 'full_calypsos', $player_id, $player_id );
-                // AB TODO: updated db when I've updated the model to allow the field
                 $sql = "UPDATE player SET completed_calypsos = completed_calypsos+1 WHERE player_id=".$player_id.";";
                 self::DbQuery( $sql );
                 $calypsos_completed[] = $player_id;
@@ -779,8 +777,7 @@ class Calypso extends Table
     }
 
     function countsToScores($num_calypsos, $calypso_cards, $won_cards){
-        // TODO: not sure about this - fixed and simple but not nice to read, and seems iffy.
-        // score calypsos 500, 750, 1000
+        // score calypsos 500, 750, 1000, 1000 (cumulatively)
         $calypsos_to_score = array(
             0,
             500,
