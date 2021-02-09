@@ -10,16 +10,13 @@
 ./calypso.game.php:1424:        // TODO: cleaner with map
 ./calypso.game.php:1482:            // TODO: clearRenounceFlags delete
 ./calypso.js:85:                        // TODO: here is where we might want to separate out trumps!
-./calypso.js:113:                // TODO: probably delete this function
-./calypso.js:114:                // TODO: set hoverable here? but then also need to do it when your turn comes around
-./calypso.js:339:            // TODO: this can all be css
-./calypso.js:392:            // TODO: this should stay in css - use class manipulation
-./calypso.js:559:            // TODO: specialise to suits?
-./calypso.js:591:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:665:            // TODO: think about this mate, not sure here
-./calypso.js:703:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:995:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:313:            // TODO: this can all be css
+./calypso.js:366:            // TODO: this should stay in css - use class manipulation
+./calypso.js:533:            // TODO: specialise to suits?
+./calypso.js:565:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:639:            // TODO: think about this mate, not sure here
+./calypso.js:677:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:969:            // TODO: again this should be farmed out, ideally to a generalised function?
 ./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
 ./calypso_style.scss:511:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:159:    // TODO: actually write this properly
-./states.inc.php:112:    // TODO: collecting cards holder text

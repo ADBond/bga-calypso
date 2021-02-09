@@ -11,7 +11,7 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * suit icons better
 * placeholder calypso cards better
 * todos under 20
-* fix tooltip removal properly
+* ~~fix tooltip removal properly~~
 
 ## For a different branch
 

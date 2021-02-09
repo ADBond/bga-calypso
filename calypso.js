@@ -95,8 +95,6 @@ function (dojo, declare) {
             this.playerHand.setOverlap( 70, 0 );
             this.playerHand.extraClasses = "clp-hand-card";
 
-            // this.playerHand.onItemCreate = dojo.hitch( this, 'setupNewHandCard' ); 
-
             dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
 
             // Cards in player's hand
@@ -106,13 +104,6 @@ function (dojo, declare) {
                 let rank = card.type_arg;
                 let unique_type = this.getCardUniqueType(suit, rank);
                 this.playerHand.addToStockWithId(unique_type, card.id);
-                let card_el = this.playerHand.getItemDivId(card.id);
-                // console.log("handy");
-                // console.log(card.id);
-                // console.log(card_el);
-                // TODO: probably delete this function
-                // TODO: set hoverable here? but then also need to do it when your turn comes around
-                // this.setupNewHandCard(card_el);
             }
             this.setHandActiveness(this.isCurrentPlayerActive());
 
@@ -307,23 +298,6 @@ function (dojo, declare) {
             }
         },
 
-        // setupNewHandCard: function( card_div_id ) {
-        //    // function for when cards are made in players' hand
-        //     console.log("hand card");
-        //     console.log(card_div_id);
-        //     // console.log(card_type_id);
-        //     // console.log(card_id)
-    
-        //     // dojo.attr(card_id, "style", "");
-        //     let current_z = dojo.style(card_div_id, "z-index");
-        //     console.log(current_z)
-        //     dojo.setStyle(card_div_id, "z-index", current_z + 20);
-        //     dojo.style(card_div_id, "color", "red");
-        //     dojo.style(card_div_id, "opacity", "");
-        //     console.log("element is:")
-        //     console.log($(card_div_id));
-        // },
-        
         setHandActiveness(active){
             let hand_div_id = "clp-myhand";
             if(active){

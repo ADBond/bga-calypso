@@ -104,12 +104,11 @@ $machinestates = array(
     ),
     32 => array(
         "name" => "nextPlayer",
-        "description" => "",
+        "description" => clienttranslate("Won cards are going to their destinations"),
         "type" => "game",
         "action" => "stNextPlayer",
         "transitions" => array( "nextPlayer" => 31, "nextTrick" => 30, "endHand" => 40 )
     ),
-    // TODO: collecting cards holder text
     
     // End of the hand (scoring, etc...)
     40 => array(
