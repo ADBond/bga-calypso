@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
+<div id="clp-myhand-wrap" class="whiteblock">
     <div id="clp-myhand">
     </div>
 </div>
@@ -78,7 +78,7 @@
 // Javascript HTML templates
 // for cards to play to tricks
 var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}"\
-                            style="background-position:-${x}px -${y}px; z-index:${z}">\
+                            style="background-position:-${x}px -${y}px">\
                         </div>';
 // animating dealer changing. TODO: deprecated??
 var jstpl_dealerindicator = '<div id="clp-dealerbutton" class="clp-dealerbutton"></div>';

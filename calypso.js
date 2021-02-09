@@ -92,7 +92,6 @@ function (dojo, declare) {
             }
             this.playerHand.centerItems = true;
             this.playerHand.image_items_per_row = 13;
-            // TODO: decide on overlap or not
             this.playerHand.setOverlap( 70, 0 );
             this.playerHand.extraClasses = "clp-hand-card";
 
@@ -172,7 +171,6 @@ function (dojo, declare) {
             }
             const totalrounds = gamedatas.totalrounds;
             const currentround = gamedatas.roundnumber;
-            // TODO: need fancier checking here, in case we are in awaitNewRound
             for(let round_number = 1; round_number < currentround; round_number++){
                 this.activateScoreButton(round_number, gamedatas.roundscoretable[round_number]);
             }
@@ -183,7 +181,6 @@ function (dojo, declare) {
             // console.log(awaiting_new_round);
             // console.log(gamedatas.gamestate);
 
-            // TODO: delete this: just for quicker testing translations
             // const awaiting_new_round = true;
 
             if(awaiting_new_round){
@@ -343,7 +340,6 @@ function (dojo, declare) {
             dojo.place(this.format_block('jstpl_cardontable', {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
-                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
@@ -407,8 +403,6 @@ function (dojo, declare) {
 
         setTrickPile : function(player_id, value) {
             const cards_el_id = `clp-trickpile-${player_id}`;
-            console.log(cards_el_id);
-            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
             if(value > 0){
                 dojo.addClass( cards_el_id, 'clp-trickpile-full' );
                 dojo.removeClass( cards_el_id, 'clp-trickpile-empty' );
@@ -476,8 +470,6 @@ function (dojo, declare) {
             let combined_animation = dojo.fx.combine(all_player_animations);
             dojo.connect(combined_animation, 'onEnd', function(node) {
                 dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
-                console.log("don't worry it has happened!");
-                // TODO: still clips a litlle, might be removed too early
             });
             return dojo.fx.combine(all_player_animations);
             // for (player of player_ids){
@@ -546,9 +538,6 @@ function (dojo, declare) {
         },
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
-            console.log("update that banner!");
-            console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
-            // TODO: look here for your js translation needs!
             // don't need to translate game title
             $("clp-game-info").innerHTML =  dojo.string.substitute(
                 '<div class="clp-gametitle">Calypso</div>' + 
@@ -683,9 +672,6 @@ function (dojo, declare) {
                     anim = this.slideToObject(card_el_id, `${to_prefix}-${player_id}` );
                     dojo.connect(anim, 'onEnd', function(node) {
                         dojo.destroy(node);
-                        // dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
-                        console.log("don't worry it has happened!");
-                        // TODO: still clips a litlle, might be removed too early
                     });
                     // dojo.connect(anim, 'onEnd', function(node) {
                     //     dojo.destroy(node);
@@ -937,7 +923,6 @@ function (dojo, declare) {
             const player_count_element = `clp-info-count-${player_id}`;
             const new_num_calypsos = notif.args.num_calypsos;
             // console.log(player_count_element)
-            // TODO: should this be delayed/animated?
             this.setCalypsoPile(player_id, new_num_calypsos);
 
             // have transform woes if we try to use calypsopile
@@ -1084,9 +1069,6 @@ function (dojo, declare) {
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];
                 }
-                // TODO: this function is what needs fiddling with - play animation after we've set flags
-                // on destinations. That's backwards mate!
-                // final_func(...final_args);
                 
                 // anim.duration = 30000;
                 anim.play();
