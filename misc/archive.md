@@ -58,6 +58,10 @@
   * ~~will be tracking this for stats, so should be easy to add in. Probably as a log option?~~ overkill - add if requested
 * ~~animations - let calypso cards & trick pile appear after animation is finished rather than early~~
 * ~~get rid of ... a very long username thingy~~
+* ~~Set different default colours~~
+* ~~Check that there's nowt that's colourblind-unfriendly~~
+  * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
+  * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
 
 ### Images
 
@@ -83,6 +87,9 @@
   * ~~some others maybe also now - e.g. "... must lead a card to the first trick", and "X plays Y"~~
   * ~~doesn't like strings with "." at the end - can break new hand/new round logs with those~~
 * ~~final scores not updating in player boxes (round 2+)(okay on refresh)~~
+* ~~tooltips don't get removed once added~~
+* ~~Hand display buggered on mobile (think overlap is culprit)~~
+* ~~hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh~~
 
 ### Other UI
 
@@ -92,6 +99,7 @@
 
 * ~~new round (genuine)/things all work nicely in multi-round games~~
 * ~~multiple players complete calypsos in one trick~~
+* ~~a little browser compatibility~~ just take this as it comes now, after fixing mobile
 
 ### Meta
 
@@ -157,4 +165,18 @@
 * ~~is starting -> starts~~
 * ~~`Round ${round_number} score` need to sub value properly~~
 * ~~check translation stuff in score-box after round now that we've fiddled~~
+
+### PR 12
+
+* ~~tooltips don't get removed once added~~
+* ~~Hand display buggered on mobile (think overlap is culprit)~~
+  * ~~believe this is an artifact of hand height being too small - happens also on window shrink~~
+* ~~hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh~~
+  * need to check, but can wait til i'm doing a job-lot
+* ~~trim down (./misc/todo_list) a decent amount~~
+  * started with 54 - get down to at most 30
+* ~~Set different default colours~~
+* ~~Check that there's nowt that's colourblind-unfriendly~~
+  * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
+  * doesn't matter for player names so just keep them as-is. Checked okay (I think) for where it matters more.
 
