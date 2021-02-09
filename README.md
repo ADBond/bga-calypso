@@ -6,6 +6,17 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* ~~tooltips don't get removed once added~~
+* ~~Hand display buggered on mobile (think overlap is culprit)~~
+  * ~~believe this is an artifact of hand height being too small - happens also on window shrink~~
+* ~~hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh~~
+  * need to check, but can wait til i'm doing a job-lot
+* trim down (./misc/todo_list) a decent amount
+  * started with 54 - get down to at most 30
+* ~~Set different default colours~~
+* ~~Check that there's nowt that's colourblind-unfriendly~~
+  * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
+  * doesn't matter for player names so just keep them as-is. Checked okay (I think) for where it matters more.
 
 ## For a different branch
 
@@ -15,7 +26,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Logic
 
-* anything else in [gathered list of to-dos](misc/todo_list) from code not covered by these/general tidying
+* anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying
 * player preference for auto-confirm new round
   * not for alpha
 
@@ -32,9 +43,9 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Display
 
-* Set different default colours
-* Check that there's nowt that's colourblind-unfriendly
-  * e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours
+* ~~Set different default colours~~
+* ~~Check that there's nowt that's colourblind-unfriendly~~
+  * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
   * ~~want to think about how to nicely signify teams - see e.g. Phat for nice approach~~
 * Order hand with personal trumps separated?
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
@@ -49,16 +60,16 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ## Things to fix
 
-* tooltips don't get removed once added
-* Hand display buggered on mobile (think overlap is culprit)
-* hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh
+* ~~tooltips don't get removed once added~~
+* ~~Hand display buggered on mobile (think overlap is culprit)~~
+* ~~hack for inter-round score table access fails for final round - i.e. can't access final round scoring on refresh~~
 
 ### Other UI
 
 
 ### Things to test
 
-* a little browser compatibility
+* ~~a little browser compatibility~~ just take this as it comes now, after fixing mobile
 
 ### Meta
 
@@ -68,9 +79,17 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * Zombie turn
 * Check timings
-* Pre-alpha checklist
+* ~~Pre-alpha checklist - all covered~~
 
 ### Variants
 
 * Seems to be enough around of 'beat the leader' to include as a variant. Maybe doesn't need to be done for alpha though
   * (i.e. trumping in to trump lead must be higher. Rule as it stands seems better to me, but nice to have both, not in too much danger of configuration hell here.)
+
+## Browser compatibility
+
+Checked:
+
+* Firefox (85.0.1)
+* Edge (88.0.705.63)
+* Chrome (88.0.4324.150)

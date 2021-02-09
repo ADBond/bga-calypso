@@ -99,14 +99,10 @@ class Calypso extends Table
     */
     protected function setupNewGame( $players, $options = array() )
     {
-        // TODO: colours
-        // Set the colors of the players with HTML color code
-        // The default below is red/green/blue/orange/brown
-        // The number of colors defined here must correspond to the maximum number of players allowed for the gams
+        // set colours - see gameinfos.inc.php for values that can exist
         $gameinfos = self::getGameinfos();
         $default_colors = $gameinfos['player_colors'];
 
-        // TODO: is this whole process a little unnecessarily complex? or that's just the way it is?? need a think
         // choose some player randomly to be first dealer
         $first_dealer_order_number = bga_rand(1, 4);
         // Set up personal trump suits
@@ -188,13 +184,7 @@ class Calypso extends Table
             $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] ).
                     "','".addslashes( $player['player_avatar'] )."','".addslashes( $order ).
                     "','".addslashes( $suit )."')";
-            // $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] )."','".addslashes( $player['player_avatar'] )."')";
-        
-            // TODO: delete:
-            // if($player["player_table_order"] == 1){
-            //     self::setGameStateInitialValue( 'firstHandDealer', $player_id );
-            //     self::setGameStateInitialValue( 'currentDealer', $player_id );
-            // }
+ 
         }
         $sql .= implode( ',', $values);
         self::DbQuery( $sql );
@@ -309,7 +299,7 @@ class Calypso extends Table
             }
 
             $result['renounce_flags'] = $player_flags;
-            // TODO: is this not a kind of bullshit way to do this?
+            // not elegant, but does okay
             $result['renounce_flags_on'] = "on";
         } else{
             $result['renounce_flags_on'] = "off";
@@ -382,13 +372,11 @@ class Calypso extends Table
         return $position;
     }
 
-    // TODO: I think there is an in-built for this? Can't find it for the mo tho
     function getPlayerName($player_id){
         $players = self::loadPlayersBasicInfos();
         return $players[$player_id]["player_name"];
     }
 
-    // TODO: check here and under that there isn't a secret option number 3?
     function getPlayerPartnership($player_id) {
         // TODO here and elsewhere move to defined constants
         // use bridge terminology
@@ -436,7 +424,6 @@ class Calypso extends Table
         return $directions;
     }
 
-    // TODO: this changes the dealer, and is only done between hands - reflect that in name
     function updateDealer($direction_index=1, $relevant_dealer='currentDealer') {
         $current_dealer = self::getGameStateValue($relevant_dealer);
 
@@ -528,7 +515,6 @@ class Calypso extends Table
             'moved_to' => $moved_to,
         ) );
         if(!empty($calypsos_completed)){
-            // TODO: don't need to get all, but small difference, and less fiddly, so maybe better than writing separate routine?
             // this is updated with latest figures already
             $total_calypso_counts = self::getAllCompletedCalypsos();
             foreach($calypsos_completed as $player_id){
@@ -540,7 +526,6 @@ class Calypso extends Table
                     }
                 );
                 self::updateFastestCalypso($player_id);
-                // TODO: guess we can delete dummy, just need to check it's not referenced on client-side
                 self::notifyAllPlayers(
                     'calypsoComplete',
                     clienttranslate('${player_name} completes a calypso'),
@@ -856,18 +841,6 @@ class Calypso extends Table
         }
     }
 
-    // function displayScoresWrapper($round_number){
-    //     // TODO: disable buttons
-    //     if($round_number >= self::getGameStateValue('roundNumber')){
-    //         // TODO: same translation problem as playCard. When fixed, do it here too :)
-    //         throw new BgaUserException(
-    //             sprintf(self::_("Round %s is not complete yet - no scores available"), $round_number)
-    //         );
-    //     }else{
-    //         displayScores($round_number);
-    //     }
-    // }
-
     function wrap_class($x, $class_name){
         // return "<div class=\"${class_name}\">${x}</div>";
         return array(
@@ -987,7 +960,6 @@ class Calypso extends Table
         $overall_scores = array(self::score_wrap_label("total_score"));
         $player_score_totals = array();
         for($round_number = 1; $round_number <= self::getGameStateValue("totalRounds"); $round_number++){
-            // TODO: translate business
             $round_scores = array( self::score_wrap_label(self::round_number_wrap($round_number)) );
             $players = self::getRoundScore($round_number);
             foreach ( $players as $player_id => $score_info ) {
@@ -1270,7 +1242,6 @@ class Calypso extends Table
             $trick_suit = self::getGameStateValue( 'trickSuit' );
             // if they're trying to revoke, warn, and remind them of the suit they should be playing
             $trick_suit_name = $this->suits[$trick_suit]['nametr'];
-            // TODO: really not convinced I've got the translation stuff right here.
             throw new BgaUserException(
                 sprintf(self::_("You must follow suit if able to! Please play a %s."), $trick_suit_name)
             );
@@ -1562,8 +1533,6 @@ class Calypso extends Table
             }
         } else {
             // Standard case (not the end of the trick)
-            // TODO: instead use getAdjacentPlayer to set next player, so we are free to bugger around with ordering
-            // $this->gamestate->changeActivePlayer( $player_id )
             $player_id = self::activeNextPlayer();
             self::giveExtraTime($player_id);
             $this->gamestate->nextState('nextPlayer');

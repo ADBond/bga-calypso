@@ -92,7 +92,6 @@ function (dojo, declare) {
             }
             this.playerHand.centerItems = true;
             this.playerHand.image_items_per_row = 13;
-            // TODO: decide on overlap or not
             this.playerHand.setOverlap( 70, 0 );
             this.playerHand.extraClasses = "clp-hand-card";
 
@@ -101,16 +100,16 @@ function (dojo, declare) {
             dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
 
             // Cards in player's hand
-            for ( let i in this.gamedatas.hand) {
-                let card = this.gamedatas.hand[i];
+            for ( let i in gamedatas.hand) {
+                let card = gamedatas.hand[i];
                 let suit = card.type;
                 let rank = card.type_arg;
                 let unique_type = this.getCardUniqueType(suit, rank);
                 this.playerHand.addToStockWithId(unique_type, card.id);
                 let card_el = this.playerHand.getItemDivId(card.id);
-                console.log("handy");
-                console.log(card.id);
-                console.log(card_el);
+                // console.log("handy");
+                // console.log(card.id);
+                // console.log(card_el);
                 // TODO: probably delete this function
                 // TODO: set hoverable here? but then also need to do it when your turn comes around
                 // this.setupNewHandCard(card_el);
@@ -118,8 +117,8 @@ function (dojo, declare) {
             this.setHandActiveness(this.isCurrentPlayerActive());
 
             // Cards played on table
-            for (i in this.gamedatas.cardsontable) {
-                let card = this.gamedatas.cardsontable[i];
+            for (i in gamedatas.cardsontable) {
+                let card = gamedatas.cardsontable[i];
                 let suit = card.type;
                 let rank = card.type_arg;
                 let player_id = card.location_arg;
@@ -129,8 +128,8 @@ function (dojo, declare) {
 
             // Cards in calypsos
             console.log("display the calypsos");
-            for (i in this.gamedatas.cardsincalypsos) {
-                let card = this.gamedatas.cardsincalypsos[i];
+            for (i in gamedatas.cardsincalypsos) {
+                let card = gamedatas.cardsincalypsos[i];
                 let suit = card.type;
                 let rank = card.type_arg;
                 let player_id = card.location_arg;
@@ -172,26 +171,26 @@ function (dojo, declare) {
             }
             const totalrounds = gamedatas.totalrounds;
             const currentround = gamedatas.roundnumber;
-            // TODO: need fancier checking here, in case we are in awaitNewRound
             for(let round_number = 1; round_number < currentround; round_number++){
-                this.activateScoreButton(round_number, this.gamedatas.roundscoretable[round_number]);
+                this.activateScoreButton(round_number, gamedatas.roundscoretable[round_number]);
             }
-            const awaiting_new_round = (gamedatas.gamestate["name"] == "awaitNewRound");
-            console.log("have a butchers at this:");
+            const awaiting_new_round = (
+                ["gameEnd", "awaitNewRound"].includes(gamedatas.gamestate["name"])
+            );
+            // console.log("have a butchers at this:");
             // console.log(awaiting_new_round);
-            console.log(gamedatas.gamestate);
+            // console.log(gamedatas.gamestate);
 
-            // TODO: delete this: just for quicker testing translations
             // const awaiting_new_round = true;
 
             if(awaiting_new_round){
-                this.activateScoreButton(currentround, this.gamedatas.roundscoretable[currentround]);
+                this.activateScoreButton(currentround, gamedatas.roundscoretable[currentround]);
             }
             if(currentround != 1 | awaiting_new_round){
                 const overall_scores_button_id = 'clp-round-scores-button-overall';
                 $(overall_scores_button_id).onclick = (
                     () => this.showResultDialog(
-                        0, this.gamedatas.overallscoretable, _("Round-by-round score summary"))
+                        0, gamedatas.overallscoretable, _("Round-by-round score summary"))
                 );
                 dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
                 dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
@@ -205,18 +204,18 @@ function (dojo, declare) {
             }
             $("clp-round-scores-button-overall").textContent = _("Round-by-round scores");
 
-            console.log("are the renounce flags on?");
-            console.log(this.gamedatas.renounce_flags_on);
-            if(this.gamedatas.renounce_flags_on == "on"){
-                console.log("show me those flags!");
-                console.log(this.gamedatas.renounce_flags);
-                for (i in this.gamedatas.renounce_flags) {
-                    let info = this.gamedatas.renounce_flags[i];
+            // console.log("are the renounce flags on?");
+            // console.log(gamedatas.renounce_flags_on);
+            if(gamedatas.renounce_flags_on == "on"){
+                // console.log("show me those flags!");
+                // console.log(gamedatas.renounce_flags);
+                for (i in gamedatas.renounce_flags) {
+                    let info = gamedatas.renounce_flags[i];
                     this.setRenounceFlag(info.player_id, info.suit);
                 }
             }
 
-            this.updateGameStatus(this.gamedatas.handnumber, currentround, totalrounds);
+            this.updateGameStatus(gamedatas.handnumber, currentround, totalrounds);
             // Setup game notifications to handle (see "setupNotifications" method below)
             this.setupNotifications();
 
@@ -308,22 +307,22 @@ function (dojo, declare) {
             }
         },
 
-        setupNewHandCard: function( card_div_id ) {
-           // function for when cards are made in players' hand
-            console.log("hand card");
-            console.log(card_div_id);
-            // console.log(card_type_id);
-            // console.log(card_id)
+        // setupNewHandCard: function( card_div_id ) {
+        //    // function for when cards are made in players' hand
+        //     console.log("hand card");
+        //     console.log(card_div_id);
+        //     // console.log(card_type_id);
+        //     // console.log(card_id)
     
-            // dojo.attr(card_id, "style", "");
-            let current_z = dojo.style(card_div_id, "z-index");
-            console.log(current_z)
-            dojo.setStyle(card_div_id, "z-index", current_z + 20);
-            dojo.style(card_div_id, "color", "red");
-            dojo.style(card_div_id, "opacity", "");
-            console.log("element is:")
-            console.log($(card_div_id));
-        },
+        //     // dojo.attr(card_id, "style", "");
+        //     let current_z = dojo.style(card_div_id, "z-index");
+        //     console.log(current_z)
+        //     dojo.setStyle(card_div_id, "z-index", current_z + 20);
+        //     dojo.style(card_div_id, "color", "red");
+        //     dojo.style(card_div_id, "opacity", "");
+        //     console.log("element is:")
+        //     console.log($(card_div_id));
+        // },
         
         setHandActiveness(active){
             let hand_div_id = "clp-myhand";
@@ -341,7 +340,6 @@ function (dojo, declare) {
             dojo.place(this.format_block('jstpl_cardontable', {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
-                z : 40,  // TODO: this is not doing the job - check clp-card-on-table and trickpile together
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
@@ -405,8 +403,6 @@ function (dojo, declare) {
 
         setTrickPile : function(player_id, value) {
             const cards_el_id = `clp-trickpile-${player_id}`;
-            console.log(cards_el_id);
-            // TODO maybe a scaled thing here? (e.g. a few cards, 10-20, etc?) not sure if I dig that though
             if(value > 0){
                 dojo.addClass( cards_el_id, 'clp-trickpile-full' );
                 dojo.removeClass( cards_el_id, 'clp-trickpile-empty' );
@@ -474,8 +470,6 @@ function (dojo, declare) {
             let combined_animation = dojo.fx.combine(all_player_animations);
             dojo.connect(combined_animation, 'onEnd', function(node) {
                 dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
-                console.log("don't worry it has happened!");
-                // TODO: still clips a litlle, might be removed too early
             });
             return dojo.fx.combine(all_player_animations);
             // for (player of player_ids){
@@ -544,9 +538,6 @@ function (dojo, declare) {
         },
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
-            console.log("update that banner!");
-            console.log("have hand " + handnumber + " and round " + roundnumber + " of total " + totalrounds);
-            // TODO: look here for your js translation needs!
             // don't need to translate game title
             $("clp-game-info").innerHTML =  dojo.string.substitute(
                 '<div class="clp-gametitle">Calypso</div>' + 
@@ -567,6 +558,13 @@ function (dojo, declare) {
             this.addTooltipToClass( "clp-calypsopile-full", _( "This player has completed one or more calypsos this round" ), "" );
             // TODO: specialise to suits?
             this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit this hand" ), "" );
+            let elements_without_tooltips = dojo.query(".clp-inactive-renounce, .clp-calypsopile-empty");
+            // let empty_calypsopiles = dojo.query(".clp-calypsopile-empty");
+            console.log(elements_without_tooltips);
+            for(let element in elements_without_tooltips){
+                this.removeTooltip(element["id"]);
+            }
+            
         },
         // displayRoundScores: function(round_number){
         //     console.log("trigerring this chappy!");
@@ -674,9 +672,6 @@ function (dojo, declare) {
                     anim = this.slideToObject(card_el_id, `${to_prefix}-${player_id}` );
                     dojo.connect(anim, 'onEnd', function(node) {
                         dojo.destroy(node);
-                        // dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
-                        console.log("don't worry it has happened!");
-                        // TODO: still clips a litlle, might be removed too early
                     });
                     // dojo.connect(anim, 'onEnd', function(node) {
                     //     dojo.destroy(node);
@@ -928,7 +923,6 @@ function (dojo, declare) {
             const player_count_element = `clp-info-count-${player_id}`;
             const new_num_calypsos = notif.args.num_calypsos;
             // console.log(player_count_element)
-            // TODO: should this be delayed/animated?
             this.setCalypsoPile(player_id, new_num_calypsos);
 
             // have transform woes if we try to use calypsopile
@@ -1075,9 +1069,6 @@ function (dojo, declare) {
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];
                 }
-                // TODO: this function is what needs fiddling with - play animation after we've set flags
-                // on destinations. That's backwards mate!
-                // final_func(...final_args);
                 
                 // anim.duration = 30000;
                 anim.play();

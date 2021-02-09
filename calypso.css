@@ -186,15 +186,10 @@
   left: 50%;
   transform: translate(-50%);
   width: 70%;
-  height: 115.2px;
-}
-
-.clp-hand-card[style] {
-  top: 10px !important;
 }
 
 .clp-active-hand .clp-hand-card:hover, .clp-selected-card {
-  top: 0 !important;
+  transform: translate(0, -10px);
 }
 
 .clp-inactive-hand .clp-hand-card {
@@ -659,14 +654,12 @@
   height: 96px;
 }
 
-/* TODO: rename - this bounds all of our public info */
 .clp-player-personal-area {
   position: absolute;
   text-align: center;
   width: 494px;
   height: 156px;
   padding: 10px;
-  /* TODO: while I figure out what to do: */
   background: rgba(255, 255, 255, 0.75);
 }
 
