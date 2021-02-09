@@ -561,7 +561,10 @@ function (dojo, declare) {
             let elements_without_tooltips = dojo.query(".clp-inactive-renounce, .clp-calypsopile-empty");
             // let empty_calypsopiles = dojo.query(".clp-calypsopile-empty");
             console.log(elements_without_tooltips);
-            for(let element in elements_without_tooltips){
+            for(let element of elements_without_tooltips){
+                // console.log("removing from:")
+                // console.log(element);
+                // console.log(element["id"]);
                 this.removeTooltip(element["id"]);
             }
             

@@ -15,10 +15,10 @@
 ./calypso.js:339:            // TODO: this can all be css
 ./calypso.js:392:            // TODO: this should stay in css - use class manipulation
 ./calypso.js:559:            // TODO: specialise to suits?
-./calypso.js:588:        // TODO: fix API - don't need round_number if title supplied!
-./calypso.js:662:            // TODO: think about this mate, not sure here
-./calypso.js:700:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso.js:992:            // TODO: again this should be farmed out, ideally to a generalised function?
+./calypso.js:591:        // TODO: fix API - don't need round_number if title supplied!
+./calypso.js:665:            // TODO: think about this mate, not sure here
+./calypso.js:703:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:995:            // TODO: again this should be farmed out, ideally to a generalised function?
 ./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
 ./calypso_style.scss:511:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:159:    // TODO: actually write this properly
