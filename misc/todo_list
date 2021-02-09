@@ -32,9 +32,9 @@
 ./calypso_calypso.tpl:70:<div id="clp-myhand-wrap" class="whiteblock"> <!-- TODO: whiteblock -> custom class -->
 ./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
 ./calypso_style.scss:146:// TODO: really want this smaller, but need to do the scaling properly.
-./calypso_style.scss:335:/* TODO: rename - this bounds all of our public info */
-./calypso_style.scss:354:    /* TODO: while I figure out what to do: */
-./calypso_style.scss:510:// TODO: might want to do this as a child div, to separate styles better...
-./calypso_style.scss:517:// TODO: transform using mixins - see sass project page
+./calypso_style.scss:336:/* TODO: rename - this bounds all of our public info */
+./calypso_style.scss:355:    /* TODO: while I figure out what to do: */
+./calypso_style.scss:511:// TODO: might want to do this as a child div, to separate styles better...
+./calypso_style.scss:518:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:159:    // TODO: actually write this properly
 ./states.inc.php:112:    // TODO: collecting cards holder text

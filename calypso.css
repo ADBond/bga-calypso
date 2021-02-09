@@ -186,15 +186,10 @@
   left: 50%;
   transform: translate(-50%);
   width: 70%;
-  height: 115.2px;
-}
-
-.clp-hand-card[style] {
-  top: 10px !important;
 }
 
 .clp-active-hand .clp-hand-card:hover, .clp-selected-card {
-  top: 0 !important;
+  transform: translate(0, -10px);
 }
 
 .clp-inactive-hand .clp-hand-card {

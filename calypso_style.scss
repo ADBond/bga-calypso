@@ -238,7 +238,7 @@ $top_bottom_offset: $card_area_height + 20px;
     left: 50%;
     transform: translate(-50%);
     width: 70%;
-    height: 1.2*$card_height;
+    // height: 1.2*$card_height;
 }
 // #clp-myhand {
 //     z-index: 50;
@@ -248,13 +248,14 @@ $top_bottom_offset: $card_area_height + 20px;
 //     z-index: 30;
 //     // bottom: 0 !important;
 // }
-.clp-hand-card[style] {
-    top: 10px !important;
-    // z-index: 30 !important;
-}
+// .clp-hand-card[style] {
+//     // bottom: 0px !important;
+//     // z-index: 30 !important;
+// }
 .clp-active-hand .clp-hand-card:hover, .clp-selected-card {
     // border: solid 1px black;
-    top: 0 !important;
+    transform: translate(0, -10px);
+    // bottom: 10px !important;
 }
 .clp-inactive-hand .clp-hand-card {
     cursor: default !important;
