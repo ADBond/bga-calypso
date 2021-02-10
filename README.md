@@ -43,11 +43,12 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
   * NFA
+* Better responsive design/mobile friendly
 
 ### Images
 
 * another display image?
-* suit icons better
+* ~~suit icons better~~
 * placeholder calypso cards better
 
 ## Things to fix

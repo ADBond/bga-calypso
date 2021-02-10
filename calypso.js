@@ -113,7 +113,7 @@ function (dojo, declare) {
                 let suit = card.type;
                 let rank = card.type_arg;
                 let player_id = card.location_arg;
-                console.log("on the table has: " + suit + ", " + rank + ", and...");
+                // console.log("on the table has: " + suit + ", " + rank + ", and...");
                 this.playCardOnTable(player_id, suit, rank, card.id);
             }
 
@@ -124,8 +124,8 @@ function (dojo, declare) {
                 let suit = card.type;
                 let rank = card.type_arg;
                 let player_id = card.location_arg;
-                console.log("calypso has: " + suit + ", " + rank + ", and...");
-                this.placeCardInCalypso(player_id, suit, rank, card.id);
+                // console.log("calypso has: " + suit + ", " + rank + ", and...");
+                this.placeCardInCalypso(player_id, suit, rank);
             }
             console.log("completed calypso counts");
             let team_lookup = {
@@ -310,19 +310,12 @@ function (dojo, declare) {
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
-            // TODO: this can all be css
             dojo.place(this.format_block('jstpl_cardontable', {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
-            // would be nicer to do as class, but makes animation weird somehow
-            dojo.style(`clp-card-on-table-${player_id}`, "top", "0");
-            // dojo.style(`clp-card-on-table-${player_id}`, "border", "solid 1px black");
-            // dojo.addClass('clp-card-on-table-' + player_id, "clp-selected-card");
-            console.log("the style");
-            console.log($(`clp-card-on-table-${player_id}`));
             if (player_id != this.player_id) {
                 // Move card from their general area
                 this.placeOnObject('clp-card-on-table-' + player_id, 'clp-player-all-captured-cards-' + player_id);
@@ -355,7 +348,7 @@ function (dojo, declare) {
             // dojo.removeClass('clp-card-on-table-' + player_id, "clp-selected-card");
         },
 
-        placeCardInCalypso : function(player_id, suit, rank, card_id) {
+        placeCardInCalypso : function(player_id, suit, rank) {
             const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
             console.log("just a simple card going into a calypso - what could be better than that?");
             console.log(card_el_id);
@@ -1032,7 +1025,7 @@ function (dojo, declare) {
                     );
                     dojo.connect(anim, 'onEnd', (node) => {
                         dojo.destroy(node);
-                        this.placeCardInCalypso(send_to_id, suit, rank, card_id);
+                        this.placeCardInCalypso(send_to_id, suit, rank);
                     });
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];

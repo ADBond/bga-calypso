@@ -1418,7 +1418,6 @@ class Calypso extends Table
         }
         $players = self::loadPlayersBasicInfos();
         $player_ids = array();
-        // TODO: cleaner with map
         foreach ( $players as $player_id => $player ) {
             $player_ids[] = array("id" => $player_id, "suit" => self::getPlayerSuit($player_id));
         }
@@ -1476,15 +1475,6 @@ class Calypso extends Table
         );
         if(self::getGameStateValue('renounceFlags') == 1){
             self::clearRenounceFlags();
-            // TODO: clearRenounceFlags delete
-            // self::notifyAllPlayers(
-            //     'clearRenounceFlags',
-            //     "",
-            //     array (
-            //         "players" => $player_ids,
-            //         "suits" => [1, 2, 3, 4],
-            //     )
-            // );
             $deal_hand_args = array_merge(
                 $deal_hand_args,
                 array (
