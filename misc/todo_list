@@ -1,8 +1,8 @@
 ./calypso.game.php:381:        // TODO here and elsewhere move to defined constants
 ./calypso.game.php:404:            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
-./calypso.game.php:439:        // TODO: this feels horrible - is there a nice way that won't be overkill?
-./calypso.game.php:953:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
-./calypso.game.php:1299:                        // TODO: here we need to implement the optional check of rank
+./calypso.game.php:451:        // TODO: this feels horrible - is there a nice way that won't be overkill?
+./calypso.game.php:965:        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
+./calypso.game.php:1311:                        // TODO: here we need to implement the optional check of rank
 ./calypso.js:85:                        // TODO: here is where we might want to separate out trumps!
 ./calypso.js:517:            // TODO: specialise to suits?
 ./calypso.js:549:        // TODO: fix API - don't need round_number if title supplied!

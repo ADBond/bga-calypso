@@ -61,6 +61,8 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * ~~check tooltips get removed after new round - didn't work but will fix~~
 * check score table game end refresh
+* ~~spectator~~
+* ~~in-game replay~~
 
 ### Meta
 

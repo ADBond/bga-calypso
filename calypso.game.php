@@ -411,7 +411,19 @@ class Calypso extends Table
     }
 
     function getPlayerDirections(){
+        // straight from the php docs - native function in php8+
+        function array_key_first(array $arr) {
+            foreach($arr as $key => $unused) {
+                return $key;
+            }
+            return NULL;
+        }
+
+        $players = self::loadPlayersBasicInfos();
         $south_id = self::getCurrentPlayerId();
+        if(!array_key_exists($south_id, $players)){
+            $south_id = array_key_first($players);
+        }
         $west_id = self::getAdjacentPlayer($south_id);
         $north_id = self::getAdjacentPlayer($west_id);
         $east_id = self::getAdjacentPlayer($north_id);
