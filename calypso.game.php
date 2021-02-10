@@ -448,7 +448,7 @@ class Calypso extends Table
     // Keep this separate, as might want to rotate the other way? if not just alias
     function getNextFirstDealer() {
         // hop back by two so that we roll forward one on new hand
-        // TODO: this feels horrible - is there a nice way that won't be overkill?
+        // might be a cleaner way, but let's not rock the boat for now
         $next_first_dealer = self::updateDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
     }

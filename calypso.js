@@ -178,13 +178,7 @@ function (dojo, declare) {
                 this.activateScoreButton(currentround, gamedatas.roundscoretable[currentround]);
             }
             if(currentround != 1 | awaiting_new_round){
-                const overall_scores_button_id = 'clp-round-scores-button-overall';
-                $(overall_scores_button_id).onclick = (
-                    () => this.showResultDialog(
-                        0, gamedatas.overallscoretable, _("Round-by-round score summary"))
-                );
-                dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
-                dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
+                this.activateOverallScoreButton(gamedatas.overallscoretable);
             }
             // button text!
             for(let round_number = 1; round_number <= totalrounds; round_number++){
@@ -546,20 +540,9 @@ function (dojo, declare) {
 
         // borrowed/modified from W. Michael Shirk's Grosstarock implementation
         // saved a lot of pain in trying to hack something together!
-        // TODO: fix API - don't need round_number if title supplied!
-        showResultDialog: function (round_number, score_table, title=null) {
-            // console.log("tabley bizzos");
-            // console.log(score_table);
-            if(title === null){
-                title = dojo.string.substitute(
-                    _("Round ${round_number} score"),
-                    {round_number: round_number}
-                );
-            }
+        showResultDialog: function (score_table, title=null) {
             wrap_translation = (text_entry) => {
                 if(typeof text_entry === 'object' && text_entry.hasOwnProperty('for_round_number')){
-                    console.log("yee");
-                    console.log(text_entry);
                     return dojo.string.substitute(
                         _("Round ${round_number} score"),
                         {round_number: text_entry["for_round_number"]["round_number"]}
@@ -577,8 +560,6 @@ function (dojo, declare) {
                 return lookup[text_entry] || text_entry;
             }
             wrap_class = (table_entry) => {
-                console.log(table_entry)
-                console.log(table_entry);
                 if(typeof table_entry === 'object' && table_entry.hasOwnProperty('to_wrap')){
                     console.log("wrap");
                     let items = table_entry["to_wrap"];
@@ -586,11 +567,9 @@ function (dojo, declare) {
                     return '<div class=\"' + items.class_name + '\">' + wrap_translation(items.string_key) + '</div>';
                     // return wrap_translation(items.string);
                 }
-                console.log("don't wrap");
                 return table_entry;
             }
             score_table = score_table.map((row) => row.map(wrap_class));
-            // console.log(score_table);
             let scoring_dialog = this.displayTableWindow(
                 "roundScore",
                 title,
@@ -601,18 +580,35 @@ function (dojo, declare) {
                     { close: _("Close") }
                 )
             )
-            console.log(scoring_dialog);
 			scoring_dialog.show()
+        },
+
+        showResultDialogByRound: function(round_number, score_table){
+            const title = dojo.string.substitute(
+                _("Round ${round_number} score"),
+                {round_number: round_number}
+            );
+            this.showResultDialog(score_table, title);
         },
 
         activateScoreButton: function(round_number, score_table){
             const round_button_id = `clp-round-scores-button-${round_number}`;
             console.log(round_button_id);
             $(round_button_id).onclick = (
-                () => this.showResultDialog(round_number, score_table)
+                () => this.showResultDialogByRound(round_number, score_table)
             );
             dojo.addClass( round_button_id, 'clp-score-button-active' );
             dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
+        },
+
+        activateOverallScoreButton: function(overall_score){
+            const overall_scores_button_id = 'clp-round-scores-button-overall';
+            $(overall_scores_button_id).onclick = (
+                () => this.showResultDialog(
+                    overall_score, _("Round-by-round score summary"))
+            );
+            dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
+            dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
         },
 
         animateCalypso: function(player_id, player_suit, fresh_ranks, to_prefix="clp-calypsopile", play=true, delay=30){
@@ -948,17 +944,9 @@ function (dojo, declare) {
 
 
         notif_scoreDisplay: function(notif) {
-            this.showResultDialog(notif.args.round_number, notif.args.table);
+            this.showResultDialogByRound(notif.args.round_number, notif.args.table);
             this.activateScoreButton(notif.args.round_number, notif.args.table);
-            // TODO: again this should be farmed out, ideally to a generalised function?
-            // see setup
-            const overall_scores_button_id = 'clp-round-scores-button-overall';
-            $(overall_scores_button_id).onclick = (
-                () => this.showResultDialog(
-                    notif.args.round_number, notif.args.overall_score, _("Round-by-round score summary"))
-            );
-            dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
-            dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
+            this.activateOverallScoreButton(notif.args.overall_score);
         },
 
         notif_scoreUpdate : function(notif) {
