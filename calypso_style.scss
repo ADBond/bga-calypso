@@ -322,7 +322,7 @@ $suit_height: 32px;
     outline: solid 1px black;
     /* background-color: #AAA; */
     z-index: 2;
-    background-image: url('img/cards_layout.jpg'); 
+    background-image: url('img/cards_layout.png'); 
 }
 .clp-captured-card {
     position: absolute;
@@ -330,7 +330,8 @@ $suit_height: 32px;
     height: $card_height;
 }
 
-$blank_space_colour: #999;
+$blank_space_colour: #777;
+// $blank_space_colour: #b8b8b8;
 
 $won_tricks_left_buffer: 40px;
 $calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_width;

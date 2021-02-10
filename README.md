@@ -9,8 +9,8 @@ a fluid list to remember what needs to be done before pulling in and starting a 
 * ~~Zombie turn~~
 * another display image?
 * ~~suit icons better~~
-* placeholder calypso cards better
-* todos under 20
+* ~~placeholder calypso cards better~~
+* ~~todos under 20~~
 * ~~fix tooltip removal properly~~
 
 ## For a different branch
@@ -33,7 +33,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * have at least a proper go-through of code to tidy at least a _little_
 * ~~Add a separate code licence~~, and make repo public once that's done
 * Use game-level constants in place of magic numbers where possible
-* JS `placeCardInCalypso` has redundant `card_id` paramter
+* ~~JS `placeCardInCalypso` has redundant `card_id` paramter~~
 * `global` trick can now be killed in favour of `use` which is much nicer
 
 ### Display
@@ -49,7 +49,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 * another display image?
 * ~~suit icons better~~
-* placeholder calypso cards better
+* ~~placeholder calypso cards better~~
 
 ## Things to fix
 

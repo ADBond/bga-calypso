@@ -645,7 +645,7 @@
   outline: solid 1px black;
   /* background-color: #AAA; */
   z-index: 2;
-  background-image: url("img/cards_layout.jpg");
+  background-image: url("img/cards_layout.png");
 }
 
 .clp-captured-card {
@@ -708,7 +708,7 @@
 }
 
 .clp-inactive-renounce {
-  background-color: #999;
+  background-color: #777;
 }
 
 .clp-dealer-indicator-area {
@@ -768,7 +768,7 @@
   height: 96px;
   right: 0;
   position: absolute;
-  background-color: #999;
+  background-color: #777;
   z-index: 4;
 }
 
