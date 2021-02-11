@@ -111,7 +111,7 @@
 
 .clp-suit-icon {
   float: left;
-  background-image: url("img/card_suits.jpg");
+  background-image: url("img/card_suits.png");
   width: 32px;
   height: 32px;
 }
@@ -645,7 +645,7 @@
   outline: solid 1px black;
   /* background-color: #AAA; */
   z-index: 2;
-  background-image: url("img/cards_layout.jpg");
+  background-image: url("img/cards_layout.png");
 }
 
 .clp-captured-card {
@@ -702,12 +702,13 @@
 }
 
 .clp-active-renounce {
-  background-image: url("img/card_suits.jpg");
+  background-color: #B8B8B8;
+  background-image: url("img/card_suits.png");
   z-index: 3;
 }
 
 .clp-inactive-renounce {
-  background-color: #999;
+  background-color: #777;
 }
 
 .clp-dealer-indicator-area {
@@ -767,7 +768,7 @@
   height: 96px;
   right: 0;
   position: absolute;
-  background-color: #999;
+  background-color: #777;
   z-index: 4;
 }
 
@@ -843,7 +844,7 @@
 
 .clp-table-suit {
   display: block;
-  background-image: url("img/card_suits.jpg");
+  background-image: url("img/card_suits.png");
   width: 32px;
   height: 32px;
   margin: auto;

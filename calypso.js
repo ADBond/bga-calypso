@@ -95,8 +95,6 @@ function (dojo, declare) {
             this.playerHand.setOverlap( 70, 0 );
             this.playerHand.extraClasses = "clp-hand-card";
 
-            // this.playerHand.onItemCreate = dojo.hitch( this, 'setupNewHandCard' ); 
-
             dojo.connect( this.playerHand, 'onChangeSelection', this, 'onPlayerHandSelectionChanged' );
 
             // Cards in player's hand
@@ -106,13 +104,6 @@ function (dojo, declare) {
                 let rank = card.type_arg;
                 let unique_type = this.getCardUniqueType(suit, rank);
                 this.playerHand.addToStockWithId(unique_type, card.id);
-                let card_el = this.playerHand.getItemDivId(card.id);
-                // console.log("handy");
-                // console.log(card.id);
-                // console.log(card_el);
-                // TODO: probably delete this function
-                // TODO: set hoverable here? but then also need to do it when your turn comes around
-                // this.setupNewHandCard(card_el);
             }
             this.setHandActiveness(this.isCurrentPlayerActive());
 
@@ -122,7 +113,7 @@ function (dojo, declare) {
                 let suit = card.type;
                 let rank = card.type_arg;
                 let player_id = card.location_arg;
-                console.log("on the table has: " + suit + ", " + rank + ", and...");
+                // console.log("on the table has: " + suit + ", " + rank + ", and...");
                 this.playCardOnTable(player_id, suit, rank, card.id);
             }
 
@@ -133,8 +124,8 @@ function (dojo, declare) {
                 let suit = card.type;
                 let rank = card.type_arg;
                 let player_id = card.location_arg;
-                console.log("calypso has: " + suit + ", " + rank + ", and...");
-                this.placeCardInCalypso(player_id, suit, rank, card.id);
+                // console.log("calypso has: " + suit + ", " + rank + ", and...");
+                this.placeCardInCalypso(player_id, suit, rank);
             }
             console.log("completed calypso counts");
             let team_lookup = {
@@ -187,13 +178,7 @@ function (dojo, declare) {
                 this.activateScoreButton(currentround, gamedatas.roundscoretable[currentround]);
             }
             if(currentround != 1 | awaiting_new_round){
-                const overall_scores_button_id = 'clp-round-scores-button-overall';
-                $(overall_scores_button_id).onclick = (
-                    () => this.showResultDialog(
-                        0, gamedatas.overallscoretable, _("Round-by-round score summary"))
-                );
-                dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
-                dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
+                this.activateOverallScoreButton(gamedatas.overallscoretable);
             }
             // button text!
             for(let round_number = 1; round_number <= totalrounds; round_number++){
@@ -307,23 +292,6 @@ function (dojo, declare) {
             }
         },
 
-        // setupNewHandCard: function( card_div_id ) {
-        //    // function for when cards are made in players' hand
-        //     console.log("hand card");
-        //     console.log(card_div_id);
-        //     // console.log(card_type_id);
-        //     // console.log(card_id)
-    
-        //     // dojo.attr(card_id, "style", "");
-        //     let current_z = dojo.style(card_div_id, "z-index");
-        //     console.log(current_z)
-        //     dojo.setStyle(card_div_id, "z-index", current_z + 20);
-        //     dojo.style(card_div_id, "color", "red");
-        //     dojo.style(card_div_id, "opacity", "");
-        //     console.log("element is:")
-        //     console.log($(card_div_id));
-        // },
-        
         setHandActiveness(active){
             let hand_div_id = "clp-myhand";
             if(active){
@@ -336,19 +304,12 @@ function (dojo, declare) {
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
-            // TODO: this can all be css
             dojo.place(this.format_block('jstpl_cardontable', {
                 x : this.cardwidth * (rank - 2),
                 y : this.cardheight * (suit - 1),
                 player_id : player_id
             }), 'clp-player-card-play-area-card-' + player_id);
 
-            // would be nicer to do as class, but makes animation weird somehow
-            dojo.style(`clp-card-on-table-${player_id}`, "top", "0");
-            // dojo.style(`clp-card-on-table-${player_id}`, "border", "solid 1px black");
-            // dojo.addClass('clp-card-on-table-' + player_id, "clp-selected-card");
-            console.log("the style");
-            console.log($(`clp-card-on-table-${player_id}`));
             if (player_id != this.player_id) {
                 // Move card from their general area
                 this.placeOnObject('clp-card-on-table-' + player_id, 'clp-player-all-captured-cards-' + player_id);
@@ -381,21 +342,12 @@ function (dojo, declare) {
             // dojo.removeClass('clp-card-on-table-' + player_id, "clp-selected-card");
         },
 
-        placeCardInCalypso : function(player_id, suit, rank, card_id) {
-            // const x = this.cardwidth * (rank - 2);
-            // const y = this.cardheight * (suit - 1);
-
+        placeCardInCalypso : function(player_id, suit, rank) {
             const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
             console.log("just a simple card going into a calypso - what could be better than that?");
             console.log(card_el_id);
 
-            // TODO: this should stay in css - use class manipulation
-            // dojo.style(card_el_id,
-            //     {
-            //         'backgroundPosition': `-${x}px -${y}px`,
-            //         'z-index': `${+rank + 14}`,
-            //     }
-            // )
+
             dojo.addClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`);
             dojo.addClass( card_el_id, 'clp-face-up-card' );
             dojo.removeClass( card_el_id, 'clp-calypsocard-space' );
@@ -561,7 +513,10 @@ function (dojo, declare) {
             let elements_without_tooltips = dojo.query(".clp-inactive-renounce, .clp-calypsopile-empty");
             // let empty_calypsopiles = dojo.query(".clp-calypsopile-empty");
             console.log(elements_without_tooltips);
-            for(let element in elements_without_tooltips){
+            for(let element of elements_without_tooltips){
+                // console.log("removing from:")
+                // console.log(element);
+                // console.log(element["id"]);
                 this.removeTooltip(element["id"]);
             }
             
@@ -585,20 +540,9 @@ function (dojo, declare) {
 
         // borrowed/modified from W. Michael Shirk's Grosstarock implementation
         // saved a lot of pain in trying to hack something together!
-        // TODO: fix API - don't need round_number if title supplied!
-        showResultDialog: function (round_number, score_table, title=null) {
-            // console.log("tabley bizzos");
-            // console.log(score_table);
-            if(title === null){
-                title = dojo.string.substitute(
-                    _("Round ${round_number} score"),
-                    {round_number: round_number}
-                );
-            }
+        showResultDialog: function (score_table, title=null) {
             wrap_translation = (text_entry) => {
                 if(typeof text_entry === 'object' && text_entry.hasOwnProperty('for_round_number')){
-                    console.log("yee");
-                    console.log(text_entry);
                     return dojo.string.substitute(
                         _("Round ${round_number} score"),
                         {round_number: text_entry["for_round_number"]["round_number"]}
@@ -616,8 +560,6 @@ function (dojo, declare) {
                 return lookup[text_entry] || text_entry;
             }
             wrap_class = (table_entry) => {
-                console.log(table_entry)
-                console.log(table_entry);
                 if(typeof table_entry === 'object' && table_entry.hasOwnProperty('to_wrap')){
                     console.log("wrap");
                     let items = table_entry["to_wrap"];
@@ -625,11 +567,9 @@ function (dojo, declare) {
                     return '<div class=\"' + items.class_name + '\">' + wrap_translation(items.string_key) + '</div>';
                     // return wrap_translation(items.string);
                 }
-                console.log("don't wrap");
                 return table_entry;
             }
             score_table = score_table.map((row) => row.map(wrap_class));
-            // console.log(score_table);
             let scoring_dialog = this.displayTableWindow(
                 "roundScore",
                 title,
@@ -640,18 +580,35 @@ function (dojo, declare) {
                     { close: _("Close") }
                 )
             )
-            console.log(scoring_dialog);
 			scoring_dialog.show()
+        },
+
+        showResultDialogByRound: function(round_number, score_table){
+            const title = dojo.string.substitute(
+                _("Round ${round_number} score"),
+                {round_number: round_number}
+            );
+            this.showResultDialog(score_table, title);
         },
 
         activateScoreButton: function(round_number, score_table){
             const round_button_id = `clp-round-scores-button-${round_number}`;
             console.log(round_button_id);
             $(round_button_id).onclick = (
-                () => this.showResultDialog(round_number, score_table)
+                () => this.showResultDialogByRound(round_number, score_table)
             );
             dojo.addClass( round_button_id, 'clp-score-button-active' );
             dojo.removeClass( round_button_id, 'clp-score-button-inactive' );
+        },
+
+        activateOverallScoreButton: function(overall_score){
+            const overall_scores_button_id = 'clp-round-scores-button-overall';
+            $(overall_scores_button_id).onclick = (
+                () => this.showResultDialog(
+                    overall_score, _("Round-by-round score summary"))
+            );
+            dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
+            dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
         },
 
         animateCalypso: function(player_id, player_suit, fresh_ranks, to_prefix="clp-calypsopile", play=true, delay=30){
@@ -987,17 +944,9 @@ function (dojo, declare) {
 
 
         notif_scoreDisplay: function(notif) {
-            this.showResultDialog(notif.args.round_number, notif.args.table);
+            this.showResultDialogByRound(notif.args.round_number, notif.args.table);
             this.activateScoreButton(notif.args.round_number, notif.args.table);
-            // TODO: again this should be farmed out, ideally to a generalised function?
-            // see setup
-            const overall_scores_button_id = 'clp-round-scores-button-overall';
-            $(overall_scores_button_id).onclick = (
-                () => this.showResultDialog(
-                    notif.args.round_number, notif.args.overall_score, _("Round-by-round score summary"))
-            );
-            dojo.addClass( overall_scores_button_id, 'clp-score-button-active' );
-            dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
+            this.activateOverallScoreButton(notif.args.overall_score);
         },
 
         notif_scoreUpdate : function(notif) {
@@ -1064,7 +1013,7 @@ function (dojo, declare) {
                     );
                     dojo.connect(anim, 'onEnd', (node) => {
                         dojo.destroy(node);
-                        this.placeCardInCalypso(send_to_id, suit, rank, card_id);
+                        this.placeCardInCalypso(send_to_id, suit, rank);
                     });
                     // final_func = this.placeCardInCalypso;
                     // final_args = [send_to_id, suit, rank, card_id];
