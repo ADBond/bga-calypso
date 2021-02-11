@@ -32,6 +32,7 @@
 * ~~rename those damn variables to keep a shred of self-consistency check below, do as we go~~
   *  ~~a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?~~
   * leaving this to general refactoring
+* ~~JS `placeCardInCalypso` has redundant `card_id` paramter~~
 
 ### Display
 
@@ -71,6 +72,8 @@
 * ~~Banner needs completing (fining edges, proper colours exported)~~
 * ~~card back(s) finalise~~
 * ~~dealer icon final version needed~~
+* ~~suit icons better~~
+* ~~placeholder calypso cards better~~
 
 ## Things to fix
 
@@ -100,12 +103,17 @@
 * ~~new round (genuine)/things all work nicely in multi-round games~~
 * ~~multiple players complete calypsos in one trick~~
 * ~~a little browser compatibility~~ just take this as it comes now, after fixing mobile
+* ~~check tooltips get removed after new round - didn't work but will fix~~
+* ~~spectator~~
+* ~~in-game replay~~
 
 ### Meta
 
 ### Misc
 
 * ~~Game progression~~
+* ~~Zombie turn~~
+* ~~Pre-alpha checklist - all covered~~
 
 ### Variants
 
@@ -180,3 +188,10 @@
   * ~~e.g. black + brewer #1b9e77, #d95f02, #7570b3, or something sim. for default colours~~
   * doesn't matter for player names so just keep them as-is. Checked okay (I think) for where it matters more.
 
+### PR 13
+
+* ~~Zombie turn~~
+* ~~suit icons better~~
+* ~~placeholder calypso cards better~~
+* ~~todos under 20~~
+* ~~fix tooltip removal properly~~
