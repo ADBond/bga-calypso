@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<div id="clp-myhand-wrap" class="whiteblock">
+<div id="clp-myhand-wrap">
     <div id="clp-myhand">
     </div>
 </div>

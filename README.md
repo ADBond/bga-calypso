@@ -6,6 +6,8 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* Better responsive design/mobile friendly
+
 ## For a different branch
 
 ## To-do list
@@ -37,7 +39,6 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
   * NFA
 * rotate cards in-transit? just a _teeny_ bit jarring when asymmetric cards (e.g. A hearts) arrive from opposite
   * NFA
-* Better responsive design/mobile friendly
 
 ### Images
 
