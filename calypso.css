@@ -649,7 +649,6 @@
 
 .clp-calypsocard-space {
   outline: solid 1px black;
-  /* background-color: #AAA; */
   z-index: 2;
   background-image: url("img/cards_layout.png");
 }
@@ -752,10 +751,7 @@
 }
 
 .clp-player-all-captured-cards {
-  /* display: inline-block;
-  position: relative; */
   position: absolute;
-  /* margin-top: 5px; */
   width: 484px;
   height: 96px;
   /* leaving room for renounces */

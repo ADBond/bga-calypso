@@ -6,6 +6,8 @@ For devvy stuff check out [dev notes](./misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* everything remaining in this file - mostly code tidying
+
 ## To-do list
 
 Loosely split into core logic stuff and more nicities, but obviously some overlap. Archived items in [an archive](./misc/archive.md)

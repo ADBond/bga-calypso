@@ -63,22 +63,14 @@ $num_ranks: 13;
 
 /** Table layout **/
 
-// #playarea {
-//     position: relative;
-//     // width: 1500px;
-//     // height: 1000px;
-// }
-
 $table_size: 740px;
 #clp-public-area{
     position: relative;
     height: $table_size;
-    // border: 2px solid red;
 }
 $left_offset: 50%;
 #clp-table-area {
     position: absolute;
-    // margin: 0 auto;
     left: $left_offset;
     transform: translate(-$left_offset);
     width: $table_size;
@@ -102,14 +94,12 @@ $info_size: 20px;
 $title_size: $info_size * 1.5;
 $info_width: 160px;
 .clp-game-info {
-    // position: absolute;
     height: $info_size*2.5;
     margin: 10px auto;
     width: 0.9*$table_size;
     border-radius: 10px;
     position: relative;
     font-weight: bold;
-    // width: $info_width;
     font-size: $info_size;
     padding: 15px;
     text-align: center;
@@ -121,36 +111,21 @@ $info_width: 160px;
 $icon_size: 32px;
 .clp-playerbox-additions {
     clear: both;
-    // background-color: #AAA;
 }
 .clp-calypso-info {
     clear: both;
     width: 2*$icon_size;
-    // display: flex;
-    // align-self: center;
     margin: 5px auto;
-    // float: left;
     display:flex;
-    
 }
 $display_font: 2*$icon_size/3;
 .clp-info-count {
     font-size: $display_font;
     font-weight: bold;
     margin-left: 10px;
-    // margin-left: $icon_size + 10px;
-    // flex-grow: 1;
     padding-top: ($icon_size - $display_font)/2;
-    // vertical-align: middle;
     flex-grow: 1;
-    
-    // transition: 2s;
-    // height: $icon_size;
 }
-// temp class to apply when updating, to highlight. Might delete
-// .clp-score-big {
-//     font-size: 2em;
-// }
 // 16px might be too small - maybe 24? the above bits should scale with
 .clp-suit-icon {
     float: left;
@@ -181,8 +156,6 @@ $card_area_width: $card_width + $card_area_buffer;
 $card_area_height: $card_height + $card_area_buffer;
 $card_area_outline_col: #AAA;
 .clp-player-card-play-area {
-    // position: absolute;
-    // text-align: center;
     outline: ridge 3px $card_area_outline_col;
     width: $card_area_width;
     height: $card_area_height;
@@ -193,44 +166,31 @@ $card_area_outline_col: #AAA;
 $left_right_offset: $card_area_width + 20px;
 $top_bottom_offset: $card_area_height + 20px;
 .clp-player-card-play-area-N {
-    // left: $table_size/2 - $card_area_width/2;
     position: absolute;
     top: 30%;
     left: 50%;
     transform: translate(-50%);
-    // margin: 0 auto;
-    // top: $table_size/2 - $card_area_height/2 - $top_bottom_offset;
 }
 .clp-player-card-play-area-S {
     position: absolute;
     bottom: 30%;
     left: 50%;
     transform: translate(-50%);
-    // margin: 0 auto;
-    // left: $table_size/2 - $card_area_width/2;
-    // top: $table_size/2 - $card_area_height/2 + $top_bottom_offset;
 }
 .clp-player-card-play-area-W {
     position: absolute;
     left: 30%;
     top: 50%;
     transform: translate(0, -50%);
-    // left: $table_size/2 - $card_area_width/2 - $left_right_offset;
-    // top: $table_size/2 - $card_area_height/2;
 }
 .clp-player-card-play-area-E {
     position: absolute;
     right: 30%;
     top: 50%;
     transform: translate(0, -50%);
-    // left: $table_size/2 - $card_area_width/2 + $left_right_offset;
-    // top: $table_size/2 - $card_area_height/2;
 }
 
 .clp-player-card-play-area-card {
-    // display: inline-block;
-    // position: relative;
-    // margin-top: ($card_area_height - $card_height)/2;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -248,24 +208,9 @@ $top_bottom_offset: $card_area_height + 20px;
     max-width: $table_size;
     margin-top: 10px;
     margin-bottom: 10px;
-    // height: 1.2*$card_height;
 }
-// #clp-myhand {
-//     z-index: 50;
-// }
-// .clp-hand-card {
-//     // make them high up so they travel over table stuff except not really
-//     z-index: 30;
-//     // bottom: 0 !important;
-// }
-// .clp-hand-card[style] {
-//     // bottom: 0px !important;
-//     // z-index: 30 !important;
-// }
 .clp-active-hand .clp-hand-card:hover, .clp-selected-card {
-    // border: solid 1px black;
     transform: translate(0, -10px);
-    // bottom: 10px !important;
 }
 .clp-inactive-hand .clp-hand-card {
     cursor: default !important;
@@ -282,7 +227,6 @@ $card_rounding: 5px;
 
 .clp-card-on-table {
     position: absolute;
-    // z-index: 50;  // above trickpile, but not working quite right
 }
 
 /*** calypsos ***/
@@ -319,19 +263,15 @@ $suit_height: 32px;
         }
     }
     .clp-calypsopile-#{$suit} {
-        background-position-x: -$card_width * (14 - 2);  // for the ace
+        // for the ace
+        background-position-x: -$card_width * (14 - 2);
         background-position-y: -$y_card;
     }
 }
 
-// This is for the actual cards that are won:
-// .cardincalypso {
-//     background-image: url('img/cards.jpg');  
-// }
 // while _this_ is the placeholder layout
 .clp-calypsocard-space {
     outline: solid 1px black;
-    /* background-color: #AAA; */
     z-index: 2;
     background-image: url('img/cards_layout.png'); 
 }
@@ -342,7 +282,6 @@ $suit_height: 32px;
 }
 
 $blank_space_colour: #777;
-// $blank_space_colour: #b8b8b8;
 
 $won_tricks_left_buffer: 40px;
 $calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_width;
@@ -360,22 +299,10 @@ $personal_area_height: $calypso_bottom_buffer + $card_height + $renounce_size + 
     text-align: center;
     width: $personal_area_width;
     height: $personal_area_height;
-    // outline: solid 1px black;
     padding: $calypso_zone_side_padding;
     background: rgba(255, 255, 255, 0.75);
 }
-// $minor_colour: #f7f7f7; // #d95f02; // rgba(170, 175, 255, 0.75);
-// $major_colour: #969696; // #1b9e77; // rgba(255, 255, 175, 0.75);
-// $minor_colour: #f7f7f7; // #d95f02; // rgba(170, 175, 255, 0.75);
-// $major_colour: #969696; // #1b9e77; // rgba(255, 255, 175, 0.75);
-// $minor_colour: #d95f02;
-// $major_colour: #1b9e77;
-// $minor_colour: #000;
-// $major_colour: #fff;
-// $minor_colour: #dd8800;
-// $major_colour: #00dd88;
-// $minor_colour: #dd00c3;
-// $major_colour: #1900dd;
+
 $minor_colour: #ffff3f;
 $major_colour: #9fff3f;
 $border_width: 5px;
@@ -391,9 +318,7 @@ $border_width: 5px;
     font-size: 1.2em;
     margin: 5px;
     text-align: center;
-    // background-color: rgba(#000, 0.7);
     background-color: #AAA;
-    // width: max-content;
     display: block;
     padding: 6px;
     border-radius: 5px;
@@ -406,7 +331,6 @@ $border_width: 5px;
 }
 
 .clp-renounce-indicators {
-    // left: 20px;
     position: absolute;
 }
 .clp-renounce-indicator {
@@ -429,8 +353,6 @@ $border_width: 5px;
     width: $renounce_size;
     height: $renounce_size;
     left: 4*($renounce_size + 2*$renounce_padding) + 55px;
-    // background-color: $blank_space_colour;
-    // display: inline-block;
     margin: $renounce_padding;
 }
 
@@ -452,8 +374,6 @@ $max_name_size: 200px;
     font-weight: bold;
     height: $renounce_size;
     width: $max_name_size;
-    // a little outline, so it's still visible when it's close to b/g (as noticed with white in Love Letter)
-    // text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -467,11 +387,7 @@ $max_name_size: 200px;
 }
 
 .clp-player-all-captured-cards {
-    /* display: inline-block;
-    position: relative; */
-    // left: 20px;
     position: absolute;
-    /* margin-top: 5px; */
     width: $calypso_zone_pure_width;
     height: $card_height;
     /* leaving room for renounces */
@@ -491,8 +407,6 @@ $calypso_card_overlap: 12px;
     position: absolute;
     background-color: $blank_space_colour;
     z-index: 4;
-    // z-index: 30;  // want calypso cards to be underneath!
-    // border: solid 1px black;
 }
 // convenience class to temporarily put things on top1
 // as z-index was causing problems with animations when static
@@ -506,21 +420,17 @@ $calypso_card_overlap: 12px;
     right: $calypso_card_overlap;
     position: absolute;
     bottom: $calypso_card_overlap;
-    // background-color: #AA0;  // for testing
     z-index: 2;
-    // border: solid 3px black;
 }
 .clp-calypsopile-full {
     background-image: url('img/cards.jpg');
 }
 
 .clp-trickpile-full {
-    // background-color: #070;
     border-radius: $card_rounding;
     background-image: url('img/#{$card_back_image}'); 
 }
 
-// TODO: transform using mixins - see sass project page
 $personal_area_side_offset: 20px;
 $personal_area_bottom_offset: 20px;
 .clp-player-personal-area-N {
@@ -579,21 +489,13 @@ $button_width: 230px;
 $button_font_size: $info_size;
 #clp-score-access-table-area {
     position: absolute;
-    // top: $table_size + 10px;
     margin: auto;
     padding: 10px;
     top: 10%;
-    // left: +($table_size/2 + $button_width + 10px);
-    // top: $table_size + 100px;
     right: 0;
-    // right: 50%;
-    // transform: translate(-50%);
-    // top: 10%;
     z-index: 0;
-    // border: 5px solid #ccc;
     background-color: rgba($calypso_colour, 0.2);
     border-radius: 10px;
-    // width: 1.1*$button_width;
 }
 // mobile view for score-button area
 // this is a total kludge, to account for additional margin and player-box area
@@ -603,15 +505,6 @@ $responsive_buffer: 530px;
     $wider_width: 2*($button_width + $mob_score_extra_padding);
     #clp-score-access-table-area {
         position: relative;
-        // left: calc($table_size + 40%);
-        // left: 0;
-        // transform: translate(100px);
-        // top: $table_size + 100px;
-        // left: +($table_size/2 + $button_width + 10px);
-        // top: $table_size + 100px;
-        // right: 0;
-        // left: 50%;
-        // transform: translate(-$wider_width/2);
         width: $wider_width;
         padding: $mob_score_extra_padding;
         display: block;
