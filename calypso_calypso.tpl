@@ -46,32 +46,29 @@
         </div>
         <!-- END playercalypso -->
     </div>
-
-    <div id="clp-score-access-table-area">
-        <table id="clp-score-access-table">
-            <!-- BEGIN roundscoreaccessrow -->
-            <tr>
-                <td>
-                    <button id="clp-round-scores-button-{ROUND_NUMBER}" class="clp-score-button clp-score-button-inactive">
-                    </button>
-                </td>
-            </tr>
-            <!-- END roundscoreaccessrow -->
-            <tr>
-                <td>
-                    <button id="clp-round-scores-button-overall" class="clp-score-button clp-score-button-inactive">
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
 </div>
-
 <div id="clp-myhand-wrap">
     <div id="clp-myhand">
     </div>
 </div>
-
+<div id="clp-score-access-table-area">
+    <table id="clp-score-access-table">
+        <!-- BEGIN roundscoreaccessrow -->
+        <tr>
+            <td>
+                <button id="clp-round-scores-button-{ROUND_NUMBER}" class="clp-score-button clp-score-button-inactive">
+                </button>
+            </td>
+        </tr>
+        <!-- END roundscoreaccessrow -->
+        <tr>
+            <td>
+                <button id="clp-round-scores-button-overall" class="clp-score-button clp-score-button-inactive">
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <script type="text/javascript">
 

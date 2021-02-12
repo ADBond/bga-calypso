@@ -6,6 +6,6 @@
 ./calypso.js:511:            // TODO: specialise to suits?
 ./calypso.js:619:            // TODO: think about this mate, not sure here
 ./calypso.js:657:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
-./calypso_calypso.tpl:83:// animating dealer changing. TODO: deprecated??
-./calypso_style.scss:522:// TODO: transform using mixins - see sass project page
+./calypso_calypso.tpl:80:// animating dealer changing. TODO: deprecated??
+./calypso_style.scss:523:// TODO: transform using mixins - see sass project page
 ./gameinfos.inc.php:159:    // TODO: actually write this properly

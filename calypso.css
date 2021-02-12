@@ -53,15 +53,16 @@
 /** Table layout **/
 #clp-public-area {
   position: relative;
-  height: 750px;
+  height: 740px;
+  border: 2px solid red;
 }
 
 #clp-table-area {
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  width: 750px;
-  height: 750px;
+  width: 740px;
+  height: 740px;
   background-color: #8800DD;
   border-radius: 20px;
   z-index: 1;
@@ -69,8 +70,8 @@
 
 #clp-table-centre {
   position: absolute;
-  left: 375px;
-  top: 375px;
+  left: 370px;
+  top: 370px;
   width: 0;
   height: 0;
   z-index: 41;
@@ -79,7 +80,7 @@
 .clp-game-info {
   height: 50px;
   margin: 10px auto;
-  width: 675px;
+  width: 666px;
   border-radius: 10px;
   position: relative;
   font-weight: bold;
@@ -189,7 +190,7 @@
   left: 50%;
   transform: translate(-50%);
   width: 70%;
-  max-width: 750px;
+  max-width: 740px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
@@ -663,9 +664,9 @@
 .clp-player-personal-area {
   position: absolute;
   text-align: center;
-  width: 494px;
+  width: 492px;
   height: 156px;
-  padding: 10px;
+  padding: 8px;
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -809,7 +810,7 @@
 
 .clp-player-personal-area-E {
   position: absolute;
-  right: -494px;
+  right: -488px;
   bottom: 20px;
   transform-origin: bottom left;
   transform: rotate(270deg);
@@ -824,7 +825,7 @@
 .clp-player-personal-area-W {
   position: absolute;
   left: 20px;
-  top: -156px;
+  top: -152px;
   transform-origin: bottom left;
   transform: rotate(90deg);
 }
@@ -858,16 +859,24 @@
 
 #clp-score-access-table-area {
   position: absolute;
-  top: 760px;
   margin: auto;
-  right: 50%;
-  transform: translate(-50%);
+  padding: 10px;
+  top: 10%;
+  right: 0;
   z-index: 0;
 }
 
+@media screen and (max-width: 1500px) {
+  #clp-score-access-table-area {
+    position: relative;
+    left: 50%;
+    transform: translate(-115px);
+    display: block;
+  }
+}
 .clp-score-button {
-  height: 80px;
-  width: 300px;
+  height: 100px;
+  width: 230px;
   border: 1px solid #FFFFFF;
   margin: 5px;
   border-radius: 5px;
@@ -877,6 +886,7 @@
   text-align: center;
   transition: all 0.2s;
   box-shadow: #000000 0 1px 0;
+  z-index: 40;
 }
 
 .clp-score-button-inactive {
@@ -898,12 +908,6 @@
   margin-top: 20px;
 }
 
-@media screen and (min-width: 1070px) {
-  #clp-score-access-table-area {
-    right: 5%;
-    top: 10%;
-  }
-}
 .tableWindow th {
   text-align: center;
 }

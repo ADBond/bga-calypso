@@ -69,10 +69,11 @@ $num_ranks: 13;
 //     // height: 1000px;
 // }
 
-$table_size: 750px;
+$table_size: 740px;
 #clp-public-area{
     position: relative;
     height: $table_size;
+    border: 2px solid red;
 }
 $left_offset: 50%;
 #clp-table-area {
@@ -346,7 +347,7 @@ $blank_space_colour: #777;
 $won_tricks_left_buffer: 40px;
 $calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_width;
 
-$calypso_zone_side_padding: 10px;
+$calypso_zone_side_padding: 8px;
 $calypso_bottom_buffer: 20px;
 
 $renounce_size: 32px;
@@ -573,19 +574,41 @@ $personal_area_bottom_offset: 20px;
 }
 
 // score buttons for getting score entries
+$button_height: 100px;
+$button_width: 230px;
+$button_font_size: $info_size;
 #clp-score-access-table-area {
     position: absolute;
-    top: $table_size + 10px;
+    // top: $table_size + 10px;
     margin: auto;
-    right: 50%;
-    transform: translate(-50%);
+    padding: 10px;
+    top: 10%;
+    // left: +($table_size/2 + $button_width + 10px);
+    // top: $table_size + 100px;
+    right: 0;
+    // right: 50%;
+    // transform: translate(-50%);
     // top: 10%;
     z-index: 0;
+    // border: 5px solid black;
+    // width: 1.1*$button_width;
 }
-
-$button_height: 80px;
-$button_width: 300px;
-$button_font_size: $info_size;
+// mobile view for score-button area
+@media screen and (max-width: 1500px) {
+    #clp-score-access-table-area {
+        position: relative;
+        // left: calc($table_size + 40%);
+        // left: 0;
+        // transform: translate(100px);
+        // top: $table_size + 100px;
+        // left: +($table_size/2 + $button_width + 10px);
+        // top: $table_size + 100px;
+        // right: 0;
+        left: 50%;
+        transform: translate(-$button_width/2);
+        display: block;
+    }
+}
 .clp-score-button{
     height: $button_height;
     width: $button_width;
@@ -598,6 +621,8 @@ $button_font_size: $info_size;
     text-align: center;
     transition: all 0.2s;
     box-shadow: #000000 0 1px 0;
+    // temp while i'm positioning
+    z-index: 40;
 }
 .clp-score-button-inactive{
     background-color: #888888;
@@ -614,13 +639,7 @@ $button_font_size: $info_size;
 #clp-round-scores-button-overall{
     margin-top: 20px;
 }
-@media screen and (min-width: $info_size + $table_size + $button_width) {
-    #clp-score-access-table-area {
-        // position: absolute;
-        right: 5%;
-        top: 10%;
-    }
-}
+
 // this is in-built bga stuff, rather than hacking it ourselves
 .tableWindow th {
     text-align: center;
