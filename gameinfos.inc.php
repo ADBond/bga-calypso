@@ -156,7 +156,6 @@ $gameinfos = array(
 // Each paragraph must be wrapped with totranslate() for translation and should not contain html (plain text without formatting).
 // A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
 'presentation' => array(
-    // TODO: actually write this properly
     totranslate("Calypso is a forgotten classic card game from Trinidad."),
     totranslate("It is played by four players in partnerships."),
 ),

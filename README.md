@@ -18,10 +18,12 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Dev
 
-* have at least a proper go-through of code to tidy at least a _little_
+* ~~have at least a proper go-through of code to tidy at least a _little_~~
 * ~~Add a separate code licence~~, and make repo public once that's done
-* Use game-level constants in place of magic numbers where possible
-* `global` trick can now be killed in favour of `use` which is much nicer
+* ~~Use game-level constants in place of magic numbers where possible~~
+  * in todo/part of general refactoring. on my radar
+* ~~`global` trick can now be killed in favour of `use` which is much nicer~~
+  * this is in todo list now - only one instance of it but want to check once it's done
 
 ### Things to test
 
