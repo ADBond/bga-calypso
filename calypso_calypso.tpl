@@ -52,22 +52,20 @@
     </div>
 </div>
 <div id="clp-score-access-table-area">
-    <table id="clp-score-access-table">
-        <!-- BEGIN roundscoreaccessrow -->
-        <tr>
-            <td>
+    <div id="clp-score-access-table">
+        <div id="clp-score-access-by-round">
+            <!-- BEGIN roundscoreaccessrow -->
+            <div>
                 <button id="clp-round-scores-button-{ROUND_NUMBER}" class="clp-score-button clp-score-button-inactive">
                 </button>
-            </td>
-        </tr>
-        <!-- END roundscoreaccessrow -->
-        <tr>
-            <td>
-                <button id="clp-round-scores-button-overall" class="clp-score-button clp-score-button-inactive">
-                </button>
-            </td>
-        </tr>
-    </table>
+            </div>
+            <!-- END roundscoreaccessrow -->
+        </div>
+        <div id="clp-score-access-overall">
+            <button id="clp-round-scores-button-overall" class="clp-score-button clp-score-button-inactive">
+            </button>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript">

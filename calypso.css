@@ -54,7 +54,6 @@
 #clp-public-area {
   position: relative;
   height: 740px;
-  border: 2px solid red;
 }
 
 #clp-table-area {
@@ -864,14 +863,26 @@
   top: 10%;
   right: 0;
   z-index: 0;
+  background-color: rgba(136, 0, 221, 0.2);
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 1500px) {
   #clp-score-access-table-area {
     position: relative;
+    width: 480px;
+    padding: 10px;
+    display: block;
+  }
+
+  #clp-score-access-by-round {
+    column-count: 2;
+  }
+
+  #clp-score-access-overall {
+    position: relative;
     left: 50%;
     transform: translate(-115px);
-    display: block;
   }
 }
 .clp-score-button {

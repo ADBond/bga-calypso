@@ -73,7 +73,7 @@ $table_size: 740px;
 #clp-public-area{
     position: relative;
     height: $table_size;
-    border: 2px solid red;
+    // border: 2px solid red;
 }
 $left_offset: 50%;
 #clp-table-area {
@@ -590,11 +590,17 @@ $button_font_size: $info_size;
     // transform: translate(-50%);
     // top: 10%;
     z-index: 0;
-    // border: 5px solid black;
+    // border: 5px solid #ccc;
+    background-color: rgba($calypso_colour, 0.2);
+    border-radius: 10px;
     // width: 1.1*$button_width;
 }
 // mobile view for score-button area
-@media screen and (max-width: 1500px) {
+// this is a total kludge, to account for additional margin and player-box area
+$responsive_buffer: 530px;
+@media screen and (max-width: $table_size + $button_width + $responsive_buffer) {
+    $mob_score_extra_padding: 10px;
+    $wider_width: 2*($button_width + $mob_score_extra_padding);
     #clp-score-access-table-area {
         position: relative;
         // left: calc($table_size + 40%);
@@ -604,9 +610,19 @@ $button_font_size: $info_size;
         // left: +($table_size/2 + $button_width + 10px);
         // top: $table_size + 100px;
         // right: 0;
+        // left: 50%;
+        // transform: translate(-$wider_width/2);
+        width: $wider_width;
+        padding: $mob_score_extra_padding;
+        display: block;
+    }
+    #clp-score-access-by-round {
+        column-count: 2;
+    }
+    #clp-score-access-overall {
+        position: relative;
         left: 50%;
         transform: translate(-$button_width/2);
-        display: block;
     }
 }
 .clp-score-button{

@@ -6,7 +6,7 @@ For devvy stuff check out [dev notes](misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* Better responsive design/mobile friendly
+* ~~Better responsive design/mobile friendly~~
 
 ## For a different branch
 
@@ -42,7 +42,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Images
 
-* another display image?
+* ~~another display image?~~
 
 ## Things to fix
 
