@@ -492,9 +492,9 @@ function (dojo, declare) {
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             // don't need to translate game title
             $("clp-game-info").innerHTML =  dojo.string.substitute(
-                '<div class="clp-gametitle">Calypso</div>' + 
+                '<span class="clp-gametitle">Calypso</span>' + 
                     "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
-                    "<br>" + _("Hand ${handnumber} of 4"),
+                    " - " + _("Hand ${handnumber} of 4"),
                 {
                     roundnumber: roundnumber,
                     handnumber: handnumber,

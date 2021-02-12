@@ -53,15 +53,15 @@
 /** Table layout **/
 #clp-public-area {
   position: relative;
-  height: 750px;
+  height: 740px;
 }
 
 #clp-table-area {
   position: absolute;
-  left: 40%;
-  transform: translate(-40%);
-  width: 750px;
-  height: 750px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 740px;
+  height: 740px;
   background-color: #8800DD;
   border-radius: 20px;
   z-index: 1;
@@ -69,19 +69,22 @@
 
 #clp-table-centre {
   position: absolute;
-  left: 375px;
-  top: 375px;
+  left: 370px;
+  top: 370px;
   width: 0;
   height: 0;
   z-index: 41;
 }
 
 .clp-game-info {
-  position: absolute;
+  height: 50px;
+  margin: 10px auto;
+  width: 666px;
+  border-radius: 10px;
+  position: relative;
   font-weight: bold;
-  width: 160px;
   font-size: 20px;
-  padding: 10px;
+  padding: 15px;
   text-align: center;
   background-color: rgba(136, 0, 221, 0.5);
 }
@@ -186,6 +189,9 @@
   left: 50%;
   transform: translate(-50%);
   width: 70%;
+  max-width: 740px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .clp-active-hand .clp-hand-card:hover, .clp-selected-card {
@@ -657,9 +663,9 @@
 .clp-player-personal-area {
   position: absolute;
   text-align: center;
-  width: 494px;
+  width: 492px;
   height: 156px;
-  padding: 10px;
+  padding: 8px;
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -803,7 +809,7 @@
 
 .clp-player-personal-area-E {
   position: absolute;
-  right: -494px;
+  right: -488px;
   bottom: 20px;
   transform-origin: bottom left;
   transform: rotate(270deg);
@@ -818,7 +824,7 @@
 .clp-player-personal-area-W {
   position: absolute;
   left: 20px;
-  top: -156px;
+  top: -152px;
   transform-origin: bottom left;
   transform: rotate(90deg);
 }
@@ -852,14 +858,36 @@
 
 #clp-score-access-table-area {
   position: absolute;
-  right: 5%;
+  margin: auto;
+  padding: 10px;
   top: 10%;
+  right: 0;
   z-index: 0;
+  background-color: rgba(136, 0, 221, 0.2);
+  border-radius: 10px;
 }
 
+@media screen and (max-width: 1500px) {
+  #clp-score-access-table-area {
+    position: relative;
+    width: 480px;
+    padding: 10px;
+    display: block;
+  }
+
+  #clp-score-access-by-round {
+    column-count: 2;
+  }
+
+  #clp-score-access-overall {
+    position: relative;
+    left: 50%;
+    transform: translate(-115px);
+  }
+}
 .clp-score-button {
-  height: 60px;
-  width: 200px;
+  height: 100px;
+  width: 230px;
   border: 1px solid #FFFFFF;
   margin: 5px;
   border-radius: 5px;

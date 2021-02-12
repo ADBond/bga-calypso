@@ -46,32 +46,27 @@
         </div>
         <!-- END playercalypso -->
     </div>
-
-    <div id="clp-score-access-table-area">
-        <table id="clp-score-access-table">
-            <!-- BEGIN roundscoreaccessrow -->
-            <tr>
-                <td>
-                    <button id="clp-round-scores-button-{ROUND_NUMBER}" class="clp-score-button clp-score-button-inactive">
-                    </button>
-                </td>
-            </tr>
-            <!-- END roundscoreaccessrow -->
-            <tr>
-                <td>
-                    <button id="clp-round-scores-button-overall" class="clp-score-button clp-score-button-inactive">
-                    </button>
-                </td>
-            </tr>
-        </table>
-    </div>
 </div>
-
-<div id="clp-myhand-wrap" class="whiteblock">
+<div id="clp-myhand-wrap">
     <div id="clp-myhand">
     </div>
 </div>
-
+<div id="clp-score-access-table-area">
+    <div id="clp-score-access-table">
+        <div id="clp-score-access-by-round">
+            <!-- BEGIN roundscoreaccessrow -->
+            <div>
+                <button id="clp-round-scores-button-{ROUND_NUMBER}" class="clp-score-button clp-score-button-inactive">
+                </button>
+            </div>
+            <!-- END roundscoreaccessrow -->
+        </div>
+        <div id="clp-score-access-overall">
+            <button id="clp-round-scores-button-overall" class="clp-score-button clp-score-button-inactive">
+            </button>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
 
@@ -80,7 +75,7 @@
 var jstpl_cardontable = '<div class="clp-card-on-table clp-face-up-card" id="clp-card-on-table-${player_id}"\
                             style="background-position:-${x}px -${y}px">\
                         </div>';
-// animating dealer changing. TODO: deprecated??
+// dynamic dealer indicator
 var jstpl_dealerindicator = '<div id="clp-dealerbutton" class="clp-dealerbutton"></div>';
 // animating moving card to calypso
 var jstpl_calypsocard = '<div class="clp-calypsocard-space clp-captured-card clp-calypsocard-${rank} clp-card-space-${suit}"\
@@ -100,14 +95,6 @@ var jstpl_playerbox_additions = '<div class="clp-playerbox-additions" class="clp
         </div>\
         <div class="clp-teamname clp-teamname-${team_name}">${team_name_display}</div>\
     </div>';
-/*
-var jstpl_player_calypso_info = '<div class="clp-calypso-info">\
-                                    <div id="clp-suit-indicator-info-${id}" class="clp-suit-icon clp-suit-icon-${trump_suit}">\
-                                    </div>\
-                                    <div class="clp-info-count" id="clp-info-count-${id}">${completed_calypsos}</span>\
-                                </div>';
-var jstpl_player_teamname = '<div class="clp-teamname clp-teamname-${team_name}">${team_name_display}</div>';
-*/
 // animate calypso count increment
 var jstpl_suiticon = '<div id="clp-suit-for-score" class="clp-suit-icon clp-suit-icon-${trump_suit}"></div>';
 

@@ -69,14 +69,16 @@ $num_ranks: 13;
 //     // height: 1000px;
 // }
 
-$table_size: 750px;
+$table_size: 740px;
 #clp-public-area{
     position: relative;
     height: $table_size;
+    // border: 2px solid red;
 }
-$left_offset: 40%;
+$left_offset: 50%;
 #clp-table-area {
     position: absolute;
+    // margin: 0 auto;
     left: $left_offset;
     transform: translate(-$left_offset);
     width: $table_size;
@@ -98,12 +100,18 @@ $left_offset: 40%;
 
 $info_size: 20px;
 $title_size: $info_size * 1.5;
+$info_width: 160px;
 .clp-game-info {
-    position: absolute;
+    // position: absolute;
+    height: $info_size*2.5;
+    margin: 10px auto;
+    width: 0.9*$table_size;
+    border-radius: 10px;
+    position: relative;
     font-weight: bold;
-    width: 160px;
+    // width: $info_width;
     font-size: $info_size;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
     background-color: rgba($calypso_colour, 0.5);
 }
@@ -237,6 +245,9 @@ $top_bottom_offset: $card_area_height + 20px;
     left: 50%;
     transform: translate(-50%);
     width: 70%;
+    max-width: $table_size;
+    margin-top: 10px;
+    margin-bottom: 10px;
     // height: 1.2*$card_height;
 }
 // #clp-myhand {
@@ -336,7 +347,7 @@ $blank_space_colour: #777;
 $won_tricks_left_buffer: 40px;
 $calypso_zone_pure_width: $calypso_pure_width + $won_tricks_left_buffer + $card_width;
 
-$calypso_zone_side_padding: 10px;
+$calypso_zone_side_padding: 8px;
 $calypso_bottom_buffer: 20px;
 
 $renounce_size: 32px;
@@ -563,15 +574,57 @@ $personal_area_bottom_offset: 20px;
 }
 
 // score buttons for getting score entries
-#clp-score-access-table-area{
-    position: absolute;
-    right: 5%;
-    top: 10%;
-    z-index: 0;
-}
-$button_height: 60px;
-$button_width: 200px;
+$button_height: 100px;
+$button_width: 230px;
 $button_font_size: $info_size;
+#clp-score-access-table-area {
+    position: absolute;
+    // top: $table_size + 10px;
+    margin: auto;
+    padding: 10px;
+    top: 10%;
+    // left: +($table_size/2 + $button_width + 10px);
+    // top: $table_size + 100px;
+    right: 0;
+    // right: 50%;
+    // transform: translate(-50%);
+    // top: 10%;
+    z-index: 0;
+    // border: 5px solid #ccc;
+    background-color: rgba($calypso_colour, 0.2);
+    border-radius: 10px;
+    // width: 1.1*$button_width;
+}
+// mobile view for score-button area
+// this is a total kludge, to account for additional margin and player-box area
+$responsive_buffer: 530px;
+@media screen and (max-width: $table_size + $button_width + $responsive_buffer) {
+    $mob_score_extra_padding: 10px;
+    $wider_width: 2*($button_width + $mob_score_extra_padding);
+    #clp-score-access-table-area {
+        position: relative;
+        // left: calc($table_size + 40%);
+        // left: 0;
+        // transform: translate(100px);
+        // top: $table_size + 100px;
+        // left: +($table_size/2 + $button_width + 10px);
+        // top: $table_size + 100px;
+        // right: 0;
+        // left: 50%;
+        // transform: translate(-$wider_width/2);
+        width: $wider_width;
+        padding: $mob_score_extra_padding;
+        display: block;
+    }
+    #clp-score-access-by-round {
+        column-count: 2;
+    }
+    #clp-score-access-overall {
+        position: relative;
+        left: 50%;
+        transform: translate(-$button_width/2);
+    }
+}
 .clp-score-button{
     height: $button_height;
     width: $button_width;
@@ -600,6 +653,7 @@ $button_font_size: $info_size;
 #clp-round-scores-button-overall{
     margin-top: 20px;
 }
+
 // this is in-built bga stuff, rather than hacking it ourselves
 .tableWindow th {
     text-align: center;
