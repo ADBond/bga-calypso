@@ -74,6 +74,7 @@
 * ~~dealer icon final version needed~~
 * ~~suit icons better~~
 * ~~placeholder calypso cards better~~
+* ~~another display image?~~
 
 ## Things to fix
 
@@ -195,3 +196,7 @@
 * ~~placeholder calypso cards better~~
 * ~~todos under 20~~
 * ~~fix tooltip removal properly~~
+
+### PR 14
+
+* ~~Better responsive design/mobile friendly~~

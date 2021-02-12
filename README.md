@@ -1,27 +1,18 @@
 # Calypso for BGA
 
-For devvy stuff check out [dev notes](misc/dev.md).
+For devvy stuff check out [dev notes](./misc/dev.md).
 
 ## Current branch to-do list
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
-* ~~Better responsive design/mobile friendly~~
-
-## For a different branch
-
 ## To-do list
 
-Loosely split into core logic stuff and more nicities, but obviously some overlap. Archived items in [an archive](misc/archive.md)
+Loosely split into core logic stuff and more nicities, but obviously some overlap. Archived items in [an archive](./misc/archive.md)
 
 ### Logic
 
 * anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying
-* player preference for auto-confirm new round
-  * not for alpha (NFA)
-
-### Notifications
-
 
 ### Dev
 
@@ -29,26 +20,6 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 * ~~Add a separate code licence~~, and make repo public once that's done
 * Use game-level constants in place of magic numbers where possible
 * `global` trick can now be killed in favour of `use` which is much nicer
-
-### Display
-
-* Order hand with personal trumps separated?
-  * NFA
-* trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
-  * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
-  * NFA
-* rotate cards in-transit? just a _teeny_ bit jarring when asymmetric cards (e.g. A hearts) arrive from opposite
-  * NFA
-
-### Images
-
-* ~~another display image?~~
-
-## Things to fix
-
-
-### Other UI
-
 
 ### Things to test
 
@@ -61,12 +32,6 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 ### Misc
 
 * Check timings
-
-### Variants
-
-* Seems to be enough around of 'beat the leader' to include as a variant. Maybe doesn't need to be done for alpha though
-  * (i.e. trumping in to trump lead must be higher. Rule as it stands seems better to me, but nice to have both, not in too much danger of configuration hell here.)
-  * NFA
 
 ## Browser compatibility
 
