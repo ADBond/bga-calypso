@@ -170,15 +170,10 @@ class Calypso extends Table
         $sql = "INSERT INTO player 
                 (player_id, player_color, player_canal, player_name, player_avatar, player_no, trump_suit)
                 VALUES ";
-        // $sql = "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES ";
         $values = array();
 
-        // self::debug("new_order_index is ". implode($new_order_index));
-        // self::dump("player_table_orders", $player_table_orders);
-
         foreach( $players as $player_id => $player ) {
-            $order = $new_order_index[$player_table_orders[$player_id]];  // this is being an arse
-            // $old_order = $player_table_orders[$player_id];
+            $order = $new_order_index[$player_table_orders[$player_id]];
             $suit = $player_suits[$order];
             $color = array_shift( $default_colors );
             $values[] = "('".$player_id."','$color','".$player['player_canal']."','".addslashes( $player['player_name'] ).
@@ -229,7 +224,6 @@ class Calypso extends Table
         self::initStat('player', 'partnership_trickpile_cards_per_round', 0);
         self::initStat('player', 'points_per_round', 0);
         self::initStat('player', 'partnership_points_per_round', 0);
-        // self::initStat('player', 'total_cards_won', 0);
 
         self::initStat('player', 'personal_trumps_per_hand', 0);
         self::initStat('player', 'partner_trumps_per_hand', 0);
@@ -267,6 +261,7 @@ class Calypso extends Table
 
         foreach($result['players'] as $player_id => $info){
             // hide actual number in pile, just for display of backs or not
+            // as all of this info is potentially public (arrives client side on load)
             $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id) > 0 ? 1 : 0; 
         }
 
@@ -358,6 +353,7 @@ class Calypso extends Table
         return self::getAdjacentPlayer($player_id, 2);
     }
 
+    // get the player number relative to the round - for stats
     function getRoundPlayerNumber($player_id){
         $first_hand_dealer_id = self::getGameStateValue("firstHandDealer");
         if($first_hand_dealer_id == $player_id){
@@ -389,6 +385,7 @@ class Calypso extends Table
     }
 
     function getPartnershipPlayers($partnership){
+        // TODO: constants here
         if($partnership == 'minor'){
             return array(self::getPlayerIDFromSuit(3), self::getPlayerIDFromSuit(4));
         }
@@ -401,7 +398,8 @@ class Calypso extends Table
         $players = self::loadPlayersBasicInfos();
         $existing_player_number = $players[$existing_player_id]["player_no"];
         foreach ( $players as $player_id => $player ) {
-            // TODO: there is probably a pithier way to do this modular arithmetic and get a number in range 1-4
+            // maybe a pithier way to do this modular arithmetic and get a number in range 1-4
+            // but this is clear enough
             $new_player_number = ($existing_player_number + $direction_index) % 4;
             $new_player_number = ($new_player_number == 0) ? 4 : $new_player_number;
             if($new_player_number == $player["player_no"]){
@@ -421,6 +419,7 @@ class Calypso extends Table
 
         $players = self::loadPlayersBasicInfos();
         $south_id = self::getCurrentPlayerId();
+        // if we are a spectator, just pick the first player as south
         if(!array_key_exists($south_id, $players)){
             $south_id = array_key_first($players);
         }
@@ -436,6 +435,7 @@ class Calypso extends Table
         return $directions;
     }
 
+    // actively changing dealer, either the real dealer, or the labelled first-hand dealer
     function updateDealer($direction_index=1, $relevant_dealer='currentDealer') {
         $current_dealer = self::getGameStateValue($relevant_dealer);
 
@@ -445,10 +445,9 @@ class Calypso extends Table
         $this->gamestate->changeActivePlayer( $first_leader );
         return $new_dealer;
     }
-    // Keep this separate, as might want to rotate the other way? if not just alias
+
     function getNextFirstDealer() {
-        // hop back by two so that we roll forward one on new hand
-        // might be a cleaner way, but let's not rock the boat for now
+        // hop back in other direction for first hand dealer
         $next_first_dealer = self::updateDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
     }
@@ -638,11 +637,10 @@ class Calypso extends Table
 
     function validPlay( $player_id, $card ){
         // check that player leads or follows suit OR has no cards of lead suit
-        // shortcut for debugging:
-        //return true;
-        global $trick_suit;  // this makes me think that there is maybe a better way to do this??
+        global $trick_suit;
         $trick_suit = self::getGameStateValue( 'trickSuit' );
-        if( $trick_suit == 0){  // i.e. first card of trick
+        if( $trick_suit == 0){
+            // i.e. first card of trick
             return true;
         }
         if( $card['type'] == $trick_suit ){
@@ -650,6 +648,7 @@ class Calypso extends Table
         }
         $hand = $this->cards->getCardsInLocation( 'hand', $player_id );
         
+        // TODO: global -> use
         $suit_cards = array_filter( $hand, function($hand_card){
             global $trick_suit;
             return $hand_card['type'] == $trick_suit;
@@ -851,7 +850,7 @@ class Calypso extends Table
     }
 
     function wrap_class($x, $class_name){
-        // return "<div class=\"${class_name}\">${x}</div>";
+        // just leave as arrays - the real wrapping happens client side
         return array(
             "to_wrap" => array(
                 "string_key" => $x,
@@ -882,13 +881,10 @@ class Calypso extends Table
     }
     function suit_element_for_score_table($suit){
         return "<div class=\"clp-suit-icon-${suit} clp-table-suit\"></div>";
-        // return self::SUIT_LOOKUP[$suit];
     }
 
     function getDisplayScoresArgs($round_number){
         // give counts and scores different classes so we can style them differently
-        // e.g. text-align: left (vs right), different colours(?), weights
-
         $scores_for_updating = array();
         $score_table = array();
 
@@ -913,7 +909,7 @@ class Calypso extends Table
         foreach ( $players as $player_id => $score_info ) {
             // and display header
             $suit = self::getPlayerSuit($player_id);
-            // $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
+
             $header_names[] = array(
                 'str' => '${player_name}',
                 'args' => array( 'player_name' => self::getPlayerName($player_id) ),
@@ -962,7 +958,6 @@ class Calypso extends Table
     }
 
     function getDisplayOverallScoresArgs(){
-        // TODO: a lot copied from above - is there enough overlap to re-use usefully?
         $header_names = array( '' );
         $header_suits = array( '' );
         $score_table = array();
@@ -975,7 +970,6 @@ class Calypso extends Table
                 // only need to add this once
                 if($round_number == 1){
                     $suit = self::getPlayerSuit($player_id);
-                    // $suit = $this->suits[ self::getPlayerSuit($player_id)]['nametr'];
                     $header_names[] = array(
                         'str' => '${player_name}',
                         'args' => array( 'player_name' => self::getPlayerName($player_id) ),
@@ -1150,14 +1144,6 @@ class Calypso extends Table
     function updateRoundStats(){
         $round_number = self::getGameStateValue('roundNumber');
         $players = self::getRoundScore($round_number);
-        // calypso_count' => $num_calypsos,
-        //         'part_calypso_count' => $calypso_cards,
-        //         'won_cards_count' => $won_cards,
-        //         'partnership_score
-        //calypso_score' => $calypso_score,
-        // 'part_calypso_score' => $part_calypso_score,
-        // 'won_cards_score' => $won_cards_score,
-        // 'total_score
 
         $ave_calypso_counter = 0;
         $individual_points_counter = 0;
@@ -1216,7 +1202,7 @@ class Calypso extends Table
     }
 
     function checkAllCardsExist(){
-        // not sure when/if to call this - probably only during dev
+        // only useful for checking no card leaks in dev. Not called elsewhere
         $locations = array(
             'hand',
             'cardsontable',
@@ -1225,12 +1211,11 @@ class Calypso extends Table
             'trickpile',
             'full_calypsos',
         );
-        $where_cards = $this->cards->countCardsInLocations();  // gives array location => count
+        $where_cards = $this->cards->countCardsInLocations();
         // some things to check:
         // full calypsos = 13n
         // deck = 52n
         // everything = 208
-        self::dump("card_counts", $where_cards);
     }
 
 
@@ -1244,7 +1229,6 @@ class Calypso extends Table
     */
     function playCard($card_id, $player_id=null) {
         self::checkAction("playCard");
-        //self::checkAllCardsExist();
         if(is_null($player_id)){
             $player_id = self::getActivePlayerId();
         }
@@ -1308,7 +1292,7 @@ class Calypso extends Table
                 if ( $current_card['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
-                        // TODO: here we need to implement the optional check of rank
+                        // this is where the variant rule would require some modification
                         self::setWinner( $player_id, $current_card, self::FIRST_TRUMP );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else {
@@ -1320,8 +1304,7 @@ class Calypso extends Table
                 }
             }
         }
-        // $tmp = self::getStat("fastest_calypso");
-        // And notify
+        // And notify, with message (or not) depending on game option
         $suit_played = $current_card ['type'];
         if(self::getGameStateValue("detailedLog") == self::DETAILED_LOG_ON){
             $log_entry = clienttranslate('${player_name} (${trump}) plays ${rank_displayed} ${suit_element}');
@@ -1423,7 +1406,8 @@ class Calypso extends Table
         self::DbQuery( $sql );
         if($round_number != 1){
             $new_dealer = self::getNextFirstDealer();
-            self::setGameStateValue( 'firstHandDealer', $new_dealer );
+            // TODO: and check things fine with this gone
+            // self::setGameStateValue( 'firstHandDealer', $new_dealer );
             self::setGameStateValue( 'currentDealer', $new_dealer );
         } else{
             $new_dealer = self::getGameStateValue( 'firstHandDealer' );
@@ -1469,7 +1453,8 @@ class Calypso extends Table
         // only change dealer after first hand, otherwise round setup should've handled it. Relax!
         if($hand_number != 1){
             $new_dealer = self::updateDealer();
-            self::setGameStateValue( 'currentDealer', $new_dealer );
+            // TODO: check this is okay to delete
+            // self::setGameStateValue( 'currentDealer', $new_dealer );
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
@@ -1478,7 +1463,7 @@ class Calypso extends Table
         self::updateHandDealtStats();
 
         $deal_hand_args = array (
-            // call it player name for colouring purposes
+            // call it player name for colouring purposes - frontend handles that automatically then
             'player_name' => self::getPlayerName($new_dealer),
             'dealer_id' => $new_dealer,
             'round_number' => self::getGameStateValue( 'roundNumber' ),
@@ -1596,7 +1581,6 @@ class Calypso extends Table
         if ($state['type'] === "activeplayer") {
             switch ($statename) {
                 case "playerTurn":
-                    // $this->gamestate->nextState( "zombiePass" );
                     $cards_in_hand = $this->cards->getCardsInLocation(
 						"hand", $active_player
 					);
