@@ -361,9 +361,6 @@ function (dojo, declare) {
                 all_player_animations.push(dojo.fx.combine(animations));
             }
             let combined_animation = dojo.fx.combine(all_player_animations);
-            dojo.connect(combined_animation, 'onEnd', function(node) {
-                dojo.removeClass(`clp-trickpile-${player_id}`, "clp-very-high");
-            });
             return dojo.fx.combine(all_player_animations);
         },
 
@@ -493,13 +490,12 @@ function (dojo, declare) {
             dojo.removeClass( overall_scores_button_id, 'clp-score-button-inactive' );
         },
 
+        // animates clearing calypso both for completing calypso, and at end of round when we clear the table
+        // to_prefix flags for us which one
         animateCalypso: function(player_id, player_suit, fresh_ranks, to_prefix="clp-calypsopile", play=true, delay=30){
             // make some modifications that we will undo at the end of the method
             // for correct animation calculation
             dojo.addClass("clp-public-area", "clp-no-transform");
-            // to stop calypso cards clipping through trickpile
-            // TODO: think about this mate, not sure here
-            dojo.addClass(`clp-trickpile-${player_id}`, "clp-very-high");
             let animations = [];
             let anim;
             let current_delay = 0;

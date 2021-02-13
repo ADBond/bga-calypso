@@ -1,2 +1,1 @@
-./calypso.js:501:            // TODO: think about this mate, not sure here
-./calypso.js:531:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+./calypso.js:527:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation

@@ -771,10 +771,6 @@
   right: 0;
   position: absolute;
   background-color: #777;
-  z-index: 4;
-}
-
-.clp-very-high {
   z-index: 35;
 }
 

@@ -406,11 +406,6 @@ $calypso_card_overlap: 12px;
     right: 0;
     position: absolute;
     background-color: $blank_space_colour;
-    z-index: 4;
-}
-// convenience class to temporarily put things on top1
-// as z-index was causing problems with animations when static
-.clp-very-high {
     z-index: 35;
 }
 // mess about with left/right overlap etc for trickpile/calypsopile appearance
