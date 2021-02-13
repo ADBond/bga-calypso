@@ -1,5 +1,7 @@
 # Archive of README to-do list
 
+* ~~anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying~~
+
 ### Logic
 
 * ~~assign trump suits to players (and dealer also?)~~
@@ -33,6 +35,12 @@
   *  ~~a bunch of stuff could be cleared up on 'type', e.g. are they _id's_, or descriptors, or what?~~
   * leaving this to general refactoring
 * ~~JS `placeCardInCalypso` has redundant `card_id` paramter~~
+* ~~have at least a proper go-through of code to tidy at least a _little_~~
+* ~~Add a separate code licence~~
+* ~~Use game-level constants in place of magic numbers where possible~~
+  * in todo/part of general refactoring. on my radar
+* ~~`global` trick can now be killed in favour of `use` which is much nicer~~
+  * this is in todo list now - only one instance of it but want to check once it's done
 
 ### Display
 
@@ -107,14 +115,18 @@
 * ~~check tooltips get removed after new round - didn't work but will fix~~
 * ~~spectator~~
 * ~~in-game replay~~
+* ~~check score table game end refresh~~
 
 ### Meta
+
+* ~~anything to adjust in gameinfos - particularly revise description & and tags, and durations~~
 
 ### Misc
 
 * ~~Game progression~~
 * ~~Zombie turn~~
 * ~~Pre-alpha checklist - all covered~~
+* ~~Check timings - don't get extra on trick lead :/~~
 
 ### Variants
 
@@ -200,3 +212,7 @@
 ### PR 14
 
 * ~~Better responsive design/mobile friendly~~
+
+### PR 15
+
+* ~~everything remaining in this file - mostly code tidying~~
