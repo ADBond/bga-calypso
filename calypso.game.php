@@ -452,10 +452,12 @@ class Calypso extends Table
         $first_leader = self::getAdjacentPlayer($new_dealer);
 
         $this->gamestate->changeActivePlayer( $first_leader );
+        // actually set the value!
+        self::setGameStateValue($relevant_dealer, $new_dealer);
         return $new_dealer;
     }
 
-    function getNextFirstDealer() {
+    function setNextFirstDealer() {
         // hop back in other direction for first hand dealer
         $next_first_dealer = self::updateDealer($direction_index=-1, $relevant_dealer='firstHandDealer');
         return $next_first_dealer;
@@ -1412,7 +1414,7 @@ class Calypso extends Table
         $sql = "UPDATE player SET completed_calypsos = 0;";
         self::DbQuery( $sql );
         if($round_number != 1){
-            $new_dealer = self::getNextFirstDealer();
+            $new_dealer = self::setNextFirstDealer();
             self::setGameStateValue( 'currentDealer', $new_dealer );
         } else{
             $new_dealer = self::getGameStateValue( 'firstHandDealer' );

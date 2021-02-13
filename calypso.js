@@ -524,7 +524,7 @@ function (dojo, declare) {
                 }
                 animations.push(anim);
 
-                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation
+                // place existing card or blank space as appropriate, for underneath
                 if(fresh_ranks.includes(rank)){
                     dojo.place(this.format_block('jstpl_calypsocard_existing', {
                         rank : rank,

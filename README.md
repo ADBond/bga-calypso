@@ -14,7 +14,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Logic
 
-* anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying
+* ~~anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying~~
 
 ### Dev
 
@@ -27,7 +27,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Things to test
 
-* check score table game end refresh
+* ~~check score table game end refresh~~
 
 ### Meta
 
@@ -35,7 +35,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Misc
 
-* Check timings - don't get extra on trick lead :/
+* ~~Check timings - don't get extra on trick lead :/~~
 
 ## Browser compatibility
 
