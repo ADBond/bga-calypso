@@ -36,7 +36,7 @@ class Calypso extends Table
     const SPADES = 1;
     const HEARTS = 2;
     const CLUBS = 3;
-    const DIAMONDS = 4
+    const DIAMONDS = 4;
 
     // game option stuff - see gameoptions.inc.php
     const DETAILED_LOG_ON = 1;
@@ -561,6 +561,7 @@ class Calypso extends Table
             }
         }
         $this->gamestate->changeActivePlayer( $best_value_player_id );
+        self::giveExtraTime($best_value_player_id);
     }
 
     function initialiseTrick(){ 
