@@ -31,7 +31,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Meta
 
-* anything to adjust in gameinfos - particularly revise description & and tags, and durations
+* ~~anything to adjust in gameinfos - particularly revise description & and tags, and durations~~
 
 ### Misc
 
