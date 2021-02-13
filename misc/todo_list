@@ -1,7 +1,4 @@
 ./calypso.game.php:377:        // TODO here and elsewhere move to defined constants
 ./calypso.game.php:388:        // TODO: constants here
-./calypso.game.php:651:        // TODO: global -> use
-./calypso.game.php:1409:            // TODO: and check things fine with this gone
-./calypso.game.php:1456:            // TODO: check this is okay to delete
 ./calypso.js:501:            // TODO: think about this mate, not sure here
 ./calypso.js:531:                // TODO: can we instead call this.setupCalypsoArea outside of loop? need to check animation

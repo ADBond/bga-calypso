@@ -35,7 +35,7 @@ Loosely split into core logic stuff and more nicities, but obviously some overla
 
 ### Misc
 
-* Check timings
+* Check timings - don't get extra on trick lead :/
 
 ## Browser compatibility
 

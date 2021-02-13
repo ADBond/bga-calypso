@@ -637,7 +637,6 @@ class Calypso extends Table
 
     function validPlay( $player_id, $card ){
         // check that player leads or follows suit OR has no cards of lead suit
-        global $trick_suit;
         $trick_suit = self::getGameStateValue( 'trickSuit' );
         if( $trick_suit == 0){
             // i.e. first card of trick
@@ -647,10 +646,8 @@ class Calypso extends Table
             return true;
         }
         $hand = $this->cards->getCardsInLocation( 'hand', $player_id );
-        
-        // TODO: global -> use
-        $suit_cards = array_filter( $hand, function($hand_card){
-            global $trick_suit;
+
+        $suit_cards = array_filter( $hand, function($hand_card) use ($trick_suit) {
             return $hand_card['type'] == $trick_suit;
         });
         if( empty($suit_cards) ){
@@ -1406,8 +1403,6 @@ class Calypso extends Table
         self::DbQuery( $sql );
         if($round_number != 1){
             $new_dealer = self::getNextFirstDealer();
-            // TODO: and check things fine with this gone
-            // self::setGameStateValue( 'firstHandDealer', $new_dealer );
             self::setGameStateValue( 'currentDealer', $new_dealer );
         } else{
             $new_dealer = self::getGameStateValue( 'firstHandDealer' );
@@ -1453,8 +1448,6 @@ class Calypso extends Table
         // only change dealer after first hand, otherwise round setup should've handled it. Relax!
         if($hand_number != 1){
             $new_dealer = self::updateDealer();
-            // TODO: check this is okay to delete
-            // self::setGameStateValue( 'currentDealer', $new_dealer );
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
