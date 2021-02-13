@@ -156,9 +156,13 @@ $gameinfos = array(
 // Each paragraph must be wrapped with totranslate() for translation and should not contain html (plain text without formatting).
 // A good length for this text is between 100 and 150 words (about 6 to 9 lines on a standard display)
 'presentation' => array(
-    // TODO: actually write this properly
-    totranslate("Calypso is a forgotten classic card game from Trinidad."),
-    totranslate("It is played by four players in partnerships."),
+    totranslate("Calypso is a somewhat forgotten card game, originating in Trinidad in the 1950s."),
+    totranslate("Described as combining elements of bridge and canasta, four players play in fixed partnerships,
+        with each player possessing their own personal trump suit."),
+    totranslate("Played with four identical fifty-two card packs,
+        the aim is to win tricks containing cards of their partnership's suits to complete Calypsos - 
+        sequences of a single card of every rank in their suit, over the course of a round of four deals,
+        whilst attempting to prevent their opponents from doing the same."),
 ),
 
 // Games categories
@@ -168,7 +172,7 @@ $gameinfos = array(
 //  http://en.doc.boardgamearena.com/Game_meta-information:_gameinfos.inc.php
 //  IMPORTANT: this list should be ORDERED, with the most important tag first.
 //  IMPORTANT: it is mandatory that the FIRST tag is 1, 2, 3 and 4 (= game category)
-'tags' => array( 1, 200, 23 ),  // 201 Collection? 207 Combinations?
+'tags' => array( 1, 200, 23, 207 ),
 
 
 //////// BGA SANDBOX ONLY PARAMETERS (DO NOT MODIFY)

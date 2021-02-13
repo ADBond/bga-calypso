@@ -6,32 +6,36 @@ For devvy stuff check out [dev notes](./misc/dev.md).
 
 a fluid list to remember what needs to be done before pulling in and starting a new chunk of work
 
+* everything remaining in this file - mostly code tidying
+
 ## To-do list
 
 Loosely split into core logic stuff and more nicities, but obviously some overlap. Archived items in [an archive](./misc/archive.md)
 
 ### Logic
 
-* anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying
+* ~~anything else in [gathered list of to-dos](./misc/todo_list) from code not covered by these/general tidying~~
 
 ### Dev
 
-* have at least a proper go-through of code to tidy at least a _little_
+* ~~have at least a proper go-through of code to tidy at least a _little_~~
 * ~~Add a separate code licence~~, and make repo public once that's done
-* Use game-level constants in place of magic numbers where possible
-* `global` trick can now be killed in favour of `use` which is much nicer
+* ~~Use game-level constants in place of magic numbers where possible~~
+  * in todo/part of general refactoring. on my radar
+* ~~`global` trick can now be killed in favour of `use` which is much nicer~~
+  * this is in todo list now - only one instance of it but want to check once it's done
 
 ### Things to test
 
-* check score table game end refresh
+* ~~check score table game end refresh~~
 
 ### Meta
 
-* anything to adjust in gameinfos - particularly revise description & and tags, and durations
+* ~~anything to adjust in gameinfos - particularly revise description & and tags, and durations~~
 
 ### Misc
 
-* Check timings
+* ~~Check timings - don't get extra on trick lead :/~~
 
 ## Browser compatibility
 

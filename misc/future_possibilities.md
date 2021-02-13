@@ -16,6 +16,7 @@ Some things to maybe add in, depending how things go
   * NFA
 * rotate cards in-transit? just a _teeny_ bit jarring when asymmetric cards (e.g. A hearts) arrive from opposite
   * NFA
+* specialise renounce-flag tooltips to player/suit?
 
 ### Variants
 
