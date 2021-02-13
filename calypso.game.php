@@ -33,6 +33,11 @@ class Calypso extends Table
         4 => '<span class="clp-suit-text-diamonds clp-suit-text">♦</span>',
     );
 
+    const SPADES = 1;
+    const HEARTS = 2;
+    const CLUBS = 3;
+    const DIAMONDS = 4
+
     // game option stuff - see gameoptions.inc.php
     const DETAILED_LOG_ON = 1;
 
@@ -330,10 +335,10 @@ class Calypso extends Table
     */
     function getPartnerSuit($player_suit) {
         return array(
-            1 => 2,
-            2 => 1,
-            3 => 4,
-            4 => 3
+            self::CLUBS => self::DIAMONDS,
+            self::DIAMONDS => self::CLUBS,
+            self::HEARTS => self::SPADES,
+            self::SPADES => self::HEARTS
         )[$player_suit];
     }
 
@@ -374,22 +379,26 @@ class Calypso extends Table
     }
 
     function getPlayerPartnership($player_id) {
-        // TODO here and elsewhere move to defined constants
         // use bridge terminology
         // 3, 4 is clubs, diamonds -> 'minor' suits
         $player_suit = self::getPlayerSuit($player_id);
-        if(in_array($player_suit, array(3, 4))){
+        if(in_array($player_suit, array(self::CLUBS, self::DIAMONDS))){
             return 'minor';
         }
         return 'major';
     }
 
     function getPartnershipPlayers($partnership){
-        // TODO: constants here
         if($partnership == 'minor'){
-            return array(self::getPlayerIDFromSuit(3), self::getPlayerIDFromSuit(4));
+            return array(
+                self::getPlayerIDFromSuit(self::CLUBS),
+                self::getPlayerIDFromSuit(self::DIAMONDS)
+            );
         }
-        return array(self::getPlayerIDFromSuit(1), self::getPlayerIDFromSuit(2));
+        return array(
+            self::getPlayerIDFromSuit(self::SPADES),
+            self::getPlayerIDFromSuit(self::HEARTS)
+        );
     }
 
     // next player clockwise pass 1, -1 for anti-clockwise (i.e. previous player)
