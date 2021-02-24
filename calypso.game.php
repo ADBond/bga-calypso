@@ -419,7 +419,8 @@ class Calypso extends Table
 
     function getPlayerDirections(){
         // straight from the php docs - native function in php8+
-        function array_key_first(array $arr) {
+        // had to rename this as it clashes in production
+        function array_key_first_homebrew(array $arr) {
             foreach($arr as $key => $unused) {
                 return $key;
             }
@@ -430,7 +431,7 @@ class Calypso extends Table
         $south_id = self::getCurrentPlayerId();
         // if we are a spectator, just pick the first player as south
         if(!array_key_exists($south_id, $players)){
-            $south_id = array_key_first($players);
+            $south_id = array_key_first_homebrew($players);
         }
         $west_id = self::getAdjacentPlayer($south_id);
         $north_id = self::getAdjacentPlayer($west_id);
