@@ -2,7 +2,7 @@
 
 Calypso is in alpha testing on Board Game Arena:
 
-[<img src="./Bga_button.png">](https://boardgamearena.com/reviewer?game=calypso)
+[<img src="./misc/Bga_button.png">](https://boardgamearena.com/reviewer?game=calypso)
 
 ## Dev
 
