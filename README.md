@@ -1,5 +1,11 @@
 # Calypso for BGA
 
+Calypso is in alpha testing on Board Game Arena:
+
+[<img src="./Bga_button.png">](https://boardgamearena.com/reviewer?game=calypso)
+
+## Dev
+
 For devvy stuff check out [dev notes](./misc/dev.md).
 
 ## To-do list
