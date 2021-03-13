@@ -4,13 +4,15 @@ Calypso is in alpha testing on Board Game Arena:
 
 [<img src="./misc/Bga_button.png">](https://boardgamearena.com/reviewer?game=calypso)
 
+[Credits](./misc/credits.md)
+
 ## Dev
 
 For devvy stuff check out [dev notes](./misc/dev.md).
 
 ## To-do list
 
-Archived items in [an archive](./misc/archive.md)
+Archived items in [an archive](./misc/archive.md), and [possible things to add](./misc/future_possibilities.md).
 
 ### Dev
 
