@@ -18,6 +18,9 @@ Some things to maybe add in, depending how things go
   * NFA
 * specialise renounce-flag tooltips to player/suit?
 
+* Nicer cards & four-colour options - see file Jimble sent via cribbage
+* Player names link to profiles?
+
 ### Variants
 
 * Seems to be enough around of 'beat the leader' to include as a variant. Maybe doesn't need to be done for alpha though
