@@ -866,11 +866,9 @@
     padding: 10px;
     display: block;
   }
-
   #clp-score-access-by-round {
     column-count: 2;
   }
-
   #clp-score-access-overall {
     position: relative;
     left: 50%;

@@ -10,7 +10,7 @@ cp pre-commit .git/hooks/pre-commit
 
 ## Sass
 
-Install sass with `npm`
+Install sass with `npm`. Obviously this means you need npm.
 
 ```bash
 npm install -g sass
