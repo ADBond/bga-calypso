@@ -94,3 +94,25 @@ $game_options = array(
         )
     ),
 );
+
+# user preference options - just aesthetic stuff
+$game_preferences = array(
+    100 => array(
+            'name' => totranslate('Table colour'),
+            'needReload' => true,
+            'values' => array(
+                1 => array( 'name' => totranslate( 'Purple' ), 'cssPref' => 'clp-up-purple' ),
+                2 => array( 'name' => totranslate( 'Yellow' ), 'cssPref' => 'clp-up-yellow' ),
+                3 => array( 'name' => totranslate( 'Red' ), 'cssPref' => 'clp-up-red' ),
+                4 => array( 'name' => totranslate( 'Green' ), 'cssPref' => 'clp-up-green' ),
+                5 => array( 'name' => totranslate( 'Blue' ), 'cssPref' => 'clp-up-blue' ),
+                6 => array( 'name' => totranslate( 'White' ), 'cssPref' => 'clp-up-white' ),
+                7 => array( 'name' => totranslate( 'Black' ), 'cssPref' => 'clp-up-black' ),
+                8 => array( 'name' => totranslate( 'Pink' ), 'cssPref' => 'clp-up-pink' ),
+                9 => array( 'name' => totranslate( 'Cyan' ), 'cssPref' => 'clp-up-cyan' ),
+                10 => array( 'name' => totranslate( 'Dark green' ), 'cssPref' => 'clp-up-darkgreen' ),
+                11 => array( 'name' => totranslate( 'Orange' ), 'cssPref' => 'clp-up-orange' ),
+            ),
+            'default' => 1
+    ),
+);
