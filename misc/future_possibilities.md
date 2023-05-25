@@ -17,6 +17,10 @@ Some things to maybe add in, depending how things go
 * rotate cards in-transit? just a _teeny_ bit jarring when asymmetric cards (e.g. A hearts) arrive from opposite
   * NFA
 * specialise renounce-flag tooltips to player/suit?
+* ~~customised table colours (for people who don't like purple as much as I do :( )?~~
+
+* Nicer cards & four-colour options - see file Jimble sent via cribbage
+* Player names link to profiles?
 
 ### Variants
 

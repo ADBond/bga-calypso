@@ -55,7 +55,8 @@
     padding: 10px;
     background-image: url("../img/layout/rounded_b.png");
 } */
-
+/* TODO: newer sass compat - division stuff */
+/* TODO ?maybe rgba -> rgb (css) */
 $calypso_colour: #8800DD;
 $card_width: 72px;
 $card_height: 96px;
@@ -540,6 +541,36 @@ $responsive_buffer: 530px;
 }
 #clp-round-scores-button-overall{
     margin-top: 20px;
+}
+
+/* user preference colour options */
+$user-pref-colours: (
+    "purple": $calypso_colour,
+    "yellow": #cccc00,
+    "red": #dd0000,
+    "green": #00dd00,
+    "blue": #0000dd,
+    "white": #dddddd,
+    "black": #222222,
+    "pink": #ff1d8e,
+    "cyan": #00ffff,
+    "darkgreen": #005500,
+    "orange": #dd8800,
+);
+// use nesting
+@each $col_name, $colour in $user-pref-colours{
+    .clp-up-#{$col_name} {
+        // affected elements:
+        .clp-game-info {
+            background-color: rgba($colour, 0.5);
+        }
+        #clp-score-access-table-area {
+            background-color: rgba($colour, 0.2);
+        }
+        #clp-table-area, .clp-score-button-active {
+            background-color: $colour;
+        }
+    }
 }
 
 // this is in-built bga stuff, rather than hacking it ourselves

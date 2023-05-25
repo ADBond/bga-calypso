@@ -50,6 +50,8 @@
     padding: 10px;
     background-image: url("../img/layout/rounded_b.png");
 } */
+/* TODO: newer sass compat - division stuff */
+/* TODO ?maybe rgba -> rgb (css) */
 /** Table layout **/
 #clp-public-area {
   position: relative;
@@ -866,11 +868,9 @@
     padding: 10px;
     display: block;
   }
-
   #clp-score-access-by-round {
     column-count: 2;
   }
-
   #clp-score-access-overall {
     position: relative;
     left: 50%;
@@ -908,6 +908,117 @@
 
 #clp-round-scores-button-overall {
   margin-top: 20px;
+}
+
+/* user preference colour options */
+.clp-up-purple .clp-game-info {
+  background-color: rgba(136, 0, 221, 0.5);
+}
+.clp-up-purple #clp-score-access-table-area {
+  background-color: rgba(136, 0, 221, 0.2);
+}
+.clp-up-purple #clp-table-area, .clp-up-purple .clp-score-button-active {
+  background-color: #8800DD;
+}
+
+.clp-up-yellow .clp-game-info {
+  background-color: rgba(204, 204, 0, 0.5);
+}
+.clp-up-yellow #clp-score-access-table-area {
+  background-color: rgba(204, 204, 0, 0.2);
+}
+.clp-up-yellow #clp-table-area, .clp-up-yellow .clp-score-button-active {
+  background-color: #cccc00;
+}
+
+.clp-up-red .clp-game-info {
+  background-color: rgba(221, 0, 0, 0.5);
+}
+.clp-up-red #clp-score-access-table-area {
+  background-color: rgba(221, 0, 0, 0.2);
+}
+.clp-up-red #clp-table-area, .clp-up-red .clp-score-button-active {
+  background-color: #dd0000;
+}
+
+.clp-up-green .clp-game-info {
+  background-color: rgba(0, 221, 0, 0.5);
+}
+.clp-up-green #clp-score-access-table-area {
+  background-color: rgba(0, 221, 0, 0.2);
+}
+.clp-up-green #clp-table-area, .clp-up-green .clp-score-button-active {
+  background-color: #00dd00;
+}
+
+.clp-up-blue .clp-game-info {
+  background-color: rgba(0, 0, 221, 0.5);
+}
+.clp-up-blue #clp-score-access-table-area {
+  background-color: rgba(0, 0, 221, 0.2);
+}
+.clp-up-blue #clp-table-area, .clp-up-blue .clp-score-button-active {
+  background-color: #0000dd;
+}
+
+.clp-up-white .clp-game-info {
+  background-color: rgba(221, 221, 221, 0.5);
+}
+.clp-up-white #clp-score-access-table-area {
+  background-color: rgba(221, 221, 221, 0.2);
+}
+.clp-up-white #clp-table-area, .clp-up-white .clp-score-button-active {
+  background-color: #dddddd;
+}
+
+.clp-up-black .clp-game-info {
+  background-color: rgba(34, 34, 34, 0.5);
+}
+.clp-up-black #clp-score-access-table-area {
+  background-color: rgba(34, 34, 34, 0.2);
+}
+.clp-up-black #clp-table-area, .clp-up-black .clp-score-button-active {
+  background-color: #222222;
+}
+
+.clp-up-pink .clp-game-info {
+  background-color: rgba(255, 29, 142, 0.5);
+}
+.clp-up-pink #clp-score-access-table-area {
+  background-color: rgba(255, 29, 142, 0.2);
+}
+.clp-up-pink #clp-table-area, .clp-up-pink .clp-score-button-active {
+  background-color: #ff1d8e;
+}
+
+.clp-up-cyan .clp-game-info {
+  background-color: rgba(0, 255, 255, 0.5);
+}
+.clp-up-cyan #clp-score-access-table-area {
+  background-color: rgba(0, 255, 255, 0.2);
+}
+.clp-up-cyan #clp-table-area, .clp-up-cyan .clp-score-button-active {
+  background-color: #00ffff;
+}
+
+.clp-up-darkgreen .clp-game-info {
+  background-color: rgba(0, 85, 0, 0.5);
+}
+.clp-up-darkgreen #clp-score-access-table-area {
+  background-color: rgba(0, 85, 0, 0.2);
+}
+.clp-up-darkgreen #clp-table-area, .clp-up-darkgreen .clp-score-button-active {
+  background-color: #005500;
+}
+
+.clp-up-orange .clp-game-info {
+  background-color: rgba(221, 136, 0, 0.5);
+}
+.clp-up-orange #clp-score-access-table-area {
+  background-color: rgba(221, 136, 0, 0.2);
+}
+.clp-up-orange #clp-table-area, .clp-up-orange .clp-score-button-active {
+  background-color: #dd8800;
 }
 
 .tableWindow th {
