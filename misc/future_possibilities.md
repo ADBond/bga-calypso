@@ -20,7 +20,7 @@ Some things to maybe add in, depending how things go
 * ~~customised table colours (for people who don't like purple as much as I do :( )?~~
 
 * Nicer cards & four-colour options - see file Jimble sent via cribbage
-* Player names link to profiles?
+* ~~Player names link to profiles?~~
 
 ### Variants
 
