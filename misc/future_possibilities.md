@@ -9,7 +9,7 @@ Some things to maybe add in, depending how things go
 
 ### Display
 
-* Order hand with personal trumps separated?
+* ~~Order hand with personal trumps separated?~~
   * NFA
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
