@@ -24,8 +24,8 @@
             class="clp-player-personal-area clp-player-personal-area-{DIR} clp-player-personal-area-{TRUMP_SUIT}"
             id="clp-player-personal-area-{DIR}"
         >
-            <div class="clp-playername clp-playername-{DIR}" style="color:#{PLAYER_COLOUR}">
-                {PLAYER_NAME}
+            <div class="clp-playername clp-playername-{DIR}">
+                <a href="/player?id={PLAYER_ID}" style="color:#{PLAYER_COLOUR}">{PLAYER_NAME}</a>
             </div>
             <div class="clp-renounce-indicators">
                 <!-- BEGIN renounceindicator -->
