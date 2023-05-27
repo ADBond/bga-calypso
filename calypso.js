@@ -68,6 +68,11 @@ function (dojo, declare) {
 
             this.playerHand = new ebg.stock();
             this.playerHand.create( this, $('clp-myhand'), this.cardwidth, this.cardheight );
+            // suit info relative to current player suitable for hand ordering
+            // suit_ranking has player, partner, player matching colour, other suit
+            let suit_ranking = gamedatas["suits_by_status"];
+            // reverse order so that player suit is last (highest index)
+            suit_ranking.reverse();
 
             const num_decks = 4;
             for (let suit = 1; suit <= 4; suit++) {
@@ -76,12 +81,12 @@ function (dojo, declare) {
                         // Build card type id
                         let card_type_id = this.getCardUniqueId(suit, rank, deck);
                         let card_type = this.getCardUniqueType(suit, rank);
-                        // args are id, weight (for hand-sorting), img url, and img position
+                        let card_weight = this.getCardWeight(suit, rank, suit_ranking);
 
-                        // leave default ordering, but could in future separate out trumps
-                        // i.e. (other two, alternating colour) (my partners trumps) (my trumps)
+                        // args are id, weight (for hand-sorting), img url,
+                        // and img position (within the url sprite)
                         this.playerHand.addItemType(
-                            card_type_id, card_type, g_gamethemeurl + 'img/cards.jpg', card_type
+                            card_type_id, card_weight, g_gamethemeurl + 'img/cards.jpg', card_type
                         );
                     }
                 }
@@ -252,6 +257,11 @@ function (dojo, declare) {
         // this is only when we distinguish between identical copies, by their deck
         getCardUniqueId : function(suit, rank, deck) {
             return (deck - 1) * 52 + (suit - 1) * 13 + (rank - 2);
+        },
+        // get 'weight' of card given ordering of suits
+        getCardWeight: function(suit, rank, suit_ranking) {
+            // last in array has highest weight
+            return (suit_ranking.indexOf(suit) - 1) * 13 + (rank - 2);
         },
         // calyspo display area populated
         setupCalypsoArea : function(player_id, suit) {

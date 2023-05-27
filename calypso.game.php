@@ -271,6 +271,16 @@ class Calypso extends Table
         }
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
+        $player_suit = self::getPlayerSuit($current_player_id);
+        $partner_suit = self::getPartnerSuit($player_suit);
+        // give suits in order: player suit, partner suit,
+        // same colour as player, same colour as partner
+        $result['suits_by_status'] = array(
+            +$player_suit,
+            $partner_suit,
+            self::getSameColourSuit($player_suit),
+            self::getSameColourSuit($partner_suit),
+        );
 
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
@@ -339,6 +349,15 @@ class Calypso extends Table
             self::DIAMONDS => self::CLUBS,
             self::HEARTS => self::SPADES,
             self::SPADES => self::HEARTS
+        )[$player_suit];
+    }
+    // get suit the same colour as a given suit - feeds through to UI
+    function getSameColourSuit($player_suit) {
+        return array(
+            self::CLUBS => self::SPADES,
+            self::DIAMONDS => self::HEARTS,
+            self::HEARTS => self::DIAMONDS,
+            self::SPADES => self::CLUBS
         )[$player_suit];
     }
 
