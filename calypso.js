@@ -40,6 +40,12 @@ function (dojo, declare) {
                 3: _("Clubs"), 
                 4: _("Diamonds"), 
             }
+            this.suits_translate_lookup_sing = {
+                1: _("Spade"),
+                2: _("Heart"),
+                3: _("Club"),
+                4: _("Diamond"),
+            }
 
         },
         
@@ -472,9 +478,9 @@ function (dojo, declare) {
                         player['player_name']
                     );
                     const tooltip = dojo.string.substitute(
-                        _("The ${trump} player (${name}) has not followed suit to ${renounce_suit}"),
+                        _("The ${trump_suit_singular} player (${name}) has not followed suit to ${renounce_suit}"),
                         {
-                            trump: this.suits_translate_lookup[player['trump_suit']],
+                            trump_suit_singular: this.suits_translate_lookup_sing[player['trump_suit']],
                             name: player['player_name'],
                             renounce_suit: this.suits_translate_lookup[suit_index]
                         }
