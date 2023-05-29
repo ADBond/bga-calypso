@@ -209,7 +209,7 @@
   border-radius: 5px;
   width: 72px;
   height: 96px;
-  background-image: url("img/cards.jpg");
+  background-image: url("img/cards.webp");
 }
 
 .clp-card-on-table {
@@ -786,7 +786,7 @@
 }
 
 .clp-calypsopile-full {
-  background-image: url("img/cards.jpg");
+  background-image: url("img/cards.webp");
 }
 
 .clp-trickpile-full {

@@ -223,7 +223,7 @@ $card_rounding: 5px;
     border-radius: $card_rounding;
     width: $card_width;
     height: $card_height;
-    background-image: url('img/cards.jpg');
+    background-image: url('img/cards.webp');
 }
 
 .clp-card-on-table {
@@ -419,7 +419,7 @@ $calypso_card_overlap: 12px;
     z-index: 2;
 }
 .clp-calypsopile-full {
-    background-image: url('img/cards.jpg');
+    background-image: url('img/cards.webp');
 }
 
 .clp-trickpile-full {
