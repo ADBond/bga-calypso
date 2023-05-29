@@ -17,8 +17,8 @@ arg_string=""
 # +1 to get the 2s, where we want to start
 SPADES_START=$((14+1))
 HEARTS_START=$((28+1))
-CLUBS_START=$((42+1))
-DIAMONDS_START=$((0+1))
+CLUBS_START=$((0+1))
+DIAMONDS_START=$((42+1))
 for img_index in $( seq $SPADES_START $((SPADES_START+12)) ) \
     $( seq $HEARTS_START $((HEARTS_START+12)) ) \
     $( seq $CLUBS_START $((CLUBS_START+12)) ) \
