@@ -474,7 +474,7 @@ function (dojo, declare) {
                     const tooltip = dojo.string.substitute(
                         _("The ${trump} player (${name}) has not followed suit to ${renounce_suit}"),
                         {
-                            trump: player['trump_suit'],
+                            trump: this.suits_translate_lookup[player['trump_suit']],
                             name: player['player_name'],
                             renounce_suit: this.suits_translate_lookup[suit_index]
                         }
