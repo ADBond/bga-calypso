@@ -34,6 +34,19 @@ function (dojo, declare) {
             this.clubs = 3;
             this.diamonds = 4;
 
+            this.suits_translate_lookup = {
+                1: _("Spades"), 
+                2: _("Hearts"), 
+                3: _("Clubs"), 
+                4: _("Diamonds"), 
+            }
+            this.suits_translate_lookup_sing = {
+                1: _("Spade"),
+                2: _("Heart"),
+                3: _("Club"),
+                4: _("Diamond"),
+            }
+
         },
         
         /*
@@ -137,6 +150,8 @@ function (dojo, declare) {
                 [this.clubs]: _("Minor suits team"),
                 [this.diamonds]: _("Minor suits team"),
             };
+            // set player info on the object so we can use it for tooltips
+            this.player_infos = gamedatas.players;
             for( player_id in gamedatas.players )
             {
                 const player = gamedatas.players[player_id];
@@ -185,7 +200,12 @@ function (dojo, declare) {
             if(gamedatas.renounce_flags_on == "on"){
                 for (i in gamedatas.renounce_flags) {
                     let info = gamedatas.renounce_flags[i];
-                    this.setRenounceFlag(info.player_id, info.suit);
+                    this.setRenounceFlag(
+                        info.player_id,
+                        info.suit,
+                        info.trump_suit,
+                        info.player_name
+                    );
                 }
             }
 
@@ -342,20 +362,38 @@ function (dojo, declare) {
             this.refreshTooltips();
         },
 
-        setRenounceFlag : function(player_id, suit){
+        getRenounceFlagUniqueClass : function(suit, trump_suit, player_name) {
+            return `clp-active-renounce-${player_name}-${trump_suit}-${suit}`;
+        },
+
+        setRenounceFlag : function(player_id, suit, player_trump, player_name){
             const renounce_el_id = `clp-renounce-${player_id}-${suit}`;
             dojo.addClass( renounce_el_id, 'clp-active-renounce' );
+            // encode info for tooltip
+            dojo.addClass(
+                renounce_el_id,
+                this.getRenounceFlagUniqueClass(suit, player_trump, player_name)
+            );
             dojo.removeClass( renounce_el_id, 'clp-inactive-renounce' );
             this.refreshTooltips();
         },
 
         clearRenounceFlags: function(players, suits){
-            for (i in players) {
-                let player = players[i];
+            for (player_id in players) {
+                let player = players[player_id];
                 for(j in suits) {
                     let suit = suits[j];
-                    let renounce_el_id = `clp-renounce-${player}-${suit}`;
+                    let renounce_el_id = `clp-renounce-${player_id}-${suit}`;
                     dojo.removeClass( renounce_el_id, 'clp-active-renounce' );
+                    // detailed class for toolTips
+                    dojo.removeClass(
+                        renounce_el_id,
+                        this.getRenounceFlagUniqueClass(
+                            suit,
+                            player.trump_suit,
+                            player.player_name
+                        )
+                    );
                     dojo.addClass( renounce_el_id, 'clp-inactive-renounce' );
                 }
             }
@@ -421,11 +459,35 @@ function (dojo, declare) {
             this.addTooltipToClass( "clp-trickpile-empty", _( "This player has no cards in their trick-pile" ), "" );
             this.addTooltipToClass( "clp-calypsopile-full", _( "This player has completed one or more calypsos this round" ), "" );
             this.addTooltipToClass( "clp-active-renounce", _( "This player failed to follow this suit this hand" ), "" );
+            this.refreshRenounceTooltips();
             const elements_without_tooltips = dojo.query(".clp-inactive-renounce, .clp-calypsopile-empty");
             for(let element of elements_without_tooltips){
                 this.removeTooltip(element["id"]);
             }
             
+        },
+        refreshRenounceTooltips: function() {
+            player_infos = this.player_infos;
+            // console.log(player_infos);
+            for( player_id in player_infos) {
+                const player = player_infos[player_id];
+                for (let [suit_index, suit_name_trans] of Object.entries(this.suits_translate_lookup)) {
+                    const class_name = this.getRenounceFlagUniqueClass(
+                        suit_index,
+                        player['trump_suit'],
+                        player['player_name']
+                    );
+                    const tooltip = dojo.string.substitute(
+                        _("The ${trump_suit_singular} player (${name}) has not followed suit to ${renounce_suit}"),
+                        {
+                            trump_suit_singular: this.suits_translate_lookup_sing[player['trump_suit']],
+                            name: player['player_name'],
+                            renounce_suit: this.suits_translate_lookup[suit_index]
+                        }
+                    );
+                    this.addTooltipToClass( class_name, tooltip, "" );
+                }
+            };
         },
 
         // borrowed/modified from W. Michael Shirk's Grosstarock implementation
@@ -701,7 +763,10 @@ function (dojo, declare) {
         },
 
         notif_renounceFlag: function(notif) {
-            this.setRenounceFlag(notif.args.player_id, notif.args.suit);
+            this.setRenounceFlag(
+                notif.args.player_id, notif.args.suit,
+                notif.args.player_trump, notif.args.player_name
+            );
         },
 
         notif_trickWin : function(notif) {
