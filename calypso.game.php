@@ -267,7 +267,8 @@ class Calypso extends Table
         foreach($result['players'] as $player_id => $info){
             // hide actual number in pile, just for display of backs or not
             // as all of this info is potentially public (arrives client side on load)
-            $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id) > 0 ? 1 : 0; 
+            $result['players'][$player_id]['trick_pile'] = self::getTrickPile($player_id) > 0 ? 1 : 0;
+            $result['players'][$player_id]['player_name'] = self::getPlayerName($player_id);
         }
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
@@ -301,7 +302,10 @@ class Calypso extends Table
         // N.B. we automatically send over game state anyhow, so need to set that here
 
         if(self::getGameStateValue('renounceFlags') == 1){
-            $sql = "SELECT renounce_id id, suit suit, player_id player_id FROM renounce_flags;";
+            $sql = "SELECT rf.renounce_id id, rf.suit suit, rf.player_id player_id, ".
+                "player.player_name player_name, player.trump_suit trump_suit".
+                "FROM renounce_flags rf ".
+                "LEFT JOIN player ON rf.player_id = player.id;";
             $player_flags = array();
             $renounce_flag_info = self::getCollectionFromDb( $sql );
             foreach ($renounce_flag_info as $id => $info) {
@@ -395,6 +399,14 @@ class Calypso extends Table
     function getPlayerName($player_id){
         $players = self::loadPlayersBasicInfos();
         return $players[$player_id]["player_name"];
+    }
+    function loadPlayersBasicInfosWithTrumps() {
+        // loadPlayersBasicInfos + trump_suit
+        $players = self::loadPlayersBasicInfos();
+        foreach ( $players as $player_id => $player_info ) {
+            $player_info["player_trump"] = self::getPlayerSuit($player_id);
+        }
+        return $players;
     }
 
     function getPlayerPartnership($player_id) {
@@ -1306,6 +1318,7 @@ class Calypso extends Table
                 // they don't follow suit
                 if(self::getGameStateValue('renounceFlags') == 1){
                     self::setRenounceFlag($player_id, $current_trick_suit);
+                    // TODO: also need to send player_trump, player_name
                     self::notifyAllPlayers(
                         'renounceFlag',
                         '',
@@ -1469,13 +1482,13 @@ class Calypso extends Table
             array("hand_number" => $hand_number)
         );
         // Deal 13 cards to each player and notify them of their hand
-        $players = self::loadPlayersBasicInfos();
-        $player_ids = array();
+        $players = self::loadPlayersBasicInfosWithTrumps();
+        // $player_ids = array();
         foreach ( $players as $player_id => $player ) {
             $cards = $this->cards->pickCards(13, 'deck', $player_id);
             self::notifyPlayer($player_id, 'newCards', '', array ('cards' => $cards ));
 
-            $player_ids[] = $player_id;
+            // $player_ids[] = $player_id;
         }
         // only change dealer after first hand, otherwise round setup should've handled it. Relax!
         if($hand_number != 1){
@@ -1483,7 +1496,6 @@ class Calypso extends Table
         } else{
             $new_dealer = self::getGameStateValue( 'currentDealer' );
         }
-        
 
         self::updateHandDealtStats();
 
@@ -1500,7 +1512,7 @@ class Calypso extends Table
             $deal_hand_args = array_merge(
                 $deal_hand_args,
                 array (
-                    "players" => $player_ids,
+                    "players" => $players,
                     "suits" => [1, 2, 3, 4],
                     "renounce_flags_clear" => true,
                 )
