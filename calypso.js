@@ -461,18 +461,20 @@ function (dojo, declare) {
             
         },
         refreshRenounceTooltips: function() {
-            for( player_id in this.player_infos ) {
+            player_infos = this.player_infos;
+            // console.log(player_infos);
+            for( player_id in player_infos) {
                 const player = player_infos[player_id];
                 for (let [suit_index, suit_name_trans] of Object.entries(this.suits_translate_lookup)) {
                     const class_name = this.getRenounceFlagUniqueClass(
                         suit_index,
-                        player['trump'],
+                        player['trump_suit'],
                         player['player_name']
                     );
                     const tooltip = dojo.string.substitute(
                         _("The ${trump} player (${name}) has not followed suit to ${renounce_suit}"),
                         {
-                            trump: player['trump'],
+                            trump: player['trump_suit'],
                             name: player['player_name'],
                             renounce_suit: this.suits_translate_lookup[suit_index]
                         }

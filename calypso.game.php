@@ -303,9 +303,9 @@ class Calypso extends Table
 
         if(self::getGameStateValue('renounceFlags') == 1){
             $sql = "SELECT rf.renounce_id id, rf.suit suit, rf.player_id player_id, ".
-                "player.player_name player_name, player.trump_suit trump_suit".
+                "player.player_name player_name, player.trump_suit trump_suit ".
                 "FROM renounce_flags rf ".
-                "LEFT JOIN player ON rf.player_id = player.id;";
+                "LEFT JOIN player ON rf.player_id = player.player_id;";
             $player_flags = array();
             $renounce_flag_info = self::getCollectionFromDb( $sql );
             foreach ($renounce_flag_info as $id => $info) {
