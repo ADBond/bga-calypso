@@ -1318,13 +1318,14 @@ class Calypso extends Table
                 // they don't follow suit
                 if(self::getGameStateValue('renounceFlags') == 1){
                     self::setRenounceFlag($player_id, $current_trick_suit);
-                    // TODO: also need to send player_trump, player_name
                     self::notifyAllPlayers(
                         'renounceFlag',
                         '',
                         array(
                             "player_id" => $player_id,
                             "suit" => $current_trick_suit,
+                            "player_trump" => self::getPlayerSuit($player_id),
+                            "player_name" => self::getPlayerName($player_id),
                         )
                     );
                 }
