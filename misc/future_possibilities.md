@@ -15,15 +15,20 @@ Some things to maybe add in, depending how things go
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
   * NFA
 * rotate cards in-transit? just a _teeny_ bit jarring when asymmetric cards (e.g. A hearts) arrive from opposite
+  * similarly nice to have side-on cards rotated to position
   * NFA
 * ~~specialise renounce-flag tooltips to player/suit?~~
 * ~~customised table colours (for people who don't like purple as much as I do :( )?~~
 
 * Nicer cards & four-colour options - see file Jimble sent via cribbage
 * ~~Player names link to profiles?~~
+* Dealing animation
+  * particularly nice to have at least _something_ to indicate when a new hand begins
 
 ### Variants
 
 * Seems to be enough around of 'beat the leader' to include as a variant. Maybe doesn't need to be done for alpha though
   * (i.e. trumping in to trump lead must be higher. Rule as it stands seems better to me, but nice to have both, not in too much danger of configuration hell here.)
   * NFA
+
+## Completed
