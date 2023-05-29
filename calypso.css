@@ -1021,6 +1021,21 @@
   background-color: #dd8800;
 }
 
+/* card face options */
+.clp-pack-standard .clp-face-up-card {
+  background-image: url("img/cards.webp");
+}
+.clp-pack-standard .clp-calypsopile-full {
+  background-image: url("img/cards.webp");
+}
+
+.clp-pack-four-colour .clp-face-up-card {
+  background-image: url("img/cards_four.webp");
+}
+.clp-pack-four-colour .clp-calypsopile-full {
+  background-image: url("img/cards_four.webp");
+}
+
 .tableWindow th {
   text-align: center;
 }
