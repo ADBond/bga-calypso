@@ -34,6 +34,7 @@ function (dojo, declare) {
             this.clubs = 3;
             this.diamonds = 4;
 
+            // TODO: translation doesn't work here, so place in setup instead
             this.suits_translate_lookup = {
                 1: _("Spades"), 
                 2: _("Hearts"), 
