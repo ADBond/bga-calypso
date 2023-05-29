@@ -138,6 +138,7 @@ $display_font: 2*$icon_size/3;
     font-size: 1.4em;
     font-weight: bold;
 }
+// TODO: maybe this should be four-colour also???
 .clp-suit-text-spades {
     color: #000;
 }
@@ -577,17 +578,25 @@ $user-pref-packs: (
     "standard": "cards.webp",
     "four-colour": "cards_four.webp",
 );
+$offset_counter: 0;
+$suit_offset: 32px;
 @each $pack_name, $file_name in $user-pref-packs {
     .clp-pack-#{$pack_name} {
-        // affected elements:
-        .clp-face-up-card {
+        // card face elements:
+        // on table and calypso. in hand dealt with in js
+        .clp-face-up-card, .clp-calypsopile-full {
             background-image: url("img/#{$file_name}");
         }
-        .clp-calypsopile-full {
-            background-image: url("img/#{$file_name}");
+        // suit icons:
+        // these appear in player boxes, renounce flags, and in score table
+        .clp-suit-icon, .clp-active-renounce, .clp-table-suit {
+            background-position-x: -$suit_offset*$offset_counter;
         }
+
     }
-}
+    $offset_counter: $offset_counter + 1;
+};
+
 
 // this is in-built bga stuff, rather than hacking it ourselves
 .tableWindow th {
