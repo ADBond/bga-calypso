@@ -99,7 +99,7 @@ function (dojo, declare) {
                         // args are id, weight (for hand-sorting), img url,
                         // and img position (within the url sprite)
                         this.playerHand.addItemType(
-                            card_type_id, card_weight, g_gamethemeurl + 'img/cards.jpg', card_type
+                            card_type_id, card_weight, g_gamethemeurl + 'img/cards.webp', card_type
                         );
                     }
                 }
