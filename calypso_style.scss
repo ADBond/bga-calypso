@@ -580,6 +580,7 @@ $user-pref-packs: (
 );
 $offset_counter: 0;
 $suit_offset: 32px;
+$layout_offset: $card_width;
 @each $pack_name, $file_name in $user-pref-packs {
     .clp-pack-#{$pack_name} {
         // card face elements:
@@ -592,7 +593,10 @@ $suit_offset: 32px;
         .clp-suit-icon, .clp-active-renounce, .clp-table-suit {
             background-position-x: -$suit_offset*$offset_counter;
         }
-
+        // layout spots - for calypsos
+        .clp-calypsocard-space {
+            background-position-x: -$layout_offset*$offset_counter;
+        }
     }
     $offset_counter: $offset_counter + 1;
 };
