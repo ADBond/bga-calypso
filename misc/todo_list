@@ -1,2 +1,2 @@
-./calypso_style.scss:58:/* TODO: newer sass compat - division stuff */
-./calypso_style.scss:59:/* TODO ?maybe rgba -> rgb (css) */
+./calypso.js:37:            // TODO: translation doesn't work here, so place in setup instead
+./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */

@@ -115,4 +115,13 @@ $game_preferences = array(
             ),
             'default' => 1
     ),
+    101 => array(
+            'name' => totranslate('Card face style'),
+            'needReload' => true,
+            'values' => array(
+                1 => array( 'name' => totranslate('Standard two-colour'), 'cssPref' => 'clp-pack-standard' ),
+                2 => array( 'name' => totranslate('Four-colour'), 'cssPref' => 'clp-pack-four-colour' ),
+            ),
+            'default' => 1
+    ),
 );
