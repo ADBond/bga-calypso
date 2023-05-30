@@ -1042,6 +1042,13 @@
   background-position-x: -72px;
 }
 
+.clp-pack-four-colour .clp-suit-text-clubs {
+  color: #080;
+}
+.clp-pack-four-colour .clp-suit-text-diamonds {
+  color: #33D;
+}
+
 .tableWindow th {
   text-align: center;
 }

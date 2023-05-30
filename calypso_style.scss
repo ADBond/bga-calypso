@@ -138,7 +138,6 @@ $display_font: 2*$icon_size/3;
     font-size: 1.4em;
     font-weight: bold;
 }
-// TODO: maybe this should be four-colour also???
 .clp-suit-text-spades {
     color: #000;
 }
@@ -600,7 +599,14 @@ $layout_offset: $card_width;
     }
     $offset_counter: $offset_counter + 1;
 };
-
+.clp-pack-four-colour {
+    .clp-suit-text-clubs {
+        color: #080;
+    }
+    .clp-suit-text-diamonds {
+        color: #33D;
+    }
+}
 
 // this is in-built bga stuff, rather than hacking it ourselves
 .tableWindow th {
