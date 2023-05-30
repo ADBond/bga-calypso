@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+## [alpha-v04] - 2023-05-30
+
 ### Added
 
 - Links to player-profiles from Calypso-mat names [PR #20](https://github.com/ADBond/bga-calypso/pull/20)
@@ -37,7 +39,8 @@ Online version working 2021-02-24.
 
 - Working version of Calypso. Sorry this is as detailed as it will go up this point! Have a shufti at previous PRs and commit history if you really need more.
 
-[unreleased]: https://github.com/ADBond/bga-calypso/compare/alpha-v03...HEAD
+[unreleased]: https://github.com/ADBond/bga-calypso/compare/alpha-v04...HEAD
+[alpha-v04]: https://github.com/ADBond/bga-calypso/compare/alpha-v03...alpha-v04
 [alpha-v03]: https://github.com/ADBond/bga-calypso/compare/alpha-v02...alpha-v03
 [alpha-v02]: https://github.com/ADBond/bga-calypso/compare/alpha-v01...alpha-v02
 [alpha-v01]: https://github.com/ADBond/bga-calypso/releases/tag/alpha-v01
