@@ -55,7 +55,6 @@
     padding: 10px;
     background-image: url("../img/layout/rounded_b.png");
 } */
-/* TODO: newer sass compat - division stuff */
 /* TODO ?maybe rgba -> rgb (css) */
 $calypso_colour: #8800DD;
 $card_width: 72px;
@@ -83,8 +82,8 @@ $left_offset: 50%;
 // just need this positioned roughly
 #clp-table-centre {
     position: absolute;
-    left: $table_size/2;
-    top: $table_size/2;
+    left: calc($table_size / 2);
+    top: calc($table_size / 2);
     width: 0;
     height: 0;
     // and let this be higher than clp-card-play-area so that animations of suits go over top
@@ -119,12 +118,12 @@ $icon_size: 32px;
     margin: 5px auto;
     display:flex;
 }
-$display_font: 2*$icon_size/3;
+$display_font: calc(2 * $icon_size / 3);
 .clp-info-count {
     font-size: $display_font;
     font-weight: bold;
     margin-left: 10px;
-    padding-top: ($icon_size - $display_font)/2;
+    padding-top: calc(($icon_size - $display_font) / 2);
     flex-grow: 1;
 }
 // 16px might be too small - maybe 24? the above bits should scale with
@@ -358,7 +357,7 @@ $border_width: 5px;
 }
 
 $card_back_image: "back_1.svg";
-$image_scale: $renounce_size*$card_width/$card_height;
+$image_scale: calc($renounce_size * $card_width / $card_height);
 $card_offset: 4px;
 #clp-dealerbutton {
     width: $renounce_size;
@@ -496,7 +495,7 @@ $button_font_size: $info_size;
 // mobile view for score-button area
 // this is a total kludge, to account for additional margin and player-box area
 $responsive_buffer: 530px;
-@media screen and (max-width: $table_size + $button_width + $responsive_buffer) {
+@media screen and (max-width: calc($table_size + $button_width + $responsive_buffer)) {
     $mob_score_extra_padding: 10px;
     $wider_width: 2*($button_width + $mob_score_extra_padding);
     #clp-score-access-table-area {
@@ -511,7 +510,7 @@ $responsive_buffer: 530px;
     #clp-score-access-overall {
         position: relative;
         left: 50%;
-        transform: translate(-$button_width/2);
+        transform: translate(calc(-1 * $button_width / 2));
     }
 }
 .clp-score-button{
