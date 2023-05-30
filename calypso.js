@@ -850,23 +850,50 @@ function (dojo, declare) {
                 let send_from_id = moved_to[player]["originating_player"];
                 let anim;
                 
+                // TODO: actual logic of rotation amount. Maybe need more from php??
                 if(send_to_id === 0){
                     // card is just going to trick pile
-                    anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
+                    // TODO: rotate 90degrees if going to the side
+                    
+                    anim = new dojo.Animation({
+                        // crazy rotation for testing
+                        curve: [0, 180 + 102],
+                        onAnimate: (v) => {
+                            $('clp-card-on-table-' + send_from_id).style.transform = 'rotate(' + v + 'deg)';
+                        } 
+                    });
+
+                    let anim_slide = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
                     dojo.connect(anim, 'onEnd', (node) => {
+                        anim_slide.play();
+                    })
+                    dojo.connect(anim_slide, 'onEnd', (node) => {
                         dojo.destroy(node);
                         this.setTrickPile(winner_id, 1);
                     });
+                    // TODO: animate card 'flipping' over?
                 } else{
                     // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
-                    anim = this.slideToObject(
+
+                    // TODO: tidy this flow up
+                    anim = new dojo.Animation({
+                        // crazy rotation for testing
+                        curve: [0, 180 + 77],
+                        onAnimate: (v) => {
+                            $('clp-card-on-table-' + send_from_id).style.transform = 'rotate(' + v + 'deg)';
+                        } 
+                    });
+                    let anim_slide = this.slideToObject(
                         'clp-card-on-table-' + send_from_id,
                         `clp-calypsocard-${calypso_player_id}-${rank}`
                     );
                     dojo.connect(anim, 'onEnd', (node) => {
+                        anim_slide.play();
+                    })
+                    dojo.connect(anim_slide, 'onEnd', (node) => {
                         dojo.destroy(node);
                         this.placeCardInCalypso(send_to_id, suit, rank);
                     });
