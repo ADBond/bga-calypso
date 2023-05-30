@@ -572,6 +572,41 @@ $user-pref-colours: (
         }
     }
 }
+/* card face options */
+$user-pref-packs: (
+    "standard": "cards.webp",
+    "four-colour": "cards_four.webp",
+);
+$offset_counter: 0;
+$suit_offset: 32px;
+$layout_offset: $card_width;
+@each $pack_name, $file_name in $user-pref-packs {
+    .clp-pack-#{$pack_name} {
+        // card face elements:
+        // on table and calypso. in hand dealt with in js
+        .clp-face-up-card, .clp-calypsopile-full {
+            background-image: url("img/#{$file_name}");
+        }
+        // suit icons:
+        // these appear in player boxes, renounce flags, and in score table
+        .clp-suit-icon, .clp-active-renounce, .clp-table-suit {
+            background-position-x: -$suit_offset*$offset_counter;
+        }
+        // layout spots - for calypsos
+        .clp-calypsocard-space {
+            background-position-x: -$layout_offset*$offset_counter;
+        }
+    }
+    $offset_counter: $offset_counter + 1;
+};
+.clp-pack-four-colour {
+    .clp-suit-text-clubs {
+        color: #080;
+    }
+    .clp-suit-text-diamonds {
+        color: #33D;
+    }
+}
 
 // this is in-built bga stuff, rather than hacking it ourselves
 .tableWindow th {

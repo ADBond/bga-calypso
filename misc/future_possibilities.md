@@ -20,7 +20,7 @@ Some things to maybe add in, depending how things go
 * ~~specialise renounce-flag tooltips to player/suit?~~
 * ~~customised table colours (for people who don't like purple as much as I do :( )?~~
 
-* Nicer cards & four-colour options - see file Jimble sent via cribbage
+* ~~Nicer cards & four-colour options - see file Jimble sent via cribbage~~
 * ~~Player names link to profiles?~~
 * Dealing animation
   * particularly nice to have at least _something_ to indicate when a new hand begins

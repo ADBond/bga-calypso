@@ -65,6 +65,11 @@ function (dojo, declare) {
         
         setup: function( gamedatas )
         {
+            // constants
+            this.pack_files = {
+                1: "cards.webp",
+                2: "cards_four.webp",
+            };
             for( let player_id in gamedatas.players )
             {
                 let player = gamedatas.players[player_id];
@@ -89,6 +94,8 @@ function (dojo, declare) {
             suit_ranking.reverse();
 
             const num_decks = 4;
+            // 101 is pack face option
+            const pack_file = 'img/' + this.pack_files[this.prefs[101].value];
             for (let suit = 1; suit <= 4; suit++) {
                 for (let rank = 2; rank <= 14; rank++) {
                     for (let deck = 1; deck <= num_decks; deck++){
@@ -100,7 +107,7 @@ function (dojo, declare) {
                         // args are id, weight (for hand-sorting), img url,
                         // and img position (within the url sprite)
                         this.playerHand.addItemType(
-                            card_type_id, card_weight, g_gamethemeurl + 'img/cards.webp', card_type
+                            card_type_id, card_weight, g_gamethemeurl + pack_file, card_type
                         );
                     }
                 }

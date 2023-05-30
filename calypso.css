@@ -1021,6 +1021,34 @@
   background-color: #dd8800;
 }
 
+/* card face options */
+.clp-pack-standard .clp-face-up-card, .clp-pack-standard .clp-calypsopile-full {
+  background-image: url("img/cards.webp");
+}
+.clp-pack-standard .clp-suit-icon, .clp-pack-standard .clp-active-renounce, .clp-pack-standard .clp-table-suit {
+  background-position-x: 0px;
+}
+.clp-pack-standard .clp-calypsocard-space {
+  background-position-x: 0px;
+}
+
+.clp-pack-four-colour .clp-face-up-card, .clp-pack-four-colour .clp-calypsopile-full {
+  background-image: url("img/cards_four.webp");
+}
+.clp-pack-four-colour .clp-suit-icon, .clp-pack-four-colour .clp-active-renounce, .clp-pack-four-colour .clp-table-suit {
+  background-position-x: -32px;
+}
+.clp-pack-four-colour .clp-calypsocard-space {
+  background-position-x: -72px;
+}
+
+.clp-pack-four-colour .clp-suit-text-clubs {
+  color: #080;
+}
+.clp-pack-four-colour .clp-suit-text-diamonds {
+  color: #33D;
+}
+
 .tableWindow th {
   text-align: center;
 }

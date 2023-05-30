@@ -9,7 +9,7 @@ echo "$x_size"
 echo "$y_size"
 mkdir -p misc/tmp
 # get individual card images row-by-row (=suit-by-suit, A-K + backs, jokers)
-magick misc/$FILENAME -crop "${x_size}x${y_size}" misc/tmp/card%01d.webp
+magick misc/img_raw/$FILENAME -crop "${x_size}x${y_size}" misc/tmp/card%01d.webp
 
 arg_string=""
 # easiest to manually concat the suits
