@@ -857,6 +857,8 @@ function (dojo, declare) {
                 let cardinal_dir = id.at(-1);
                 return degrees_lookup[cardinal_dir];
             };
+            // duration of rotation animation in ms - 350 default.
+            const rotate_dur = 100;
             const winner_id = notif.args.player_id;
             // this has the admin on where all the cards come from, but more importantly go to
             const moved_to = notif.args.moved_to;
@@ -875,7 +877,8 @@ function (dojo, declare) {
                         curve: [0, getRotationDegrees(send_to_el)],
                         onAnimate: (v) => {
                             send_from_el.style.transform = 'rotate(' + v + 'deg)';
-                        } 
+                        },
+                        duration: rotate_dur,
                     });
 
                     let anim_slide = this.slideToObject(send_from_el, send_to_el);
@@ -900,7 +903,8 @@ function (dojo, declare) {
                         curve: [0, getRotationDegrees(send_to_el)],
                         onAnimate: (v) => {
                             send_from_el.style.transform = 'rotate(' + v + 'deg)';
-                        } 
+                        } ,
+                        duration: rotate_dur,
                     });
                     let anim_slide = this.slideToObject(
                         send_from_el,
