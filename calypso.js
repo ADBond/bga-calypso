@@ -862,10 +862,10 @@ function (dojo, declare) {
             const winner_id = notif.args.player_id;
             // this has the admin on where all the cards come from, but more importantly go to
             const moved_to = notif.args.moved_to;
-            // count cards going to trickpile to stagger them slightly
-            // only a little bit just so it doesn't seem like cards are disappearing
-            let trickpile_count = 0;
-            const trickpile_delay = 100;
+            // count all cards to stagger them slightly - a bit nicer
+            // helps it not seem like cards are disappearing
+            let card_count = 0;
+            const card_anim_delay = 100;
             const flip_half_dur = 100;
             for ( let player in moved_to) {
                 let anim;
@@ -885,9 +885,8 @@ function (dojo, declare) {
                             send_from_el.style.transform = 'rotate(' + v + 'deg)';
                         },
                         duration: rotate_dur,
-                        delay: trickpile_count * trickpile_delay,
+                        delay: card_count * card_anim_delay,
                     });
-                    trickpile_count += 1;
                     let anim_slide = this.slideToObject(send_from_el, send_to_el);
                     let anim_flip_1 = new dojo.Animation({
                         curve: [1, 0],
@@ -929,6 +928,7 @@ function (dojo, declare) {
                             send_from_el.style.transform = 'rotate(' + v + 'deg)';
                         } ,
                         duration: rotate_dur,
+                        delay: card_count * card_anim_delay,
                     });
                     let anim_slide = this.slideToObject(
                         send_from_el,
@@ -940,6 +940,8 @@ function (dojo, declare) {
                     });
                     anim = dojo.fx.chain([anim_rot, anim_slide]);
                 }
+                // next card - this will set delays for subsequent animations
+                card_count += 1;
                 anim.play();
             }
             
