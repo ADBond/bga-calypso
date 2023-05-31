@@ -1,6 +1,4 @@
 ./calypso.js:37:            // TODO: translation doesn't work here, so place in setup instead
-./calypso.js:853:                // TODO: actual logic of rotation amount. Maybe need more from php??
-./calypso.js:856:                    // TODO: rotate 90degrees if going to the side
-./calypso.js:874:                    // TODO: animate card 'flipping' over?
-./calypso.js:881:                    // TODO: tidy this flow up
+./calypso.js:889:                    // TODO: animate card 'flipping' over?
+./calypso.js:897:                    // TODO: tidy this flow up
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */

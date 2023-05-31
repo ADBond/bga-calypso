@@ -842,28 +842,43 @@ function (dojo, declare) {
         },
 
         notif_moveCardsToCalypsos : function(notif) {
+            // cardinal positions - how rotated are they (in degrees, sunwise)?
+            const degrees_lookup = {
+                'S': 0,
+                'W': 90,
+                'N': 180,
+                'E': -90,
+            };
+            function getRotationDegrees(element) {
+                // given a destination, how much should we rotate to end up pointing the right way
+                // find the player area which contains the destination element, and get the id
+                let id = element.closest(".clp-player-personal-area").id;
+                // id is e.g. clp-player-personal-area-N, so extract cardinal point
+                let cardinal_dir = id.at(-1);
+                return degrees_lookup[cardinal_dir];
+            };
             const winner_id = notif.args.player_id;
             // this has the admin on where all the cards come from, but more importantly go to
             const moved_to = notif.args.moved_to;
             for ( let player in moved_to) {
-                let send_to_id = moved_to[player]["owner"];
-                let send_from_id = moved_to[player]["originating_player"];
                 let anim;
-                
-                // TODO: actual logic of rotation amount. Maybe need more from php??
+                let send_to_id = moved_to[player]["owner"];
+                let send_from_player_id = moved_to[player]["originating_player"];
+                let send_from_el_id = `clp-card-on-table-${send_from_player_id}`;
+                let send_from_el = $(send_from_el_id);
+
                 if(send_to_id === 0){
                     // card is just going to trick pile
-                    // TODO: rotate 90degrees if going to the side
-                    
+                    let send_to_el = $('clp-trickpile-' + winner_id);
                     anim = new dojo.Animation({
                         // crazy rotation for testing
-                        curve: [0, 180 + 102],
+                        curve: [0, getRotationDegrees(send_to_el)],
                         onAnimate: (v) => {
-                            $('clp-card-on-table-' + send_from_id).style.transform = 'rotate(' + v + 'deg)';
+                            send_from_el.style.transform = 'rotate(' + v + 'deg)';
                         } 
                     });
 
-                    let anim_slide = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
+                    let anim_slide = this.slideToObject(send_from_el, send_to_el);
                     dojo.connect(anim, 'onEnd', (node) => {
                         anim_slide.play();
                     })
@@ -877,18 +892,19 @@ function (dojo, declare) {
                     let calypso_player_id = moved_to[player]["owner"];
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
+                    let send_to_el = $(`clp-calypsocard-${calypso_player_id}-${rank}`);
 
                     // TODO: tidy this flow up
                     anim = new dojo.Animation({
                         // crazy rotation for testing
-                        curve: [0, 180 + 77],
+                        curve: [0, getRotationDegrees(send_to_el)],
                         onAnimate: (v) => {
-                            $('clp-card-on-table-' + send_from_id).style.transform = 'rotate(' + v + 'deg)';
+                            send_from_el.style.transform = 'rotate(' + v + 'deg)';
                         } 
                     });
                     let anim_slide = this.slideToObject(
-                        'clp-card-on-table-' + send_from_id,
-                        `clp-calypsocard-${calypso_player_id}-${rank}`
+                        send_from_el,
+                        send_to_el,
                     );
                     dojo.connect(anim, 'onEnd', (node) => {
                         anim_slide.play();
