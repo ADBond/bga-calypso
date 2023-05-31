@@ -862,6 +862,11 @@ function (dojo, declare) {
             const winner_id = notif.args.player_id;
             // this has the admin on where all the cards come from, but more importantly go to
             const moved_to = notif.args.moved_to;
+            // count cards going to trickpile to stagger them slightly
+            // only a little bit just so it doesn't seem like cards are disappearing
+            let trickpile_count = 0;
+            const trickpile_delay = 100;
+            const flip_half_dur = 100;
             for ( let player in moved_to) {
                 let anim;
                 let send_to_id = moved_to[player]["owner"];
@@ -872,24 +877,44 @@ function (dojo, declare) {
                 if(send_to_id === 0){
                     // card is just going to trick pile
                     let send_to_el = $('clp-trickpile-' + winner_id);
-                    anim = new dojo.Animation({
+                    let rot_deg = getRotationDegrees(send_to_el);
+                    let anim_rot = new dojo.Animation({
                         // crazy rotation for testing
-                        curve: [0, getRotationDegrees(send_to_el)],
+                        curve: [0, rot_deg],
                         onAnimate: (v) => {
                             send_from_el.style.transform = 'rotate(' + v + 'deg)';
                         },
                         duration: rotate_dur,
+                        delay: trickpile_count * trickpile_delay,
                     });
-
+                    trickpile_count += 1;
                     let anim_slide = this.slideToObject(send_from_el, send_to_el);
-                    dojo.connect(anim, 'onEnd', (node) => {
-                        anim_slide.play();
+                    let anim_flip_1 = new dojo.Animation({
+                        curve: [1, 0],
+                        onAnimate: (v) => {
+                            // needs to still be rotated!
+                            send_from_el.style.transform = 'rotate( ' + rot_deg + 'deg) scaleX(' + v + ') ';
+                        },
+                        duration: flip_half_dur,
+                    });
+                    dojo.connect(anim_flip_1, 'onEnd', (node) => {
+                        send_from_el.classList.add("clp-trickpile-nearly");
+                        send_from_el.classList.remove("clp-face-up-card");
                     })
-                    dojo.connect(anim_slide, 'onEnd', (node) => {
-                        dojo.destroy(node);
+                    let anim_flip_2 = new dojo.Animation({
+                        curve: [0, 1],
+                        onAnimate: (v) => {
+                            // needs to still be rotated!
+                            send_from_el.style.transform = 'rotate( ' + rot_deg + 'deg) scaleX(' + v + ') ';
+                        },
+                        duration: flip_half_dur,
+                    });
+                    dojo.connect(anim_flip_2, 'onEnd', (node) => {
+                        dojo.destroy(send_from_el);
                         this.setTrickPile(winner_id, 1);
                     });
-                    // TODO: animate card 'flipping' over?
+
+                    anim = dojo.fx.chain([anim_rot, anim_slide, anim_flip_1, anim_flip_2]);
                 } else{
                     // card goes to the one of the winning partnerships' calypsos
                     let calypso_player_id = moved_to[player]["owner"];
@@ -897,8 +922,7 @@ function (dojo, declare) {
                     let suit = moved_to[player]["suit"];
                     let send_to_el = $(`clp-calypsocard-${calypso_player_id}-${rank}`);
 
-                    // TODO: tidy this flow up
-                    anim = new dojo.Animation({
+                    let anim_rot = new dojo.Animation({
                         // crazy rotation for testing
                         curve: [0, getRotationDegrees(send_to_el)],
                         onAnimate: (v) => {
@@ -910,13 +934,11 @@ function (dojo, declare) {
                         send_from_el,
                         send_to_el,
                     );
-                    dojo.connect(anim, 'onEnd', (node) => {
-                        anim_slide.play();
-                    })
                     dojo.connect(anim_slide, 'onEnd', (node) => {
-                        dojo.destroy(node);
+                        dojo.destroy(send_from_el);
                         this.placeCardInCalypso(send_to_id, suit, rank);
                     });
+                    anim = dojo.fx.chain([anim_rot, anim_slide]);
                 }
                 anim.play();
             }

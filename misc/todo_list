@@ -1,4 +1,2 @@
 ./calypso.js:37:            // TODO: translation doesn't work here, so place in setup instead
-./calypso.js:892:                    // TODO: animate card 'flipping' over?
-./calypso.js:900:                    // TODO: tidy this flow up
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */
