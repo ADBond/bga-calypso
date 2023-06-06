@@ -409,6 +409,7 @@ function (dojo, declare) {
         },
 
         clearCalypsos: function(player_ids){
+            // runs on new round
             let all_player_animations = [];
             for (player of player_ids){
                 let player_id = player["id"];
@@ -416,7 +417,6 @@ function (dojo, declare) {
                 animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, delay=100);
                 all_player_animations.push(dojo.fx.combine(animations));
             }
-            let combined_animation = dojo.fx.combine(all_player_animations);
             return dojo.fx.combine(all_player_animations);
         },
 
@@ -714,7 +714,8 @@ function (dojo, declare) {
             dojo.subscribe( 'moveCardsToWinner', this, "notif_moveCardsToWinner" );
             this.notifqueue.setSynchronous( 'moveCardsToWinner', 600 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
-            this.notifqueue.setSynchronous( 'moveCardsToCalypsos', 700 );
+            // need to leave enough time for _all_ cards to get to calypsos, otherwise they stick around
+            this.notifqueue.setSynchronous( 'moveCardsToCalypsos', 1200 );
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
             // updating scores/display score tables
             dojo.subscribe( 'scoreDisplay', this, "notif_scoreDisplay" );
@@ -879,7 +880,6 @@ function (dojo, declare) {
                     let send_to_el = $('clp-trickpile-' + winner_id);
                     let rot_deg = getRotationDegrees(send_to_el);
                     let anim_rot = new dojo.Animation({
-                        // crazy rotation for testing
                         curve: [0, rot_deg],
                         onAnimate: (v) => {
                             send_from_el.style.transform = 'rotate(' + v + 'deg)';

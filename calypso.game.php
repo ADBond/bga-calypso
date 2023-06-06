@@ -566,6 +566,7 @@ class Calypso extends Table
         ) );
         self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
             'player_id' => $best_value_player_id,
+            // this tells us where all the cards will end up
             'moved_to' => $moved_to,
         ) );
         if(!empty($calypsos_completed)){
