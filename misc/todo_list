@@ -1,2 +1,4 @@
 ./calypso.js:37:            // TODO: translation doesn't work here, so place in setup instead
+./calypso.js:1038:                    // TODO (somewhere) - card appears in calypso too soon
+./calypso.js:1041:                    // TODO (somwhere) - card completeing calypso disappears a little too late
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */
