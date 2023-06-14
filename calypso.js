@@ -34,20 +34,6 @@ function (dojo, declare) {
             this.clubs = 3;
             this.diamonds = 4;
 
-            // TODO: translation doesn't work here, so place in setup instead
-            this.suits_translate_lookup = {
-                1: _("Spades"), 
-                2: _("Hearts"), 
-                3: _("Clubs"), 
-                4: _("Diamonds"), 
-            }
-            this.suits_translate_lookup_sing = {
-                1: _("Spade"),
-                2: _("Heart"),
-                3: _("Club"),
-                4: _("Diamond"),
-            }
-
         },
         
         /*
@@ -70,6 +56,18 @@ function (dojo, declare) {
                 1: "cards.webp",
                 2: "cards_four.webp",
             };
+            this.suits_translate_lookup = {
+                1: _("Spades"), 
+                2: _("Hearts"), 
+                3: _("Clubs"), 
+                4: _("Diamonds"), 
+            }
+            this.suits_translate_lookup_sing = {
+                1: _("Spade"),
+                2: _("Heart"),
+                3: _("Club"),
+                4: _("Diamond"),
+            }
             for( let player_id in gamedatas.players )
             {
                 let player = gamedatas.players[player_id];
