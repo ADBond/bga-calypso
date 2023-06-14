@@ -346,7 +346,6 @@ function (dojo, declare) {
             dojo.addClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`);
             dojo.addClass( card_el_id, 'clp-face-up-card' );
             dojo.removeClass( card_el_id, 'clp-calypsocard-space' );
-            console.log(`place card - ${player_id}-${rank}`)
         },
         
         removeCardFromCalypso : function(player_id, suit, rank) {
@@ -486,7 +485,6 @@ function (dojo, declare) {
         },
         refreshRenounceTooltips: function() {
             player_infos = this.player_infos;
-            // console.log(player_infos);
             for( player_id in player_infos) {
                 const player = player_infos[player_id];
                 for (let [suit_index, suit_name_trans] of Object.entries(this.suits_translate_lookup)) {
@@ -610,21 +608,9 @@ function (dojo, declare) {
                 anim.delay = current_delay;
                 current_delay += delay;
                 anim.duration = 400;
-                // if(play){
-                //     // anim.play();
-                //     anim.delay = current_delay;
-                //     current_delay += delay;
-                //     anim.duration = 400;
-                // } else{
-                //     anim.delay = current_delay;
-                //     current_delay += delay;
-                //     anim.duration = 400;
-                // }
-
                 // place existing card or blank space as appropriate, for underneath
                 // these are the moving items that will get swept away
                 if(fresh_ranks.includes(rank)){
-                    // this.placeCardInCalypso(player_id, player_suit, rank);
                     dojo.connect(
                         anim, "onBegin",
                         () => {
@@ -649,11 +635,7 @@ function (dojo, declare) {
                 animations.push(anim);
             }
 
-            // if (play) {
-            //     this.addToQueue(dojo.fx.combine(animations), "calyspos -> calypso pile")
-            // }
             dojo.removeClass("clp-public-area", "clp-no-transform");
-            // return animations;
             return dojo.fx.combine(animations);
         },
 
@@ -662,12 +644,8 @@ function (dojo, declare) {
             this.animation_queue.push(anim);
             // description queue is for aid in debugging
             this.description_queue.push(description);
-            console.log(
-                `Adding '${description}' animation - now length ${this.animation_queue.length} (= ${this.description_queue.length})`
-            );
         },
         playQueue : function() {
-            console.log(`playing all: ${this.animation_queue.length}`)
             dojo.fx.chain(this.animation_queue).play();
         },
         clearQueue : function() {
@@ -764,10 +742,8 @@ function (dojo, declare) {
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'moveCardsToWinner', this, "notif_moveCardsToWinner" );
-            // this.notifqueue.setSynchronous( 'moveCardsToWinner', 600 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
             // need to leave enough time for _all_ cards to get to calypsos, otherwise they stick around
-            // this.notifqueue.setSynchronous( 'moveCardsToCalypsos', 1200 );
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
             dojo.subscribe( 'playAllAnimations', this, "notif_playAllAnimations" );
             // updating scores/display score tables
@@ -866,7 +842,6 @@ function (dojo, declare) {
                 calypso_pile_func();
             })
             anim.duration = 300;
-            // anim.play();
             this.addToQueue(anim_calypso, "calypsos -> calypso pile");
             this.addToQueue(anim, "suit icon to scoreboard to clue players");
         },
@@ -874,7 +849,6 @@ function (dojo, declare) {
         notif_actionRequired : function(notif) {
             // waiting for first player to play a card
         },
-
 
         notif_scoreDisplay: function(notif) {
             this.showResultDialogByRound(notif.args.round_number, notif.args.table);
@@ -901,7 +875,6 @@ function (dojo, declare) {
                     'clp-player-card-play-area-card-' + winner_id
                 );
                 anims.push(anim);
-                // anim.play();
             }
             // queue should already be clear, but can't hurt to make sure
             this.clearQueue();
@@ -990,44 +963,6 @@ function (dojo, declare) {
                     let suit = moved_to[player]["suit"];
                     let send_to_el = $(`clp-calypsocard-${calypso_player_id}-${rank}`);
 
-                    // once dust has settled
-                    // we will place card in calypso UNLESS it completes a calypso
-                    // and doesn't come as a duplicate
-                    // default is we will:
-                    let place_card = false;
-                    console.log("rank times");
-                    console.log(rank);
-                    console.log(notif.args.calypsos_completed);
-                    console.log(calypso_player_id);
-                    // if (!notif.args.calypsos_completed.includes(+calypso_player_id)) {
-                    //     // if our destination player hasn't completed a calypso
-                    //     place_card = true;
-                    //     console.log("place it for normals");
-                    //     // console.log(notif.args.calypsos_completed.includes(calypso_player_id));
-                    //     // console.log(calypso_player_id);
-                    //     // console.log(notif.args.calypsos_completed);
-                    //     // console.log(notif.args.calypsos_completed[0]);
-                    //     // console.log(notif.args.calypsos_completed[0] === calypso_player_id);
-                    //     // console.log(typeof calypso_player_id);
-                    //     // console.log(typeof notif.args.calypsos_completed[0]);
-                    //     // console.log("stuff done");
-                    // } else {
-                    //     // only need the extra ranks
-                    //     console.log(notif.args.extras_to_calypso);
-                    //     console.log(notif.args.extras_to_calypso[calypso_player_id]);
-                    //     // notif.args.extras_to_calypso is destination_id => (originator_id => details)
-                    //     let players_extras_ranks = Object.values(
-                    //         notif.args.extras_to_calypso[calypso_player_id]
-                    //     ).map((card) => card["rank"]);
-                    //     if (players_extras_ranks.includes(rank)) {
-                    //         // or they have completed a calypso but the card is a duplicate
-                    //         // that is going to fresh calypso (and not trick pile)
-                    //         place_card = true;
-                    //         console.log("place it for ranks");
-                    //         console.log(players_extras_ranks);
-                    //     }
-                    // }
-
                     let anim_rot = new dojo.Animation({
                         // crazy rotation for testing
                         curve: [0, getRotationDegrees(send_to_el)],
@@ -1041,28 +976,19 @@ function (dojo, declare) {
                         send_from_el,
                         send_to_el,
                     );
-                    // TODO (somewhere) - card appears in calypso too soon
-                    // e..g K to complete, another K left, the extra gets there before cards :/
 
-                    // TODO (somwhere) - card completeing calypso disappears a little too late
-                    // ^ I think this is sorted
                     dojo.connect(anim_slide, 'onEnd', (node) => {
                         dojo.destroy(send_from_el);
                         this.placeCardInCalypso(send_to_id, suit, rank);
-                        // if (place_card) {
-                        //     this.placeCardInCalypso(send_to_id, suit, rank);
-                        // };
                     });
                     anim = dojo.fx.chain([anim_rot, anim_slide]);
                 }
                 // next card - this will set delays for subsequent animations
                 card_count += 1;
-                // anim.play();
                 anims.push(anim);
             }
             // add combined animation to the queue
             this.addToQueue(dojo.fx.combine(anims), "move cards from winner space to destinations");
-            console.log(`move to calypsos we have now ${this.animation_queue.length}`)
         },
 
         notif_playAllAnimations : function(notif) {
