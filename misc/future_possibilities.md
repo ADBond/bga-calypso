@@ -14,8 +14,8 @@ Some things to maybe add in, depending how things go
 * trick-pile/(calypso - ~~though think it's irrelevant here~~) show small grey bits in corners?
   * slight border round face-down cards? (to distinguish calypsopile) - needs separation above so that we don't have round corners
   * NFA
-* rotate cards in-transit? just a _teeny_ bit jarring when asymmetric cards (e.g. A hearts) arrive from opposite
-  * similarly nice to have side-on cards rotated to position
+* ~~rotate cards in-transit? just a _teeny_ bit jarring when asymmetric cards (e.g. A hearts) arrive from opposite~~
+  * ~~similarly nice to have side-on cards rotated to position~~
   * NFA
 * ~~specialise renounce-flag tooltips to player/suit?~~
 * ~~customised table colours (for people who don't like purple as much as I do :( )?~~
@@ -24,6 +24,7 @@ Some things to maybe add in, depending how things go
 * ~~Player names link to profiles?~~
 * Dealing animation
   * particularly nice to have at least _something_ to indicate when a new hand begins
+* Card back user options
 
 ### Variants
 

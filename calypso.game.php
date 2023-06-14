@@ -560,25 +560,43 @@ class Calypso extends Table
         }
         $this->cards->moveAllCardsInLocation('cardsontable', 'trickpile', null, $best_value_player_id);
 
+        // we construct the animations on the client-side in three steps:
+        // move to the winner's space
+        // move from there to where they end up
+        // then any completed calypsos get tidied up to the relevant calypso pile
         // now we move cards where they need to go, and get next player
         self::notifyAllPlayers( 'moveCardsToWinner','', array(
             'winner_id' => $best_value_player_id,
         ) );
-        self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
-            'player_id' => $best_value_player_id,
-            'moved_to' => $moved_to,
-        ) );
+        // first we compute cards going to the next calypso so we can use it in notif
+        // this will hold player_id => (cards going to the next calypso), if any
+        $all_fresh_cards = array( );
         if(!empty($calypsos_completed)){
-            // this is updated with latest figures already
-            $total_calypso_counts = self::getAllCompletedCalypsos();
             foreach($calypsos_completed as $player_id){
                 # get only those cards for the relevant calypso
+                // i.e. (cards going to the next calypso)
                 $fresh_cards = array_filter(
                     $moved_to_second_batch,
                     function($card) use ($player_id){
                         return $card['owner'] == $player_id;
                     }
                 );
+                $all_fresh_cards[$player_id] = $fresh_cards;
+            }
+        };
+        self::notifyAllPlayers( 'moveCardsToCalypsos','', array(
+            'player_id' => $best_value_player_id,
+            // this tells us where all the cards will end up
+            'moved_to' => $moved_to,
+            // we need info on any completed calypsos + extra cards if so
+            // so we know which cards will stay in calypso layout
+            'extras_to_calypso' => $all_fresh_cards,
+            'calypsos_completed' => $calypsos_completed,
+        ) );
+        if(!empty($calypsos_completed)){
+            // this is updated with latest figures already
+            $total_calypso_counts = self::getAllCompletedCalypsos();
+            foreach($calypsos_completed as $player_id){
                 self::updateFastestCalypso($player_id);
                 self::notifyAllPlayers(
                     'calypsoComplete',
@@ -588,12 +606,18 @@ class Calypso extends Table
                         'player_name' => self::getPlayerName($player_id),
                         'player_suit' => self::getPlayerSuit($player_id),
                         'num_calypsos' => $total_calypso_counts[$player_id],
-                        'cards_to_fresh_calypso' => $fresh_cards,
+                        'cards_to_fresh_calypso' => $all_fresh_cards[$player_id],
                         'dummy' => $moved_to_second_batch,
                     )
                 );
             }
         }
+        // now that the animations are all constructed we send the go-ahead to play them (in sequence)
+        self::notifyAllPlayers(
+            'playAllAnimations',
+            '',
+            array(),
+        );
         $this->gamestate->changeActivePlayer( $best_value_player_id );
         self::giveExtraTime($best_value_player_id);
     }

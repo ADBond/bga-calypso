@@ -273,7 +273,7 @@ $suit_height: 32px;
 .clp-calypsocard-space {
     outline: solid 1px black;
     z-index: 2;
-    background-image: url('img/cards_layout.png'); 
+    background-image: url('img/cards_layout.png');
 }
 .clp-captured-card {
     position: absolute;
@@ -423,7 +423,14 @@ $calypso_card_overlap: 12px;
 
 .clp-trickpile-full {
     border-radius: $card_rounding;
-    background-image: url('img/#{$card_back_image}'); 
+    background-image: url('img/#{$card_back_image}');
+}
+// class for card about to enter trickpile in animation:
+.clp-trickpile-nearly {
+    border-radius: $card_rounding;
+    width: $card_width;
+    height: $card_height;
+    background-image: url('img/#{$card_back_image}');
 }
 
 $personal_area_side_offset: 20px;
