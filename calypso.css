@@ -793,6 +793,13 @@
   background-image: url("img/back_1.svg");
 }
 
+.clp-trickpile-nearly {
+  border-radius: 5px;
+  width: 72px;
+  height: 96px;
+  background-image: url("img/back_1.svg");
+}
+
 .clp-player-personal-area-N {
   position: absolute;
   right: 20px;

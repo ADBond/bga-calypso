@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+### Changed
+
+- Nicer post-trick animations [PR #25](https://github.com/ADBond/bga-calypso/pull/25)
+
 ## [alpha-v04] - 2023-05-30
 
 ### Added

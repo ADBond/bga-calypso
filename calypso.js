@@ -221,6 +221,8 @@ function (dojo, declare) {
             this.setupNotifications();
             // tooltips ahoy:
             this.refreshTooltips();
+            // set the empty animation queue:
+            this.clearQueue();
         },
        
 
@@ -291,7 +293,7 @@ function (dojo, declare) {
             // last in array has highest weight
             return (suit_ranking.indexOf(suit) - 1) * 13 + (rank - 2);
         },
-        // calyspo display area populated
+        // calypso display area populated
         setupCalypsoArea : function(player_id, suit) {
             for (let rank = 2; rank <= 14; rank++) {
                 dojo.place(this.format_block('jstpl_calypsocard', {
@@ -344,6 +346,13 @@ function (dojo, declare) {
             dojo.addClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`);
             dojo.addClass( card_el_id, 'clp-face-up-card' );
             dojo.removeClass( card_el_id, 'clp-calypsocard-space' );
+        },
+        
+        removeCardFromCalypso : function(player_id, suit, rank) {
+            const card_el_id = `clp-calypsocard-${player_id}-${rank}`;
+            dojo.removeClass( card_el_id, `clp-calypsocard-face-${suit}-${rank}`);
+            dojo.removeClass( card_el_id, 'clp-face-up-card' );
+            dojo.addClass( card_el_id, 'clp-calypsocard-space' );
         },
 
         setTrickPile : function(player_id, value) {
@@ -409,14 +418,14 @@ function (dojo, declare) {
         },
 
         clearCalypsos: function(player_ids){
+            // runs on new round
             let all_player_animations = [];
             for (player of player_ids){
                 let player_id = player["id"];
                 let suit = player["suit"];
-                animations = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, delay=100);
-                all_player_animations.push(dojo.fx.combine(animations));
+                let animation = this.animateCalypso(player_id, suit, [], to_prefix="clp-trickpile", play=false, delay=100);
+                all_player_animations.push(animation);
             }
-            let combined_animation = dojo.fx.combine(all_player_animations);
             return dojo.fx.combine(all_player_animations);
         },
 
@@ -476,7 +485,6 @@ function (dojo, declare) {
         },
         refreshRenounceTooltips: function() {
             player_infos = this.player_infos;
-            // console.log(player_infos);
             for( player_id in player_infos) {
                 const player = player_infos[player_id];
                 for (let [suit_index, suit_name_trans] of Object.entries(this.suits_translate_lookup)) {
@@ -572,6 +580,7 @@ function (dojo, declare) {
 
         // animates clearing calypso both for completing calypso, and at end of round when we clear the table
         // to_prefix flags for us which one
+        // play=true means we add it to the animation queue rather than just returning it
         animateCalypso: function(player_id, player_suit, fresh_ranks, to_prefix="clp-calypsopile", play=true, delay=30){
             // make some modifications that we will undo at the end of the method
             // for correct animation calculation
@@ -595,32 +604,53 @@ function (dojo, declare) {
                         properties: {}
                     });
                 }
-                if(play){
-                    anim.play();
-                } else{
-                    anim.delay = current_delay;
-                    current_delay += delay;
-                    anim.duration = 400;
-                }
-                animations.push(anim);
-
+                
+                anim.delay = current_delay;
+                current_delay += delay;
+                anim.duration = 400;
                 // place existing card or blank space as appropriate, for underneath
+                // these are the moving items that will get swept away
                 if(fresh_ranks.includes(rank)){
-                    dojo.place(this.format_block('jstpl_calypsocard_existing', {
-                        rank : rank,
-                        suit : player_suit,
-                        player_id : player_id
-                    }), 'clp-calypsoholder-' + player_id);
+                    dojo.connect(
+                        anim, "onBegin",
+                        () => {
+                            dojo.place(this.format_block('jstpl_calypsocard_existing', {
+                                rank : rank,
+                                suit : player_suit,
+                                player_id : player_id
+                            }), 'clp-calypsoholder-' + player_id);
+                        }
+                    );
                 } else{
+                    dojo.connect(
+                        anim, "onBegin",
+                        () => this.removeCardFromCalypso(player_id, player_suit, rank)
+                    );
                     dojo.place(this.format_block('jstpl_calypsocard', {
                         rank : rank,
                         suit : player_suit,
                         player_id : player_id
                     }), 'clp-calypsoholder-' + player_id);
                 }
+                animations.push(anim);
             }
+
             dojo.removeClass("clp-public-area", "clp-no-transform");
-            return animations;
+            return dojo.fx.combine(animations);
+        },
+
+        // animation queue handling - in case we need to zhuzh it up
+        addToQueue : function(anim, description = "") {
+            this.animation_queue.push(anim);
+            // description queue is for aid in debugging
+            this.description_queue.push(description);
+        },
+        playQueue : function() {
+            dojo.fx.chain(this.animation_queue).play();
+        },
+        clearQueue : function() {
+            this.animation_queue = [];
+            this.description_queue = [];
         },
 
         ///////////////////////////////////////////////////
@@ -712,10 +742,10 @@ function (dojo, declare) {
             dojo.subscribe( 'trickWin', this, "notif_trickWin" );
             this.notifqueue.setSynchronous( 'trickWin', 1000 );
             dojo.subscribe( 'moveCardsToWinner', this, "notif_moveCardsToWinner" );
-            this.notifqueue.setSynchronous( 'moveCardsToWinner', 600 );
             dojo.subscribe( 'moveCardsToCalypsos', this, "notif_moveCardsToCalypsos" );
-            this.notifqueue.setSynchronous( 'moveCardsToCalypsos', 700 );
+            // need to leave enough time for _all_ cards to get to calypsos, otherwise they stick around
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
+            dojo.subscribe( 'playAllAnimations', this, "notif_playAllAnimations" );
             // updating scores/display score tables
             dojo.subscribe( 'scoreDisplay', this, "notif_scoreDisplay" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
@@ -787,11 +817,13 @@ function (dojo, declare) {
 
             const player_id = notif.args.player_id;
             // for each card in calypso, get rid of it, but not too much
-            this.animateCalypso(player_id, notif.args.player_suit, fresh_ranks, to_prefix="clp-calypsopile");
+            let anim_calypso = this.animateCalypso(
+                player_id, notif.args.player_suit, fresh_ranks, to_prefix="clp-calypsopile"
+            );
             
             const player_count_element = `clp-info-count-${player_id}`;
             const new_num_calypsos = notif.args.num_calypsos;
-            this.setCalypsoPile(player_id, new_num_calypsos);
+            const calypso_pile_func = () => this.setCalypsoPile(player_id, new_num_calypsos);
 
             // have transform woes if we try to use calypsopile
             const anim_origin = "clp-table-centre";
@@ -806,14 +838,17 @@ function (dojo, declare) {
             dojo.connect(anim, 'onEnd', function(node) {
                 $(player_count_element).textContent = new_num_calypsos;
             });
+            dojo.connect(anim_calypso, 'onEnd', function(node) {
+                calypso_pile_func();
+            })
             anim.duration = 300;
-            anim.play();
+            this.addToQueue(anim_calypso, "calypsos -> calypso pile");
+            this.addToQueue(anim, "suit icon to scoreboard to clue players");
         },
 
         notif_actionRequired : function(notif) {
             // waiting for first player to play a card
         },
-
 
         notif_scoreDisplay: function(notif) {
             this.showResultDialogByRound(notif.args.round_number, notif.args.table);
@@ -831,49 +866,135 @@ function (dojo, declare) {
 
         notif_moveCardsToWinner : function(notif) {
             // Move all cards on table to winners' card space, ready to be sent on
+            // construct the animation, and add it to the queue
             const winner_id = notif.args.winner_id;
+            let anims = [];
             for ( let player_id in this.gamedatas.players) {
                 let anim = this.slideToObject(
                     'clp-card-on-table-' + player_id,
                     'clp-player-card-play-area-card-' + winner_id
                 );
-                anim.play();
+                anims.push(anim);
             }
+            // queue should already be clear, but can't hurt to make sure
+            this.clearQueue();
+            // start a new animation queue with these animations combined as a single one (simultaneous)
+            this.addToQueue(dojo.fx.combine(anims), "move all cards to winner");
         },
 
         notif_moveCardsToCalypsos : function(notif) {
+            // cardinal positions - how rotated are they (in degrees, sunwise)?
+            const degrees_lookup = {
+                'S': 0,
+                'W': 90,
+                'N': 180,
+                'E': -90,
+            };
+            function getRotationDegrees(element) {
+                // given a destination, how much should we rotate to end up pointing the right way
+                // find the player area which contains the destination element, and get the id
+                let id = element.closest(".clp-player-personal-area").id;
+                // id is e.g. clp-player-personal-area-N, so extract cardinal point
+                let cardinal_dir = id.at(-1);
+                return degrees_lookup[cardinal_dir];
+            };
+            let anims = [];
+            // duration of rotation animation in ms - 350 default.
+            const rotate_dur = 100;
             const winner_id = notif.args.player_id;
             // this has the admin on where all the cards come from, but more importantly go to
             const moved_to = notif.args.moved_to;
+            // count all cards to stagger them slightly - a bit nicer
+            // helps it not seem like cards are disappearing
+            let card_count = 0;
+            const card_anim_delay = 100;
+            const flip_half_dur = 100;
+            // loop through the cards of the trick:
             for ( let player in moved_to) {
-                let send_to_id = moved_to[player]["owner"];
-                let send_from_id = moved_to[player]["originating_player"];
                 let anim;
-                
+                let send_to_id = moved_to[player]["owner"];
+                let send_from_player_id = moved_to[player]["originating_player"];
+                let send_from_el_id = `clp-card-on-table-${send_from_player_id}`;
+                let send_from_el = $(send_from_el_id);
+
                 if(send_to_id === 0){
                     // card is just going to trick pile
-                    anim = this.slideToObject('clp-card-on-table-' + send_from_id, 'clp-trickpile-' + winner_id);
-                    dojo.connect(anim, 'onEnd', (node) => {
-                        dojo.destroy(node);
+                    let send_to_el = $('clp-trickpile-' + winner_id);
+                    let rot_deg = getRotationDegrees(send_to_el);
+                    let anim_rot = new dojo.Animation({
+                        curve: [0, rot_deg],
+                        onAnimate: (v) => {
+                            send_from_el.style.transform = 'rotate(' + v + 'deg)';
+                        },
+                        duration: rotate_dur,
+                        delay: card_count * card_anim_delay,
+                    });
+                    let anim_slide = this.slideToObject(send_from_el, send_to_el);
+                    let anim_flip_1 = new dojo.Animation({
+                        curve: [1, 0],
+                        onAnimate: (v) => {
+                            // needs to still be rotated!
+                            send_from_el.style.transform = 'rotate( ' + rot_deg + 'deg) scaleX(' + v + ') ';
+                        },
+                        duration: flip_half_dur,
+                    });
+                    dojo.connect(anim_flip_1, 'onEnd', (node) => {
+                        send_from_el.classList.add("clp-trickpile-nearly");
+                        send_from_el.classList.remove("clp-face-up-card");
+                    })
+                    let anim_flip_2 = new dojo.Animation({
+                        curve: [0, 1],
+                        onAnimate: (v) => {
+                            // needs to still be rotated!
+                            send_from_el.style.transform = 'rotate( ' + rot_deg + 'deg) scaleX(' + v + ') ';
+                        },
+                        duration: flip_half_dur,
+                    });
+                    dojo.connect(anim_flip_2, 'onEnd', (node) => {
+                        dojo.destroy(send_from_el);
                         this.setTrickPile(winner_id, 1);
                     });
+
+                    anim = dojo.fx.chain([anim_rot, anim_slide, anim_flip_1, anim_flip_2]);
                 } else{
                     // card goes to the one of the winning partnerships' calypsos
-                    let calypso_player_id = moved_to[player]["owner"];
+                    let calypso_player_id = send_to_id;
                     let rank = moved_to[player]["rank"];
                     let suit = moved_to[player]["suit"];
-                    anim = this.slideToObject(
-                        'clp-card-on-table-' + send_from_id,
-                        `clp-calypsocard-${calypso_player_id}-${rank}`
+                    let send_to_el = $(`clp-calypsocard-${calypso_player_id}-${rank}`);
+
+                    let anim_rot = new dojo.Animation({
+                        // crazy rotation for testing
+                        curve: [0, getRotationDegrees(send_to_el)],
+                        onAnimate: (v) => {
+                            send_from_el.style.transform = 'rotate(' + v + 'deg)';
+                        } ,
+                        duration: rotate_dur,
+                        delay: card_count * card_anim_delay,
+                    });
+                    let anim_slide = this.slideToObject(
+                        send_from_el,
+                        send_to_el,
                     );
-                    dojo.connect(anim, 'onEnd', (node) => {
-                        dojo.destroy(node);
+
+                    dojo.connect(anim_slide, 'onEnd', (node) => {
+                        dojo.destroy(send_from_el);
                         this.placeCardInCalypso(send_to_id, suit, rank);
                     });
+                    anim = dojo.fx.chain([anim_rot, anim_slide]);
                 }
-                anim.play();
+                // next card - this will set delays for subsequent animations
+                card_count += 1;
+                anims.push(anim);
             }
-            
+            // add combined animation to the queue
+            this.addToQueue(dojo.fx.combine(anims), "move cards from winner space to destinations");
+        },
+
+        notif_playAllAnimations : function(notif) {
+            this.playQueue();
+            // can't hurt to clear just in case
+            this.clearQueue();
         },
 
         notif_newHandBegin : function(notif) {
