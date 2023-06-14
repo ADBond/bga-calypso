@@ -841,7 +841,7 @@ function (dojo, declare) {
             dojo.connect(anim_calypso, 'onEnd', function(node) {
                 calypso_pile_func();
             })
-            anim.duration = 300;
+            anim.duration = 800;
             this.addToQueue(anim_calypso, "calypsos -> calypso pile");
             this.addToQueue(anim, "suit icon to scoreboard to clue players");
         },
