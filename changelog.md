@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+## [alpha-v06] - 2023-06-14
+
+### Fixed
+
+- Sorted introduced translation error
+
 ## [alpha-v05] - 2023-06-14
 
 ### Changed
@@ -45,7 +51,8 @@ Online version working 2021-02-24.
 
 - Working version of Calypso. Sorry this is as detailed as it will go up this point! Have a shufti at previous PRs and commit history if you really need more.
 
-[unreleased]: https://github.com/ADBond/bga-calypso/compare/alpha-v05...HEAD
+[unreleased]: https://github.com/ADBond/bga-calypso/compare/alpha-v06...HEAD
+[alpha-v06]: https://github.com/ADBond/bga-calypso/compare/alpha-v05...alpha-v06
 [alpha-v05]: https://github.com/ADBond/bga-calypso/compare/alpha-v04...alpha-v05
 [alpha-v04]: https://github.com/ADBond/bga-calypso/compare/alpha-v03...alpha-v04
 [alpha-v03]: https://github.com/ADBond/bga-calypso/compare/alpha-v02...alpha-v03
