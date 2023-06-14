@@ -24,6 +24,7 @@ Some things to maybe add in, depending how things go
 * ~~Player names link to profiles?~~
 * Dealing animation
   * particularly nice to have at least _something_ to indicate when a new hand begins
+* Card back user options
 
 ### Variants
 
