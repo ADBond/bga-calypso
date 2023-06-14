@@ -293,7 +293,7 @@ function (dojo, declare) {
             // last in array has highest weight
             return (suit_ranking.indexOf(suit) - 1) * 13 + (rank - 2);
         },
-        // calyspo display area populated
+        // calypso display area populated
         setupCalypsoArea : function(player_id, suit) {
             for (let rank = 2; rank <= 14; rank++) {
                 dojo.place(this.format_block('jstpl_calypsocard', {
