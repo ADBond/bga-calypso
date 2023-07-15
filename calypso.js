@@ -232,7 +232,7 @@ function (dojo, declare) {
         //
         onEnteringState: function( stateName, args )
         {
-            // only action is classing the hand so that active hands have cursor, card highlight on hover   
+            // only action is classing the hand so that active hands have cursor, card highlight on hover
             switch( stateName )
             {            
                 case 'playerTurn':
@@ -259,7 +259,7 @@ function (dojo, declare) {
         onUpdateActionButtons: function( stateName, args )
         {
             if( this.isCurrentPlayerActive() )
-            {            
+            {
                 switch( stateName )
                 {
                     case 'awaitNewRound':
