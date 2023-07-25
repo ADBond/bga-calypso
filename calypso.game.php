@@ -286,6 +286,8 @@ class Calypso extends Table
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
 
+        $result['current_card'] = self::getGameStateValue('trickSuit');
+
         $result['dealer'] = self::getGameStateValue('currentDealer');
 
         $result['handnumber'] = self::getGameStateValue('handNumber');
@@ -1428,6 +1430,12 @@ class Calypso extends Table
         );
     }    
     */
+    function argPlayerTurn() {
+        $trick_suit = self::getGameStateValue("trickSuit");
+        return array(
+            "current_suit" => $trick_suit,
+        );
+    }
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state actions

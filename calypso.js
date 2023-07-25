@@ -122,10 +122,9 @@ function (dojo, declare) {
                 let card = gamedatas.hand[i];
                 let suit = card.type;
                 let rank = card.type_arg;
-                let unique_type = this.getCardUniqueType(suit, rank);
-                this.playerHand.addToStockWithId(unique_type, card.id);
+                this.addCardToPlayerHand(suit, rank, card.id);
             }
-            this.setHandActiveness(this.isCurrentPlayerActive());
+            this.setHandActiveness(this.isCurrentPlayerActive(), gamedatas.current_suit);
 
             // Cards played on table
             for (i in gamedatas.cardsontable) {
@@ -236,7 +235,7 @@ function (dojo, declare) {
             switch( stateName )
             {            
                 case 'playerTurn':
-                    this.setHandActiveness(this.isCurrentPlayerActive());
+                    this.setHandActiveness(this.isCurrentPlayerActive(), args.current_suit);
                     break;
             }
         },
@@ -302,15 +301,49 @@ function (dojo, declare) {
             }
         },
 
-        setHandActiveness(active){
+        addCardToPlayerHand(suit, rank, card_id){
+            const unique_type = this.getCardUniqueType(suit, rank);
+            const hand_card_el_id = `clp-myhand_item_${card_id}`;
+            this.playerHand.addToStockWithId(unique_type, card_id);
+            // add to card info on suit directly
+            dojo.addClass(hand_card_el_id, `clp-hand-card-${suit}`);
+        },
+
+        setHandActiveness(active, trick_suit=0){
             const hand_div_id = "clp-myhand";
             if(active){
                 dojo.addClass(hand_div_id, "clp-active-hand");
                 dojo.removeClass(hand_div_id, "clp-inactive-hand");
+                this.highlightPlayable(hand_div_id, true, trick_suit);
             } else{
                 dojo.removeClass(hand_div_id, "clp-active-hand");
                 dojo.addClass(hand_div_id, "clp-inactive-hand");
+                this.highlightPlayable(hand_div_id, false);
             }
+        },
+
+        highlightPlayable(hand_div_id, make_playable, trick_suit=0){
+            // add css class to playable / not playable cards if make_playable is true
+            // else remove all classes
+            // actual behaviour covered by css, as it is a user pref
+            const card_els = $(hand_div_id).children;
+            const regex_suit = /clp-hand-card-(?<suit>\d)/m;
+            card_els.forEach(
+                (card_el) => {
+                    let card_el_id = card_el.id;
+                    if (make_playable) {
+                        let card_suit = card_el_id.match(regex_suit)["suit"];
+                        if ((trick_suit == 0) || (card_suit == trick_suit)) {
+                            dojo.addClass(card_el_id, "clp-hand-card-playable");
+                        } else {
+                            dojo.addClass(card_el_id, "clp-hand-card-unplayable");
+                        }
+                    } else {
+                        dojo.removeClass(card_el_id, "clp-hand-card-playable");
+                        dojo.removeClass(card_el_id, "clp-hand-card-unplayable");
+                    }
+                }
+            )
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
@@ -781,7 +814,7 @@ function (dojo, declare) {
                 let card = notif.args.cards[i];
                 let suit = card.type;
                 let rank = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, rank), card.id);
+                this.addCardToPlayerHand(suit, rank, card.id);
             }
             this.playerHand.updateDisplay();
         },
