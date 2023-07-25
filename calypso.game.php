@@ -286,7 +286,7 @@ class Calypso extends Table
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
 
-        $result['current_card'] = self::getGameStateValue('trickSuit');
+        $result['current_suit'] = self::getGameStateValue('trickSuit');
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
 

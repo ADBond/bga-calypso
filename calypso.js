@@ -235,7 +235,7 @@ function (dojo, declare) {
             switch( stateName )
             {            
                 case 'playerTurn':
-                    this.setHandActiveness(this.isCurrentPlayerActive(), args.current_suit);
+                    this.setHandActiveness(this.isCurrentPlayerActive(), args.args.current_suit);
                     break;
             }
         },
@@ -328,11 +328,14 @@ function (dojo, declare) {
             // actual behaviour covered by css, as it is a user pref
             const card_els = $(hand_div_id).children;
             const regex_suit = /clp-hand-card-(?<suit>\d)/m;
-            card_els.forEach(
+            [...card_els].forEach(
                 (card_el) => {
                     let card_el_id = card_el.id;
                     if (make_playable) {
-                        let card_suit = card_el_id.match(regex_suit)["suit"];
+                        let classes = card_el.classList;
+                        let class_string = [...classes].join(",");
+                        let r_match = class_string.match(regex_suit)
+                        let card_suit = r_match.groups.suit;
                         if ((trick_suit == 0) || (card_suit == trick_suit)) {
                             dojo.addClass(card_el_id, "clp-hand-card-playable");
                         } else {
