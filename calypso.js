@@ -336,6 +336,7 @@ function (dojo, declare) {
                         let class_string = [...classes].join(",");
                         let r_match = class_string.match(regex_suit)
                         let card_suit = r_match.groups.suit;
+                        // TODO: need to check that I have _any_ of that suit
                         if ((trick_suit == 0) || (card_suit == trick_suit)) {
                             dojo.addClass(card_el_id, "clp-hand-card-playable");
                         } else {
