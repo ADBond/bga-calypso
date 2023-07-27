@@ -124,4 +124,14 @@ $game_preferences = array(
             ),
             'default' => 1
     ),
+    102 => array(
+            'name' => totranslate('Highlight playable cards'),
+            'needReload' => true,
+            'values' => array(
+                1 => array( 'name' => totranslate('True'), 'cssPref' => 'clp-cards-highlight-playable' ),
+                2 => array( 'name' => totranslate('False'), 'cssPref' => 'clp-cards-dont-highlight-playable' ),
+            ),
+            'default' => 1
+
+    )
 );
