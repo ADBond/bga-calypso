@@ -33,7 +33,6 @@ class Calypso extends Table
         4 => '<span class="clp-suit-text-diamonds clp-suit-text">♦</span>',
     );
 
-    const DUMMY = 0;
     const SPADES = 1;
     const HEARTS = 2;
     const CLUBS = 3;
@@ -366,7 +365,6 @@ class Calypso extends Table
             self::DIAMONDS => self::CLUBS,
             self::HEARTS => self::SPADES,
             self::SPADES => self::HEARTS,
-            self::DUMMY => self::DUMMY,
         )[$player_suit];
     }
     // get suit the same colour as a given suit - feeds through to UI
@@ -376,7 +374,6 @@ class Calypso extends Table
             self::DIAMONDS => self::HEARTS,
             self::HEARTS => self::DIAMONDS,
             self::SPADES => self::CLUBS,
-            self::DUMMY => self::DUMMY,
         )[$player_suit];
     }
 
