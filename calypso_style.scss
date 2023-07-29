@@ -209,9 +209,21 @@ $top_bottom_offset: $card_area_height + 20px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.clp-active-hand .clp-hand-card:hover, .clp-selected-card {
+
+// active cards - ones I can try and click
+// if user pref is highlight playable, these will only be legal, otherwise all cards
+.clp-cards-dont-highlight-playable .clp-active-hand .clp-hand-card:hover,
+.clp-cards-highlight-playable .clp-active-hand .clp-hand-card-playable.clp-hand-card:hover {
     transform: translate(0, -10px);
 }
+// if user pref is highlight playable, grey out unplayable cards
+// if not then these are not distinguished
+.clp-cards-highlight-playable .clp-active-hand .clp-hand-card-unplayable {
+    background-color: #aaa;
+    background-blend-mode: multiply;
+    cursor: default !important;
+}
+// not my turn
 .clp-inactive-hand .clp-hand-card {
     cursor: default !important;
 }

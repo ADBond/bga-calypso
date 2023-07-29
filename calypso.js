@@ -122,10 +122,9 @@ function (dojo, declare) {
                 let card = gamedatas.hand[i];
                 let suit = card.type;
                 let rank = card.type_arg;
-                let unique_type = this.getCardUniqueType(suit, rank);
-                this.playerHand.addToStockWithId(unique_type, card.id);
+                this.addCardToPlayerHand(suit, rank, card.id);
             }
-            this.setHandActiveness(this.isCurrentPlayerActive());
+            this.setHandActiveness(this.isCurrentPlayerActive(), gamedatas.playable_cards);
 
             // Cards played on table
             for (i in gamedatas.cardsontable) {
@@ -236,7 +235,6 @@ function (dojo, declare) {
             switch( stateName )
             {            
                 case 'playerTurn':
-                    this.setHandActiveness(this.isCurrentPlayerActive());
                     break;
             }
         },
@@ -302,15 +300,50 @@ function (dojo, declare) {
             }
         },
 
-        setHandActiveness(active){
+        addCardToPlayerHand(suit, rank, card_id){
+            const unique_type = this.getCardUniqueType(suit, rank);
+            this.playerHand.addToStockWithId(unique_type, card_id);
+        },
+
+        setHandActiveness(active, playable_cards=[]){
             const hand_div_id = "clp-myhand";
             if(active){
                 dojo.addClass(hand_div_id, "clp-active-hand");
                 dojo.removeClass(hand_div_id, "clp-inactive-hand");
+                this.highlightPlayable(hand_div_id, true, playable_cards);
             } else{
                 dojo.removeClass(hand_div_id, "clp-active-hand");
                 dojo.addClass(hand_div_id, "clp-inactive-hand");
+                this.highlightPlayable(hand_div_id, false);
             }
+        },
+
+        highlightPlayable(hand_div_id, make_playable, playable_cards=[]){
+            // add css class to playable / not playable cards if make_playable is true
+            // else remove all classes
+            // actual behaviour covered by css, as it is a user pref
+            const card_els = $(hand_div_id).children;
+            const regex_card_id = /clp-myhand_item_(?<card_id>\d+)/m;
+            const playable_card_ids = Object.values(playable_cards).map(
+                (card) => card.id
+            );
+            [...card_els].forEach(
+                (card_el) => {
+                    let card_el_id = card_el.id;
+                    let r_match = card_el_id.match(regex_card_id)
+                    let card_id = r_match.groups.card_id;
+                    if (make_playable) {
+                        if (playable_card_ids.includes(card_id)) {
+                            dojo.addClass(card_el_id, "clp-hand-card-playable");
+                        } else {
+                            dojo.addClass(card_el_id, "clp-hand-card-unplayable");
+                        }
+                    } else {
+                        dojo.removeClass(card_el_id, "clp-hand-card-playable");
+                        dojo.removeClass(card_el_id, "clp-hand-card-unplayable");
+                    }
+                }
+            );
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
@@ -729,6 +762,7 @@ function (dojo, declare) {
             dojo.subscribe('newCards', this, "notif_newCards");
             // admin around hand/dealer changing
             dojo.subscribe('dealHand', this, "notif_dealHand");
+            dojo.subscribe('playableCards', this, "notif_playableCards");
             // playing a card - the main game action occurring
             dojo.subscribe('playCard', this, "notif_playCard");
             // handles setting renounce flags when a player renounces
@@ -781,7 +815,7 @@ function (dojo, declare) {
                 let card = notif.args.cards[i];
                 let suit = card.type;
                 let rank = card.type_arg;
-                this.playerHand.addToStockWithId(this.getCardUniqueType(suit, rank), card.id);
+                this.addCardToPlayerHand(suit, rank, card.id);
             }
             this.playerHand.updateDisplay();
         },
@@ -792,6 +826,10 @@ function (dojo, declare) {
             if(notif.args.renounce_flags_clear){
                 this.clearRenounceFlags(notif.args.players, notif.args.suits);
             }
+        },
+
+        notif_playableCards: function(notif) {
+            this.setHandActiveness(true, notif.args.playable_cards);
         },
 
         notif_playCard : function(notif) {
