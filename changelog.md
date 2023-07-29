@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 - User preference to highlight playable cards (vs non-playable). Default is on
 
+### Fixed
+
+- Fixed spectator (silent) server errors by skipping problematic functions
+
 ## [beta-v01] - 2023-07-15
 
 Entered beta on 15/7 - no changes
