@@ -33,6 +33,7 @@ class Calypso extends Table
         4 => '<span class="clp-suit-text-diamonds clp-suit-text">♦</span>',
     );
 
+    const DUMMY = 0;
     const SPADES = 1;
     const HEARTS = 2;
     const CLUBS = 3;
@@ -354,7 +355,8 @@ class Calypso extends Table
             self::CLUBS => self::DIAMONDS,
             self::DIAMONDS => self::CLUBS,
             self::HEARTS => self::SPADES,
-            self::SPADES => self::HEARTS
+            self::SPADES => self::HEARTS,
+            self::DUMMY => self::DUMMY,
         )[$player_suit];
     }
     // get suit the same colour as a given suit - feeds through to UI
@@ -363,20 +365,21 @@ class Calypso extends Table
             self::CLUBS => self::SPADES,
             self::DIAMONDS => self::HEARTS,
             self::HEARTS => self::DIAMONDS,
-            self::SPADES => self::CLUBS
+            self::SPADES => self::CLUBS,
+            self::DUMMY => self::DUMMY,
         )[$player_suit];
     }
 
     function getPlayerSuit($player_id) {
         $sql = "SELECT player_id, trump_suit FROM player WHERE player_id=".$player_id.";";
         $query_result = self::getCollectionFromDB( $sql, true );
-        return $query_result[$player_id];
+        return $query_result[$player_id] ?? 0;
     }
 
     function getPlayerIDFromSuit($suit){
         $sql = "SELECT trump_suit, player_id FROM player WHERE trump_suit=".$suit.";";
         $query_result = self::getCollectionFromDB( $sql, true );
-        return $query_result[$suit];
+        return $query_result[$suit] ?? 0;
     }
 
     function getPartnerID($player_id){
