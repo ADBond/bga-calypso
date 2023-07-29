@@ -273,16 +273,26 @@ class Calypso extends Table
         }
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
-        $player_suit = self::getPlayerSuit($current_player_id);
-        $partner_suit = self::getPartnerSuit($player_suit);
-        // give suits in order: player suit, partner suit,
-        // same colour as player, same colour as partner
-        $result['suits_by_status'] = array(
-            +$player_suit,
-            $partner_suit,
-            self::getSameColourSuit($player_suit),
-            self::getSameColourSuit($partner_suit),
-        );
+        if (!self::isSpectator()){
+            $player_suit = self::getPlayerSuit($current_player_id);
+            $partner_suit = self::getPartnerSuit($player_suit);
+            // give suits in order: player suit, partner suit,
+            // same colour as player, same colour as partner
+            $result['suits_by_status'] = array(
+                +$player_suit,
+                $partner_suit,
+                self::getSameColourSuit($player_suit),
+                self::getSameColourSuit($partner_suit),
+            );
+        } else {
+            // dummy ranking to keep nice and smooth
+            $result['suits_by_status'] = array(
+                self::CLUBS,
+                self::DIAMONDS,
+                self::HEARTS,
+                self::SPADES,
+            );
+        }
 
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
@@ -373,13 +383,13 @@ class Calypso extends Table
     function getPlayerSuit($player_id) {
         $sql = "SELECT player_id, trump_suit FROM player WHERE player_id=".$player_id.";";
         $query_result = self::getCollectionFromDB( $sql, true );
-        return $query_result[$player_id] ?? 0;
+        return $query_result[$player_id];
     }
 
     function getPlayerIDFromSuit($suit){
         $sql = "SELECT trump_suit, player_id FROM player WHERE trump_suit=".$suit.";";
         $query_result = self::getCollectionFromDB( $sql, true );
-        return $query_result[$suit] ?? 0;
+        return $query_result[$suit];
     }
 
     function getPartnerID($player_id){
