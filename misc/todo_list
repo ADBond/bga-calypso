@@ -1,3 +1,2 @@
 ./calypso.game.php:1662:                    // TODO: just $card_to_play?
-./calypso.js:339:                        // TODO: need to check that I have _any_ of that suit
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */

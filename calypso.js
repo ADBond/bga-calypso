@@ -124,7 +124,7 @@ function (dojo, declare) {
                 let rank = card.type_arg;
                 this.addCardToPlayerHand(suit, rank, card.id);
             }
-            this.setHandActiveness(this.isCurrentPlayerActive(), gamedatas.current_suit);
+            this.setHandActiveness(this.isCurrentPlayerActive(), gamedatas.playable_cards);
 
             // Cards played on table
             for (i in gamedatas.cardsontable) {
@@ -235,7 +235,7 @@ function (dojo, declare) {
             switch( stateName )
             {            
                 case 'playerTurn':
-                    this.setHandActiveness(this.isCurrentPlayerActive(), args.args.current_suit);
+                    this.setHandActiveness(this.isCurrentPlayerActive(), args.args.playable_cards);
                     break;
             }
         },
@@ -303,18 +303,15 @@ function (dojo, declare) {
 
         addCardToPlayerHand(suit, rank, card_id){
             const unique_type = this.getCardUniqueType(suit, rank);
-            const hand_card_el_id = `clp-myhand_item_${card_id}`;
             this.playerHand.addToStockWithId(unique_type, card_id);
-            // add to card info on suit directly
-            dojo.addClass(hand_card_el_id, `clp-hand-card-${suit}`);
         },
 
-        setHandActiveness(active, trick_suit=0){
+        setHandActiveness(active, playable_cards=[]){
             const hand_div_id = "clp-myhand";
             if(active){
                 dojo.addClass(hand_div_id, "clp-active-hand");
                 dojo.removeClass(hand_div_id, "clp-inactive-hand");
-                this.highlightPlayable(hand_div_id, true, trick_suit);
+                this.highlightPlayable(hand_div_id, true, playable_cards);
             } else{
                 dojo.removeClass(hand_div_id, "clp-active-hand");
                 dojo.addClass(hand_div_id, "clp-inactive-hand");
@@ -322,22 +319,19 @@ function (dojo, declare) {
             }
         },
 
-        highlightPlayable(hand_div_id, make_playable, trick_suit=0){
+        highlightPlayable(hand_div_id, make_playable, playable_cards=[]){
             // add css class to playable / not playable cards if make_playable is true
             // else remove all classes
             // actual behaviour covered by css, as it is a user pref
             const card_els = $(hand_div_id).children;
-            const regex_suit = /clp-hand-card-(?<suit>\d)/m;
+            const playable_card_ids = playable_cards.map(
+                (card) => card.id
+            );
             [...card_els].forEach(
                 (card_el) => {
                     let card_el_id = card_el.id;
                     if (make_playable) {
-                        let classes = card_el.classList;
-                        let class_string = [...classes].join(",");
-                        let r_match = class_string.match(regex_suit)
-                        let card_suit = r_match.groups.suit;
-                        // TODO: need to check that I have _any_ of that suit
-                        if ((trick_suit == 0) || (card_suit == trick_suit)) {
+                        if (playable_card_ids.includes(card_el_id)) {
                             dojo.addClass(card_el_id, "clp-hand-card-playable");
                         } else {
                             dojo.addClass(card_el_id, "clp-hand-card-unplayable");
@@ -347,7 +341,7 @@ function (dojo, declare) {
                         dojo.removeClass(card_el_id, "clp-hand-card-unplayable");
                     }
                 }
-            )
+            );
         },
 
         playCardOnTable : function(player_id, suit, rank, card_id) {
