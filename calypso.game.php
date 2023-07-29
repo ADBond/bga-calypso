@@ -1667,8 +1667,7 @@ class Calypso extends Table
                 case "playerTurn":
                     $valid_cards = self::getValidCards($active_player);
                     $card_to_play = array_rand($valid_cards, 1);
-                    // TODO: just $card_to_play?
-					$this->playCard($valid_cards[$card_to_play]['id'], $active_player);
+					$this->playCard($card_to_play, $active_player);
                 	break;
             }
 
