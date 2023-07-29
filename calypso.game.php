@@ -732,6 +732,17 @@ class Calypso extends Table
         return $suit_cards;
     }
 
+    function setPlayerHandActive($player_id) {
+        self::notifyPlayer(
+            $player_id,
+            'playableCards',
+            '',
+            array(
+                'playable_cards' => self::getValidCards($player_id),
+            )
+        );
+    }
+
     function getCurrentRanks($player_id){
         $calypso_so_far = $this->cards->getCardsInLocation( 'calypso', $player_id);
         return array_map(
@@ -1436,12 +1447,6 @@ class Calypso extends Table
         );
     }    
     */
-    function argPlayerTurn() {
-        $player_id = $this->getCurrentPlayerId();
-        return array(
-            "playable_cards" => self::getValidCards($player_id),
-        );
-    }
 
 //////////////////////////////////////////////////////////////////////////////
 //////////// Game state actions
@@ -1574,6 +1579,8 @@ class Calypso extends Table
 
     function stNewTrick() {
         self::initialiseTrick();
+        $player_id = self::getActivePlayerId();
+        self::setPlayerHandActive($player_id);
         $this->gamestate->nextState();
     }
 
@@ -1598,6 +1605,7 @@ class Calypso extends Table
             // Standard case (not the end of the trick)
             $player_id = self::activeNextPlayer();
             self::giveExtraTime($player_id);
+            self::setPlayerHandActive($player_id);
             $this->gamestate->nextState('nextPlayer');
         }
     }

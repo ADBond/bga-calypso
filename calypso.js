@@ -235,7 +235,6 @@ function (dojo, declare) {
             switch( stateName )
             {            
                 case 'playerTurn':
-                    this.setHandActiveness(this.isCurrentPlayerActive(), args.args.playable_cards);
                     break;
             }
         },
@@ -324,14 +323,17 @@ function (dojo, declare) {
             // else remove all classes
             // actual behaviour covered by css, as it is a user pref
             const card_els = $(hand_div_id).children;
-            const playable_card_ids = playable_cards.map(
+            const regex_card_id = /clp-myhand_item_(?<card_id>\d+)/m;
+            const playable_card_ids = Object.values(playable_cards).map(
                 (card) => card.id
             );
             [...card_els].forEach(
                 (card_el) => {
                     let card_el_id = card_el.id;
+                    let r_match = card_el_id.match(regex_card_id)
+                    let card_id = r_match.groups.card_id;
                     if (make_playable) {
-                        if (playable_card_ids.includes(card_el_id)) {
+                        if (playable_card_ids.includes(card_id)) {
                             dojo.addClass(card_el_id, "clp-hand-card-playable");
                         } else {
                             dojo.addClass(card_el_id, "clp-hand-card-unplayable");
@@ -760,6 +762,7 @@ function (dojo, declare) {
             dojo.subscribe('newCards', this, "notif_newCards");
             // admin around hand/dealer changing
             dojo.subscribe('dealHand', this, "notif_dealHand");
+            dojo.subscribe('playableCards', this, "notif_playableCards");
             // playing a card - the main game action occurring
             dojo.subscribe('playCard', this, "notif_playCard");
             // handles setting renounce flags when a player renounces
@@ -823,6 +826,10 @@ function (dojo, declare) {
             if(notif.args.renounce_flags_clear){
                 this.clearRenounceFlags(notif.args.players, notif.args.suits);
             }
+        },
+
+        notif_playableCards: function(notif) {
+            this.setHandActiveness(true, notif.args.playable_cards);
         },
 
         notif_playCard : function(notif) {
