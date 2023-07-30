@@ -272,19 +272,31 @@ class Calypso extends Table
         }
 
         $result['hand'] = $this->cards->getCardsInLocation( 'hand', $current_player_id );
-        $player_suit = self::getPlayerSuit($current_player_id);
-        $partner_suit = self::getPartnerSuit($player_suit);
-        // give suits in order: player suit, partner suit,
-        // same colour as player, same colour as partner
-        $result['suits_by_status'] = array(
-            +$player_suit,
-            $partner_suit,
-            self::getSameColourSuit($player_suit),
-            self::getSameColourSuit($partner_suit),
-        );
+        if (!self::isSpectator()){
+            $player_suit = self::getPlayerSuit($current_player_id);
+            $partner_suit = self::getPartnerSuit($player_suit);
+            // give suits in order: player suit, partner suit,
+            // same colour as player, same colour as partner
+            $result['suits_by_status'] = array(
+                +$player_suit,
+                $partner_suit,
+                self::getSameColourSuit($player_suit),
+                self::getSameColourSuit($partner_suit),
+            );
+        } else {
+            // dummy ranking to keep nice and smooth
+            $result['suits_by_status'] = array(
+                self::CLUBS,
+                self::DIAMONDS,
+                self::HEARTS,
+                self::SPADES,
+            );
+        }
 
         $result['cardsontable'] = $this->cards->getCardsInLocation( 'cardsontable' );
         $result['cardsincalypsos'] = $this->cards->getCardsInLocation( 'calypso' );
+
+        $result["playable_cards"] = self::getValidCards($current_player_id);
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
 
@@ -352,7 +364,7 @@ class Calypso extends Table
             self::CLUBS => self::DIAMONDS,
             self::DIAMONDS => self::CLUBS,
             self::HEARTS => self::SPADES,
-            self::SPADES => self::HEARTS
+            self::SPADES => self::HEARTS,
         )[$player_suit];
     }
     // get suit the same colour as a given suit - feeds through to UI
@@ -361,7 +373,7 @@ class Calypso extends Table
             self::CLUBS => self::SPADES,
             self::DIAMONDS => self::HEARTS,
             self::HEARTS => self::DIAMONDS,
-            self::SPADES => self::CLUBS
+            self::SPADES => self::CLUBS,
         )[$player_suit];
     }
 
@@ -704,24 +716,41 @@ class Calypso extends Table
     }
 
     function validPlay( $player_id, $card ){
-        // check that player leads or follows suit OR has no cards of lead suit
+        $valid_cards = self::getValidCards($player_id);
+        // this also ensures that $card is in hand, and there has been no funny business
+        return in_array($card, $valid_cards);
+    }
+
+    function getValidCards( $player_id ) {
+        // return array of valid cards
+        // all cards of led suit if available, otherwise anything
         $trick_suit = self::getGameStateValue( 'trickSuit' );
+        $hand = $this->cards->getCardsInLocation( 'hand', $player_id );
         if( $trick_suit == 0){
             // i.e. first card of trick
-            return true;
+            // any card is fine
+            return $hand;
         }
-        if( $card['type'] == $trick_suit ){
-            return true;
-        }
-        $hand = $this->cards->getCardsInLocation( 'hand', $player_id );
-
+        // otherwise, get all cards of led suit
         $suit_cards = array_filter( $hand, function($hand_card) use ($trick_suit) {
             return $hand_card['type'] == $trick_suit;
         });
         if( empty($suit_cards) ){
-            return true;
+            // if we have no cards of suit, again any card is fine
+            return $hand;
         }
-        return false;
+        return $suit_cards;
+    }
+
+    function setPlayerHandActive($player_id) {
+        self::notifyPlayer(
+            $player_id,
+            'playableCards',
+            '',
+            array(
+                'playable_cards' => self::getValidCards($player_id),
+            )
+        );
     }
 
     function getCurrentRanks($player_id){
@@ -1560,6 +1589,8 @@ class Calypso extends Table
 
     function stNewTrick() {
         self::initialiseTrick();
+        $player_id = self::getActivePlayerId();
+        self::setPlayerHandActive($player_id);
         $this->gamestate->nextState();
     }
 
@@ -1584,6 +1615,7 @@ class Calypso extends Table
             // Standard case (not the end of the trick)
             $player_id = self::activeNextPlayer();
             self::giveExtraTime($player_id);
+            self::setPlayerHandActive($player_id);
             $this->gamestate->nextState('nextPlayer');
         }
     }
@@ -1643,17 +1675,9 @@ class Calypso extends Table
         if ($state['type'] === "activeplayer") {
             switch ($statename) {
                 case "playerTurn":
-                    $cards_in_hand = $this->cards->getCardsInLocation(
-						"hand", $active_player
-					);
-                    // go through cards in hand and play the first one that's legal
-					foreach ($cards_in_hand as $card) {
-                        if ( self::validPlay($active_player, $card) ){
-                            $card_to_play = $card;
-                            break;
-                        }
-					}
-					$this->playCard($card_to_play['id'], $active_player);
+                    $valid_cards = self::getValidCards($active_player);
+                    $card_to_play = array_rand($valid_cards, 1);
+					$this->playCard($card_to_play, $active_player);
                 	break;
             }
 

@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## [Unreleased]
 
+## [beta-v02] - 2023-07-30
+
+### Added
+
+- User preference to highlight playable cards (vs non-playable). Default is on
+
+### Fixed
+
+- Fixed spectator (silent) server errors by skipping problematic functions
+
 ## [beta-v01] - 2023-07-15
 
 Entered beta on 15/7 - no changes
@@ -55,7 +65,8 @@ Online version working 2021-02-24.
 
 - Working version of Calypso. Sorry this is as detailed as it will go up this point! Have a shufti at previous PRs and commit history if you really need more.
 
-[unreleased]: https://github.com/ADBond/bga-calypso/compare/beta-v01...HEAD
+[unreleased]: https://github.com/ADBond/bga-calypso/compare/beta-v02...HEAD
+[beta-v02]: https://github.com/ADBond/bga-calypso/compare/beta-v01...beta-v02
 [beta-v01]: https://github.com/ADBond/bga-calypso/compare/alpha-v06...beta-v01
 [alpha-v06]: https://github.com/ADBond/bga-calypso/compare/alpha-v05...alpha-v06
 [alpha-v05]: https://github.com/ADBond/bga-calypso/compare/alpha-v04...alpha-v05
