@@ -82,6 +82,9 @@ class Calypso extends Table
                          "partnerships" => 102,
                          // detailed log option
                          "detailedLog" => 103,
+                         // ruleset + corresponding number of decks
+                         "ruleSet" => 104,
+                         "numDecks" => 105,
 
                           ) );
 
