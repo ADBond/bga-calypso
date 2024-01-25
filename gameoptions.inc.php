@@ -28,6 +28,8 @@
 
 $game_options = array(
 
+    // TODO: can this mesh with variant rules, or we need a separate option set?
+    // in that case we want number of rounds to be 1 for logic, but hands/round is set here somewhere
     100 => array(
         'name' => totranslate('Game Length'),
         'values' => array(

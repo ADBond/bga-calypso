@@ -199,9 +199,17 @@ class Calypso extends Table
         self::setGameStateInitialValue( 'roundNumber', 0 );
         self::setGameStateInitialValue( 'trickNumber', 0 );
 
-        // Create 4 identiical decks of cards
+        // Create multiple identiical decks of cards
         // see material.inc.php to confirm the labelling
-        $num_decks = 4;
+        // if ruleset is standard this is always 4
+        // otherwise we get the value from the gameoption
+        $ruleset = self::getRuleSet();
+        if ($ruleset == "standard") {
+            $num_decks = 4;
+        } elseif ($ruleset == "variant") {
+            // TODO: wrap this properly
+            $num_decks = self::getGameStateValue("numDecks");
+        }
         $cards = array();
         foreach ( $this->suits as $suit_id => $suit ) {
             // spade, heart, club, diamond
@@ -362,6 +370,18 @@ class Calypso extends Table
     /*
         In this space, you can put any utility methods useful for your game logic
     */
+    // easy way to get game version
+    function getRuleSet() {
+        $ruleset = self::getGameStateValue('ruleSet');
+        if ($ruleset == 1) {
+            return "standard";
+        }
+        if ($ruleset == 2) {
+            return "variant";
+        }
+        return "error";
+    }
+
     function getPartnerSuit($player_suit) {
         return array(
             self::CLUBS => self::DIAMONDS,
@@ -1300,6 +1320,7 @@ class Calypso extends Table
 
     function checkAllCardsExist(){
         // only useful for checking no card leaks in dev. Not called elsewhere
+        // TODO: gameoption areas
         $locations = array(
             'hand',
             'cardsontable',
@@ -1500,6 +1521,13 @@ class Calypso extends Table
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
+
+        if (self::getRuleSet == 'variant') {
+            // move all cards from deck to greenroom
+            // will just help with terminology / consistency
+            // probably move the shuffle into above into 'standard' block
+            // as in this case we shuffle each hand
+        }
         // and make sure no-one has any calypsos counted any more :(
         $sql = "UPDATE player SET completed_calypsos = 0;";
         self::DbQuery( $sql );
@@ -1538,11 +1566,20 @@ class Calypso extends Table
             clienttranslate('A new hand starts - hand ${hand_number} of 4 in the current round'),
             array("hand_number" => $hand_number)
         );
+        if (self::getRuleSet == 'variant') {
+            // completed calypsoes -> green room (+ scored, but that should be at hand end)
+            // sin bin -> green room
+            // trickpiles -> sin bin
+            // shuffle greenroom
+            $dealFrom = 'greenroom';
+        } elseif (self::getRuleSet == 'standard') {
+            $dealFrom = 'deck';
+        }
         // Deal 13 cards to each player and notify them of their hand
         $players = self::loadPlayersBasicInfosWithTrumps();
         // $player_ids = array();
         foreach ( $players as $player_id => $player ) {
-            $cards = $this->cards->pickCards(13, 'deck', $player_id);
+            $cards = $this->cards->pickCards(13, $dealFrom, $player_id);
             self::notifyPlayer($player_id, 'newCards', '', array ('cards' => $cards ));
 
             // $player_ids[] = $player_id;
