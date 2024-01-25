@@ -24,6 +24,8 @@
  *
  */
 
+// TODO: migrate to .json files??
+
 $game_options = array(
 
     100 => array(
@@ -60,6 +62,7 @@ $game_options = array(
                 'tmdisplay' => totranslate('Renounce indicators off'),
             ),
         ),
+        'level' => 'additional',
     ),
     102 => array(
         'name' => totranslate('Partnerships'),
@@ -93,6 +96,36 @@ $game_options = array(
             ),
         )
     ),
+    104 => array(
+        'name' => totranslate('Ruleset'),
+        'values' => array(
+            1 => array(
+                'name' => totranslate('Standard'),
+            ),
+            2 => array(
+                'name' => totranslate('Variant'),
+            ),
+        ),
+        'level' => 'major',
+    ),
+    // only allow other deck numbers with variant rules
+    105 => array(
+        'name' => totranslate('Number of decks'),
+        'values' => array(
+            3 => array(
+                'name' => totranslate('3'),
+            ),
+            4 => array(
+                'name' => totranslate('4'),
+            ),
+        ),
+        'default': 3,
+        'displaycondition' => array(
+            'type' => 'otheroption',
+            'id' => '104',
+            'value' => ['2'],
+        )
+    )
 );
 
 # user preference options - just aesthetic stuff
