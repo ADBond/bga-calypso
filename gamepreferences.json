@@ -89,12 +89,12 @@
             }
         },
         "default": 3,
-        "displaycondition": {
-            "type": "otheroption",
-            "id": "104",
-            "value": [
-                "2"
-            ]
-        }
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 104,
+                "value": 2
+            }
+        ]
     }
 }
