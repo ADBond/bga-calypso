@@ -1522,7 +1522,7 @@ class Calypso extends Table
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
 
-        if (self::getRuleSet == 'variant') {
+        if (self::getRuleSet() == 'variant') {
             // move all cards from deck to greenroom
             // will just help with terminology / consistency
             // probably move the shuffle into above into 'standard' block
@@ -1566,13 +1566,13 @@ class Calypso extends Table
             clienttranslate('A new hand starts - hand ${hand_number} of 4 in the current round'),
             array("hand_number" => $hand_number)
         );
-        if (self::getRuleSet == 'variant') {
+        if (self::getRuleSet() == 'variant') {
             // completed calypsoes -> green room (+ scored, but that should be at hand end)
             // sin bin -> green room
             // trickpiles -> sin bin
             // shuffle greenroom
             $dealFrom = 'greenroom';
-        } elseif (self::getRuleSet == 'standard') {
+        } elseif (self::getRuleSet() == 'standard') {
             $dealFrom = 'deck';
         }
         // Deal 13 cards to each player and notify them of their hand
