@@ -1,4 +1,16 @@
 {
+    "104": {
+        "name": "Ruleset",
+        "values": {
+            "1": {
+                "name": "Standard"
+            },
+            "2": {
+                "name": "Variant"
+            }
+        },
+        "level": "major"
+    },
     "100": {
         "name": "Game Length",
         "values": {
@@ -65,18 +77,6 @@
                 "tmdisplay": "Cards played not in gamelog"
             }
         }
-    },
-    "104": {
-        "name": "Ruleset",
-        "values": {
-            "1": {
-                "name": "Standard"
-            },
-            "2": {
-                "name": "Variant"
-            }
-        },
-        "level": "major"
     },
     "105": {
         "name": "Number of decks",

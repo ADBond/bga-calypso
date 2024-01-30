@@ -357,6 +357,7 @@ class Calypso extends Table
     */
     function getGameProgression()
     {
+        // TODO: not via rounds, but hands for generality
         $total_rounds = self::getGameStateValue('totalRounds');
         $tricks_completed = self::getTrickNumber() - 1;
         return round(100.0*$tricks_completed/(13*4*$total_rounds));
@@ -904,19 +905,25 @@ class Calypso extends Table
         return $processed_score;
     }
 
+    function calypsoCountToScore($num_calypsos) {
+        // score calypsos 500, 750, 1000, 1000, ... (cumulatively)
+
+        if ($num_calypsos == 0){
+            return 0;
+        }
+        if ($num_calypsos == 1){
+            return 500;
+        }
+        // 2 or more
+        return 500 + 750 + 1000*($num_calypsos - 2);
+    }
+
     function countsToScores($num_calypsos, $calypso_cards, $won_cards){
-        // score calypsos 500, 750, 1000, 1000 (cumulatively)
-        $calypsos_to_score = array(
-            0,
-            500,
-            1250,  // 500 + 750
-            2250,  // 500 + 750 + 1000
-            3250,  // 500 + 750 + 1000 + 1000
-        );
+   
         $part_calypso_card_value = 20;
         $won_cards_card_value = 10;
 
-        $calypso_score = $calypsos_to_score[$num_calypsos];
+        $calypso_score = self::calypsoCountToScore($num_calypsos);
         $part_calypso_score = $part_calypso_card_value * $calypso_cards;
         $won_cards_score = $won_cards_card_value * $won_cards;
         return array(
@@ -929,6 +936,7 @@ class Calypso extends Table
 
     // here we actually set the scores
     function updateScores(){
+        // this has total count of calypsoes
         $players = self::getAllCompletedCalypsos();
 
         $round_number = self::getGameStateValue( 'roundNumber' );
@@ -937,23 +945,28 @@ class Calypso extends Table
             "minor" => 0,
             "major" => 0,
         );
+        // get the individual scores per player
         foreach ( $players as $player_id => $num_calypsos ) {
 
+            // TODO: no calypso cards in var until the end
             $calypso_cards = count($this->cards->getCardsInLocation( 'calypso', $player_id ));
             $won_cards = count($this->cards->getCardsInLocation( 'trickpile', $player_id ));
 
             $scores_for_updating[$player_id] = self::countsToScores($num_calypsos, $calypso_cards, $won_cards)['total_score'];
 
+            // TODO: var we score by the hand, not round
             self::setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards );
 
             $partnership = self::getPlayerPartnership($player_id);
             $partnership_scores[$partnership] += $scores_for_updating[$player_id];
         }
+        // set the scores per player
         foreach ( $players as $player_id => $num_calypsos ) {
 
             $partnership = self::getPlayerPartnership($player_id);
             self::setScore( $player_id, $partnership_scores[$partnership] );
         }
+        // and update the partnership scores table
         foreach ( $partnership_scores as $partnership => $score ){
             $sql_query = "
                 INSERT INTO partnership_scores (round_number, partnership, score)
@@ -1517,6 +1530,7 @@ class Calypso extends Table
         $old_round_number = self::getGameStateValue( 'roundNumber' );
         $round_number = $old_round_number + 1;
         self::setGameStateValue( 'roundNumber', $round_number );
+        // TODO: wrap totalRounds logic for variants
         $total_rounds = self::getGameStateValue( 'totalRounds');
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
@@ -1543,6 +1557,7 @@ class Calypso extends Table
         foreach ( $players as $player_id => $player ) {
             $player_ids[] = array("id" => $player_id, "suit" => self::getPlayerSuit($player_id));
         }
+        // TODO: only for standard - otherwise we play just one round of N hands
         self::notifyAllPlayers(
             "newRound",
             clienttranslate('A new round of hands starts - round ${round_number} of ${total_rounds}'),
@@ -1562,6 +1577,7 @@ class Calypso extends Table
         // always start at trick number 1
         self::setGameStateValue( 'trickNumber', 1 );
 
+        // TODO: this needs adjusting for variant
         self::notifyAllPlayers(
             "newHandBegin",
             clienttranslate('A new hand starts - hand ${hand_number} of 4 in the current round'),
@@ -1669,7 +1685,10 @@ class Calypso extends Table
 
         self::updatePostHandStats();
         $num_hands = 4;
-        
+        if (self::getRuleSet() == 'variant') {
+            // score the hand. Movement happens at start of next hand
+        }
+
         if(self::getGameStateValue( 'handNumber' ) == $num_hands){
             $this->gamestate->nextState('endRound');
         } else {
