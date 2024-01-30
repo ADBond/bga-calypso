@@ -1527,6 +1527,7 @@ class Calypso extends Table
             // will just help with terminology / consistency
             // probably move the shuffle into above into 'standard' block
             // as in this case we shuffle each hand
+            $this->cards->moveAllCardsInLocation("deck", "greenroom");
         }
         // and make sure no-one has any calypsos counted any more :(
         $sql = "UPDATE player SET completed_calypsos = 0;";
@@ -1568,10 +1569,14 @@ class Calypso extends Table
         );
         if (self::getRuleSet() == 'variant') {
             // completed calypsoes -> green room (+ scored, but that should be at hand end)
+            $this->cards->moveAllCardsInLocation("full_calypsos", "greenroom");
             // sin bin -> green room
+            $this->cards->moveAllCardsInLocation("sinbin", "greenroom");
             // trickpiles -> sin bin
+            $this->cards->moveAllCardsInLocation("trickpile", "sinbin");
             // shuffle greenroom
             $dealFrom = 'greenroom';
+            $this->cards->shuffle('greenroom');
         } elseif (self::getRuleSet() == 'standard') {
             $dealFrom = 'deck';
         }
