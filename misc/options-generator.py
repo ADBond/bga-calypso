@@ -27,6 +27,18 @@ import json
 
 
 game_options = {
+    "104": {
+        "name": "Ruleset",
+        "values": {
+            "1": {
+                "name": "Standard",
+            },
+            "2": {
+                "name": "Variant",
+            },
+        },
+        "level": "major",
+    },
     # TODO: can this mesh with variant rules, or we need a separate option set?
     # in that case we want number of rounds to be 1 for logic, but hands/round is set here somewhere
     "100": {
@@ -97,18 +109,6 @@ game_options = {
             },
         },
     },
-    "104": {
-        "name": "Ruleset",
-        "values": {
-            "1": {
-                "name": "Standard",
-            },
-            "2": {
-                "name": "Variant",
-            },
-        },
-        "level": "major",
-    },
     # only allow other deck numbers with variant rules
     "105": {
         "name": "Number of decks",
@@ -175,4 +175,4 @@ with open("gameoptions.json", "w+") as f:
     json.dump(game_options, f, indent=4)
 
 with open("gamepreferences.json", "w+") as f:
-    json.dump(game_options, f, indent=4)
+    json.dump(game_preferences, f, indent=4)
