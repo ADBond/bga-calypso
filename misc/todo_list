@@ -1,1 +1,9 @@
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */
+./calypso.game.php:210:            // TODO: wrap this properly
+./calypso.game.php:360:        // TODO: not via rounds, but hands for generality
+./calypso.game.php:951:            // TODO: no calypso cards in var until the end
+./calypso.game.php:957:            // TODO: var we score by the hand, not round
+./calypso.game.php:1336:        // TODO: gameoption areas
+./calypso.game.php:1533:        // TODO: wrap totalRounds logic for variants
+./calypso.game.php:1560:        // TODO: only for standard - otherwise we play just one round of N hands
+./calypso.game.php:1580:        // TODO: this needs adjusting for variant
