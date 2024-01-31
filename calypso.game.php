@@ -317,7 +317,7 @@ class Calypso extends Table
         // TODO: from here we have variant logic
         $result['handnumber'] = self::getGameStateValue('handNumber');
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
-        $result['totalrounds'] = self::getGameStateValue('totalRounds');
+        $result['totalrounds'] = self::getTotalRounds();
 
         $result['roundscoretable'] = array();
         for($round = 1; $round <= $result['roundnumber']; $round++){
@@ -1186,6 +1186,7 @@ class Calypso extends Table
         if ($ruleset == "standard") {
             return 4 * self::getGameStateValue('totalRounds');
         } elseif ($ruleset == "variant") {
+            // each value increases # of hands by 4
             return 4 * self::getGameStateValue('gameLengthIndex');
         }
     }
@@ -1723,10 +1724,16 @@ class Calypso extends Table
         self::updatePostHandStats();
         $num_hands = 4;
         if (self::getRuleSet() == 'variant') {
-            // score the hand. Movement happens at start of next hand
+            $num_hands = self::getTotalHands();
+        }
+        $final_hand = (self::getGameStateValue( 'handNumber' ) == $num_hands);
+        if (self::getRuleSet() == 'variant') {
+            // score the hand. Movement of cards happens at start of next hand
+            // only score from 2nd hand onwards
+            // for last hand, also score partial calypso cards
         }
 
-        if(self::getGameStateValue( 'handNumber' ) == $num_hands){
+        if($final_hand){
             $this->gamestate->nextState('endRound');
         } else {
             $this->gamestate->nextState("nextHand");

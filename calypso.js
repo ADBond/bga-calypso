@@ -192,6 +192,7 @@ function (dojo, declare) {
             if(currentround != 1 | awaiting_new_round){
                 this.activateOverallScoreButton(gamedatas.overallscoretable);
             }
+            // TODO: maybe skip round scores for variant? needs thought
             // button text!
             for(let round_number = 1; round_number <= totalrounds; round_number++){
                 $(`clp-round-scores-button-${round_number}`).textContent = dojo.string.substitute(
