@@ -62,6 +62,47 @@ game_options = {
                 "tmdisplay": "Full rotation",
             },
         },
+        # standard rules only:
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 104,
+                "value": 1,
+            },
+        ]
+    },
+    "106": {
+        "name": "Game Length",
+        "values": {
+            "1": {
+                "name": "Short game - 4 hands",
+                "tmdisplay": "4 hands",
+            },
+            "2": {
+                "name": "Medium game - 8 hands",
+                "tmdisplay": "8 hands",
+            },
+            "3": {
+                "name": "Longer game - 12 hands",
+                "tmdisplay": "12 hands",
+            },
+            "4": {
+                "name": "Long game - 16 hands",
+                "tmdisplay": "16 hands",
+            },
+            "5": {
+                "name": "Very long game - 20 hands",
+                "tmdisplay": "20 hands",
+            },
+        },
+        # variant rules only:
+        "displaycondition": [
+            {
+                "type": "otheroption",
+                "id": 104,
+                "value": 2,
+            },
+        ]
     },
     "101": {
         "name": "Renounce indicators",
@@ -121,6 +162,7 @@ game_options = {
             },
         },
         "default": 3,
+        # variant rules only:
         "displaycondition": [
             {
                 "type": "otheroption",

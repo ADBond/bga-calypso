@@ -958,6 +958,7 @@ class Calypso extends Table
             $won_cards = count($this->cards->getCardsInLocation( 'trickpile', $player_id ));
 
             $scores_for_updating[$player_id] = self::countsToScores($num_calypsos, $calypso_cards, $won_cards)['total_score'];
+            // TODO: variant delete partials
 
             // TODO: var we score by the hand, not round
             self::setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards );
