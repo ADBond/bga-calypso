@@ -207,8 +207,7 @@ class Calypso extends Table
         if ($ruleset == "standard") {
             $num_decks = 4;
         } elseif ($ruleset == "variant") {
-            // TODO: wrap this properly
-            $num_decks = self::getGameStateValue("numDecks");
+            $num_decks = self::getNumDecks();
         }
         $cards = array();
         foreach ( $this->suits as $suit_id => $suit ) {
@@ -373,7 +372,8 @@ class Calypso extends Table
     */
     // easy way to get game version
     function getRuleSet() {
-        $ruleset = self::getGameStateValue('ruleSet');
+        // standard by default
+        $ruleset = self::getGameStateValue('ruleSet', 1);
         if ($ruleset == 1) {
             return "standard";
         }
@@ -381,6 +381,11 @@ class Calypso extends Table
             return "variant";
         }
         return "error";
+    }
+
+    // only called for variant rules
+    function getNumDecks() {
+        return self::getGameStateValue("numDecks", 3);
     }
 
     function getPartnerSuit($player_suit) {
