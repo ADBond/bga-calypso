@@ -488,6 +488,7 @@ function (dojo, declare) {
         },
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
+            // TODO: don't include round info in variant
             // don't need to translate game title
             $("clp-game-info").innerHTML =  dojo.string.substitute(
                 '<span class="clp-gametitle">Calypso</span>' + 

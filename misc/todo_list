@@ -1,9 +1,12 @@
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */
-./calypso.game.php:359:        // TODO: not via rounds, but hands for generality
-./calypso.game.php:956:            // TODO: no calypso cards in var until the end
-./calypso.game.php:961:            // TODO: variant delete partials
-./calypso.game.php:963:            // TODO: var we score by the hand, not round
-./calypso.game.php:1342:        // TODO: gameoption areas
-./calypso.game.php:1539:        // TODO: wrap totalRounds logic for variants
-./calypso.game.php:1566:        // TODO: only for standard - otherwise we play just one round of N hands
-./calypso.game.php:1586:        // TODO: this needs adjusting for variant
+./calypso.js:491:            // TODO: don't include round info in variant
+./calypso.game.php:315:        // TODO: send variant over for javascript updateGameStatus
+./calypso.game.php:317:        // TODO: from here we have variant logic
+./calypso.game.php:364:        // TODO: not via rounds, but hands for generality
+./calypso.game.php:961:            // TODO: no calypso cards in var until the end
+./calypso.game.php:966:            // TODO: variant delete partials
+./calypso.game.php:968:            // TODO: var we score by the hand, not round
+./calypso.game.php:1102:        // TODO: variant - what do we use this function for specifically?
+./calypso.game.php:1368:        // TODO: gameoption areas
+./calypso.game.php:1613:        // TODO: this needs adjusting for variant
+./calypso.game.php:1660:            // TODO: pass variant

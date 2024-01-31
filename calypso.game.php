@@ -74,8 +74,10 @@ class Calypso extends Table
                          "trickNumber" => 33,
 
                          // gameoptions - see gameoptions.inc.php
-                         // how many rounds we play to
+                         // how many rounds we play to - only standard rules
                          "totalRounds" => 100,
+                         // for variant rules we count by hands
+                         "gameLengthIndex" => 106,
                          // are renounce indicators on or off?
                          "renounceFlags" => 101,
                          // how do we pair players for partnerships?
@@ -310,6 +312,9 @@ class Calypso extends Table
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
 
+        // TODO: send variant over for javascript updateGameStatus
+
+        // TODO: from here we have variant logic
         $result['handnumber'] = self::getGameStateValue('handNumber');
         $result['roundnumber'] = self::getGameStateValue('roundNumber');
         $result['totalrounds'] = self::getGameStateValue('totalRounds');
@@ -357,9 +362,9 @@ class Calypso extends Table
     function getGameProgression()
     {
         // TODO: not via rounds, but hands for generality
-        $total_rounds = self::getGameStateValue('totalRounds');
+        $total_hands = self::getTotalHands();
         $tricks_completed = self::getTrickNumber() - 1;
-        return round(100.0*$tricks_completed/(13*4*$total_rounds));
+        return round(100.0*$tricks_completed/(13*$total_hands));
     }
 
 
@@ -1094,12 +1099,13 @@ class Calypso extends Table
     }
 
     function getDisplayOverallScoresArgs(){
+        // TODO: variant - what do we use this function for specifically?
         $header_names = array( '' );
         $header_suits = array( '' );
         $score_table = array();
         $overall_scores = array(self::score_wrap_label("total_score"));
         $player_score_totals = array();
-        for($round_number = 1; $round_number <= self::getGameStateValue("totalRounds"); $round_number++){
+        for($round_number = 1; $round_number <= self::getTotalRounds(); $round_number++){
             $round_scores = array( self::score_wrap_label(self::round_number_wrap($round_number)) );
             $players = self::getRoundScore($round_number);
             foreach ( $players as $player_id => $score_info ) {
@@ -1171,6 +1177,26 @@ class Calypso extends Table
             self::initStat("table", "fastest_calypso", $tricks_completed);
         } elseif($tricks_completed < $fastest_overall){
             self::setStat($tricks_completed, "fastest_calypso");
+        }
+    }
+
+    // total number of hands we are playing
+    function getTotalHands(){
+        $ruleset = self::getRuleSet();
+        if ($ruleset == "standard") {
+            return 4 * self::getGameStateValue('totalRounds');
+        } elseif ($ruleset == "variant") {
+            return 4 * self::getGameStateValue('gameLengthIndex');
+        }
+    }
+    // total number of rounds we are playing
+    function getTotalRounds(){
+        $ruleset = self::getRuleSet();
+        if ($ruleset == "standard") {
+            return self::getGameStateValue('totalRounds');
+        } elseif ($ruleset == "variant") {
+            // variant rules we define as a single round
+            return 1;
         }
     }
 
@@ -1536,8 +1562,7 @@ class Calypso extends Table
         $old_round_number = self::getGameStateValue( 'roundNumber' );
         $round_number = $old_round_number + 1;
         self::setGameStateValue( 'roundNumber', $round_number );
-        // TODO: wrap totalRounds logic for variants
-        $total_rounds = self::getGameStateValue( 'totalRounds');
+        $total_rounds = self::getTotalRounds();
         // Take back all cards (from any location => null) to deck, and give it a nice shuffle
         $this->cards->moveAllCardsInLocation(null, "deck");
         $this->cards->shuffle('deck');
@@ -1563,16 +1588,18 @@ class Calypso extends Table
         foreach ( $players as $player_id => $player ) {
             $player_ids[] = array("id" => $player_id, "suit" => self::getPlayerSuit($player_id));
         }
-        // TODO: only for standard - otherwise we play just one round of N hands
-        self::notifyAllPlayers(
-            "newRound",
-            clienttranslate('A new round of hands starts - round ${round_number} of ${total_rounds}'),
-            array(
-                "round_number" => $round_number,
-                "total_rounds" => $total_rounds,
-                "player_ids" => $player_ids,
-            )
-        );
+        // only notify for standard - otherwise we play just one round of N hands
+        if (self::getRuleSet() == "standard") {
+            self::notifyAllPlayers(
+                "newRound",
+                clienttranslate('A new round of hands starts - round ${round_number} of ${total_rounds}'),
+                array(
+                    "round_number" => $round_number,
+                    "total_rounds" => $total_rounds,
+                    "player_ids" => $player_ids,
+                )
+            );
+        }
         $this->gamestate->nextState("");
     }
 
@@ -1629,7 +1656,8 @@ class Calypso extends Table
             'dealer_id' => $new_dealer,
             'round_number' => self::getGameStateValue( 'roundNumber' ),
             'hand_number' => $hand_number,
-            'total_rounds' => self::getGameStateValue( 'totalRounds' ),
+            'total_rounds' => self::getTotalRounds(),
+            // TODO: pass variant
         );
         if(self::getGameStateValue('renounceFlags') == 1){
             self::clearRenounceFlags();
@@ -1711,7 +1739,7 @@ class Calypso extends Table
         self::displayScores($round_number);
 
         self::updateRoundStats();
-        $num_rounds = self::getGameStateValue( 'totalRounds' );
+        $num_rounds = self::getTotalRounds();
         
         if($round_number < $num_rounds){
             $this->gamestate->nextState('nextRound');
