@@ -312,7 +312,8 @@ class Calypso extends Table
 
         $result['dealer'] = self::getGameStateValue('currentDealer');
 
-        // TODO: send variant over for javascript updateGameStatus
+        $result['rule_set'] = self::getRuleSet();
+        $result['totalhands'] = self::getTotalHands();
 
         // TODO: from here we have variant logic
         $result['handnumber'] = self::getGameStateValue('handNumber');
@@ -1667,7 +1668,8 @@ class Calypso extends Table
             'round_number' => self::getGameStateValue( 'roundNumber' ),
             'hand_number' => $hand_number,
             'total_rounds' => self::getTotalRounds(),
-            // TODO: pass variant
+            'rule_set' => self::getRuleSet(),
+            "total_hands" => self::getTotalHands(),
         );
         if(self::getGameStateValue('renounceFlags') == 1){
             self::clearRenounceFlags();

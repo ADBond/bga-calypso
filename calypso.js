@@ -179,6 +179,8 @@ function (dojo, declare) {
             // score table buttons
             const totalrounds = gamedatas.totalrounds;
             const currentround = gamedatas.roundnumber;
+            const totalhands = gamedatas.totalhands;
+            const rule_set = gamedatas.rule_set;
             for(let round_number = 1; round_number < currentround; round_number++){
                 this.activateScoreButton(round_number, gamedatas.roundscoretable[round_number]);
             }
@@ -215,7 +217,7 @@ function (dojo, declare) {
                 }
             }
 
-            this.updateGameStatus(gamedatas.handnumber, currentround, totalrounds);
+            this.updateGameStatus(gamedatas.handnumber, currentround, totalrounds, rule_set, totalhands);
             this.setupNotifications();
             // tooltips ahoy:
             this.refreshTooltips();
@@ -488,17 +490,24 @@ function (dojo, declare) {
             this.attachToNewParent( 'clp-dealerbutton', new_dealer_area_id );
         },
 
-        updateGameStatus: function(handnumber, roundnumber, totalrounds) {
-            // TODO: don't include round info in variant
+        updateGameStatus: function(handnumber, roundnumber, totalrounds, rule_set, totalhands) {
             // don't need to translate game title
+
+            let banner_template = '<span class="clp-gametitle">Calypso</span>' + "<br>";
+            if (rule_set == "standard"){
+                banner_template += _("Round ${roundnumber} of ${totalrounds}") + " - ";
+                hands_per_round = 4;
+            } else {
+                hands_per_round = totalhands;
+            }
+            banner_template +=_("Hand ${handnumber} of ${hands_per_round}");
             $("clp-game-info").innerHTML =  dojo.string.substitute(
-                '<span class="clp-gametitle">Calypso</span>' + 
-                    "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
-                    " - " + _("Hand ${handnumber} of 4"),
+                banner_template,
                 {
                     roundnumber: roundnumber,
                     handnumber: handnumber,
                     totalrounds: totalrounds,
+                    hands_per_round: hands_per_round,
                 } 
             );
         },
@@ -824,7 +833,13 @@ function (dojo, declare) {
 
         notif_dealHand : function(notif) {
             this.changeDealer(notif.args.dealer_id);
-            this.updateGameStatus(notif.args.hand_number, notif.args.round_number, notif.args.total_rounds);
+            this.updateGameStatus(
+                notif.args.hand_number,
+                notif.args.round_number,
+                notif.args.total_rounds,
+                notif.args.rule_set,
+                notif.args.total_hands,
+            );
             if(notif.args.renounce_flags_clear){
                 this.clearRenounceFlags(notif.args.players, notif.args.suits);
             }
