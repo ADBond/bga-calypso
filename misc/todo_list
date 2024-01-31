@@ -8,6 +8,5 @@
 ./calypso.game.php:966:            // TODO: variant delete partials
 ./calypso.game.php:968:            // TODO: var we score by the hand, not round
 ./calypso.game.php:1102:        // TODO: variant - what do we use this function for specifically?
-./calypso.game.php:1369:        // TODO: gameoption areas
-./calypso.game.php:1614:        // TODO: this needs adjusting for variant
-./calypso.game.php:1661:            // TODO: pass variant
+./calypso.game.php:1371:        // TODO: gameoption areas
+./calypso.game.php:1670:            // TODO: pass variant

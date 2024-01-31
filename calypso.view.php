@@ -77,7 +77,7 @@
             );
         }
 
-        $total_rounds = $this->game->getGameStateValue("totalRounds");
+        $total_rounds = $this->game->getTotalRounds();
         $this->page->begin_block( $template, "roundscoreaccessrow" );
         for ($round = 1; $round <= $total_rounds; $round++){
             $this->page->insert_block(

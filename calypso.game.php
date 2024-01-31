@@ -385,7 +385,7 @@ class Calypso extends Table
         if ($ruleset == 2) {
             return "variant";
         }
-        return "error";
+        return "ruleseterror";
     }
 
     // only called for variant rules
@@ -1189,6 +1189,7 @@ class Calypso extends Table
             // each value increases # of hands by 4
             return 4 * self::getGameStateValue('gameLengthIndex');
         }
+        return "handerror";
     }
     // total number of rounds we are playing
     function getTotalRounds(){
@@ -1199,6 +1200,7 @@ class Calypso extends Table
             // variant rules we define as a single round
             return 1;
         }
+        return "rounderror";
     }
 
     // Hand number OVERALL
@@ -1611,12 +1613,6 @@ class Calypso extends Table
         // always start at trick number 1
         self::setGameStateValue( 'trickNumber', 1 );
 
-        // TODO: this needs adjusting for variant
-        self::notifyAllPlayers(
-            "newHandBegin",
-            clienttranslate('A new hand starts - hand ${hand_number} of 4 in the current round'),
-            array("hand_number" => $hand_number)
-        );
         if (self::getRuleSet() == 'variant') {
             // skip moving cards when we are in the fire
             if (self::getGameStateValue('handNumber') > 1) {
@@ -1630,8 +1626,21 @@ class Calypso extends Table
             // shuffle greenroom
             $dealFrom = 'greenroom';
             $this->cards->shuffle('greenroom');
+            self::notifyAllPlayers(
+                "newHandBegin",
+                clienttranslate('A new hand starts - hand ${hand_number} of ${total_hands}'),
+                array(
+                    "hand_number" => $hand_number,
+                    "total_hands" => self::getTotalHands(),
+                )
+            );
         } elseif (self::getRuleSet() == 'standard') {
             $dealFrom = 'deck';
+            self::notifyAllPlayers(
+                "newHandBegin",
+                clienttranslate('A new hand starts - hand ${hand_number} of 4 in the current round'),
+                array("hand_number" => $hand_number)
+            );
         }
         // Deal 13 cards to each player and notify them of their hand
         $players = self::loadPlayersBasicInfosWithTrumps();
