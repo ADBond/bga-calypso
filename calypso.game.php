@@ -1195,6 +1195,7 @@ class Calypso extends Table
             'scoreUpdate',
             '',
             array(
+                // TODO: just need this:
                 'scores' => $args_array["scores_for_updating"],
             )
         );
@@ -1659,6 +1660,7 @@ class Calypso extends Table
                 $this->cards->moveAllCardsInLocation("sinbin", "greenroom");
                 // trickpiles -> sin bin
                 $this->cards->moveAllCardsInLocation("trickpile", "sinbin");
+                // TODO: log this info from hand 3 on
             }
             // shuffle greenroom
             $dealFrom = 'greenroom';
@@ -1782,7 +1784,7 @@ class Calypso extends Table
             // TODO: for last hand, also score partial calypso cards
             // (these probably live in updateScores)
             // TODO: display scores special
-            self::displayScoresVariant($round_number);
+            self::displayScoresVariant($hand_number);
         }
 
         if($final_hand){
