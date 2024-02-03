@@ -44,3 +44,21 @@ Do smt like (and origin)
        -o-transform: rotate(45deg);
           transform: rotate(45deg);
 ```
+
+## Misc framework notes
+
+Can safely wrap invalid options:
+
+```php
+self::initGameStateLabels(
+  array(
+    ...
+    "fakeGameOption" => 109,  # 109 not in gameoptions.json
+    ...
+  )
+)
+...
+
+$val = self::getGameStateValue('fakeGameOption', 999);
+# $val is now 999
+```
