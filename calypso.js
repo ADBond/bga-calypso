@@ -790,7 +790,9 @@ function (dojo, declare) {
             dojo.subscribe( 'calypsoComplete', this, "notif_calypsoComplete" );
             dojo.subscribe( 'playAllAnimations', this, "notif_playAllAnimations" );
             // updating scores/display score tables
+            
             dojo.subscribe( 'scoreDisplay', this, "notif_scoreDisplay" );
+            dojo.subscribe( 'scoreDisplayVariant', this, "notif_scoreDisplayVariant" );
             dojo.subscribe( 'scoreUpdate', this, "notif_scoreUpdate" );
         },
 
@@ -906,6 +908,11 @@ function (dojo, declare) {
         notif_scoreDisplay: function(notif) {
             this.showResultDialogByRound(notif.args.round_number, notif.args.table);
             this.activateScoreButton(notif.args.round_number, notif.args.table);
+            this.activateOverallScoreButton(notif.args.overall_score);
+        },
+        notif_scoreDisplayVariant: function(notif) {
+            // TODO: not sure about this first one
+            this.showResultDialogByRound(notif.args.round_number, notif.args.table);
             this.activateOverallScoreButton(notif.args.overall_score);
         },
 

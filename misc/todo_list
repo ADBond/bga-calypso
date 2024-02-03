@@ -1,11 +1,15 @@
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */
 ./calypso.js:197:            // TODO: maybe skip round scores for variant? needs thought
+./calypso.js:914:            // TODO: not sure about this first one
 ./calypso.game.php:318:        // TODO: from here we have variant logic
 ./calypso.game.php:365:        // TODO: not via rounds, but hands for generality
 ./calypso.game.php:978:                // TODO: exceptin' the last hand
 ./calypso.game.php:980:                // TODO: first hand we don't score at all
 ./calypso.game.php:1118:        // TODO: variant - what do we use this function for specifically?
-./calypso.game.php:1387:        // TODO: gameoption areas
-./calypso.game.php:1759:            // TODO: only score from 2nd hand onwards
-./calypso.game.php:1760:            // TODO: for last hand, also score partial calypso cards
-./calypso.game.php:1762:            // TODO: display scores special
+./calypso.game.php:1173:        // TODO: this is part of what needs happened for hand end in variant
+./calypso.game.php:1184:        // TODO: custom table, figure out data + format
+./calypso.game.php:1187:            '',  // TODO: log entry?
+./calypso.game.php:1408:        // TODO: gameoption areas
+./calypso.game.php:1781:            // TODO: only score from 2nd hand onwards
+./calypso.game.php:1782:            // TODO: for last hand, also score partial calypso cards
+./calypso.game.php:1784:            // TODO: display scores special

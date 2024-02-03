@@ -1170,6 +1170,27 @@ class Calypso extends Table
                 "overall_score" => self::getDisplayOverallScoresArgs(),
             )
         );
+        // TODO: this is part of what needs happened for hand end in variant
+        $this->notifyAllPlayers(
+            'scoreUpdate',
+            '',
+            array(
+                'scores' => $args_array["scores_for_updating"],
+            )
+        );
+    }
+    function displayScoresVariant($round_number) {
+        $args_array = self::getDisplayScoresArgs($round_number);
+        // TODO: custom table, figure out data + format
+        $this->notifyAllPlayers(
+            "scoreDisplayVariant",
+            '',  // TODO: log entry?
+            array(
+                "round_number" => $round_number,
+                "table" => $args_array["score_table"],
+                "overall_score" => self::getDisplayOverallScoresArgs(),
+            )
+        );
         $this->notifyAllPlayers(
             'scoreUpdate',
             '',
@@ -1752,7 +1773,8 @@ class Calypso extends Table
         if (self::getRuleSet() == 'variant') {
             $num_hands = self::getTotalHands();
         }
-        $final_hand = (self::getGameStateValue( 'handNumber' ) == $num_hands);
+        $hand_number = self::getGameStateValue( 'handNumber' );
+        $final_hand = ($hand_number == $num_hands);
         if (self::getRuleSet() == 'variant') {
             // score the hand. Movement of cards happens at start of next hand
             self::updateScores();
@@ -1760,6 +1782,7 @@ class Calypso extends Table
             // TODO: for last hand, also score partial calypso cards
             // (these probably live in updateScores)
             // TODO: display scores special
+            self::displayScoresVariant($round_number);
         }
 
         if($final_hand){
