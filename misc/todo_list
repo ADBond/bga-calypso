@@ -2,8 +2,8 @@
 ./calypso.js:197:            // TODO: maybe skip round scores for variant? needs thought
 ./calypso.game.php:318:        // TODO: from here we have variant logic
 ./calypso.game.php:365:        // TODO: not via rounds, but hands for generality
-./calypso.game.php:979:                // TODO: exceptin' the last hand
-./calypso.game.php:981:                // TODO: first hand we don't score at all
+./calypso.game.php:978:                // TODO: exceptin' the last hand
+./calypso.game.php:980:                // TODO: first hand we don't score at all
 ./calypso.game.php:1118:        // TODO: variant - what do we use this function for specifically?
 ./calypso.game.php:1387:        // TODO: gameoption areas
 ./calypso.game.php:1759:            // TODO: only score from 2nd hand onwards

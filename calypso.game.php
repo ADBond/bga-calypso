@@ -974,7 +974,6 @@ class Calypso extends Table
             $calypso_cards = count($this->cards->getCardsInLocation( 'calypso', $player_id ));
             $won_cards = count($this->cards->getCardsInLocation( 'trickpile', $player_id ));
 
-            $scores_for_updating[$player_id] = self::countsToScores($num_calypsos, $calypso_cards, $won_cards)['total_score'];
             if (self::getRuleSet() == "variant") {
                 // TODO: exceptin' the last hand
                 $calypso_cards = 0;
@@ -982,6 +981,7 @@ class Calypso extends Table
                 // skip setRoundSCore + partnership updating!
             }
 
+            $scores_for_updating[$player_id] = self::countsToScores($num_calypsos, $calypso_cards, $won_cards)['total_score'];
             self::setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards );
 
             $partnership = self::getPlayerPartnership($player_id);
