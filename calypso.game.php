@@ -739,7 +739,13 @@ class Calypso extends Table
     }
 
     function setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards ){
-        $round_number = self::getGameStateValue('roundNumber');
+        // update db with round score
+        // for variant this is really a hand number, but we play make-believe
+        if (self::getRuleSet() == "variant") {
+            $round_number = self::getHandNumber();
+        } else {
+            $round_number = self::getGameStateValue('roundNumber');
+        }
         $sql_query = "
             INSERT INTO round_scores (player_id, round_number, completed_calypsos, calypso_incomplete, won_tricks)
             VALUES
@@ -950,7 +956,13 @@ class Calypso extends Table
         // this has total count of calypsoes
         $players = self::getAllCompletedCalypsos();
 
-        $round_number = self::getGameStateValue( 'roundNumber' );
+        if (self::getRuleSet() == "variant") {
+            // make believe for scores:
+            $round_number = self::getHandNumber();
+
+        } else {
+            $round_number = self::getGameStateValue( 'roundNumber' );
+        }
 
         $partnership_scores = array(
             "minor" => 0,
@@ -959,14 +971,17 @@ class Calypso extends Table
         // get the individual scores per player
         foreach ( $players as $player_id => $num_calypsos ) {
 
-            // TODO: no calypso cards in var until the end
             $calypso_cards = count($this->cards->getCardsInLocation( 'calypso', $player_id ));
             $won_cards = count($this->cards->getCardsInLocation( 'trickpile', $player_id ));
 
             $scores_for_updating[$player_id] = self::countsToScores($num_calypsos, $calypso_cards, $won_cards)['total_score'];
-            // TODO: variant delete partials
+            if (self::getRuleSet() == "variant") {
+                // TODO: exceptin' the last hand
+                $calypso_cards = 0;
+                // TODO: first hand we don't score at all
+                // skip setRoundSCore + partnership updating!
+            }
 
-            // TODO: var we score by the hand, not round
             self::setRoundScore( $player_id, $num_calypsos, $calypso_cards, $won_cards );
 
             $partnership = self::getPlayerPartnership($player_id);
@@ -1740,8 +1755,11 @@ class Calypso extends Table
         $final_hand = (self::getGameStateValue( 'handNumber' ) == $num_hands);
         if (self::getRuleSet() == 'variant') {
             // score the hand. Movement of cards happens at start of next hand
-            // only score from 2nd hand onwards
-            // for last hand, also score partial calypso cards
+            self::updateScores();
+            // TODO: only score from 2nd hand onwards
+            // TODO: for last hand, also score partial calypso cards
+            // (these probably live in updateScores)
+            // TODO: display scores special
         }
 
         if($final_hand){
@@ -1753,8 +1771,10 @@ class Calypso extends Table
 
     function stEndRound() {
         $round_number = self::getGameStateValue('roundNumber');
-        self::updateScores();
-        self::displayScores($round_number);
+        if (self::getRuleSet() == "standard"){
+            self::updateScores();
+            self::displayScores($round_number);
+        }
 
         self::updateRoundStats();
         $num_rounds = self::getTotalRounds();
