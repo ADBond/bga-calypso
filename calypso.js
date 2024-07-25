@@ -161,6 +161,7 @@ function (dojo, declare) {
             {
                 const player = gamedatas.players[player_id];
                 const player_board_div = $(`player_board_${player_id}`);
+                // TODO: this need to adjust this for variant
                 this.setCalypsoPile(player_id, player["completed_calypsos"]);
                 
                 dojo.place(

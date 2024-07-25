@@ -1653,14 +1653,21 @@ class Calypso extends Table
 
         if (self::getRuleSet() == 'variant') {
             // skip moving cards when we are in the fire
-            if (self::getGameStateValue('handNumber') > 1) {
+            if ($hand_number > 1) {
                 // completed calypsoes -> green room (+ scored, but that should be at hand end)
                 $this->cards->moveAllCardsInLocation("full_calypsos", "greenroom");
                 // sin bin -> green room
                 $this->cards->moveAllCardsInLocation("sinbin", "greenroom");
                 // trickpiles -> sin bin
                 $this->cards->moveAllCardsInLocation("trickpile", "sinbin");
-                // TODO: log this info from hand 3 on
+                if ($hand_number > 2) {
+                    # TODO: conditional
+                    self::notifyAllPlayers(
+                        "cardMovementsCalypsoes",
+                        clienttranslate('
+                        '),
+                    );
+                }
             }
             // shuffle greenroom
             $dealFrom = 'greenroom';
