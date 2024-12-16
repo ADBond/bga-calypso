@@ -38,8 +38,10 @@ class Calypso extends Table
     const CLUBS = 3;
     const DIAMONDS = 4;
 
-    // game option stuff - see gameoptions.inc.php
+    // game option stuff - see gameoptions.json
     const DETAILED_LOG_ON = 1;
+
+    const ALL_FOURS = 3;
 
 	function __construct( )
 	{
@@ -82,6 +84,8 @@ class Calypso extends Table
                          "partnerships" => 102,
                          // detailed log option
                          "detailedLog" => 103,
+                         // which game variant?
+                         "gameVariant" => 104,
 
                           ) );
 
@@ -739,6 +743,17 @@ class Calypso extends Table
             // if we have no cards of suit, again any card is fine
             return $hand;
         }
+        // in all fours version, we can also play a trump even if we have cards of led suit
+        if( self::getGameStateValue('gameVariant') == self::ALL_FOURS) {
+            $trump_suit = self::getPlayerSuit($player_id);
+            // obviously don't get any extra options if our trump suit led
+            if ($trump_suit != $trick_suit){
+                $trump_suit_cards = array_filter( $hand, function($hand_card) use ($trump_suit) {
+                    return $hand_card['type'] == $trump_suit;
+                });
+                $suit_cards = array_merge($suit_cards, $trump_suit_cards);
+            }
+        };
         return $suit_cards;
     }
 
