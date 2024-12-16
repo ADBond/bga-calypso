@@ -1385,6 +1385,7 @@ class Calypso extends Table
             } else {
                 // they don't follow suit
                 if(self::getGameStateValue('renounceFlags') == 1){
+                    // TODO: All Fours logic - ruffing isn't renouncing
                     self::setRenounceFlag($player_id, $current_trick_suit);
                     self::notifyAllPlayers(
                         'renounceFlag',
@@ -1400,6 +1401,7 @@ class Calypso extends Table
                 
                 // if they don't play their trump don't worry - it's a loser
                 // if they do...
+                // TODO: trick-winning logic for all fours - only if led, and we have _higher rank_
                 if ( $current_card['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
