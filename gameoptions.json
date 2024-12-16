@@ -31,14 +31,7 @@
                 "description": "4 rounds - everyone gets to be first player once",
                 "tmdisplay": "Full rotation"
             }
-        },
-        "displaycondition": [
-            {
-                "type": "otheroption",
-                "id": 104,
-                "value": 1
-            }
-        ]
+        }
     },
     "101": {
         "name": "Renounce indicators",
