@@ -1,3 +1,2 @@
 ./calypso_style.scss:58:/* TODO ?maybe rgba -> rgb (css) */
-./calypso.game.php:1388:                    // TODO: All Fours logic - ruffing isn't renouncing
-./calypso.game.php:1404:                // TODO: trick-winning logic for all fours - only if led, and we have _higher rank_
+./calypso.game.php:1393:                    // TODO: All Fours logic - ruffing isn't renouncing

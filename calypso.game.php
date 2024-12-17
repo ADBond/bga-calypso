@@ -1357,10 +1357,15 @@ class Calypso extends Table
         // case of the first card of the trick:
         if( $current_trick_suit == 0 ) {
             self::setGameStateValue( 'trickSuit', $current_card['type'] );
-            // set if trumps are lead
+            // set if trumps are led
             if ( $current_card['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
                 self::setWinner( $player_id, $current_card, self::TRUMP_LEAD );
+                // in All Fours version, this counts as a trump played for this purpose
+                // i.e. subsequent trump must also beat its rank
+                if (self::getGameStateValue('gameVariant') == self::ALL_FOURS) {
+                    self::setGameStateValue( 'trumpPlayed', 1 );
+                }
             } else {
                 // this _should_ be irrelevant, but can't hurt
                 self::setGameStateValue( 'trumpLead', 0 );
@@ -1401,15 +1406,17 @@ class Calypso extends Table
                 
                 // if they don't play their trump don't worry - it's a loser
                 // if they do...
-                // TODO: trick-winning logic for all fours - only if led, and we have _higher rank_
                 if ( $current_card['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
-                        // this is where the variant rule would require some modification
+                        // in Standard Calypso this will include a trump lead
+                        // in All Fours Calypso this really does mean only plain suits so far
                         self::setWinner( $player_id, $current_card, self::FIRST_TRUMP );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else {
                         // if trumpPlayed - check if we're higher, in which case we're winning. Otherwise still a loser
+                        // in Standard Calypso this will be if a trump is played after the lead
+                        // in All Fours Calypso this will also include the case where trump is the led card
                         if ( $current_card['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
                             self::setWinner( $player_id, $current_card, self::OVERTRUMP );
                         }
