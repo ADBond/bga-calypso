@@ -1389,8 +1389,26 @@ class Calypso extends Table
                 }
             } else {
                 // they don't follow suit
-                if(self::getGameStateValue('renounceFlags') == 1){
-                    // TODO: All Fours logic - ruffing isn't renouncing
+                // are we going to show a renounce indicator?
+                if(
+                    // game option is on, and
+                    (self::getGameStateValue('renounceFlags') == 1) &&
+                    (
+                        // always happens in Standard Calypso (as we aren't following suit)
+                        (self::getGameStateValue('gameVariant') == self::STANDARD) ||
+                        // in AF Calypso we also need to not be playing a trump
+                        // ruffing isn't renouncing - we might still have cards of led suit!
+                        (
+                            self::getGameStateValue('gameVariant') == self::ALL_FOURS &&
+                            $current_card['type'] != self::getPlayerSuit($player_id)
+                        )
+                    )
+                ) {
+                    $turn_on_flags = true;
+                } else {
+                    $turn_on_flags = false;
+                }
+                if($turn_on_flags){
                     self::setRenounceFlag($player_id, $current_trick_suit);
                     self::notifyAllPlayers(
                         'renounceFlag',
