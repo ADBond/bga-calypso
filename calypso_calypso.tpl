@@ -9,7 +9,9 @@
 -- See http://en.boardgamearena.com/#!doc/Studio for more information.
 -->
 
-<div id="clp-game-info" class="clp-game-info"></div>
+<div id="clp-game-info" class="clp-game-info">
+    <span id="clp-gametitle" class="clp-gametitle"></span><br><span id="clp-gi-round-hand"></span>
+</div>
 
 <div id="clp-public-area">
     <div id="clp-table-area">

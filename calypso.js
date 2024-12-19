@@ -215,6 +215,13 @@ function (dojo, declare) {
             }
 
             this.updateGameStatus(gamedatas.handnumber, currentround, totalrounds);
+
+            variant = gamedatas.gamevariant;
+            console.log(variant);
+            title = "Calypso" + ((variant == "Standard Calypso") ? "" : " (All Fours)");
+            $("clp-gametitle").innerText = title;
+            console.log(title);
+            console.log($("clp-gametitle"));
             this.setupNotifications();
             // tooltips ahoy:
             this.refreshTooltips();
@@ -489,9 +496,8 @@ function (dojo, declare) {
 
         updateGameStatus: function(handnumber, roundnumber, totalrounds) {
             // don't need to translate game title
-            $("clp-game-info").innerHTML =  dojo.string.substitute(
-                '<span class="clp-gametitle">Calypso</span>' + 
-                    "<br>" + _("Round ${roundnumber} of ${totalrounds}") +
+            $("clp-gi-round-hand").innerHTML =  dojo.string.substitute(
+                 _("Round ${roundnumber} of ${totalrounds}") +
                     " - " + _("Hand ${handnumber} of 4"),
                 {
                     roundnumber: roundnumber,

@@ -41,6 +41,7 @@ class Calypso extends Table
     // game option stuff - see gameoptions.json
     const DETAILED_LOG_ON = 1;
 
+    const STANDARD_CALYPSO = 1;
     const ALL_FOURS = 3;
 
 	function __construct( )
@@ -314,6 +315,10 @@ class Calypso extends Table
             $result['roundscoretable'][$round] = $args_array["score_table"];
         }
         $result['overallscoretable'] = self::getDisplayOverallScoresArgs();
+        $result['gamevariant'] = array(
+            self::STANDARD_CALYPSO => "Standard Calypso",
+            self::ALL_FOURS => "All Fours",
+        )[self::getGameStateValue('gameVariant')];
 
         // N.B. we automatically send over game state anyhow, so need to set that here
 
@@ -1395,7 +1400,7 @@ class Calypso extends Table
                     (self::getGameStateValue('renounceFlags') == 1) &&
                     (
                         // always happens in Standard Calypso (as we aren't following suit)
-                        (self::getGameStateValue('gameVariant') == self::STANDARD) ||
+                        (self::getGameStateValue('gameVariant') == self::STANDARD_CALYPSO) ||
                         // in AF Calypso we also need to not be playing a trump
                         // ruffing isn't renouncing - we might still have cards of led suit!
                         (
