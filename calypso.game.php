@@ -1352,9 +1352,23 @@ class Calypso extends Table
             $trick_suit = self::getGameStateValue( 'trickSuit' );
             // if they're trying to revoke, warn, and remind them of the suit they should be playing
             $trick_suit_name = $this->suits[$trick_suit]['nametr'];
-            throw new BgaUserException(
-                sprintf(self::_("You must follow suit if able to! Please play a %s."), $trick_suit_name)
-            );
+            // TODO: break up repeated text to limit translations needed
+            if (self::getGameStateValue("gameVariant") == self::STANDARD_CALYPSO) {
+                $err_msg = sprintf(self::_("You must follow suit if able to! Please play a %s."), $trick_suit_name);
+            } else {
+                // All Fours
+                $trumps = self::getPlayerSuit($player_id);
+                if ($trumps == $trick_suit) {
+                    $err_msg = sprintf(self::_("You must follow suit or trump! Please play a %s."), $trick_suit_name);
+                } else {
+                    $trump_suit_name = $this->suits[$trumps]['nametr'];
+                    $err_msg = sprintf(
+                        self::_("You must follow suit or trump! Please play a %s or a %s."),
+                        $trick_suit_name, $trump_suit_name
+                    );
+                }
+            }
+            throw new BgaUserException($err_msg);
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
 
