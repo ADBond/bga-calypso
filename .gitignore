@@ -1,3 +1,5 @@
 *.css.map
 
 .vscode
+
+_*.php
