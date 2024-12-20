@@ -499,7 +499,8 @@ class Calypso extends Table
 
     // wrap access to variant, so we can guard during transition
     function getGameVariant(){
-        return self::getGameStateValue("gameVariant");
+        // default value is as-was, for games started before the change
+        return self::getGameStateValue("gameVariant", self::STANDARD_CALYPSO);
     }
 
     // actively changing dealer, either the real dealer, or the labelled first-hand dealer
