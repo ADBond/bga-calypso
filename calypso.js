@@ -217,11 +217,8 @@ function (dojo, declare) {
             this.updateGameStatus(gamedatas.handnumber, currentround, totalrounds);
 
             variant = gamedatas.gamevariant;
-            console.log(variant);
-            title = "Calypso" + ((variant == "Standard Calypso") ? "" : " (All Fours)");
+            title = ((variant == "Standard Calypso") ? "Calypso" : "All Fours Calypso");
             $("clp-gametitle").innerText = title;
-            console.log(title);
-            console.log($("clp-gametitle"));
             this.setupNotifications();
             // tooltips ahoy:
             this.refreshTooltips();
