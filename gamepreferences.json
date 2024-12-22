@@ -1,0 +1,83 @@
+{
+    "100": {
+        "name": "Table colour",
+        "needReload": true,
+        "values": {
+            "1": {
+                "name": "Purple",
+                "cssPref": "clp-up-purple"
+            },
+            "2": {
+                "name": "Yellow",
+                "cssPref": "clp-up-yellow"
+            },
+            "3": {
+                "name": "Red",
+                "cssPref": "clp-up-red"
+            },
+            "4": {
+                "name": "Green",
+                "cssPref": "clp-up-green"
+            },
+            "5": {
+                "name": "Blue",
+                "cssPref": "clp-up-blue"
+            },
+            "6": {
+                "name": "White",
+                "cssPref": "clp-up-white"
+            },
+            "7": {
+                "name": "Black",
+                "cssPref": "clp-up-black"
+            },
+            "8": {
+                "name": "Pink",
+                "cssPref": "clp-up-pink"
+            },
+            "9": {
+                "name": "Cyan",
+                "cssPref": "clp-up-cyan"
+            },
+            "10": {
+                "name": "Dark green",
+                "cssPref": "clp-up-darkgreen"
+            },
+            "11": {
+                "name": "Orange",
+                "cssPref": "clp-up-orange"
+            }
+        },
+        "default": 1
+    },
+    "101": {
+        "name": "Card face style",
+        "needReload": true,
+        "values": {
+            "1": {
+                "name": "Standard two-colour",
+                "cssPref": "clp-pack-standard"
+            },
+            "2": {
+                "name": "Four-colour",
+                "cssPref": "clp-pack-four-colour"
+            }
+        },
+        "default": 1
+    },
+    "102": {
+        "name": "Highlight playable cards",
+        "needReload": true,
+        "values": {
+            "1": {
+                "name": "Yes",
+                "cssPref": "clp-cards-highlight-playable"
+            },
+            "2": {
+                "name": "No",
+                "cssPref": "clp-cards-dont-highlight-playable"
+            }
+        },
+        "default": 1
+    }
+}
