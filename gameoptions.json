@@ -3,10 +3,12 @@
         "name": "Ruleset",
         "values": {
             "1": {
-                "name": "Standard Calypso"
+                "name": "Standard Calypso",
+                "tmdisplay": "Standard Calypso"
             },
             "3": {
-                "name": "All Fours Calypso"
+                "name": "All Fours Calypso",
+                "tmdisplay": "All Fours Calypso"
             }
         },
         "level": "major"
@@ -16,7 +18,7 @@
         "values": {
             "1": {
                 "name": "Standard, short - 1 round (4 hands)",
-                "tmdisplay": "Standard game"
+                "tmdisplay": "Single game (1 round)"
             },
             "2": {
                 "name": "Medium - 2 rounds (8 hands)",
