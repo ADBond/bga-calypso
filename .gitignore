@@ -1,1 +1,7 @@
 *.css.map
+
+.vscode
+
+_*.php
+
+.env

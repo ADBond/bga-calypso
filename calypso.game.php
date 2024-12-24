@@ -38,8 +38,11 @@ class Calypso extends Table
     const CLUBS = 3;
     const DIAMONDS = 4;
 
-    // game option stuff - see gameoptions.inc.php
+    // game option stuff - see gameoptions.json
     const DETAILED_LOG_ON = 1;
+
+    const STANDARD_CALYPSO = 1;
+    const ALL_FOURS = 3;
 
 	function __construct( )
 	{
@@ -82,6 +85,8 @@ class Calypso extends Table
                          "partnerships" => 102,
                          // detailed log option
                          "detailedLog" => 103,
+                         // which game variant?
+                         "gameVariant" => 104,
 
                           ) );
 
@@ -310,6 +315,10 @@ class Calypso extends Table
             $result['roundscoretable'][$round] = $args_array["score_table"];
         }
         $result['overallscoretable'] = self::getDisplayOverallScoresArgs();
+        $result['gamevariant'] = array(
+            self::STANDARD_CALYPSO => "Standard Calypso",
+            self::ALL_FOURS => "All Fours",
+        )[self::getGameVariant()];
 
         // N.B. we automatically send over game state anyhow, so need to set that here
 
@@ -486,6 +495,12 @@ class Calypso extends Table
             $east_id => "E",
         );
         return $directions;
+    }
+
+    // wrap access to variant, so we can guard during transition
+    function getGameVariant(){
+        // default value is as-was, for games started before the change
+        return self::getGameStateValue("gameVariant", self::STANDARD_CALYPSO);
     }
 
     // actively changing dealer, either the real dealer, or the labelled first-hand dealer
@@ -739,6 +754,17 @@ class Calypso extends Table
             // if we have no cards of suit, again any card is fine
             return $hand;
         }
+        // in all fours version, we can also play a trump even if we have cards of led suit
+        if( self::getGameVariant() == self::ALL_FOURS) {
+            $trump_suit = self::getPlayerSuit($player_id);
+            // obviously don't get any extra options if our trump suit led
+            if ($trump_suit != $trick_suit){
+                $trump_suit_cards = array_filter( $hand, function($hand_card) use ($trump_suit) {
+                    return $hand_card['type'] == $trump_suit;
+                });
+                $suit_cards = array_merge($suit_cards, $trump_suit_cards);
+            }
+        };
         return $suit_cards;
     }
 
@@ -1332,9 +1358,13 @@ class Calypso extends Table
             $trick_suit = self::getGameStateValue( 'trickSuit' );
             // if they're trying to revoke, warn, and remind them of the suit they should be playing
             $trick_suit_name = $this->suits[$trick_suit]['nametr'];
-            throw new BgaUserException(
-                sprintf(self::_("You must follow suit if able to! Please play a %s."), $trick_suit_name)
-            );
+            if (self::getGameVariant() == self::STANDARD_CALYPSO) {
+                $err_msg = sprintf(self::_("You must follow suit if able to! Please play a %s."), $trick_suit_name);
+            } else {
+                // All Fours
+                $err_msg = self::_("You must follow suit or play a trump!");
+            }
+            throw new BgaUserException($err_msg);
         }
         $this->cards->moveCard($card_id, 'cardsontable', $player_id);
 
@@ -1342,10 +1372,15 @@ class Calypso extends Table
         // case of the first card of the trick:
         if( $current_trick_suit == 0 ) {
             self::setGameStateValue( 'trickSuit', $current_card['type'] );
-            // set if trumps are lead
+            // set if trumps are led
             if ( $current_card['type'] == self::getPlayerSuit($player_id) ) {
                 self::setGameStateValue( 'trumpLead', 1 );
                 self::setWinner( $player_id, $current_card, self::TRUMP_LEAD );
+                // in All Fours version, this counts as a trump played for this purpose
+                // i.e. subsequent trump must also beat its rank
+                if (self::getGameVariant() == self::ALL_FOURS) {
+                    self::setGameStateValue( 'trumpPlayed', 1 );
+                }
             } else {
                 // this _should_ be irrelevant, but can't hurt
                 self::setGameStateValue( 'trumpLead', 0 );
@@ -1369,7 +1404,26 @@ class Calypso extends Table
                 }
             } else {
                 // they don't follow suit
-                if(self::getGameStateValue('renounceFlags') == 1){
+                // are we going to show a renounce indicator?
+                if(
+                    // game option is on, and
+                    (self::getGameStateValue('renounceFlags') == 1) &&
+                    (
+                        // always happens in Standard Calypso (as we aren't following suit)
+                        (self::getGameVariant() == self::STANDARD_CALYPSO) ||
+                        // in AF Calypso we also need to not be playing a trump
+                        // ruffing isn't renouncing - we might still have cards of led suit!
+                        (
+                            self::getGameVariant() == self::ALL_FOURS &&
+                            $current_card['type'] != self::getPlayerSuit($player_id)
+                        )
+                    )
+                ) {
+                    $turn_on_flags = true;
+                } else {
+                    $turn_on_flags = false;
+                }
+                if($turn_on_flags){
                     self::setRenounceFlag($player_id, $current_trick_suit);
                     self::notifyAllPlayers(
                         'renounceFlag',
@@ -1388,11 +1442,14 @@ class Calypso extends Table
                 if ( $current_card['type'] == self::getPlayerSuit($player_id) ){
                     // if trump not played yet then great we're winning, and set it
                     if ( self::getGameStateValue( 'trumpPlayed' ) == 0 ){
-                        // this is where the variant rule would require some modification
+                        // in Standard Calypso this will include a trump lead
+                        // in All Fours Calypso this really does mean only plain suits so far
                         self::setWinner( $player_id, $current_card, self::FIRST_TRUMP );
                         self::setGameStateValue( 'trumpPlayed', 1 );
                     } else {
                         // if trumpPlayed - check if we're higher, in which case we're winning. Otherwise still a loser
+                        // in Standard Calypso this will be if a trump is played after the lead
+                        // in All Fours Calypso this will also include the case where trump is the led card
                         if ( $current_card['type_arg'] > self::getGameStateValue( 'bestCardRank' )){
                             self::setWinner( $player_id, $current_card, self::OVERTRUMP );
                         }
